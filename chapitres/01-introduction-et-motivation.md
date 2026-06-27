@@ -264,6 +264,8 @@ Ces quatre piliers ne vivent pas séparément : ils collaborent sur le moindre p
 
 Reprenons le marchand de glaces et résolvons son problème **complètement**, en mobilisant les quatre piliers. C'est l'exemple canonique de la **régression linéaire** (linear regression) : il est assez simple pour être traité à la main, assez riche pour contenir, en germe, presque toute la discipline.
 
+![Animation — une droite s'ajuste à un nuage de points : c'est l'apprentissage en action](../assets/ch1-ajuster-droite.svg)
+
 #### Étape 0 — Les données chiffrées
 
 Prenons un petit jeu de $`n = 5`$ jours (volontairement minuscule pour tout calculer à la main).
