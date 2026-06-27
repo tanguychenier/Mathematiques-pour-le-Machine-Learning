@@ -94,7 +94,7 @@ Sous cette convention, les deux hyperplans qui bordent la marge sont $`\mathbf{w
 
 En effet, prenons un point $`\mathbf{x}_+`$ sur le bord positif ($`\mathbf{w}^\top\mathbf{x}_+ + b = 1`$) et $`\mathbf{x}_-`$ sur le bord negatif ($`\mathbf{w}^\top\mathbf{x}_- + b = -1`$). En soustrayant : $`\mathbf{w}^\top(\mathbf{x}_+ - \mathbf{x}_-) = 2`$. La distance entre les deux bords est la projection de $`\mathbf{x}_+ - \mathbf{x}_-`$ sur la direction unitaire $`\mathbf{w}/\lVert\mathbf{w}\rVert`$, soit $`\dfrac{\mathbf{w}^\top(\mathbf{x}_+-\mathbf{x}_-)}{\lVert\mathbf{w}\rVert} = \dfrac{2}{\lVert\mathbf{w}\rVert}`$.
 
-**Consequence fondamentale.** *Maximiser la marge $`\dfrac{2}{\lVert\mathbf{w}\rVert}`$ revient a minimiser $`\lVert\mathbf{w}\rVert`$, donc a minimiser $`\tfrac{1}{2}\lVert\mathbf{w}\rVert^2`$* (le carre et le facteur $`1/2`$ sont la pour rendre la fonction lisse et l'optimisation agreable). Voici le pont entre geometrie et optimisation, que nous formaliserons dans la section suivante.
+**Consequence fondamentale.** Maximiser la marge $`\dfrac{2}{\lVert\mathbf{w}\rVert}`$ revient a minimiser $`\lVert\mathbf{w}\rVert`$, donc a minimiser $`\tfrac{1}{2}\lVert\mathbf{w}\rVert^2`$ (le carre et le facteur $`1/2`$ sont la pour rendre la fonction lisse et l'optimisation agreable). Voici le pont entre geometrie et optimisation, que nous formaliserons dans la section suivante.
 
 #### Exemple chiffre minuscule
 
@@ -132,7 +132,7 @@ Si les donnees sont **lineairement separables** (on peut les separer sans erreur
 \end{aligned}
 ```
 
-Chaque contrainte $`y_i(\mathbf{w}^\top\mathbf{x}_i + b)\ge 1`$ dit : "le point $`i`$, multiplie par son etiquette, doit avoir un score d'au moins 1", c'est-a-dire etre du bon cote *avec une distance d'au moins $`1/\lVert\mathbf{w}\rVert`$*. C'est un **programme quadratique** (quadratic program, QP) : objectif quadratique convexe, contraintes lineaires. La convexite (vue au chapitre 7) garantit l'existence d'un *unique* minimiseur en $`\mathbf{w}`$ (l'objectif $`\tfrac12\lVert\mathbf{w}\rVert^2`$ est strictement convexe en $`\mathbf{w}`$) : pas de piege de minimum local.
+Chaque contrainte $`y_i(\mathbf{w}^\top\mathbf{x}_i + b)\ge 1`$ dit : "le point $`i`$, multiplie par son etiquette, doit avoir un score d'au moins 1", c'est-a-dire etre du bon cote avec une distance d'au moins $`1/\lVert\mathbf{w}\rVert`$. C'est un **programme quadratique** (quadratic program, QP) : objectif quadratique convexe, contraintes lineaires. La convexite (vue au chapitre 7) garantit l'existence d'un *unique* minimiseur en $`\mathbf{w}`$ (l'objectif $`\tfrac12\lVert\mathbf{w}\rVert^2`$ est strictement convexe en $`\mathbf{w}`$) : pas de piege de minimum local.
 
 > **Definition (SVM a marge dure).** Etant donne un echantillon lineairement separable $`\{(\mathbf{x}_i,y_i)\}_{i=1}^n`$, l'hyperplan a marge maximale est l'unique solution $`(\mathbf{w}^\star, b^\star)`$ du programme quadratique ci-dessus. Les points pour lesquels la contrainte est *active* (egalite $`y_i(\mathbf{w}^{\star\top}\mathbf{x}_i+b^\star)=1`$) sont les **vecteurs de support** (support vectors) : ils touchent le bord de la route et la determinent entierement.
 
@@ -572,7 +572,7 @@ Pour la SVM *lineaire* en grande dimension (texte, $`d \gg n`$), on resout souve
 \nabla_{\mathbf{w}}J = \mathbf{w} - C\!\!\sum_{i:\,y_is_i<1}\!\! y_i\mathbf{x}_i, \qquad \frac{\partial J}{\partial b} = -C\!\!\sum_{i:\,y_is_i<1}\!\! y_i,
 ```
 
-ou la somme ne porte que sur les points *a l'interieur ou du mauvais cote de la marge* ($`y_is_i<1`$). En version stochastique (un point a la fois), on obtient **Pegasos**, dont la mise a jour avec pas decroissant $`\eta_t = 1/(\lambda t)`$ converge en $`O(1/\varepsilon)`$ iterations vers une precision $`\varepsilon`$, *independamment de $`n`$*. C'est ce qui rend la SVM lineaire passable a l'echelle.
+ou la somme ne porte que sur les points *a l'interieur ou du mauvais cote de la marge* ($`y_is_i<1`$). En version stochastique (un point a la fois), on obtient **Pegasos**, dont la mise a jour avec pas decroissant $`\eta_t = 1/(\lambda t)`$ converge en $`O(1/\varepsilon)`$ iterations vers une precision $`\varepsilon`$, independamment de $`n`$. C'est ce qui rend la SVM lineaire passable a l'echelle.
 
 ```python
 import numpy as np
@@ -675,7 +675,7 @@ Soit le noyau polynomial $`k(\mathbf{x},\mathbf{x}')=(\mathbf{x}^\top\mathbf{x}'
 > **Corrige.**
 > 1. $`\varphi(\mathbf{x})=(x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$ (vu plus haut).
 > 2. Cote noyau : $`\mathbf{x}^\top\mathbf{x}'=1\cdot3+2\cdot1=5`$, donc $`k=5^2=25`$. Cote $`\varphi`$ : $`\varphi(\mathbf{x})=(1,\ 2\sqrt2,\ 4)`$, $`\varphi(\mathbf{x}')=(9,\ 3\sqrt2,\ 1)`$. Produit scalaire $`=1\cdot9+2\sqrt2\cdot3\sqrt2+4\cdot1=9+12+4=25`$. Les deux coincident.
-> 3. Via $`\varphi`$, on construit un vecteur de $`\binom{d+p-1}{p}`$ composantes pour le noyau homogene (croissance combinatoire) puis on fait le produit scalaire : irrealisable des que $`d`$ et $`p`$ grandissent. Via $`k`$, on calcule un produit scalaire en dimension $`d`$ ($`O(d)`$) puis une puissance : cout $`O(d)`$, *independant de $`p`$* (a part dans l'exposant). Le gain est astronomique : c'est tout l'interet du truc du noyau.
+> 3. Via $`\varphi`$, on construit un vecteur de $`\binom{d+p-1}{p}`$ composantes pour le noyau homogene (croissance combinatoire) puis on fait le produit scalaire : irrealisable des que $`d`$ et $`p`$ grandissent. Via $`k`$, on calcule un produit scalaire en dimension $`d`$ ($`O(d)`$) puis une puissance : cout $`O(d)`$, independant de $`p`$ (a part dans l'exposant). Le gain est astronomique : c'est tout l'interet du truc du noyau.
 
 #### Exercice 5 — Effet de $`C`$ (raisonnement + code)
 

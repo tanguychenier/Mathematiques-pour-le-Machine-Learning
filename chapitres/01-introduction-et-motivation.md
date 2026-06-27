@@ -63,7 +63,7 @@ Reprenons le carnet du marchand et donnons un nom mathématique à chaque ingré
 
 Une **donnée** (data point), ou *exemple*, est une situation observée. Le marchand a observé $`n`$ jours. Pour le jour numéro $`i`$, il a noté la température, qu'on appelle $`x_i`$, et les ventes, qu'on appelle $`y_i`$.
 
-> **Le symbole $`\in`$ (« appartient à »).** Ce symbole ressemble à un petit « e » arrondi, comme la première lettre du mot « élément ». Il représente l'idée d'**être un membre de**, d'**appartenir à une collection**. Quand on écrit « $`x \in A`$ », on lit « $`x`$ appartient à $`A`$ », et cela veut dire : *l'objet $`x`$ fait partie de la boîte $`A`$*. Imagine une trousse $`A`$ qui contient des crayons : si $`x`$ est un crayon de cette trousse, alors $`x \in A`$. À l'inverse, une gomme qui n'est pas dans la trousse n'y appartient pas.
+> **Le symbole $`\in`$ (« appartient à »).** Ce symbole ressemble à un petit « e » arrondi, comme la première lettre du mot « élément ». Il représente l'idée d'**être un membre de**, d'**appartenir à une collection**. Quand on écrit « $`x \in A`$ », on lit « $`x`$ appartient à $`A`$ », et cela veut dire : l'objet $`x`$ fait partie de la boîte $`A`$. Imagine une trousse $`A`$ qui contient des crayons : si $`x`$ est un crayon de cette trousse, alors $`x \in A`$. À l'inverse, une gomme qui n'est pas dans la trousse n'y appartient pas.
 
 > **Le symbole $`\mathbb{R}`$ (les nombres réels).** Ce symbole, un « R » à la barre doublée, représente l'ensemble de **tous les nombres de la droite graduée** : les entiers comme $`3`$, les nombres à virgule comme $`2{,}5`$ ou $`-0{,}7`$, et même des nombres infiniment précis comme $`\pi \approx 3{,}1415\ldots`$. Imagine une règle d'écolier infiniment longue, sans aucun trou : chaque point de cette règle est un nombre réel. Écrire « $`x \in \mathbb{R}`$ » signifie donc simplement « $`x`$ est un nombre, repérable quelque part sur cette règle ». Une température comme $`28`$ ou $`19{,}3`$ est un réel.
 
@@ -393,7 +393,7 @@ Un $`R^2 \approx 0{,}978`$ : la droite explique près de 98 % de la variabilité
 
 Voici le pont entre piliers, et un résultat central qu'on démontre entièrement.
 
-> **Définition — vraisemblance (likelihood).** Étant donné un modèle probabiliste dépendant de paramètres $`\boldsymbol\theta`$, la **vraisemblance** des données observées est la probabilité (ou densité) que le modèle leur attribue, vue *comme une fonction de $`\boldsymbol\theta`$*. Estimer par **maximum de vraisemblance** (maximum likelihood estimation, MLE), c'est choisir le $`\boldsymbol\theta`$ qui rend les données observées les plus plausibles.
+> **Définition — vraisemblance (likelihood).** Étant donné un modèle probabiliste dépendant de paramètres $`\boldsymbol\theta`$, la **vraisemblance** des données observées est la probabilité (ou densité) que le modèle leur attribue, vue comme une fonction de $`\boldsymbol\theta`$. Estimer par **maximum de vraisemblance** (maximum likelihood estimation, MLE), c'est choisir le $`\boldsymbol\theta`$ qui rend les données observées les plus plausibles.
 
 Supposons le modèle génératif $`y_i = a x_i + b + \varepsilon_i`$ avec $`\varepsilon_i \sim \mathcal N(0, \sigma^2)`$ indépendants. La densité de la loi normale donne, pour une observation $`y_i`$ :
 
@@ -526,7 +526,7 @@ On a vu $`\mathbb{N}`$ (entiers de comptage $`0,1,2,\ldots`$), $`\mathbb{R}`$ (t
 
 Le symbole $`\in`$ (« appartient à ») relie un objet à son ensemble ; sa négation se note $`\notin`$ (« n'appartient pas à »). On a aussi l'inclusion entre ensembles :
 
-> **Le symbole $`\subseteq`$ (inclusion).** $`A \subseteq B`$ se lit « $`A`$ est inclus dans $`B`$ » et signifie *tout élément de $`A`$ est aussi dans $`B`$* : la petite boîte $`A`$ tient entièrement dans la grande boîte $`B`$. Par exemple $`\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{R}`$ : chaque ensemble de nombres est contenu dans le suivant, comme des poupées russes.
+> **Le symbole $`\subseteq`$ (inclusion).** $`A \subseteq B`$ se lit « $`A`$ est inclus dans $`B`$ » et signifie tout élément de $`A`$ est aussi dans $`B`$ : la petite boîte $`A`$ tient entièrement dans la grande boîte $`B`$. Par exemple $`\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{R}`$ : chaque ensemble de nombres est contenu dans le suivant, comme des poupées russes.
 
 #### Scalaires, vecteurs, matrices : la convention typographique
 

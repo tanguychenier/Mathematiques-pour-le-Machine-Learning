@@ -342,7 +342,7 @@ Le gradient s'annule en $`-\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\lambda\
 \hat{\mathbf w}_{\text{ridge}}=(\mathbf X^\top\mathbf X+\lambda\mathbf I_d)^{-1}\mathbf X^\top\mathbf y .
 ```
 
-> **Pourquoi ca repare tout.** La matrice $`\mathbf X^\top\mathbf X+\lambda\mathbf I_d`$ est **toujours inversible** pour $`\lambda>0`$, meme si $`\mathbf X^\top\mathbf X`$ est singuliere : on ajoute $`\lambda`$ a chacune de ses valeurs propres, qui passent toutes strictement au-dessus de zero. La solution existe et est unique *meme quand $`d>n`$*. Le terme $`\lambda\mathbf I_d`$ « remonte la diagonale », d'ou le nom historique de *ridge* (la crete).
+> **Pourquoi ca repare tout.** La matrice $`\mathbf X^\top\mathbf X+\lambda\mathbf I_d`$ est **toujours inversible** pour $`\lambda>0`$, meme si $`\mathbf X^\top\mathbf X`$ est singuliere : on ajoute $`\lambda`$ a chacune de ses valeurs propres, qui passent toutes strictement au-dessus de zero. La solution existe et est unique meme quand $`d>n`$. Le terme $`\lambda\mathbf I_d`$ « remonte la diagonale », d'ou le nom historique de *ridge* (la crete).
 
 > **Lecture par la SVD (effet de retrecissement, en anglais *shrinkage*).** Avec $`\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top`$, OLS donne des coefficients $`\propto 1/\sigma_k`$ sur chaque direction propre $`\mathbf v_k`$, ce qui explose quand $`\sigma_k`$ est minuscule. La ridge remplace le facteur $`1/\sigma_k`$ par $`\sigma_k/(\sigma_k^2+\lambda)`$ : les directions a grande variance ($`\sigma_k`$ grand) sont quasi intactes, mais les directions a faible variance (les plus bruitees) sont **fortement attenuees**. La ridge degonfle selectivement le bruit. C'est aussi le lien avec l'ACP : on amortit les composantes de petite variance.
 
@@ -483,7 +483,7 @@ p(y_\star\mid\mathbf x_\star,\mathbf y)=\int p(y_\star\mid\mathbf x_\star,\mathb
 
 > **Lecture cruciale.** La variance predictive a **deux sources** : (1) le bruit de mesure $`\sigma^2`$, qu'on ne pourra jamais supprimer meme avec des donnees infinies ; (2) l'incertitude epistemique $`\mathbf x_\star^\top\mathbf S_N\mathbf x_\star`$, qui *diminue* a mesure qu'on accumule des donnees. Geometriquement, cette seconde variance **enfle quand $`\mathbf x_\star`$ s'eloigne** des zones ou l'on a observe des donnees : le modele « avoue » qu'il extrapole. C'est precisement ce qui manque a une prediction OLS nue.
 
-> **Le symbole $`\int`$ (integrale) — rappel d'usage.** L'integrale ici *additionne sur toutes les valeurs possibles de $`\mathbf w`$*, chacune ponderee par sa credibilite $`p(\mathbf w\mid\mathbf y)`$. C'est une « moyenne ponderee continue » : au lieu de parier sur un seul $`\mathbf w`$, on consulte *tous* les modeles plausibles et on melange leurs avis. On appelle cela la *marginalisation*.
+> **Le symbole $`\int`$ (integrale) — rappel d'usage.** L'integrale ici additionne sur toutes les valeurs possibles de $`\mathbf w`$, chacune ponderee par sa credibilite $`p(\mathbf w\mid\mathbf y)`$. C'est une « moyenne ponderee continue » : au lieu de parier sur un seul $`\mathbf w`$, on consulte *tous* les modeles plausibles et on melange leurs avis. On appelle cela la *marginalisation*.
 
 #### Mise a jour sequentielle (en ligne)
 

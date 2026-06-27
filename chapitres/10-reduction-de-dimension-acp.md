@@ -402,7 +402,7 @@ print("forme des scores   :", Z.shape)
 
 L'ACP peut se voir comme la reponse a une question d'**algebre matricielle pure**, independante de toute statistique : *quelle matrice de rang au plus $`k`$ approche le mieux $`\tilde{X}`$ ?* La reponse est l'un des theoremes les plus importants de l'algebre lineaire numerique.
 
-> **Le symbole « rang $`k`$ ».** Le *rang* d'une matrice represente **le nombre de directions vraiment independantes qu'elle contient**. Une matrice de rang 1 est « pauvre » : toutes ses lignes sont des multiples d'une seule. Demander une approximation *de rang $`k`$*, c'est demander la meilleure version « comprimee a $`k`$ directions » de la matrice. C'est exactement l'idee de la reduction de dimension, traduite en langage matriciel.
+> **Le symbole « rang $`k`$ ».** Le *rang* d'une matrice represente **le nombre de directions vraiment independantes qu'elle contient**. Une matrice de rang 1 est « pauvre » : toutes ses lignes sont des multiples d'une seule. Demander une approximation de rang $`k`$, c'est demander la meilleure version « comprimee a $`k`$ directions » de la matrice. C'est exactement l'idee de la reduction de dimension, traduite en langage matriciel.
 
 > **Le symbole $`\|\cdot\|_F`$ (norme de Frobenius).** Ce symbole represente **la taille globale d'une matrice, mesuree en mettant tous ses coefficients dans un grand sac et en prenant la racine de la somme de leurs carres**. C'est la norme euclidienne, mais appliquee a une matrice vue comme une longue liste de nombres : $`\|A\|_F = \sqrt{\sum_{i,j} A_{ij}^2}`$. Elle mesure « a quel point deux matrices different » quand on ecrit $`\|A-B\|_F`$.
 

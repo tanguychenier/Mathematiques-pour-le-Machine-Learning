@@ -272,7 +272,7 @@ Changeons de lunettes. Jusqu'ici, on *mesurait une erreur*. Adoptons maintenant 
 
 Imaginez une machine a fabriquer des donnees, dont le comportement depend de boutons $`\boldsymbol{\theta}`$. Pour un reglage donne, elle a une certaine probabilite de cracher exactement le cahier $`\mathcal{D}`$ que vous avez sous les yeux. La **vraisemblance** retourne le point de vue : les donnees sont *fixees* (c'est ce qu'on a vu), et on regarde cette probabilite *comme une fonction des boutons*.
 
-> **Le symbole $`p(\cdot \mid \boldsymbol{\theta})`$ (loi du modele, ou densite parametree).** Ce symbole represente *la regle de hasard de la machine quand ses boutons valent $`\boldsymbol{\theta}`$*. La barre verticale « $`\mid`$ » se lit « sachant » ou « etant donne » : $`p(\mathbf{y} \mid \boldsymbol{\theta})`$ veut dire « la probabilite (ou densite) de voir les reponses $`\mathbf{y}`$, *si* la machine est reglee sur $`\boldsymbol{\theta}`$ ». C'est la fiche technique de la machine : pour chaque reglage, elle dit quelles sorties sont frequentes et lesquelles sont rares.
+> **Le symbole $`p(\cdot \mid \boldsymbol{\theta})`$ (loi du modele, ou densite parametree).** Ce symbole represente la regle de hasard de la machine quand ses boutons valent $`\boldsymbol{\theta}`$. La barre verticale « $`\mid`$ » se lit « sachant » ou « etant donne » : $`p(\mathbf{y} \mid \boldsymbol{\theta})`$ veut dire « la probabilite (ou densite) de voir les reponses $`\mathbf{y}`$, *si* la machine est reglee sur $`\boldsymbol{\theta}`$ ». C'est la fiche technique de la machine : pour chaque reglage, elle dit quelles sorties sont frequentes et lesquelles sont rares.
 
 > **Le symbole $`\mathcal{L}(\boldsymbol{\theta})`$ (la vraisemblance, likelihood).** Ce symbole represente *la plausibilite d'un reglage au vu des donnees observees*. C'est numeriquement la meme expression que $`p(\text{donnees} \mid \boldsymbol{\theta})`$, mais on a echange les roles : on bloque les donnees (elles sont connues, c'est notre cahier) et on fait varier $`\boldsymbol{\theta}`$. Question posee : « quel reglage explique le mieux ce que j'ai vu ? ». Sous l'hypothese i.i.d., la machine fabrique chaque exemple independamment, donc la probabilite du paquet est le **produit** des probabilites :
 > ```math
@@ -486,7 +486,7 @@ Illustrons sur un modele star : le **melange de gaussiennes** (Gaussian mixture 
 
 > **Le symbole $`\pi_k`$ (poids de melange).** Ce symbole represente *la part de chaque groupe dans la population* : $`\pi_k`$ est la probabilite qu'un point pris au hasard appartienne au groupe $`k`$. Ce sont des nombres positifs qui somment a 1 ($`\sum_k \pi_k = 1`$), comme les tranches d'un camembert. Le symbole $`K`$ designe simplement *le nombre de groupes* du melange.
 
-> **Le symbole $`\mathcal{N}(x\mid\mu_k,\Sigma_k)`$ (gaussienne du groupe $`k`$).** Cette notation represente *la cloche de probabilite du groupe $`k`$* : $`\mu_k`$ est son centre (le point typique du groupe) et $`\Sigma_k`$ sa **matrice de covariance** (la forme et l'orientation du nuage — large ou serre, rond ou allonge). C'est l'usage habituel de la loi normale, simplement decline pour chaque groupe.
+> **Le symbole $`\mathcal{N}(x\mid\mu_k,\Sigma_k)`$ (gaussienne du groupe $`k`$).** Cette notation represente la cloche de probabilite du groupe $`k`$ : $`\mu_k`$ est son centre (le point typique du groupe) et $`\Sigma_k`$ sa **matrice de covariance** (la forme et l'orientation du nuage — large ou serre, rond ou allonge). C'est l'usage habituel de la loi normale, simplement decline pour chaque groupe.
 
 ```mermaid
 flowchart TD
@@ -502,7 +502,7 @@ Par conditionnement (Bayes), la probabilite *a posteriori* qu'un point observe a
 \gamma_k(x) = p(z=k\mid x) = \frac{\pi_k\,\mathcal{N}(x\mid\mu_k,\Sigma_k)}{\sum_{j=1}^K \pi_j\,\mathcal{N}(x\mid\mu_j,\Sigma_j)}.
 ```
 
-> **Le symbole $`\gamma_k(x)`$ (responsabilite).** Ce symbole represente *a quel point le groupe $`k`$ « revendique » le point $`x`$* : un nombre entre 0 et 1 qui dit la probabilite que $`x`$ soit ne du groupe $`k`$. Pour un point donne, les responsabilites de tous les groupes somment a 1 (le point appartient forcement a *un* groupe). C'est une appartenance *douce* : au lieu de trancher « ce point est au groupe 2 », on dit « 70 pour cent groupe 2, 30 pour cent groupe 1 ».
+> **Le symbole $`\gamma_k(x)`$ (responsabilite).** Ce symbole represente a quel point le groupe $`k`$ « revendique » le point $`x`$ : un nombre entre 0 et 1 qui dit la probabilite que $`x`$ soit ne du groupe $`k`$. Pour un point donne, les responsabilites de tous les groupes somment a 1 (le point appartient forcement a *un* groupe). C'est une appartenance *douce* : au lieu de trancher « ce point est au groupe 2 », on dit « 70 pour cent groupe 2, 30 pour cent groupe 1 ».
 
 #### L'algorithme EM : apprendre avec des variables cachees
 

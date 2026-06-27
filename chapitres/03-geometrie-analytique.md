@@ -284,7 +284,7 @@ G = V @ V.T
 print(G)
 ```
 
-> **Mise à jour 2026.** Les **méthodes à noyaux** (kernel methods) reposent sur l'idée que $`k(x, y) = \langle \phi(x), \phi(y)\rangle`$ est un produit scalaire dans un espace de caractéristiques de très grande (voire infinie) dimension, *sans jamais calculer $`\phi`$* (l'« astuce du noyau », kernel trick). Cette idée connaît un net regain : les **noyaux tangents neuronaux** (Neural Tangent Kernels, NTK) décrivent la dynamique des réseaux très larges, et les approximations randomisées (random features) rendent les noyaux applicables à des millions de points. Côté matériel, les accélérateurs (GPU/TPU) sont avant tout des machines à produits scalaires massivement parallèles.
+> **Mise à jour 2026.** Les **méthodes à noyaux** (kernel methods) reposent sur l'idée que $`k(x, y) = \langle \phi(x), \phi(y)\rangle`$ est un produit scalaire dans un espace de caractéristiques de très grande (voire infinie) dimension, sans jamais calculer $`\phi`$ (l'« astuce du noyau », kernel trick). Cette idée connaît un net regain : les **noyaux tangents neuronaux** (Neural Tangent Kernels, NTK) décrivent la dynamique des réseaux très larges, et les approximations randomisées (random features) rendent les noyaux applicables à des millions de points. Côté matériel, les accélérateurs (GPU/TPU) sont avant tout des machines à produits scalaires massivement parallèles.
 
 ---
 
