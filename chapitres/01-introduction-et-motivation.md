@@ -11,14 +11,14 @@ L'apprentissage automatique (machine learning) ne fait rien d'autre que de forma
 ```mermaid
 flowchart LR
     subgraph Programmation classique
-        A1[Donnees] --> P1[Programme ecrit a la main]
-        R1[Regles ecrites par l'humain] --> P1
-        P1 --> S1[Reponses]
+        A1["Données"] --> P1["Programme écrit à la main"]
+        R1["Règles écrites par l'humain"] --> P1
+        P1 --> S1["Réponses"]
     end
     subgraph Apprentissage automatique
-        A2[Donnees] --> P2[Algorithme d'apprentissage]
-        S2[Reponses connues] --> P2
-        P2 --> R2[Regles apprises = modele]
+        A2["Données"] --> P2["Algorithme d'apprentissage"]
+        S2["Réponses connues"] --> P2
+        P2 --> R2["Règles apprises = modèle"]
     end
 ```
 
@@ -107,9 +107,9 @@ Ici $`a`$ est la **pente** (de combien de glaces les ventes montent quand la tem
 
 ```mermaid
 flowchart LR
-    X[Entree x = temperature] --> F["Modele f(x) = a*x + b"]
-    F --> Y["Prediction y-chapeau = ventes estimees"]
-    A[Parametres a, b] -.reglent.-> F
+    X["Entrée x = température"] --> F["Modèle f(x) = a*x + b"]
+    F --> Y["Prédiction y-chapeau = ventes estimées"]
+    A["Paramètres a, b"] -.règlent.-> F
 ```
 
 #### Les paramètres : les boutons réglables du modèle
@@ -150,6 +150,8 @@ J(\boldsymbol{\theta}) = \frac{1}{n} \sum_{i=1}^{n} \big( f_{\boldsymbol{\theta}
 
 > **Lecture de $`J(\boldsymbol{\theta})`$.** La lettre $`J`$ est le nom du juge : on lui donne un réglage $`\boldsymbol{\theta}`$ et il renvoie un nombre, d'autant plus **petit** que le modèle est bon. Le « $`\frac{1}{n}`$ » devant transforme la somme en **moyenne** (on partage le total entre les $`n`$ jours, comme on partage une addition de restaurant entre les convives). L'exposant $`2`$ sur la parenthèse veut dire « **au carré** », c'est-à-dire le nombre multiplié par lui-même : un écart de $`3`$ compte pour $`9`$, un écart de $`5`$ pour $`25`$, les grosses erreurs pèsent donc beaucoup plus lourd.
 
+![Diviser par n, c'est faire la moyenne : on répartit le total également entre les n valeurs](../assets/moyenne.svg)
+
 ![Déconstruction de la formule du coût, morceau par morceau : ce que signifie chaque terme de J(θ)](../assets/formule-cout.svg)
 
 ![Schéma des moindres carrés : chaque erreur devient un carré, une aire toujours positive, qu'on soit au-dessus ou en dessous de la droite](../assets/moindres-carres.svg)
@@ -169,9 +171,9 @@ Tout l'édifice de l'apprentissage automatique repose sur quatre disciplines mat
 ```mermaid
 flowchart TB
     ML["Apprentissage automatique"]
-    AL["Algebre lineaire<br/>(representer)"]
-    OP["Optimisation et calcul<br/>(ameliorer)"]
-    PR["Probabilites<br/>(modeliser le hasard)"]
+    AL["Algèbre linéaire<br/>(représenter)"]
+    OP["Optimisation et calcul<br/>(améliorer)"]
+    PR["Probabilités<br/>(modéliser le hasard)"]
     ST["Statistique<br/>(estimer et valider)"]
     AL --> ML
     OP --> ML
@@ -200,7 +202,11 @@ Le modèle linéaire à $`d`$ caractéristiques s'écrit alors d'un seul coup po
 \hat{y}_i = \sum_{j=1}^{d} X_{i,j}\, \theta_j .
 ```
 
+> **Que veut dire « linéaire » ?** Le mot vient de « ligne ». Une relation est **linéaire** quand elle est *proportionnelle et additive* : chaque quantité agit seulement en étant multipliée par un nombre fixe, et ces effets s'**additionnent**, sans rien de plus (jamais de carré, jamais de produit entre deux quantités, jamais de courbe). Avec une seule variable, cela trace une **droite** : si la variable double, son effet double, ni plus ni moins. Le contraire (une courbe, un effet qui s'emballe ou sature) est dit *non linéaire*. Un **modèle linéaire** applique exactement cette idée : la prédiction est une somme où chaque caractéristique est multipliée par un poids, puis le tout est additionné. C'est le **ticket de caisse** au supermarché : pour chaque article, quantité × prix unitaire, puis on additionne toutes les lignes pour obtenir le total. Ici les « quantités » sont les caractéristiques $`X_{i,j}`$, les « prix unitaires » sont les poids $`\theta_j`$, et le total est la prédiction $`\hat{y}_i`$.
+
 Les dimensions concordent : multiplier une matrice $`n \times d`$ par un vecteur de taille $`d`$ produit bien un vecteur de taille $`n`$, une prédiction par exemple.
+
+![Produit matrice-vecteur Xθ = ŷ : chaque ligne de X, multipliée terme à terme par θ puis additionnée, donne une prédiction ; les dimensions n×d fois d donnent n](../assets/produit-matrice-vecteur.svg)
 
 > **Le chapeau, comme dans $`\hat{y}`$.** Le petit accent en forme de toit, $`\hat{y}`$ (lu « y chapeau »), signifie « **valeur estimée / prédite** », par opposition à $`y`$ qui est la **vraie** valeur observée. Pensez au chapeau comme à une étiquette « ceci est une supposition de la machine, pas la réalité mesurée ». L'écart entre $`y`$ (réalité) et $`\hat{y}`$ (prédiction) est précisément ce que la fonction de coût cherche à réduire.
 
@@ -219,6 +225,8 @@ L'algorithme-roi est la **descente de gradient** (gradient descent) : partir d'u
 ```math
 \boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \eta \, \nabla J(\boldsymbol{\theta}_t).
 ```
+
+![La descente de gradient : partir d'un point, suivre la pente vers le bas par petits pas, jusqu'au fond du bol (le minimum)](../assets/descente-gradient.svg)
 
 > **Le symbole $`\eta`$ (êta, le taux d'apprentissage).** Cette lettre grecque (qui ressemble à un « n » avec une jambe qui descend) est le **taux d'apprentissage** (learning rate) : la **taille du pas** qu'on fait à chaque étape. Trop petit, on descend la colline à pas de fourmi (très lent) ; trop grand, on enjambe le creux et on rebondit d'un versant à l'autre sans jamais atteindre le fond. Le $`t`$ en indice, lui, est le **numéro de l'étape**: $`\boldsymbol{\theta}_0`$ est le réglage de départ, $`\boldsymbol{\theta}_1`$ après un pas, et ainsi de suite.
 
@@ -248,15 +256,17 @@ Ce point de vue probabiliste est fécond : il transforme « ajuster une droite �
 
 #### Pilier 4 : La statistique : estimer et valider
 
-La statistique se demande : *à partir d'un échantillon fini, que peut-on conclure, et avec quelle confiance ?* Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance** (variance, l'instabilité d'un échantillon à l'autre).
+La statistique se demande : *à partir d'un échantillon fini, que peut-on conclure, et avec quelle confiance ?* Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance de l'estimateur** (variance, l'instabilité d'un échantillon à l'autre).
+
+> **Attention, ce mot « variance » ne désigne pas la même chose qu'avant.** Plus haut, la variance $`\sigma^2`$ mesurait l'étalement du **bruit** des données (à quel point les ventes s'éparpillent autour de la vraie droite). Ici, la **variance de l'estimateur** mesure l'étalement de la **réponse de la recette d'estimation** : si l'on changeait d'échantillon, par exemple en retirant ou en remplaçant quelques jours du carnet, de combien sauteraient les valeurs trouvées $`\hat{a}`$ et $`\hat{b}`$ ? C'est la **même idée d'étalement** que $`\sigma^2`$, mais appliquée à la *sortie de la recette*, pas au bruit des données. Gardez bien les deux séparées, surtout dans le compromis biais-variance qui suit.
 
 C'est ici que vit la tension fondamentale de tout l'apprentissage, le **compromis biais-variance** (bias-variance tradeoff) :
 
 ```mermaid
 flowchart LR
-    S[Modele trop simple] --> SB[Biais eleve<br/>sous-apprentissage]
-    C[Modele trop complexe] --> CV[Variance elevee<br/>sur-apprentissage]
-    M[Modele bien regle] --> MM[Bon equilibre<br/>generalisation]
+    S["Modèle trop simple"] --> SB["Biais élevé<br/>sous-apprentissage"]
+    C["Modèle trop complexe"] --> CV["Variance élevée<br/>sur-apprentissage"]
+    M["Modèle bien réglé"] --> MM["Bon équilibre<br/>généralisation"]
 ```
 
 > **Sous-apprentissage et sur-apprentissage.**
@@ -411,7 +421,11 @@ Voici le pont entre piliers, et un résultat central qu'on démontre entièremen
 
 > **Définition, vraisemblance (likelihood).** Étant donné un modèle probabiliste dépendant de paramètres $`\boldsymbol\theta`$, la **vraisemblance** des données observées est la probabilité (ou densité) que le modèle leur attribue, vue comme une fonction de $`\boldsymbol\theta`$. Estimer par **maximum de vraisemblance** (maximum likelihood estimation, MLE), c'est choisir le $`\boldsymbol\theta`$ qui rend les données observées les plus plausibles.
 
-Supposons le modèle génératif $`y_i = a x_i + b + \varepsilon_i`$ avec $`\varepsilon_i \sim \mathcal N(0, \sigma^2)`$ indépendants. La densité de la loi normale donne, pour une observation $`y_i`$:
+Supposons le modèle génératif $`y_i = a x_i + b + \varepsilon_i`$ avec $`\varepsilon_i \sim \mathcal N(0, \sigma^2)`$ indépendants. Un **modèle génératif**, c'est simplement une recette qui raconte *comment les données sont fabriquées* : on prend la vraie droite, et on lui ajoute chaque jour un petit grain de hasard $`\varepsilon_i`$ (le bruit). C'est comme une machine à biscuits qui suit toujours la même forme, mais saupoudre à chaque fournée une pincée de sel placée un peu au hasard.
+
+> **« Densité », pour une grandeur qui varie en continu.** Pour une quantité continue, comme un nombre de ventes mesuré aussi finement qu'on veut, la probabilité de tomber sur une valeur *exactement* égale est nulle (il y a une infinité de valeurs possibles, alors tomber pile sur l'une d'elles ne pèse rien). On ne parle donc pas de « probabilité d'une valeur », mais de **densité** : c'est la **hauteur de la courbe en cloche au-dessus de la valeur** $`y_i`$. Plus la cloche est haute à cet endroit, plus cette valeur est plausible ; plus elle est basse, plus la valeur est surprenante. La densité ne dit pas « quelle chance exacte », elle dit « à quel point c'est crédible ».
+
+La densité de la loi normale donne, pour une observation $`y_i`$:
 
 ```math
 p(y_i \mid x_i; a, b) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left( -\frac{(y_i - a x_i - b)^2}{2\sigma^2} \right).
@@ -489,9 +503,11 @@ theta_lstsq, *_ = np.linalg.lstsq(X, y, rcond=None)
 print("via lstsq (a, b) =", np.round(theta_lstsq, 4))
 ```
 
-> **Mise à jour 2026.** En pratique, **n'inversez jamais $`X^\top X`$ à la main**: l'inversion explicite est numériquement instable (elle élève au carré le mauvais conditionnement de $`X`$). Les bibliothèques modernes résolvent les moindres carrés par décomposition QR ou SVD via `numpy.linalg.lstsq` (ou `scipy.linalg.lstsq`), plus stables. Pour de très grands jeux, on préfère la descente de gradient stochastique (une variante de la descente de gradient qui, à chaque pas, ne regarde qu'une petite poignée d'exemples tirés au hasard plutôt que la totalité des données, ce qui la rend bien plus rapide quand les exemples se comptent en millions). L'opérateur `@` de Python (PEP 465, depuis 2015) note le produit matriciel et rend ce code lisible.
+> **Mise à jour 2026.** En pratique, **n'inversez jamais $`X^\top X`$ à la main**: l'inversion explicite est numériquement instable (elle élève au carré le mauvais conditionnement de $`X`$). L'intuition : former $`X^\top X`$ revient à « multiplier la matrice par elle-même », ce qui **double l'écart** entre ses directions les plus fortes et les plus faibles ; or c'est précisément cet écart que mesure le conditionnement (le bol déjà étiré devient deux fois plus étiré), donc on amplifie l'instabilité numérique au lieu de la subir une seule fois. C'est pour cela qu'on préfère travailler **directement sur $`X`$**. Les bibliothèques modernes résolvent les moindres carrés par décomposition QR ou SVD via `numpy.linalg.lstsq` (ou `scipy.linalg.lstsq`), plus stables. Pour de très grands jeux, on préfère la descente de gradient stochastique (une variante de la descente de gradient qui, à chaque pas, ne regarde qu'une petite poignée d'exemples tirés au hasard plutôt que la totalité des données, ce qui la rend bien plus rapide quand les exemples se comptent en millions). L'opérateur `@` de Python (PEP 465, depuis 2015) note le produit matriciel et rend ce code lisible.
 
-Et la même chose en descente de gradient, pour faire le lien avec le pilier optimisation et préfigurer le deep learning. Un piège pratique apparaît ici : les températures (de $`15`$ à $`24`$) et les ventes (de $`40`$ à $`70`$) vivent à des échelles différentes, ce qui rend le coût très « allongé » dans une direction (son conditionnement vaut ici environ $`1{,}6\times 10^4`$). Une descente brute sur les données telles quelles convergerait extrêmement lentement. Le remède standard en apprentissage est de **standardiser** la caractéristique (la centrer puis la diviser par son écart-type) ; la descente converge alors en quelques milliers de pas, et l'on retraduit ensuite les coefficients vers l'échelle d'origine.
+Et la même chose en descente de gradient, pour faire le lien avec le pilier optimisation et préfigurer le deep learning. Un piège pratique apparaît ici : les températures sont grandes et toutes éloignées de zéro (de $`15`$ à $`24`$). Du coup, quand on essaie de régler en même temps la pente et l'ordonnée à l'origine, ces deux boutons sont fortement liés l'un à l'autre, et le coût devient très « allongé » dans une direction (son conditionnement vaut ici environ $`1{,}6\times 10^4`$). Une descente brute sur les données telles quelles convergerait extrêmement lentement. Le remède standard en apprentissage est de **standardiser** la caractéristique (la centrer puis la diviser par son écart-type) ; la descente converge alors en quelques milliers de pas, et l'on retraduit ensuite les coefficients vers l'échelle d'origine.
+
+> **Le conditionnement, c'est quoi ?** Imaginez la fonction de coût comme un grand bol dans lequel on cherche le point le plus bas. Si ce bol est bien rond, on glisse droit vers le fond. Mais s'il est écrasé, étiré comme une **gouttière** très longue et très étroite, descendre devient pénible : on dévale vite les parois raides et on avance à peine le long de la vallée. Le **conditionnement** est justement le nombre qui mesure cet écrasement : c'est le rapport entre la direction la plus « pentue » du bol et sa direction la plus « plate ». Quand il vaut $`1`$, le bol est parfaitement rond ; plus il est grand, plus le bol est allongé en vallée étroite, et plus la descente de gradient zigzague d'une paroi à l'autre en n'avançant que très lentement vers le fond. Ici, un conditionnement d'environ $`16\,000`$ veut donc dire « bol très étiré, descente très laborieuse », d'où l'intérêt de standardiser.
 
 ```python
 mu, sd = x.mean(), x.std()
@@ -521,11 +537,11 @@ Les trois méthodes, formule fermée scalaire, formule matricielle, descente de 
 
 ```mermaid
 flowchart LR
-    D[Donnees du carnet] --> AL[Algebre lineaire :<br/>X, X-theta]
-    AL --> OP[Optimisation :<br/>min J via gradient ou formule fermee]
-    OP --> PR[Probabilites :<br/>bruit gaussien, vraisemblance]
-    PR --> ST[Statistique :<br/>R-deux, residus, generalisation]
-    ST --> PRED[Prediction fiable<br/>a 28 degres]
+    D["Données du carnet"] --> AL["Algèbre linéaire :<br/>X, X-theta"]
+    AL --> OP["Optimisation :<br/>min J via gradient ou formule fermée"]
+    OP --> PR["Probabilités :<br/>bruit gaussien, vraisemblance"]
+    PR --> ST["Statistique :<br/>R-deux, résidus, généralisation"]
+    ST --> PRED["Prédiction fiable<br/>à 28 degrés"]
 ```
 
 ---
