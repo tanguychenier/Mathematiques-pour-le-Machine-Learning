@@ -318,6 +318,8 @@ flowchart LR
 
 L'algorithme **espérance-maximisation** (expectation-maximization, EM) résout le problème du serpent qui se mord la queue par une alternance simple et élégante. C'est l'un des algorithmes les plus importants de tout l'apprentissage statistique.
 
+![Algorithme EM : deux cloches gaussiennes mal placées au départ se recentrent tour après tour sur leurs groupes, jusqu'à les épouser](../assets/algorithme-em.svg)
+
 #### Le principe en deux temps
 
 > **Intuition (le jeu du professeur et des groupes).** Vous êtes professeur face à une classe mélangée et vous voulez (a) deviner à quel groupe appartient chaque élève et (b) décrire chaque groupe (sa taille moyenne, sa dispersion). Problème : pour assigner les élèves il faut connaître les groupes, et pour décrire les groupes il faut savoir qui en fait partie. Solution pragmatique :
