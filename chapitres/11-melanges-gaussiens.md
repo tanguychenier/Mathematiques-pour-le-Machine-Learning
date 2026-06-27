@@ -132,7 +132,9 @@ En pratique on contraint souvent la forme des $`\boldsymbol{\Sigma}_k`$ pour ré
 
 #### Générer un point : le mode d'emploi
 
-Un mélange n'est pas qu'une formule : c'est une **recette pour fabriquer des données**. Pour tirer un point au hasard selon $`p`$ (*tirer un point au hasard selon* $`p`$, ou « selon une loi », veut dire fabriquer une valeur en respectant les chances dictées par $`p`$ : les zones où $`p`$ est haute sortent souvent, celles où $`p`$ est basse rarement, comme une tombola truquée qui favorise certains numéros) :
+Un mélange n'est pas qu'une formule : c'est une **recette pour fabriquer des données**. Pour tirer un point au hasard selon $`p`$ :
+
+> **Que veut dire « tirer un point au hasard selon $`p`$ » ?** Cela signifie fabriquer une valeur en respectant les chances dictées par $`p`$ : les zones où $`p`$ est haute sortent souvent, celles où $`p`$ est basse rarement, comme une tombola truquée qui favorise certains numéros.
 
 ```mermaid
 flowchart TD
