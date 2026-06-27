@@ -142,7 +142,7 @@ Un mélange n'est pas qu'une formule : c'est une **recette pour fabriquer des do
 
 ```mermaid
 flowchart TD
-    A["Choisir une cloche k au hasard<br/>avec probabilités pi_1, ..., pi_K"] --> B["Tirer x dans la gaussienne<br/>N(mu_k, Sigma_k) de cette cloche"]
+    A["Choisir une cloche k au hasard<br/>avec probabilités pi_1, ..., pi_K"] --> B["Tirer x dans la gaussienne<br/>N mu_k, Sigma_k de cette cloche"]
     B --> C["Renvoyer x"]
 ```
 
@@ -574,7 +574,7 @@ Cette décomposition donne la **vraie** définition d'EM : une **maximisation pa
 ```mermaid
 flowchart TD
     subgraph EE["Étape E : on bouge q (theta figé)"]
-      E1["Maximiser F en q<br/>=> q = p(Z|X, theta)<br/>=> KL = 0, le plancher touche le plafond"]
+      E1["Maximiser F en q<br/>=> q = p Z|X, theta<br/>=> KL = 0, le plancher touche le plafond"]
     end
     subgraph MM["Étape M : on bouge theta (q figé)"]
       M1["Maximiser F en theta<br/>=> nouveaux pi, mu, Sigma<br/>=> le plancher monte, donc le plafond aussi"]
@@ -616,11 +616,11 @@ En enchaînant : $`\ell(\boldsymbol{\theta}^{(t+1)}) \overset{(3)}{\ge} \mathcal
 
 ```mermaid
 flowchart TD
-    A["Données multimodales<br/>(plusieurs bosses)"] --> B["Modèle : mélange<br/>p = somme pi_k N(mu_k, Sigma_k)"]
+    A["Données multimodales<br/>(plusieurs bosses)"] --> B["Modèle : mélange<br/>p = somme pi_k N mu_k, Sigma_k"]
     B --> C["Variable latente z :<br/>de quelle cloche vient le point ?"]
     C --> D["Vraisemblance = log d'une somme<br/>=> pas de solution close"]
     D --> E["EM : alterner E et M<br/>= monter l'ELBO par coordonnées"]
-    E --> F["E : responsabilités r_nk<br/>= posterior p(z|x)"]
+    E --> F["E : responsabilités r_nk<br/>= posterior p z|x"]
     E --> G["M : pi_k=Nk/N, mu_k, Sigma_k<br/>moyennes pondérées"]
     F --> H["Garantie : ell croît, converge<br/>(optimum LOCAL)"]
     G --> H

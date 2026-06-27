@@ -223,10 +223,10 @@ graph TD
     A["Loi P_X d'une variable X"] --> B{"Quel type de valeurs ?"}
     B -->|"valeurs isolees, comptables"| C["DISCRET"]
     B -->|"continuum, intervalle"| D["CONTINU"]
-    C --> E["PMF p_X(x) = P(X=x)<br/>somme = 1<br/>P en paquets (jetons)"]
-    D --> F["PDF p_X(x) = densite<br/>integrale = 1<br/>P en aires sous la courbe"]
-    E --> G["F_X(x) = P(X<=x)<br/>en escalier"]
-    F --> H["F_X(x) = integrale de -inf a x<br/>continue, F'_X = p_X"]
+    C --> E["PMF p_X x = P X=x<br/>somme = 1<br/>P en paquets (jetons)"]
+    D --> F["PDF p_X x = densite<br/>integrale = 1<br/>P en aires sous la courbe"]
+    E --> G["F_X x = P X<=x<br/>en escalier"]
+    F --> H["F_X x = integrale de -inf a x<br/>continue, F'_X = p_X"]
     G --> I["Fonction de repartition F_X<br/>(existe TOUJOURS)"]
     H --> I
 ```

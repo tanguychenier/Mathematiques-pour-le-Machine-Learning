@@ -1125,10 +1125,10 @@ L'ensemble des rotations de $`\mathbb{R}^3`$ forme le groupe $`SO(3)`$. Contrair
 
 ```mermaid
 graph TD
-    O["Matrices orthogonales O(n)<br/>det = ±1"] --> S["Rotations SO(n)<br/>det = +1"]
+    O["Matrices orthogonales O n<br/>det = ±1"] --> S["Rotations SO n<br/>det = +1"]
     O --> R["Réflexions<br/>det = -1"]
-    S --> S2["SO(2) : plan<br/>commutatif, 1 angle"]
-    S --> S3["SO(3) : espace<br/>NON commutatif, 3 degrés de liberté"]
+    S --> S2["SO 2 : plan<br/>commutatif, 1 angle"]
+    S --> S3["SO 3 : espace<br/>NON commutatif, 3 degrés de liberté"]
     style S fill:#e0ffe0
     style R fill:#ffe0e0
 ```

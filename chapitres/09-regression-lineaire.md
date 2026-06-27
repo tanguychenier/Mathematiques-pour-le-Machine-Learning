@@ -125,7 +125,7 @@ flowchart LR
     A["Données brutes<br/>(x_i, y_i)"] --> B["Matrice de design X<br/>+ vecteur cible y"]
     B --> C["Modèle : y = X w + bruit"]
     C --> D["Estimation de w<br/>(moindres carrés / MAP / bayes)"]
-    D --> E["Prédiction sur du neuf<br/>y_hat = x* . w"]
+    D --> E["Prédiction sur du neuf<br/>y_hat = x· . w"]
 ```
 
 > **Exemple chiffré minimal.** Trois maisons, une seule caractéristique (surface en dizaines de m²) plus le biais. Données : $`(x, y) = (5, 12), (8, 18), (10, 21)`$ (prix en dizaines de milliers d'euros). Avec biais absorbé, $`\mathbf{x}_1 = (1,5)`$, $`\mathbf{x}_2 = (1,8)`$, $`\mathbf{x}_3 = (1,10)`$. Si on devine $`\mathbf{w} = (b, a) = (2,\ 1{,}9)`$, alors $`\hat y_1 = 2 + 1{,}9 \times 5 = 11{,}5`$, $`\hat y_2 = 2 + 1{,}9 \times 8 = 17{,}2`$, $`\hat y_3 = 2 + 1{,}9 \times 10 = 21`$. Les résidus $`y_i - \hat y_i`$ sont $`0{,}5,\ 0{,}8,\ 0`$. La section suivante explique comment trouver *le meilleur* $`\mathbf{w}`$ automatiquement plutôt qu'à la main.
@@ -599,9 +599,9 @@ Plaçons-nous dans $`\mathbb R^n`$ (un axe par *observation*, pas par caractéri
 ```mermaid
 flowchart TB
     Y["y (cible, dans R^n)"]
-    Yhat["y_hat = projection sur Col(X)"]
+    Yhat["y_hat = projection sur Col X"]
     R["residu y - y_hat<br/>(perpendiculaire au plan)"]
-    Plane["Col(X) : plan des predictions atteignables"]
+    Plane["Col X : plan des predictions atteignables"]
     Y -- "rayon vertical (residu)" --> Yhat
     Yhat --- Plane
     Y -. "distance minimisee" .- Plane
@@ -754,9 +754,9 @@ def kernel_ridge_predict(Xstar, X, alpha, s=1.0):
 
 ```mermaid
 flowchart LR
-    A["Régression linéaire<br/>w sur x"] --> B["+ features phi(x)<br/>(polynômes, RBF...)"]
-    B --> C["Passage au dual<br/>solution = somme alpha_i phi(x_i)"]
-    C --> D["Astuce du noyau<br/>k(x,x') au lieu de phi"]
+    A["Régression linéaire<br/>w sur x"] --> B["+ features phi x<br/>(polynômes, RBF...)"]
+    B --> C["Passage au dual<br/>solution = somme alpha_i phi x_i"]
+    C --> D["Astuce du noyau<br/>k x,x' au lieu de phi"]
     D --> E["Kernel ridge regression"]
     D --> F["Processus gaussien<br/>(version bayésienne)"]
 ```

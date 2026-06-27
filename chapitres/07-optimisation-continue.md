@@ -359,7 +359,7 @@ flowchart TD
     A["Initialiser theta_0"] --> B["Calculer le gradient du lot"]
     B --> C{"Norme du gradient < seuil ?"}
     C -- "oui" --> F["Renvoyer theta : solution approchee"]
-    C -- "non" --> D["Pas : theta = theta - eta * gradient"]
+    C -- "non" --> D["Pas : theta = theta - eta · gradient"]
     D --> E["Ajuster eta (planning / adaptatif)"]
     E --> B
 ```

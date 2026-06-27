@@ -67,7 +67,7 @@ flowchart LR
     B["Classe H<br/>(formes de règles)"] --> D
     C["Critère<br/>(qu'est-ce qu'une bonne règle ?)"] --> D
     D --> E["Hypothèse h-chapeau<br/>(la règle retenue)"]
-    E --> F["Prédiction sur du nouveau<br/>y-chapeau = h-chapeau(x)"]
+    E --> F["Prédiction sur du nouveau<br/>y-chapeau = h-chapeau x"]
 ```
 
 | Ingrédient | Question à laquelle il répond | Exemple « droite » |
@@ -570,7 +570,7 @@ Illustrons sur un modèle star : le **mélange de gaussiennes** (Gaussian mixtur
 
 ```mermaid
 flowchart TD
-    Z["z : groupe choisi<br/>(latent, P(z=k)=pi_k)"] --> X["x : point observé<br/>x | z=k  ~  N(mu_k, Sigma_k)"]
+    Z["z : groupe choisi<br/>(latent, P z=k=pi_k)"] --> X["x : point observé<br/>x | z=k  ~  N mu_k, Sigma_k"]
 ```
 
 La loi jointe d'un point et de son groupe : $`p(x, z=k) = \pi_k\, \mathcal{N}(x\mid\mu_k, \Sigma_k)`$. Par marginalisation, la loi observée d'un point est un *mélange*:

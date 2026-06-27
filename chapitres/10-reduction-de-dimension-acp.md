@@ -749,9 +749,9 @@ L'histoire générative de la PPCA tient en deux temps :
 
 ```mermaid
 flowchart LR
-    Z["cause cachée z<br/>N(0, I_k), petite dim k"] -->|"x W"| WZ["W z<br/>(dans R^d)"]
+    Z["cause cachée z<br/>N 0, I_k, petite dim k"] -->|"x W"| WZ["W z<br/>(dans R^d)"]
     WZ -->|"+ mu"| M["W z + mu"]
-    M -->|"+ bruit N(0, sigma^2 I)"| X["observation x<br/>(dans R^d)"]
+    M -->|"+ bruit N 0, sigma^2 I"| X["observation x<br/>(dans R^d)"]
 ```
 
 #### La loi marginale des observations
