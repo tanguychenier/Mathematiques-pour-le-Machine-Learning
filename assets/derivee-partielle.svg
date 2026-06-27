@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="pa" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#dc2626"/></marker>
+  </defs>
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="30" text-anchor="middle" font-size="18.5" font-weight="700" fill="#1b2a4a">La dérivée partielle ∂S/∂a : ne bouger qu'un seul réglage</text>
+  <text x="360" y="50" text-anchor="middle" font-size="12" fill="#64748b">À gauche l'intuition de tous les jours (deux robinets) ; à droite la version mathématique (la pente d'une coupe).</text>
+
+  <!-- ================= PANNEAU GAUCHE : robinets ================= -->
+  <rect x="24" y="68" width="336" height="248" rx="9" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="192" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2a4a">La vie de tous les jours</text>
+
+  <!-- robinet a (on le tourne) -->
+  <circle cx="110" cy="150" r="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2.5"/>
+  <g>
+    <line x1="110" y1="150" x2="110" y2="126" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+    <line x1="110" y1="150" x2="110" y2="174" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+    <animateTransform attributeName="transform" type="rotate" values="0 110 150;-60 110 150;-60 110 150;0 110 150" keyTimes="0;0.35;0.78;1" dur="5.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+  </g>
+  <text x="110" y="207" text-anchor="middle" font-size="12" fill="#b91c1c" font-weight="700">a (eau chaude)</text>
+  <text x="110" y="222" text-anchor="middle" font-size="10.5" fill="#dc2626">on le tourne</text>
+
+  <!-- robinet b (fige) -->
+  <circle cx="110" cy="262" r="26" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+  <line x1="110" y1="262" x2="110" y2="240" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/>
+  <line x1="110" y1="262" x2="110" y2="284" stroke="#2563eb" stroke-width="5" stroke-linecap="round"/>
+  <text x="152" y="259" font-size="12" fill="#1d4ed8" font-weight="700">b (eau froide)</text>
+  <text x="152" y="274" font-size="10.5" fill="#2563eb">reste figé</text>
+
+  <!-- thermometre -->
+  <rect x="293" y="120" width="14" height="142" rx="7" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <circle cx="300" cy="272" r="13" fill="#dc2626"/>
+  <rect x="296" width="8" rx="4" fill="#dc2626" y="232" height="30">
+    <animate attributeName="y" values="232;134;134;232" keyTimes="0;0.35;0.78;1" dur="5.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+    <animate attributeName="height" values="30;128;128;30" keyTimes="0;0.35;0.78;1" dur="5.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+  </rect>
+  <text x="300" y="114" text-anchor="middle" font-size="10.5" fill="#dc2626" font-weight="700">température</text>
+  <text x="192" y="305" text-anchor="middle" font-size="11" fill="#1b2a4a">On tourne <tspan font-weight="700">seulement a</tspan> : la température change. C'est ∂(temp.)/∂a.</text>
+
+  <!-- ================= PANNEAU DROIT : pente de la coupe ================= -->
+  <rect x="372" y="68" width="324" height="248" rx="9" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="534" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#1b2a4a">La version mathématique</text>
+  <rect x="600" y="100" width="74" height="20" rx="10" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="637" y="114" text-anchor="middle" font-size="11" fill="#1d4ed8" font-weight="700">b figé</text>
+
+  <line x1="408" y1="278" x2="664" y2="278" stroke="#475569" stroke-width="2"/>
+  <text x="660" y="296" text-anchor="end" font-size="12" fill="#475569">a</text>
+  <line x1="412" y1="278" x2="412" y2="108" stroke="#475569" stroke-width="2"/>
+  <text x="420" y="116" font-size="12" fill="#475569">S</text>
+  <polyline points="412,224.7 418,227.1 424,229.4 430,231.6 436,233.7 442,235.6 448,237.4 454,239.1 460,240.7 466,242.1 472,243.5 478,244.7 484,245.8 490,246.7 496,247.5 502,248.3 508,248.9 514,249.3 520,249.7 526,249.9 532,250.0 538,250.0 544,249.8 550,249.6 556,249.2 562,248.7 568,248.0 574,247.3 580,246.4 586,245.4 592,244.3 598,243.0 604,241.7 610,240.2 616,238.6 622,236.8 628,235.0 634,233.0 640,230.9 646,228.7 652,226.3" fill="none" stroke="#1b2a4a" stroke-width="3"/>
+  <line x1="392" y1="226.1" x2="548" y2="260.0" stroke="#dc2626" stroke-width="2.5" marker-end="url(#pa)"/>
+  <circle cx="470" cy="243.0" r="5.5" fill="#dc2626"/>
+  <text x="534" y="305" text-anchor="middle" font-size="11" fill="#1b2a4a"><tspan font-weight="700" fill="#b91c1c">∂S/∂a</tspan> = la pente de cette coupe (S quand seul a varie).</text>
+
+  <text x="360" y="338" text-anchor="middle" font-size="12.5" fill="#1b2a4a">Une dérivée partielle, c'est une pente « toutes choses égales par ailleurs » : on fait varier un seul réglage à la fois.</text>
+  <text x="360" y="362" text-anchor="middle" font-size="11" fill="#94a3b8">Au fond du bol, toutes les pentes partielles sont nulles en même temps : c'est là qu'est le minimum.</text>
+</svg>

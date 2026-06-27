@@ -320,17 +320,27 @@ L'œil devine une tendance croissante presque rectiligne. Cherchons la **meilleu
 
 #### Étape 1 : Poser le problème (pilier optimisation)
 
-On cherche $`(a, b)`$ minimisant l'erreur quadratique moyenne. Pour la régression linéaire simple, il existe une **solution exacte en forme close** (closed form) : on n'a même pas besoin de descente de gradient. (Une *solution en forme close* est une **formule toute faite** qui donne la réponse exacte d'un seul calcul direct, comme une recette qui livre le résultat sans avoir à tâtonner pas à pas.) Annulons les dérivées partielles du coût.
+On cherche le couple $`(a, b)`$ qui rend l'erreur quadratique moyenne la plus petite possible. Bonne nouvelle : pour la régression linéaire simple, on n'a même pas besoin de la descente de gradient, car il existe une **solution en forme close**.
 
-Le coût (on travaille avec la somme, car le facteur $`\frac1n`$ est une constante positive qui ne change pas le minimiseur, c'est-à-dire le **réglage qui rend le coût le plus petit** : multiplier le coût par un même nombre positif n'en déplace pas le point le plus bas) :
+> **Que veut dire « solution en forme close » (closed form) ?** C'est une **formule toute faite** qui donne la réponse exacte en un seul calcul direct, comme une recette qui livre le plat du premier coup sans avoir à goûter et rectifier pas à pas. C'est le contraire de la descente de gradient, qui s'approche du résultat petit pas après petit pas.
+
+Comment trouver ce minimum ? On utilise l'idée clé du pilier optimisation : **au point le plus bas d'une vallée, le sol est plat**. On cherche donc le réglage où la pente du coût est nulle. Avant de calculer, un petit allègement : on minimise la simple **somme** des carrés, pas leur moyenne.
+
+> **Pourquoi a-t-on le droit de remplacer la moyenne par la somme ?** Faire la moyenne, c'est prendre la somme et la partager en $`n`$ parts égales, donc la multiplier par $`\frac{1}{n}`$. Ce facteur $`\frac{1}{n}`$ est un **nombre fixe et positif** : $`n`$ est le nombre de jours du carnet, il ne dépend pas des réglages $`a`$ et $`b`$ que l'on cherche. Or multiplier toute une courbe par un même nombre positif la rend plus haute, mais ne **déplace pas** son point le plus bas (imaginez la même vallée redessinée deux fois plus haute : le fond reste exactement au même endroit). Le réglage qui rend la somme la plus petite est donc aussi celui qui rend la moyenne la plus petite. Ce réglage gagnant porte un nom : le **minimiseur**, c'est-à-dire le couple $`(a, b)`$ qui rend le coût le plus petit possible.
+
+La somme à minimiser est donc :
 
 ```math
 S(a, b) = \sum_{i=1}^{n} \big( a\, x_i + b - y_i \big)^2 .
 ```
 
-> **Le symbole $`\partial`$ (dérivée partielle).** Ce « d » arrondi, $`\partial`$, signifie « **dérivée partielle** » : on mesure la pente du coût en ne bougeant **qu'un seul** bouton à la fois, les autres restant figés. Imaginez une cuisine avec deux robinets, eau chaude et eau froide : $`\frac{\partial}{\partial a}`$ répond à « si je tourne *seulement* le robinet $`a`$, comment change la température de l'eau ? », sans toucher au robinet $`b`$. Au minimum d'un bol, *toutes* ces pentes sont nulles en même temps.
+Il y a deux réglages à ajuster, $`a`$ et $`b`$. On va donc mesurer la pente de $`S`$ dans **deux directions** : une fois en bougeant seulement $`a`$, une fois en bougeant seulement $`b`$. Ces deux pentes s'appellent les **dérivées partielles**, et on les écrit avec un « d » arrondi, le symbole $`\partial`$.
 
-On dérive $`S`$ par rapport à $`a`$ puis à $`b`$ et on annule (règle de la chaîne sur le carré) :
+> **Le symbole $`\partial`$ (la dérivée partielle).** L'écriture $`\frac{\partial S}{\partial a}`$ se lit « dérivée partielle de $`S`$ par rapport à $`a`$ ». Elle mesure la pente du coût quand on bouge **seulement** le bouton $`a`$, en gardant $`b`$ figé (et l'inverse pour $`\frac{\partial S}{\partial b}`$). Imaginez une douche à deux robinets, eau chaude ($`a`$) et eau froide ($`b`$) : $`\frac{\partial S}{\partial a}`$ répond à « si je tourne *seulement* le robinet $`a`$, de combien change la température ? », sans toucher à $`b`$. Ce symbole $`\partial`$ apparaît pour la première fois dans la formule juste en dessous.
+
+![Dérivée partielle expliquée en deux temps : à gauche deux robinets (on tourne seulement a, b reste figé) et un thermomètre qui réagit, à droite la pente de la coupe du coût S quand seul a varie, b figé](../assets/derivee-partielle.svg)
+
+Au fond d'un bol, ces deux pentes sont nulles **en même temps**. On dérive donc $`S`$ par rapport à $`a`$, puis par rapport à $`b`$, et on annule les deux (en appliquant la règle de la chaîne sur le carré) :
 
 ```math
 \frac{\partial S}{\partial a} = \sum_{i=1}^{n} 2\,(a x_i + b - y_i)\,x_i = 0,
