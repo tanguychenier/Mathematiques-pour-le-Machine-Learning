@@ -420,7 +420,7 @@ Le cosinus traduit fidèlement l'intuition :
 > \langle x, y\rangle = 0.
 > ```
 
-> **Le symbole $`\perp`$ (perpendiculaire / « taquet »).** Ce petit symbole en forme de « T » renversé représente l'**orthogonalité**, c'est-à-dire l'angle droit. $`x \perp y`$ se lit « $`x`$ est orthogonal à $`y`$ ». Pensez à l'angle parfait entre un mur et le sol, ou entre les deux aiguilles d'une montre à $`15`$h pile. La beauté de la définition abstraite : on n'a même pas besoin de « voir » l'angle, il suffit que le produit scalaire soit nul.
+> **Le symbole $`\perp`$ (perpendiculaire / « taquet »).** Ce petit symbole en forme de « T » renversé représente l'**orthogonalité**, c'est-à-dire l'angle droit. $`x \perp y`$ se lit « $`x`$ est orthogonal à $`y`$ ». Pensez à l'angle parfait entre un mur et le sol, ou entre les deux aiguilles d'une montre à $`15`$ h pile. La beauté de la définition abstraite : on n'a même pas besoin de « voir » l'angle, il suffit que le produit scalaire soit nul.
 
 > **Subtilité importante.** Le vecteur nul $`0`$ est orthogonal à **tous** les vecteurs (car $`\langle 0, y\rangle = 0`$ toujours). C'est le seul vecteur orthogonal à lui-même. L'orthogonalité dépend du produit scalaire choisi : deux vecteurs orthogonaux pour $`\langle\cdot,\cdot\rangle`$ ne le sont pas forcément pour $`\langle\cdot,\cdot\rangle_A`$.
 

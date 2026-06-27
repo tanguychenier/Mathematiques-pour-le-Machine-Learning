@@ -317,7 +317,7 @@ C'est la propriete fondamentale d'EM, demontree en detail dans la section suivan
 
 #### Exemple chiffre deroule pas a pas
 
-Prenons $`1`$D, $`N=4`$ points : $`\mathbf{x} = (0,\ 1,\ 8,\ 9)`$, et $`K=2`$. Initialisons grossierement : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=1`$, $`\mu_2=8`$, $`\sigma_1^2=\sigma_2^2=4`$.
+Prenons $`1`$ D, $`N=4`$ points : $`\mathbf{x} = (0,\ 1,\ 8,\ 9)`$, et $`K=2`$. Initialisons grossierement : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=1`$, $`\mu_2=8`$, $`\sigma_1^2=\sigma_2^2=4`$.
 
 **Etape E (premier tour).** Calculons $`r_{n1}`$ (responsabilite de la cloche 1). Avec $`\mathcal{N}(x\mid\mu,\sigma^2) = \tfrac{1}{\sqrt{2\pi\cdot 4}}\exp\!\big(-(x-\mu)^2/8\big)`$ ici :
 
@@ -521,7 +521,7 @@ Les corriges sont detailles juste apres chaque enonce.
 
 #### Exercice 1 — Verifier qu'un melange est bien une densite
 
-Soit le melange $`1`$D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\mathcal{N}(x\mid 3, 4)`$ (les seconds arguments sont des **variances**).
+Soit le melange $`1`$ D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\mathcal{N}(x\mid 3, 4)`$ (les seconds arguments sont des **variances**).
 **(a)** Verifier que $`p`$ est une densite. **(b)** Calculer l'esperance $`\mathbb{E}[X]`$. **(c)** La variance $`\mathrm{Var}[X]`$.
 
 > **Corrige.**
@@ -532,7 +532,7 @@ Soit le melange $`1`$D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\mathca
 
 #### Exercice 2 — Calcul de responsabilites a la main
 
-Melange $`1`$D : $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2=2, \sigma_2^2=1`$. Calculer $`r_{1}`$ et $`r_{2}`$ pour le point $`x=1`$.
+Melange $`1`$ D : $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2=2, \sigma_2^2=1`$. Calculer $`r_{1}`$ et $`r_{2}`$ pour le point $`x=1`$.
 
 > **Corrige.** Les deux composantes ont meme $`\pi`$ et meme $`\sigma`$, donc le rapport ne depend que des exponentielles.
 > $`\mathcal{N}(1\mid 0,1) \propto \exp(-\tfrac12(1-0)^2) = e^{-0{,}5}`$.
@@ -542,7 +542,7 @@ Melange $`1`$D : $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2=
 
 #### Exercice 3 — Une iteration complete d'EM
 
-Donnees $`1`$D : $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=0, \mu_2=5`$, $`\sigma_1^2=\sigma_2^2=1`$. Effectuer **une** etape E puis **une** etape M (on pourra arrondir les responsabilites a $`0`$ ou $`1`$ vu la separation).
+Donnees $`1`$ D : $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=0, \mu_2=5`$, $`\sigma_1^2=\sigma_2^2=1`$. Effectuer **une** etape E puis **une** etape M (on pourra arrondir les responsabilites a $`0`$ ou $`1`$ vu la separation).
 
 > **Corrige.**
 > **Etape E.** Comme $`\sigma_1=\sigma_2`$ et $`\pi_1=\pi_2`$, la responsabilite ne depend que de la distance au carre au centre. Pour $`x=-1`$ : $`(x-\mu_1)^2=1`$ contre $`(x-\mu_2)^2=36 \Rightarrow r_{1,1}\approx 1`$. Pour $`x=0`$ : $`0`$ contre $`25 \Rightarrow r_{1}\approx 1`$. Pour $`x=4`$ : $`16`$ contre $`1 \Rightarrow r_{2}\approx 1`$. Pour $`x=5`$ : $`25`$ contre $`0 \Rightarrow r_{2}\approx 1`$. Donc cloche 1 = $`\{-1,0\}`$, cloche 2 = $`\{4,5\}`$.
@@ -554,7 +554,7 @@ Donnees $`1`$D : $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation : $`\pi_1=\pi
 
 #### Exercice 4 — Singularite du maximum de vraisemblance
 
-Montrer que pour un GMM $`1`$D avec $`K\ge 2`$, on peut rendre la log-vraisemblance arbitrairement grande. En deduire un remede.
+Montrer que pour un GMM $`1`$ D avec $`K\ge 2`$, on peut rendre la log-vraisemblance arbitrairement grande. En deduire un remede.
 
 > **Corrige.** Placons le centre de la composante 1 exactement sur un point de donnee : $`\mu_1 = x_1`$. Sa contribution a la densite en $`x_1`$ est $`\frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}\exp(0) = \frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}`$ (avec $`\pi_1>0`$). Les autres composantes ne contribuent que positivement, donc $`p(x_1) \ge \frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}`$. Quand $`\sigma_1 \to 0^+`$, ce minorant $`\to +\infty`$, donc $`p(x_1)\to +\infty`$ ; comme les autres points gardent une densite strictement positive bornee inferieurement, $`\ell = \sum_n \ln p(x_n) \to +\infty`$. La vraisemblance n'a **pas** de maximum global fini : c'est une singularite. **Remede :** regulariser en ajoutant $`\epsilon\mathbf{I}`$ aux covariances (covariance floor $`\sigma_k^2 \ge \epsilon`$), adopter une vue bayesienne avec un a priori sur $`\boldsymbol{\Sigma}_k`$, ou re-initialiser toute composante qui s'effondre. C'est exactement le garde-fou `var = np.maximum(var, 1e-6)` du code EM.
 

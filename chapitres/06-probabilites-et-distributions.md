@@ -611,9 +611,9 @@ Quelques couples conjugues de reference, omnipresents :
 
 | Vraisemblance | Prior conjugue | Posterior (mise a jour) |
 |---|---|---|
-| Bernoulli / Binomiale | Beta$`(\alpha,\beta)`$ | Beta$`(\alpha + \sum x_i,\ \beta + n - \sum x_i)`$ |
-| Poisson | Gamma$`(\alpha,\beta)`$ | Gamma$`(\alpha + \sum x_i,\ \beta + n)`$ |
-| Multinomiale | Dirichlet$`(\boldsymbol\alpha)`$ | Dirichlet$`(\boldsymbol\alpha + \text{comptes})`$ |
+| Bernoulli / Binomiale | Beta $`(\alpha,\beta)`$ | Beta $`(\alpha + \sum x_i,\ \beta + n - \sum x_i)`$ |
+| Poisson | Gamma $`(\alpha,\beta)`$ | Gamma $`(\alpha + \sum x_i,\ \beta + n)`$ |
+| Multinomiale | Dirichlet $`(\boldsymbol\alpha)`$ | Dirichlet $`(\boldsymbol\alpha + \text{comptes})`$ |
 | Normale (moyenne, $`\sigma^2`$ connue) | Normale | Normale (moyennes ponderees par precisions) |
 
 #### La famille exponentielle

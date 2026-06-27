@@ -199,7 +199,7 @@ Le meme calcul de Lagrange (avec deux contraintes) montre que $`\mathbf{u}_2`$ e
 #### Exemple chiffre deroule pas a pas
 
 Choisissons un cas ou les variables sont **correlees** pour voir l'ACP tourner le repere. Soit les points
-$$(1,1),\quad (2,2),\quad (3,3),\quad (4,4),\quad (5,5).$$
+$`(1,1),\quad (2,2),\quad (3,3),\quad (4,4),\quad (5,5).`$
 Ils sont parfaitement alignes sur la droite $`y=x`$ : une seule direction porte toute l'information.
 
 **Etape 1 — moyenne.** $`\bar{\mathbf{x}} = \big(\tfrac{1+2+3+4+5}{5}, \tfrac{1+2+3+4+5}{5}\big) = (3,3)`$.
@@ -301,7 +301,7 @@ Cela donne une lecture tres concrete des valeurs propres : $`\lambda_{k+1},\dots
 #### Exemple chiffre : projeter sur la meilleure droite
 
 Reprenons un nuage legerement bruite autour de la droite $`y=x`$. Soit les points **deja centres** (leur moyenne est bien $`(0,0)`$)
-$$(-2,-1.8),\ (-1,-1.2),\ (0,0.1),\ (1,0.9),\ (2,2.0).$$
+$`(-2,-1.8),\ (-1,-1.2),\ (0,0.1),\ (1,0.9),\ (2,2.0).`$
 
 La matrice de covariance (calcul direct, $`\tfrac1n`$ avec $`n=5`$) vaut
 ```math
