@@ -959,7 +959,7 @@ Une rotation fait pivoter tous les points autour d'un centre (en 2D) ou d'un axe
 
 > **Définition (matrice de rotation 2D).** La rotation d'angle $\theta$ (dans le sens trigonométrique, autour de l'origine) est donnée par
 > ```math
-> R(\theta) = \begin{pmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \phantom{-}\cos\theta\end{pmatrix}.
+> R(\theta) = \begin{pmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}.
 > ```
 
 > **Le symbole $\sin\theta$ (sinus).** Compagnon du cosinus : si le cosinus est la position **horizontale** de la pointe de l'aiguille d'horloge de longueur $1$, le sinus est sa position **verticale**. À $0°$ : $\sin 0 = 0$ (pointe à l'horizontale). À $90°$ : $\sin 90° = 1$ (pointe tout en haut). Ensemble, $(\cos\theta, \sin\theta)$ donnent les coordonnées exactes d'un point sur le cercle de rayon $1$ après rotation d'un angle $\theta$ depuis l'axe horizontal.
