@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Régression linéaire](09-regression-lineaire.md) · [↑ Sommaire](../README.md#table-des-matières) · [Estimation de densité par mélanges gaussiens →](11-melanges-gaussiens.md)
 
 # 10. Réduction de dimension par ACP
 

@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Géométrie analytique](03-geometrie-analytique.md) · [↑ Sommaire](../README.md#table-des-matières) · [Calcul différentiel vectoriel →](05-calcul-differentiel-vectoriel.md)
 
 # 4. Décompositions matricielles
 

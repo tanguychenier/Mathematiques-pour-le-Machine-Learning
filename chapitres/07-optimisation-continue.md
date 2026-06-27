@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Probabilités et distributions](06-probabilites-et-distributions.md) · [↑ Sommaire](../README.md#table-des-matières) · [Quand les modèles rencontrent les données →](08-modeles-et-donnees.md)
 
 # 7. Optimisation continue
 

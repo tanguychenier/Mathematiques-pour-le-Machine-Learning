@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Calcul différentiel vectoriel](05-calcul-differentiel-vectoriel.md) · [↑ Sommaire](../README.md#table-des-matières) · [Optimisation continue →](07-optimisation-continue.md)
 
 # 6. Probabilités et distributions
 

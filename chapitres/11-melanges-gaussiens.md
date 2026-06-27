@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Réduction de dimension par ACP](10-reduction-de-dimension-acp.md) · [↑ Sommaire](../README.md#table-des-matières) · [Classification par machines à vecteurs de support →](12-classification-svm.md)
 
 # 11. Estimation de densité par mélanges gaussiens
 

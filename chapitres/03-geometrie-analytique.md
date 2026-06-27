@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Algèbre linéaire](02-algebre-lineaire.md) · [↑ Sommaire](../README.md#table-des-matières) · [Décompositions matricielles →](04-decompositions-matricielles.md)
 
 # 3. Géométrie analytique
 

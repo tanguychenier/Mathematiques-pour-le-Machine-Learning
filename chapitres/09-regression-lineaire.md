@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Quand les modèles rencontrent les données](08-modeles-et-donnees.md) · [↑ Sommaire](../README.md#table-des-matières) · [Réduction de dimension par ACP →](10-reduction-de-dimension-acp.md)
 
 # 9. Régression linéaire
 

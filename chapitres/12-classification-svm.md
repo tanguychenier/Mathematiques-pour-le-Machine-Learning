@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Estimation de densité par mélanges gaussiens](11-melanges-gaussiens.md) · [↑ Sommaire](../README.md#table-des-matières) · [Sommaire →](../README.md#table-des-matières)
 
 # 12. Classification par machines à vecteurs de support
 

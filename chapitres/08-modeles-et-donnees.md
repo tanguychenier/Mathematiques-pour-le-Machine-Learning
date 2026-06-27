@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Optimisation continue](07-optimisation-continue.md) · [↑ Sommaire](../README.md#table-des-matières) · [Régression linéaire →](09-regression-lineaire.md)
 
 # 8. Quand les modèles rencontrent les données
 

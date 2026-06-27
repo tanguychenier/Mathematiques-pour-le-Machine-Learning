@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[↑ Sommaire](../README.md#table-des-matières) · [Algèbre linéaire →](02-algebre-lineaire.md)
 
 # 1. Introduction et motivation
 
@@ -746,4 +746,4 @@ Coût à une variable $`J(\theta) = (\theta - 3)^2`$. On part de $`\theta_0 = 0`
 
 ---
 
-[← Sommaire](../README.md#table-des-matières) · [↑ Sommaire](../README.md#table-des-matières) · [Algèbre linéaire →](02-algebre-lineaire.md)
+[↑ Sommaire](../README.md#table-des-matières) · [Algèbre linéaire →](02-algebre-lineaire.md)

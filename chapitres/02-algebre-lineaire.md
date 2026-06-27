@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Introduction et motivation](01-introduction-et-motivation.md) · [↑ Sommaire](../README.md#table-des-matières) · [Géométrie analytique →](03-geometrie-analytique.md)
 
 # 2. Algèbre linéaire
 
@@ -238,6 +238,8 @@ D'où
 ```math
 AB = \begin{pmatrix} 19 & 22 \\ 43 & 50 \end{pmatrix}.
 ```
+
+![Produit matriciel animé : chaque case du résultat est la ligne i de A multipliée terme à terme par la colonne j de B, puis additionnée, avec les mêmes nombres que l'exemple](../assets/produit-matriciel.svg)
 
 ##### Le produit n'est PAS commutatif
 

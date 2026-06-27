@@ -1,4 +1,4 @@
-[← Sommaire](../README.md#table-des-matières)
+[← Décompositions matricielles](04-decompositions-matricielles.md) · [↑ Sommaire](../README.md#table-des-matières) · [Probabilités et distributions →](06-probabilités-et-distributions.md)
 
 # 5. Calcul différentiel vectoriel
 
