@@ -154,6 +154,8 @@ J(\boldsymbol{\theta}) = \frac{1}{n} \sum_{i=1}^{n} \big( f_{\boldsymbol{\theta}
 
 Apprendre se reformule alors en un problème net: **trouver le réglage $`\boldsymbol{\theta}`$ qui rend $`J(\boldsymbol{\theta})`$ le plus petit possible.** C'est un problème d'optimisation, deuxième pilier. Mais avant de le résoudre, prenons de la hauteur et regardons les quatre piliers ensemble.
 
+![Le coût J(θ) : à gauche on change la droite (le réglage θ), à droite le juge J donne sa note (le coût). Le fond du bol est le meilleur réglage](../assets/cout-juge.svg)
+
 > **Mise à jour 2026.** Le triptyque *données → modèle → paramètres* est resté identique des moindres carrés de Gauss et Legendre (vers 1805–1809) aux modèles de fondation (foundation models) actuels. Ce qui a explosé, c'est l'**échelle**: un grand modèle de langage compte aujourd'hui des dizaines à des centaines de milliards de paramètres, et les « données » sont des corpus de plusieurs milliers de milliards de tokens (un *token* est un petit morceau de texte, en gros un mot ou un bout de mot, l'unité élémentaire que le modèle lit et produit). La nouveauté conceptuelle n'est pas dans la définition, mais dans les *lois d'échelle* (scaling laws) qui relient empiriquement la performance à la taille du modèle, à la quantité de données et au budget de calcul.
 
 ---
