@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="cu" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2563eb"/></marker>
+    <marker id="cv" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#16a34a"/></marker>
+    <marker id="cw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#ea580c"/></marker>
+  </defs>
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="31" text-anchor="middle" font-size="19" font-weight="700" fill="#1b2a4a">Une combinaison linéaire : fabriquer un point avec deux directions</text>
+  <text x="360" y="50" text-anchor="middle" font-size="12" fill="#64748b">On étire les deux directions de base, puis on les met bout à bout. On peut ainsi atteindre n'importe quel point du plan.</text>
+
+  <!-- directions de base (toujours visibles, faibles) -->
+  <line x1="140" y1="300" x2="258" y2="278" stroke="#2563eb" stroke-width="2" marker-end="url(#cu)" opacity="0.5"/>
+  <text x="266" y="282" font-size="13" fill="#2563eb" font-weight="700">u</text>
+  <line x1="140" y1="300" x2="184" y2="180" stroke="#16a34a" stroke-width="2" marker-end="url(#cv)" opacity="0.5"/>
+  <text x="172" y="178" font-size="13" fill="#16a34a" font-weight="700">v</text>
+  <circle cx="140" cy="300" r="4" fill="#475569"/>
+  <text x="131" y="316" text-anchor="end" font-size="13" fill="#475569">O</text>
+
+  <!-- a*u (croit en phase 0) -->
+  <line x1="140" y1="300" x2="140" y2="300" stroke="#2563eb" stroke-width="4" marker-end="url(#cu)">
+    <animate attributeName="x2" values="140.0;140.0;376.0;376.0;376.0;376.0;376.0;140.0" keyTimes="0;0.12;0.34;0.34;0.56;0.7;0.92;1" dur="7.5s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/><animate attributeName="y2" values="300.0;300.0;256.0;256.0;256.0;256.0;256.0;300.0" keyTimes="0;0.12;0.34;0.34;0.56;0.7;0.92;1" dur="7.5s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+  </line>
+  <!-- b*v depuis le bout de a*u (croit en phase 1) -->
+  <line x1="376.0" y1="256.0" x2="376.0" y2="256.0" stroke="#16a34a" stroke-width="4" marker-end="url(#cv)">
+    <animate attributeName="x2" values="376.0;376.0;376.0;376.0;431.0;431.0;431.0;376.0" keyTimes="0;0.12;0.34;0.34;0.56;0.7;0.92;1" dur="7.5s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/><animate attributeName="y2" values="256.0;256.0;256.0;256.0;106.0;106.0;106.0;256.0" keyTimes="0;0.12;0.34;0.34;0.56;0.7;0.92;1" dur="7.5s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+  </line>
+  <!-- resultante O->w -->
+  <g opacity="0"><animate attributeName="opacity" values="0;0;0;0;0;1;1;0" keyTimes="0;0.12;0.34;0.34;0.56;0.7;0.92;1" dur="7.5s" repeatCount="indefinite"/>
+    <line x1="140" y1="300" x2="431.0" y2="106.0" stroke="#ea580c" stroke-width="3.5" stroke-dasharray="2 0" marker-end="url(#cw)"/>
+    <circle cx="431.0" cy="106.0" r="5.5" fill="#ea580c"/>
+    <text x="441" y="106" font-size="15" fill="#ea580c" font-weight="700">w</text>
+  </g>
+
+  <text x="468" y="150" font-size="15" fill="#1b2a4a">w = <tspan fill="#2563eb" font-weight="700">2</tspan>·<tspan fill="#2563eb" font-weight="700">u</tspan> + <tspan fill="#16a34a" font-weight="700">1,25</tspan>·<tspan fill="#16a34a" font-weight="700">v</tspan></text>
+  <text x="468" y="174" font-size="11.5" fill="#64748b">les nombres 2 et 1,25 sont</text>
+  <text x="468" y="190" font-size="11.5" fill="#64748b">les coefficients de la combinaison.</text>
+
+  <text x="360" y="362" text-anchor="middle" font-size="12.5" fill="#1b2a4a">Comme sur une carte : faire 2 pas dans une direction, puis 1,25 pas dans une autre, mène à destination.</text>
+</svg>
