@@ -10,7 +10,9 @@ Avant de parler de gradients, de jacobiennes ou de rétropropagation, il faut co
 
 Imaginez que vous roulez en voiture. À chaque instant, le compteur de vitesse vous indique à quelle vitesse vous allez **maintenant**, pas votre vitesse moyenne depuis le départ. La dérivée, c'est exactement ce compteur de vitesse : elle vous dit, en un point précis, **à quelle vitesse une quantité change**.
 
-Géométriquement, si on trace la courbe d'une fonction $`f`$, la dérivée en un point est la **pente de la tangente** à la courbe en ce point (la **tangente**, c'est la droite qui « épouse » la courbe en ce point précis, en la frôlant sans la traverser : posez une règle contre l'arrondi d'une assiette, elle ne touche qu'en un seul endroit, c'est la tangente). Une pente positive signifie « ça monte », une pente négative « ça descend », une pente nulle « c'est plat » (sommet, creux ou palier).
+Géométriquement, si on trace la courbe d'une fonction $`f`$, la dérivée en un point est la **pente de la tangente** à la courbe en ce point. Une pente positive signifie « ça monte », une pente négative « ça descend », une pente nulle « c'est plat » (sommet, creux ou palier).
+
+> **Que veut dire « tangente » ?** La **tangente** est la droite qui « épouse » la courbe en un point précis, en la frôlant sans la traverser. Posez une règle contre l'arrondi d'une assiette : elle ne touche qu'en un seul endroit, c'est la tangente.
 
 > **Le symbole $`f(x)`$.** Ce symbole représente une **machine à transformer les nombres**. On lui donne un nombre $`x`$ (l'entrée), et elle recrache un autre nombre noté $`f(x)`$ (la sortie). Comme une machine à café : vous mettez une capsule (le $`x`$), vous obtenez un café (le $`f(x)`$). La lettre $`f`$ est juste le nom de la machine ; on pourrait l'appeler $`g`$, $`h`$ ou « tartempion ».
 
@@ -111,7 +113,11 @@ En pratique on ne repasse jamais par la limite : on apprend une fois pour toutes
 
 > **Les symboles $`\alpha`$ et $`\beta`$ (alpha, bêta).** Ces deux premières lettres grecques désignent ici de simples **nombres fixes** (des constantes) qui pondèrent $`f`$ et $`g`$. On les emploie par convention pour des coefficients (un **coefficient**, c'est juste le nombre par lequel on multiplie quelque chose, comme le « 3 » dans « 3 pommes »), exactement comme on dirait « 3 fois ceci plus 2 fois cela ».
 
-La dernière, la **règle de la chaîne** (chain rule), est de loin la plus importante de tout le chapitre : c'est elle qui, généralisée aux vecteurs et aux matrices, deviendra la **rétropropagation** (backpropagation : la méthode qui calcule, en remontant le calcul à l'envers, comment régler chaque bouton du modèle pour réduire ses erreurs ; détaillée en fin de chapitre) qui entraîne les réseaux de neurones (un **réseau de neurones** est un gros empilement de petites opérations très simples, branchées les unes aux autres, dont on ajuste les réglages jusqu'à ce que l'ensemble accomplisse une tâche : reconnaître une image, traduire une phrase). Nous lui consacrons un encadré.
+La dernière, la **règle de la chaîne** (chain rule), est de loin la plus importante de tout le chapitre : c'est elle qui, généralisée aux vecteurs et aux matrices, deviendra la **rétropropagation** (backpropagation) qui entraîne les **réseaux de neurones**. Nous lui consacrons un encadré.
+
+> **Que veut dire « rétropropagation » ?** C'est la méthode qui calcule, en remontant le calcul à l'envers, comment régler chaque bouton du modèle pour réduire ses erreurs. Elle est détaillée en fin de chapitre.
+
+> **Que veut dire « réseau de neurones » ?** C'est un gros empilement de petites opérations très simples, branchées les unes aux autres, dont on ajuste les réglages jusqu'à ce que l'ensemble accomplisse une tâche : reconnaître une image, traduire une phrase.
 
 > **Définition (règle de la chaîne, une variable).** Soit $`g`$ dérivable en $`x`$ et $`f`$ dérivable en $`g(x)`$. Alors la fonction composée $`h = f \circ g`$, définie par $`h(x) = f(g(x))`$, est dérivable en $`x`$ et
 > ```math
@@ -218,11 +224,16 @@ Le gradient encode bien plus que les pentes selon les axes : il donne la pente d
 
 > **Le symbole $`\langle\cdot,\cdot\rangle`$ (produit scalaire).** Vu au chapitre 4, c'est l'opération qui mesure « à quel point deux vecteurs pointent dans le même sens » : $`\langle\mathbf a,\mathbf b\rangle = \mathbf a^\top\mathbf b = \sum_i a_i b_i`$ (la grande lettre $`\sum`$, détaillée plus loin, se lit « somme de » : elle dit qu'on additionne tous les termes $`a_i b_i`$ ; ici on multiplie les coordonnées deux à deux puis on additionne le tout). On le rappelle ici parce qu'il fait le pont entre le gradient (un vecteur) et la pente (un nombre). Les deux écritures $`\nabla f^\top\mathbf u`$ et $`\langle\nabla f,\mathbf u\rangle`$ désignent la même chose.
 
-Cette égalité a une conséquence géométrique fondamentale. Par l'inégalité de Cauchy-Schwarz (vue au chapitre 4 ; une **inégalité** affirme qu'une quantité est plus petite, ou plus grande, qu'une autre, le symbole $`\le`$ se lisant « est inférieur ou égal à », c'est-à-dire « ne dépasse pas »),
+Cette égalité a une conséquence géométrique fondamentale. Par l'**inégalité** de Cauchy-Schwarz (vue au chapitre 4),
+
 ```math
 -\|\nabla f(\mathbf{x})\| \;\le\; D_{\mathbf{u}} f(\mathbf{x}) = \langle \nabla f(\mathbf{x}), \mathbf{u}\rangle \;\le\; \|\nabla f(\mathbf{x})\|\,\|\mathbf{u}\| = \|\nabla f(\mathbf{x})\|,
 ```
-la borne supérieure étant atteinte lorsque $`\mathbf{u}`$ est colinéaire et de même sens que $`\nabla f(\mathbf{x})`$ (deux vecteurs sont **colinéaires** quand ils sont **parallèles**, c'est-à-dire qu'ils pointent le long de la même droite, soit dans le même sens, soit en sens contraire : comme deux flèches posées sur le même rail), et la borne inférieure lorsque $`\mathbf{u}`$ pointe dans le sens opposé. **Le gradient pointe donc dans la direction de plus forte croissance** (sa norme est la pente maximale), et son opposé $`-\nabla f`$ dans celle de plus forte décroissance. C'est la justification rigoureuse de la descente de gradient.
+la borne supérieure étant atteinte lorsque $`\mathbf{u}`$ est **colinéaire** et de même sens que $`\nabla f(\mathbf{x})`$, et la borne inférieure lorsque $`\mathbf{u}`$ pointe dans le sens opposé. **Le gradient pointe donc dans la direction de plus forte croissance** (sa norme est la pente maximale), et son opposé $`-\nabla f`$ dans celle de plus forte décroissance. C'est la justification rigoureuse de la descente de gradient.
+
+> **Que veut dire « inégalité » ?** Une inégalité affirme qu'une quantité est plus petite, ou plus grande, qu'une autre. Le symbole $`\le`$ se lit « est inférieur ou égal à », c'est-à-dire « ne dépasse pas ».
+
+> **Que veut dire « colinéaires » ?** Deux vecteurs sont colinéaires quand ils sont **parallèles**, c'est-à-dire qu'ils pointent le long de la même droite, soit dans le même sens, soit en sens contraire : comme deux flèches posées sur le même rail.
 
 > **Définition (différentiabilité).** $`f: \mathbb{R}^n \to \mathbb{R}`$ est **différentiable** en $`\mathbf{x}`$ s'il existe un vecteur $`\mathbf{g}`$ tel que
 > ```math
@@ -294,10 +305,12 @@ J(\mathbf{w}) = \tfrac{1}{2}\,\|X\mathbf{w} - \mathbf{y}\|^2.
 ```
 
 > **Le vocabulaire de la régression linéaire.** La **régression**, c'est l'art de **tracer la « meilleure » droite (ou le meilleur plan) à travers un nuage de points** de données, pour résumer la tendance et prédire de nouvelles valeurs. Imaginez un nuage de points « surface du logement / prix » : on cherche la droite qui passe au plus près de tous les points. Ici $`X`$ est le **tableau des données** (chaque ligne un exemple observé, chaque colonne une caractéristique mesurée), $`\mathbf{y}`$ le vecteur des **vraies valeurs** à prédire, et $`\mathbf{w}`$ les **poids** (les réglages) qu'on cherche. La méthode des **moindres carrés** consiste à choisir $`\mathbf{w}`$ qui rend la **somme des carrés des erreurs** la plus petite possible : on met chaque écart au carré (pour que les écarts positifs et négatifs ne s'annulent pas, et pour punir davantage les grosses erreurs), puis on additionne, et on minimise ce total. C'est exactement ce que mesure $`J(\mathbf{w})`$.
-Nous montrerons plus loin (section sur les identités) que (le petit indice sous le nabla, $`\nabla_{\mathbf{w}}`$, précise **par rapport à quoi** on dérive : ici « la pente de $`J`$ quand on bouge $`\mathbf{w}`$ »)
+Nous montrerons plus loin (section sur les identités) que
 ```math
 \nabla_{\mathbf{w}} J(\mathbf{w}) = X^\top (X\mathbf{w} - \mathbf{y}).
 ```
+
+> **Le symbole $`\nabla_{\mathbf{w}}`$.** Le petit indice sous le nabla précise **par rapport à quoi** on dérive : ici, il s'agit de « la pente de $`J`$ quand on bouge $`\mathbf{w}`$ ».
 La descente de gradient s'écrit alors $`\mathbf{w} \leftarrow \mathbf{w} - \eta\, X^\top(X\mathbf{w}-\mathbf{y})`$: exactement la version vectorielle de l'algorithme en dimension 1 vu plus haut, où le simple nombre $`w`$ est devenu le vecteur $`\mathbf{w}`$.
 
 > **Le symbole $`\leftarrow`$ (affectation).** Cette flèche vers la gauche ne signifie pas « égal » mais « devient » : $`\mathbf{w} \leftarrow \mathbf{w} - \eta\,\nabla J`$ se lit « remplace l'ancienne valeur de $`\mathbf{w}`$ par la nouvelle ». C'est l'équivalent mathématique de la ligne de code `w = w - eta * grad`: on écrase la case mémoire.
@@ -306,7 +319,9 @@ La descente de gradient s'écrit alors $`\mathbf{w} \leftarrow \mathbf{w} - \eta
 
 ### Gradients de fonctions à valeurs vectorielles
 
-Jusqu'ici la sortie était un seul nombre (fonction scalaire). Mais une couche de réseau de neurones (une **couche**, c'est un étage du réseau : un paquet d'opérations qui travaillent en parallèle, recevant le vecteur de l'étage précédent et passant leur résultat à l'étage suivant, comme les wagons successifs d'un train) transforme un vecteur en un **autre vecteur**. Il faut donc dériver des fonctions $`\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m`$. L'objet qui généralise le gradient est alors la **matrice jacobienne**.
+Jusqu'ici la sortie était un seul nombre (fonction scalaire). Mais une **couche** de réseau de neurones transforme un vecteur en un **autre vecteur**. Il faut donc dériver des fonctions $`\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m`$. L'objet qui généralise le gradient est alors la **matrice jacobienne**.
+
+> **Que veut dire « couche » ?** Une couche, c'est un étage du réseau : un paquet d'opérations qui travaillent en parallèle, recevant le vecteur de l'étage précédent et passant leur résultat à l'étage suivant, comme les wagons successifs d'un train.
 
 #### L'intuition : un tableau de toutes les sensibilités
 
@@ -385,10 +400,12 @@ J_{\mathbf{f}}(0,0) = \begin{bmatrix}0 & 1\\ 0 & 0\end{bmatrix}, \qquad J_{\math
 
 #### Application machine learning : la jacobienne de softmax
 
-La fonction **softmax** transforme un vecteur de scores en une distribution de probabilités (une **distribution de probabilités**, c'est une liste de nombres tous compris entre 0 et 1 et dont la **somme fait exactement 1** ; chacun donne la « chance » d'une possibilité, comme « 70 % chat, 20 % chien, 10 % oiseau » : la softmax convertit des scores bruts en de telles parts de gâteau) :
+La fonction **softmax** transforme un vecteur de scores en une **distribution de probabilités** :
 ```math
 \mathrm{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{k=1}^{n} e^{z_k}} =: p_i.
 ```
+
+> **Que veut dire « distribution de probabilités » ?** C'est une liste de nombres tous compris entre 0 et 1 et dont la **somme fait exactement 1** ; chacun donne la « chance » d'une possibilité, comme « 70 % chat, 20 % chien, 10 % oiseau ». La softmax convertit des scores bruts en de telles parts de gâteau.
 
 > **Le symbole $`\sum`$ (somme sigma).** Cette grande lettre grecque représente une **boucle qui additionne**. $`\sum_{k=1}^{n} a_k`$ se lit « somme, pour $`k`$ allant de 1 à $`n`$, des $`a_k`$ » et vaut $`a_1 + a_2 + \dots + a_n`$. Pensez à une caisse enregistreuse qui scanne les articles un à un et cumule le total. Le « $`k=1`$ » dessous est le point de départ, le « $`n`$ » dessus l'arrivée.
 
@@ -507,11 +524,18 @@ print(g_num)                      # ~[ 6. 13.]
 
 #### Application machine learning : gradient d'une couche linéaire
 
-Une couche dense (« dense » signifie que **chaque** entrée est reliée à **chaque** sortie, sans trou : c'est la couche la plus simple, une multiplication par la matrice de poids $`W`$) calcule $`Y = XW`$, et la perte scalaire $`L`$ (la **perte** est un autre nom pour la fonction de coût : le nombre unique qui mesure l'erreur totale du modèle, qu'on cherche à rendre le plus petit possible) remonte un gradient $`\dfrac{\partial L}{\partial Y} =: \bar{Y}`$ (de même forme que $`Y`$). Les règles de la trace donnent les deux gradients essentiels à la rétropropagation :
+Une couche **dense** calcule $`Y = XW`$, et la **perte** scalaire $`L`$ remonte un gradient $`\dfrac{\partial L}{\partial Y} =: \bar{Y}`$ (de même forme que $`Y`$). Les règles de la trace donnent les deux gradients essentiels à la rétropropagation :
 ```math
 \boxed{\;\frac{\partial L}{\partial W} = X^\top \bar{Y}, \qquad \frac{\partial L}{\partial X} = \bar{Y}\,W^\top.\;}
 ```
-Ces deux formules, dérivées une fois pour toutes, sont **le** moteur de l'entraînement des couches linéaires (et donc des transformeurs : les **transformeurs**, « transformers », sont l'architecture de réseau de neurones qui équipe aujourd'hui la plupart des grands modèles de langage, et elle est massivement faite de couches linéaires comme celle-ci).
+
+> **Que veut dire « dense » ?** Une couche est dense quand **chaque** entrée est reliée à **chaque** sortie, sans trou : c'est la couche la plus simple, une multiplication par la matrice de poids $`W`$.
+
+> **Que veut dire « perte » ?** La perte est un autre nom pour la fonction de coût : le nombre unique qui mesure l'erreur totale du modèle, qu'on cherche à rendre le plus petit possible.
+
+Ces deux formules, dérivées une fois pour toutes, sont **le** moteur de l'entraînement des couches linéaires (et donc des **transformeurs**).
+
+> **Que veut dire « transformeurs » ?** Les transformeurs (« transformers ») sont l'architecture de réseau de neurones qui équipe aujourd'hui la plupart des grands modèles de langage ; elle est massivement faite de couches linéaires comme celle-ci.
 
 ---
 
@@ -562,11 +586,17 @@ En statistique, on maximise souvent la **log-vraisemblance** (log-likelihood). P
 
 > **Le symbole $`\boldsymbol{\mu}`$ (mu, en gras).** Cette lettre grecque désigne traditionnellement une **moyenne**; en gras, c'est un **vecteur** moyenne (un centre dans $`\mathbb{R}^n`$). On dérive ici par rapport à $`\boldsymbol\mu`$ comme par rapport à n'importe quel vecteur de paramètres. La dérivée de $`\|\mathbf x_k-\boldsymbol\mu\|^2`$ par rapport à $`\boldsymbol\mu`$ vaut $`-2(\mathbf x_k-\boldsymbol\mu)`$ par la chaîne ; le facteur $`\tfrac12`$ devant la somme l'absorbe.
 
-En annulant : $`\boldsymbol{\mu}^\star = \frac{1}{N}\sum_k \mathbf{x}_k`$, la moyenne empirique (la petite étoile $`{}^\star`$ en exposant se lit « optimal » : $`\boldsymbol{\mu}^\star`$ désigne la **meilleure** valeur, celle qui résout le problème ; et « empirique » veut dire « calculée à partir des données réellement observées »). Le calcul différentiel **redémontre** que la meilleure estimation de la moyenne est... la moyenne. Rassurant.
+En annulant : $`\boldsymbol{\mu}^\star = \frac{1}{N}\sum_k \mathbf{x}_k`$, la moyenne **empirique**. Le calcul différentiel **redémontre** que la meilleure estimation de la moyenne est... la moyenne. Rassurant.
+
+> **Le symbole $`{}^\star`$.** La petite étoile en exposant se lit « optimal » : $`\boldsymbol{\mu}^\star`$ désigne la **meilleure** valeur, celle qui résout le problème.
+
+> **Que veut dire « empirique » ?** Calculé à partir des données réellement observées.
 
 #### Application machine learning : gradient de la régression logistique
 
-Pour la classification binaire (la **classification binaire**, c'est trier des exemples en **deux** catégories seulement, par exemple « spam / pas spam » ou « malade / sain » ; la **régression logistique** du titre est justement la méthode standard pour cela), le modèle prédit $`\hat{y} = \sigma(\mathbf{w}^\top\mathbf{x})`$ avec $`\sigma`$ la sigmoïde, et la perte d'entropie croisée (cross-entropy) sur un exemple vaut $`L = -\big[y\ln\hat{y} + (1-y)\ln(1-\hat{y})\big]`$.
+Pour la **classification binaire**, le modèle prédit $`\hat{y} = \sigma(\mathbf{w}^\top\mathbf{x})`$ avec $`\sigma`$ la sigmoïde, et la perte d'entropie croisée (cross-entropy) sur un exemple vaut $`L = -\big[y\ln\hat{y} + (1-y)\ln(1-\hat{y})\big]`$. La **régression logistique** du titre est justement la méthode standard pour cette tâche.
+
+> **Que veut dire « classification binaire » ?** C'est trier des exemples en **deux** catégories seulement, par exemple « spam / pas spam » ou « malade / sain ».
 
 > **Que veut dire « entropie croisée » ?** C'est une **mesure d'erreur faite pour les probabilités**. Le modèle annonce une probabilité $`\hat y`$ (par exemple « 90 % spam »), et la vérité $`y`$ vaut soit 0, soit 1. L'entropie croisée **punit d'autant plus fort que le modèle est à la fois sûr de lui et trompé** : annoncer « 99 % sûr » alors que la réponse est « non » coûte très cher, tandis qu'une hésitation prudente coûte peu. Minimiser cette perte pousse donc le modèle à donner des probabilités à la fois justes et bien calibrées.
 
@@ -760,7 +790,11 @@ H_f(x,y) = \begin{bmatrix} 6x & 4y \\ 4y & 4x - 6y \end{bmatrix}, \qquad H_f(1,1
 
 #### Classification des points critiques
 
-La hessienne sert à déterminer la nature d'un **point critique** (un endroit où la pente est nulle dans toutes les directions, c'est-à-dire $`\nabla f = \mathbf{0}`$ : un fond de vallée, un sommet de colline ou un col de montagne ; là, le terrain est « plat » sous nos pieds), via le signe de ses valeurs propres (vues au chapitre 4 ; rappel : les **valeurs propres** d'une matrice sont les quelques nombres qui résument ses « directions privilégiées » et de combien elle y étire ou écrase l'espace).
+La hessienne sert à déterminer la nature d'un **point critique**, via le signe de ses **valeurs propres** (vues au chapitre 4).
+
+> **Que veut dire « point critique » ?** C'est un endroit où la pente est nulle dans toutes les directions, c'est-à-dire $`\nabla f = \mathbf{0}`$ : un fond de vallée, un sommet de colline ou un col de montagne. Là, le terrain est « plat » sous nos pieds.
+
+> **Rappel sur les « valeurs propres ».** Les valeurs propres d'une matrice sont les quelques nombres qui résument ses « directions privilégiées » et de combien elle y étire ou écrase l'espace.
 
 | Hessienne en un point critique | Valeurs propres | Nature du point |
 |---|---|---|
@@ -771,7 +805,9 @@ La hessienne sert à déterminer la nature d'un **point critique** (un endroit o
 
 > **Rappel (définie positive).** Une matrice symétrique $`A`$ est définie positive si $`\mathbf{v}^\top A \mathbf{v} > 0`$ pour tout $`\mathbf{v}\neq\mathbf{0}`$, ce qui équivaut à « toutes ses valeurs propres sont strictement positives » (chapitre 4). Géométriquement, la fonction se creuse vers le haut dans **toutes** les directions : c'est bien un fond de vallée.
 
-Pour notre exemple en $`(1,1)`$, le gradient n'y est pas nul, donc $`(1,1)`$ n'est pas un point critique ; mais le signe du déterminant de la hessienne y est instructif : $`\det H_f(1,1) = 6\times(-2) - 4\times 4 = -28 < 0`$, ce qui signale des valeurs propres de signes opposés (la hessienne y est indéfinie). En un point critique présentant cette signature, on aurait affaire à un **point-selle** (un **point-selle**, c'est un endroit plat qui n'est ni un creux ni un sommet : il monte si on part dans une direction et descend si on part dans une autre, exactement comme le centre d'une selle de cheval, où l'on descend vers les flancs mais où l'on monte vers la tête et la queue).
+Pour notre exemple en $`(1,1)`$, le gradient n'y est pas nul, donc $`(1,1)`$ n'est pas un point critique ; mais le signe du déterminant de la hessienne y est instructif : $`\det H_f(1,1) = 6\times(-2) - 4\times 4 = -28 < 0`$, ce qui signale des valeurs propres de signes opposés (la hessienne y est indéfinie). En un point critique présentant cette signature, on aurait affaire à un **point-selle**.
+
+> **Que veut dire « point-selle » ?** C'est un endroit plat qui n'est ni un creux ni un sommet : il monte si on part dans une direction et descend si on part dans une autre, exactement comme le centre d'une selle de cheval, où l'on descend vers les flancs mais où l'on monte vers la tête et la queue.
 
 > **Mise à jour de perspective.** En grande dimension, les points critiques d'un réseau profond sont **massivement des points-selles** plutôt que des minima locaux (résultat majeur de la théorie de l'optimisation non convexe ; **non convexe** veut dire « pas en forme de bol unique » : le paysage a plein de creux, de bosses et de cols, pas une seule belle vallée). C'est rassurant : la descente de gradient stochastique (**stochastique** signifie « avec une part de hasard » : à chaque pas, on n'utilise qu'un petit échantillon des données tiré au sort, ce qui rend la trajectoire un peu zigzagante mais permet de s'extraire des pièges) s'échappe des selles, et la plupart des minima atteints ont des valeurs de perte comparables. La hessienne complète ($`n\times n`$ avec $`n`$ en milliards) n'est jamais formée ; on accède à ses effets via des **produits hessienne-vecteur** $`H\mathbf{v}`$ calculés par autodiff (astuce de Pearlmutter : un VJP du gradient), au cœur des méthodes de Newton tronquées, de Gauss-Newton et du calcul de courbure (K-FAC).
 
@@ -803,7 +839,9 @@ Nous bouclons le chapitre avec l'outil qui relie tout : l'approximation d'une fo
 
 #### L'intuition : remplacer une courbe par sa tangente
 
-Près d'un point, toute fonction régulière « ressemble » à une droite (sa tangente), puis, si l'on veut plus de précision, à une parabole (une **parabole**, c'est la courbe en forme de U que dessine $`x^2`$, comme la trajectoire d'un ballon qu'on lance), puis à un polynôme de degré croissant. La **série de Taylor** est la recette systématique pour construire ces approximations polynomiales de mieux en mieux ajustées.
+Près d'un point, toute fonction régulière « ressemble » à une droite (sa tangente), puis, si l'on veut plus de précision, à une **parabole**, puis à un polynôme de degré croissant. La **série de Taylor** est la recette systématique pour construire ces approximations polynomiales de mieux en mieux ajustées.
+
+> **Que veut dire « parabole » ?** C'est la courbe en forme de U que dessine $`x^2`$, comme la trajectoire d'un ballon qu'on lance.
 
 > **Que veut dire « polynôme » ?** Un **polynôme**, c'est une expression bâtie uniquement avec des additions et des puissances entières de la variable, du genre $`3x^2 + 5x - 7`$ : pas de division par $`x`$, pas de racine, pas de sinus, rien d'exotique. Le **degré** est la plus haute puissance présente (ici 2). Plus le degré est élevé, plus la courbe peut faire de virages, donc plus elle peut « épouser » finement une fonction compliquée. C'est précisément l'idée de Taylor : remplacer une fonction difficile par un polynôme facile à calculer, valable près d'un point.
 

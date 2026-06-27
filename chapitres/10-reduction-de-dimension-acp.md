@@ -23,7 +23,9 @@ Avant de construire l'ACP, prenons le temps de comprendre **pourquoi** on veut r
 
 > **Les symboles $`n`$ et $`d`$.** Le symbole $`n`$ représente **combien on a d'objets** (le nombre de lignes, comme le nombre de personnes dans une salle). Le symbole $`d`$ représente **combien de mesures on prend sur chaque objet** (le nombre de colonnes, comme le nombre de questions d'un questionnaire). Si on photographie $`n=1000`$ visages et que chaque image fait $`d=100\times100 = 10\,000`$ pixels, alors notre tableau a mille lignes et dix mille colonnes.
 
-**1. Le fléau de la dimension (curse of dimensionality).** En grande dimension, l'espace est tellement vaste que les points deviennent presque tous « loin » les uns des autres, et les notions de proximité, de densité (la **densité**, c'est à quel point les points sont serrés, tassés les uns contre les autres, comme la foule dense d'un marché bondé face à une place déserte), de plus proche voisin perdent leur sens. Un petit exemple frappant : le volume d'une boule de rayon $`1`$ rapporté au volume du cube $`[-1,1]^d`$ qui la contient tend vers $`0`$ quand $`d`$ grandit (de $`0{,}52`$ en dimension 3, il chute à $`0{,}0025`$ en dimension 10, puis à $`2{,}5\cdot10^{-8}`$ en dimension 20). Autrement dit, en grande dimension, **presque tout le volume d'un cube est dans ses coins**, loin du centre. Les algorithmes qui s'appuient sur les distances (k plus proches voisins, regroupement / clustering) en souffrent directement.
+**1. Le fléau de la dimension (curse of dimensionality).** En grande dimension, l'espace est tellement vaste que les points deviennent presque tous « loin » les uns des autres, et les notions de proximité, de **densité**, de plus proche voisin perdent leur sens. Un petit exemple frappant : le volume d'une boule de rayon $`1`$ rapporté au volume du cube $`[-1,1]^d`$ qui la contient tend vers $`0`$ quand $`d`$ grandit (de $`0{,}52`$ en dimension 3, il chute à $`0{,}0025`$ en dimension 10, puis à $`2{,}5\cdot10^{-8}`$ en dimension 20). Autrement dit, en grande dimension, **presque tout le volume d'un cube est dans ses coins**, loin du centre. Les algorithmes qui s'appuient sur les distances (k plus proches voisins, regroupement / clustering) en souffrent directement.
+
+> **Que veut dire « densité » ?** La densité dit à quel point les points sont serrés, tassés les uns contre les autres, comme la foule dense d'un marché bondé face à une place déserte.
 
 **2. Le coût de calcul et de stockage.** Beaucoup de colonnes signifient beaucoup de mémoire et des calculs plus lents. Réduire $`d`$ de $`10\,000`$ à $`50`$ peut transformer un entraînement de plusieurs heures en quelques secondes.
 
@@ -224,9 +226,13 @@ Le même calcul de Lagrange (avec deux contraintes) montre que $`\mathbf{u}_2`$ 
 
 #### Exemple chiffré déroulé pas à pas
 
-Choisissons un cas où les variables sont **corrélées** (deux variables sont **corrélées** quand elles ont tendance à bouger ensemble : quand l'une monte, l'autre monte aussi, comme la taille et la pointure de chaussure) pour voir l'ACP tourner le repère. Soit les points
+Choisissons un cas où les variables sont **corrélées** pour voir l'ACP tourner le repère. Soit les points
 $`(1,1),\quad (2,2),\quad (3,3),\quad (4,4),\quad (5,5).`$
-Ils sont parfaitement alignés sur la droite $`y=x`$ (l'écriture $`y=x`$ décrit la droite formée de tous les points dont les deux coordonnées sont égales : $`(1,1)`$, $`(2,2)`$, etc., c'est la diagonale qui monte à 45 degrés) : une seule direction porte toute l'information.
+Ils sont parfaitement alignés sur la droite $`y=x`$ : une seule direction porte toute l'information.
+
+> **Que veut dire « corrélées » ?** Deux variables sont corrélées quand elles ont tendance à bouger ensemble : quand l'une monte, l'autre monte aussi, comme la taille et la pointure de chaussure.
+
+> **L'écriture $`y=x`$.** Elle décrit la droite formée de tous les points dont les deux coordonnées sont égales : $`(1,1)`$, $`(2,2)`$, etc., c'est la diagonale qui monte à 45 degrés.
 
 **Étape 1, moyenne.** $`\bar{\mathbf{x}} = \big(\tfrac{1+2+3+4+5}{5}, \tfrac{1+2+3+4+5}{5}\big) = (3,3)`$.
 
@@ -524,7 +530,9 @@ print("vecteur propre dominant   :", np.round(np.abs(u), 6))  # ~ (0.707, 0.707)
 
 ### L'ACP en grande dimension
 
-Que se passe-t-il quand le nombre de variables **dépasse** le nombre d'observations, $`d > n`$, voire $`d \gg n`$ ? C'est le quotidien de la génomique (des dizaines de milliers de gènes, quelques centaines de patients), de l'imagerie (des millions de pixels, quelques milliers d'images), du traitement du langage. La matrice de covariance $`S \in \mathbb{R}^{d\times d}`$ devient gigantesque et **singulière** (une matrice est dite **singulière** quand elle « aplatit » l'espace : son déterminant vaut zéro, certaines directions sont écrasées à plat et on ne peut pas revenir en arrière, un peu comme une photo qui perd la profondeur ; le contraire serait une matrice *inversible*), mais l'ACP reste calculable, et un joli tour de passe-passe la rend même bon marché.
+Que se passe-t-il quand le nombre de variables **dépasse** le nombre d'observations, $`d > n`$, voire $`d \gg n`$ ? C'est le quotidien de la génomique (des dizaines de milliers de gènes, quelques centaines de patients), de l'imagerie (des millions de pixels, quelques milliers d'images), du traitement du langage. La matrice de covariance $`S \in \mathbb{R}^{d\times d}`$ devient gigantesque et **singulière**, mais l'ACP reste calculable, et un joli tour de passe-passe la rend même bon marché.
+
+> **Que veut dire « singulière » ?** Une matrice est dite singulière quand elle « aplatit » l'espace : son déterminant vaut zéro, certaines directions sont écrasées à plat et on ne peut pas revenir en arrière, un peu comme une photo qui perd la profondeur. Le contraire serait une matrice *inversible*.
 
 #### Le rang est limité par le nombre de points
 
@@ -606,7 +614,11 @@ flowchart TD
     I --> J["8. (option) Reconstruire,<br/>évaluer l'erreur"]
 ```
 
-**Étape 1, Nettoyer et cadrer.** Traiter les valeurs manquantes (l'**imputation**, c'est boucher les trous : remplacer une case vide du tableau par une valeur raisonnable, par exemple la moyenne de la colonne), repérer les valeurs aberrantes (l'ACP, fondée sur la variance et donc sur des carrés, est **très sensible aux outliers**, c'est-à-dire aux points extrêmes, complètement à l'écart des autres : un seul point extrême peut détourner une composante entière).
+**Étape 1, Nettoyer et cadrer.** Traiter les valeurs manquantes par **imputation**, repérer les valeurs aberrantes, car l'ACP est **très sensible aux outliers**.
+
+> **Que veut dire « imputation » ?** Imputer, c'est boucher les trous : remplacer une case vide du tableau par une valeur raisonnable, par exemple la moyenne de la colonne.
+
+> **Que veut dire « sensible aux outliers » ?** L'ACP, fondée sur la variance et donc sur des carrés, se laisse facilement détourner par les *outliers*, c'est-à-dire les points extrêmes, complètement à l'écart des autres : un seul point extrême peut détourner une composante entière.
 
 **Étape 2, Centrer (obligatoire).** Retirer la moyenne de chaque colonne. Sans centrage, ce n'est plus l'ACP : la première « composante » pointerait vers le nuage depuis une origine arbitraire.
 
@@ -622,7 +634,11 @@ flowchart TD
 
 **Étape 4, Décomposer.** SVD de la matrice prétraitée (voie recommandée), ou `eigh` de $`S`$, ou astuce de Gram si $`d \gg n`$.
 
-**Étape 5, Examiner le spectre.** Tracer les valeurs propres décroissantes (le *scree plot*, « éboulis » : un graphique en bâtons rangés du plus grand au plus petit, qui ressemble à un tas de cailloux dévalant une pente, d'où le nom) et le ratio de variance cumulé. (Ici, le **spectre** d'une matrice désigne simplement la collection de ses valeurs propres, la liste de tous ses $`\lambda_j`$.)
+**Étape 5, Examiner le spectre.** Tracer les valeurs propres décroissantes (le **scree plot**) et le ratio de variance cumulé.
+
+> **Que veut dire « scree plot » ?** C'est le graphique « éboulis » : un graphique en bâtons rangés du plus grand au plus petit, qui ressemble à un tas de cailloux dévalant une pente, d'où le nom.
+
+> **Que veut dire « spectre » ?** Le spectre d'une matrice désigne simplement la collection de ses valeurs propres, la liste de tous ses $`\lambda_j`$.
 
 **Étape 6, Choisir $`k`$.** Plusieurs critères, à croiser.
 
@@ -700,7 +716,11 @@ print("erreur de reconstruction (k=2)   :", round(modele.erreur_reconstruction(X
 
 ### Perspective par variable latente (ACP probabiliste)
 
-Jusqu'ici, l'ACP était un objet **géométrique et déterministe** (**déterministe** veut dire « sans aucun hasard » : mêmes données en entrée, toujours exactement le même résultat, comme une recette suivie à la lettre). On peut lui donner une troisième vie, **probabiliste** (**probabiliste** veut dire « qui fait intervenir le hasard, les probabilités », comme un lancer de dés), en la voyant comme un *modèle génératif*, une histoire racontant **comment les données auraient pu être fabriquées** par le hasard. C'est l'**ACP probabiliste** (Probabilistic PCA, PPCA) de Tipping et Bishop. Elle éclaire l'ACP sous un jour nouveau, la relie au maximum de vraisemblance, gère proprement les données manquantes, et ouvre la porte aux modèles à variables latentes modernes (analyse factorielle, autoencodeurs variationnels).
+Jusqu'ici, l'ACP était un objet **géométrique et déterministe**. On peut lui donner une troisième vie, **probabiliste**, en la voyant comme un *modèle génératif*, une histoire racontant **comment les données auraient pu être fabriquées** par le hasard. C'est l'**ACP probabiliste** (Probabilistic PCA, PPCA) de Tipping et Bishop. Elle éclaire l'ACP sous un jour nouveau, la relie au maximum de vraisemblance, gère proprement les données manquantes, et ouvre la porte aux modèles à variables latentes modernes (analyse factorielle, autoencodeurs variationnels).
+
+> **Que veut dire « déterministe » ?** « Sans aucun hasard » : mêmes données en entrée, toujours exactement le même résultat, comme une recette suivie à la lettre.
+
+> **Que veut dire « probabiliste » ?** « Qui fait intervenir le hasard, les probabilités », comme un lancer de dés.
 
 #### L'idée : une cause cachée de petite dimension
 
@@ -712,10 +732,12 @@ L'histoire générative de la PPCA tient en deux temps :
 ```math
 \mathbf{z} \sim \mathcal{N}(\mathbf{0}, I_k).
 ```
-2. **Fabriquer l'observation** en étirant/tournant cette cause par une matrice $`W`$, en la décalant par la moyenne $`\boldsymbol\mu`$, et en ajoutant un bruit gaussien isotrope (**isotrope** veut dire « pareil dans toutes les directions », sans direction privilégiée, comme une tache d'encre parfaitement ronde) :
+2. **Fabriquer l'observation** en étirant/tournant cette cause par une matrice $`W`$, en la décalant par la moyenne $`\boldsymbol\mu`$, et en ajoutant un bruit gaussien **isotrope** :
 ```math
 \mathbf{x} \mid \mathbf{z} \sim \mathcal{N}\big(W\mathbf{z} + \boldsymbol\mu,\ \sigma^2 I_d\big).
 ```
+
+> **Que veut dire « isotrope » ?** « Pareil dans toutes les directions », sans direction privilégiée, comme une tache d'encre parfaitement ronde.
 
 > **Les symboles de ces deux lignes : $`\mathcal{N}`$, $`\sim`$, et la barre $`\mid`$.** Une **loi normale** (ou loi **gaussienne**) est la fameuse courbe « en cloche » : les valeurs proches du centre sont très fréquentes, celles loin du centre de plus en plus rares, comme les tailles des gens autour de la moyenne. On la note $`\mathcal{N}(\text{centre},\ \text{dispersion})`$ : le premier argument dit où est le sommet de la cloche, le second à quel point elle est large. Une loi normale **standard**, c'est la cloche la plus simple : centrée en zéro, de largeur 1. Le symbole $`\sim`$ se lit « **suit la loi** » ou « est tiré au hasard selon » : $`\mathbf{z} \sim \mathcal{N}(\mathbf{0}, I_k)`$ veut dire « $`\mathbf{z}`$ est tiré au sort selon cette cloche ». Enfin la barre verticale $`\mid`$ se lit « **sachant** » : $`\mathbf{x} \mid \mathbf{z}`$ signifie « la valeur de $`\mathbf{x}`$ une fois qu'on connaît déjà $`\mathbf{z}`$ », comme « la météo de demain sachant qu'aujourd'hui il pleut ».
 

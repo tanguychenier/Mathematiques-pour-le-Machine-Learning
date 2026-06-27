@@ -8,13 +8,17 @@
 
 Avant toute formule, posons l'image fondatrice. Une probabilité, ce n'est pas une propriété mystérieuse cachée dans les objets : c'est une manière de **mesurer notre ignorance** ou la fréquence avec laquelle quelque chose se produit. Quand on dit « cette pièce a une chance sur deux de tomber sur pile », on résume en un nombre, $`\tfrac{1}{2}`$, toute notre incertitude sur le résultat d'un lancer que l'on n'a pas encore vu.
 
-L'analogie la plus utile pour tout le chapitre est celle du **gâteau découpé**. Imaginez un gâteau entier qui représente « tout ce qui peut arriver ». On le coupe en parts. Chaque part représente un événement possible. La taille d'une part, sa fraction du gâteau total, c'est sa probabilité. Le gâteau entier vaut $`1`$ (c'est-à-dire $`100\%`$ ; le signe $`\%`$ se lit « pour cent » et veut dire « sur cent », donc $`100\%`$ = la totalité, et $`50\%`$ = la moitié). Une part ne peut pas être négative (on ne peut pas avoir « moins que rien » de gâteau) et la somme de toutes les parts redonne exactement le gâteau entier. Ces trois idées enfantines, total égal à un, jamais négatif, les parts s'additionnent, sont **exactement** les trois axiomes de Kolmogorov que nous allons formaliser.
+L'analogie la plus utile pour tout le chapitre est celle du **gâteau découpé**. Imaginez un gâteau entier qui représente « tout ce qui peut arriver ». On le coupe en parts. Chaque part représente un événement possible. La taille d'une part, sa fraction du gâteau total, c'est sa probabilité. Le gâteau entier vaut $`1`$, c'est-à-dire la totalité, ce qu'on note aussi $`100\%`$. Une part ne peut pas être négative (on ne peut pas avoir « moins que rien » de gâteau) et la somme de toutes les parts redonne exactement le gâteau entier. Ces trois idées enfantines, total égal à un, jamais négatif, les parts s'additionnent, sont **exactement** les trois axiomes de Kolmogorov que nous allons formaliser.
+
+> **Le symbole $`\%`$ (pour cent).** Il se lit « pour cent » et veut dire « sur cent ». Ainsi $`100\%`$ représente la totalité (le gâteau entier, soit $`1`$) et $`50\%`$ la moitié.
 
 > **Que veut dire « axiome » ?** Un **axiome**, c'est une **règle de départ qu'on décide d'accepter sans la démontrer**, une fondation. C'est comme les règles d'un jeu de société qu'on lit avant de jouer : on ne discute pas pourquoi on avance de six cases en faisant un six, on l'admet, et tout le reste de la partie découle de ces quelques règles. Ici, les trois axiomes sont les trois règles de base des probabilités ; tout le calcul probabiliste en découlera.
 
 #### Les trois ingrédients : $`\Omega`$, $`\mathcal{F}`$, $`P`$
 
-Un **espace probabilisé (probability space)** est un triplet $`(\Omega, \mathcal{F}, P)`$ (un **triplet**, c'est simplement un groupe de trois objets rangés ensemble dans un ordre fixé, comme on rangerait trois ingrédients côte à côte ; les parenthèses et les virgules disent juste « voici ces trois-là, dans cet ordre »). Examinons chaque ingrédient.
+Un **espace probabilisé (probability space)** est un **triplet** $`(\Omega, \mathcal{F}, P)`$. Examinons chaque ingrédient.
+
+> **Que veut dire « triplet » ?** Un **triplet**, c'est simplement un groupe de trois objets rangés ensemble dans un ordre fixé, comme on rangerait trois ingrédients côte à côte. Les parenthèses et les virgules disent juste « voici ces trois-là, dans cet ordre ».
 
 > **Le symbole $`\Omega`$ (oméga majuscule).** Ce symbole représente **l'ensemble de tout ce qui peut arriver**. C'est notre gâteau entier avant découpe. Pensez à une grande boîte qui contient, écrits sur des petits papiers, absolument tous les résultats imaginables de l'expérience. Pour un lancer de dé, $`\Omega = \{1,2,3,4,5,6\}`$: la boîte contient six papiers. (Les **accolades** $`\{\ \}`$ se lisent « l'ensemble formé de » : $`\{1,2,3,4,5,6\}`$ veut dire « la collection contenant les nombres 1, 2, 3, 4, 5 et 6 », comme une liste de courses entre crochets. L'ordre et les répétitions n'y comptent pas : seul importe ce qui est dedans.) On l'appelle l'**univers** ou l'**espace des résultats**. Un élément de cette boîte, un résultat individuel, se note souvent $`\omega`$ (oméga minuscule) : c'est **un** papier tiré de la boîte.
 
@@ -22,11 +26,15 @@ Un **espace probabilisé (probability space)** est un triplet $`(\Omega, \mathca
 
 > **Le symbole $`P`$.** Ce symbole représente **la règle qui attribue à chaque événement sa taille de part de gâteau**, c'est-à-dire un nombre entre $`0`$ et $`1`$. On écrit $`P(A)`$ et on lit « probabilité de $`A`$ ». Pensez à $`P`$ comme à une **balance**: vous lui présentez un événement (un morceau de gâteau), elle vous rend son poids, et le poids total de tout le gâteau est toujours exactement $`1`$.
 
-Formalisons. L'objet $`\mathcal{F}`$ doit être une **tribu** (ou **sigma-algèbre**, en anglais $`\sigma`$-*algebra* ; la lettre grecque $`\sigma`$ se lit « sigma », c'est juste un nom traditionnel donné ici, sans calcul derrière) sur $`\Omega`$, c'est-à-dire une famille de parties de $`\Omega`$ (une **famille de parties**, c'est une collection de sous-ensembles, autrement dit la liste des regroupements de papiers qu'on s'autorise à considérer) vérifiant :
+Formalisons. L'objet $`\mathcal{F}`$ doit être une **tribu** (ou **sigma-algèbre**, en anglais $`\sigma`$-*algebra*) sur $`\Omega`$, c'est-à-dire une **famille de parties** de $`\Omega`$ vérifiant :
 
 1. $`\Omega \in \mathcal{F}`$ (l'événement certain « quelque chose arrive » est dans le menu) ;
 2. si $`A \in \mathcal{F}`$, alors son complémentaire $`A^{c} = \Omega \setminus A \in \mathcal{F}`$ (stabilité par passage au contraire) ;
 3. si $`A_{1}, A_{2}, A_{3}, \dots \in \mathcal{F}`$ est une suite **dénombrable** d'événements, alors leur réunion $`\bigcup_{n=1}^{\infty} A_{n} \in \mathcal{F}`$ (stabilité par réunion dénombrable).
+
+> **Le symbole $`\sigma`$ (sigma).** La lettre grecque $`\sigma`$ se lit « sigma » ; dans « sigma-algèbre », c'est juste un nom traditionnel donné ici, sans calcul derrière.
+
+> **Que veut dire « famille de parties » ?** C'est une collection de sous-ensembles, autrement dit la liste des regroupements de papiers qu'on s'autorise à considérer.
 
 > **Le symbole $`\in`$ (appartient à).** Ce petit symbole se lit **« appartient à »** ou **« est dans »**. L'écriture $`A \in \mathcal{F}`$ veut dire « l'objet $`A`$ fait partie de la collection $`\mathcal{F}`$ », comme « la pomme est dans le panier ». Son cousin barré $`\notin`$ se lirait « n'appartient pas à ».
 
@@ -62,7 +70,9 @@ Ces trois axiomes sont la traduction littérale du gâteau : (A1) une part n'est
 
 #### Premières conséquences (et leurs preuves)
 
-De ces trois axiomes découlent, par pure logique, toutes les règles de calcul usuelles. Démontrons-les : chaque étape reste élémentaire. (Une **preuve** ou **démonstration**, c'est un raisonnement qui part des règles admises et enchaîne des étapes incontestables jusqu'à la conclusion, comme une recette qui prouve qu'on arrive bien au gâteau promis.)
+De ces trois axiomes découlent, par pure logique, toutes les règles de calcul usuelles. Démontrons-les : chaque étape reste élémentaire.
+
+> **Que veut dire « preuve » (ou « démonstration ») ?** C'est un raisonnement qui part des règles admises et enchaîne des étapes incontestables jusqu'à la conclusion, comme une recette qui prouve qu'on arrive bien au gâteau promis.
 
 > **Le symbole $`\blacksquare`$ (fin de preuve).** Ce petit carré noir, qu'on rencontrera à la fin de chaque démonstration, se lit **« ce qu'il fallait démontrer »** (en latin abrégé **CQFD**). Il ne calcule rien : c'est juste un panneau « stop, la preuve est terminée », comme le mot « Fin » à la fin d'un film.
 
@@ -544,7 +554,9 @@ Décortiquons cette formule, morceau par morceau, car chaque partie a un rôle p
 
 > **Le symbole $`\exp`$ (exponentielle) et $`e`$.** Ce symbole représente **la croissance/décroissance multiplicative**, $`\exp(t) = e^{t}`$ où $`e \approx 2{,}718`$. Ici, avec un argument **négatif** qui devient très négatif loin du centre, $`\exp`$ écrase la valeur vers $`0`$ très vite : c'est ce qui donne à la cloche ses queues qui s'amincissent rapidement. Image : un volume sonore qui s'atténue de plus en plus fort à mesure qu'on s'éloigne de la source.
 
-- $`\frac{1}{\sqrt{2\pi\sigma^2}}`$ est la **constante de normalisation**: elle n'a aucun rôle de forme, elle ajuste juste la hauteur pour que l'aire totale sous la cloche fasse exactement $`1`$ (c'est notre gâteau). Le nombre $`\pi`$ (la lettre grecque qui se lit **« pi »**, ce nombre fixe et célèbre $`\pi \approx 3{,}1416`$ qu'on rencontre dans le cercle) surgit de l'intégrale de Gauss $`\int_{-\infty}^{+\infty} e^{-t^2/2}\,\mathrm{d}t = \sqrt{2\pi}`$, résultat classique d'analyse.
+- $`\frac{1}{\sqrt{2\pi\sigma^2}}`$ est la **constante de normalisation**: elle n'a aucun rôle de forme, elle ajuste juste la hauteur pour que l'aire totale sous la cloche fasse exactement $`1`$ (c'est notre gâteau). Le nombre $`\pi`$ surgit de l'intégrale de Gauss $`\int_{-\infty}^{+\infty} e^{-t^2/2}\,\mathrm{d}t = \sqrt{2\pi}`$, résultat classique d'analyse.
+
+> **Le symbole $`\pi`$ (pi).** C'est la lettre grecque qui se lit « pi », ce nombre fixe et célèbre $`\pi \approx 3{,}1416`$ qu'on rencontre dans le cercle.
 
 > **La loi normale standard et la standardisation (z-score).** Le cas $`\mu=0`$, $`\sigma=1`$ donne la **normale standard** $`\mathcal N(0,1)`$. Toute gaussienne s'y ramène par **standardisation**: si $`X \sim \mathcal N(\mu,\sigma^2)`$, alors
 > ```math
@@ -647,7 +659,9 @@ L'image est celle d'une **forme stable par apprentissage**: on part d'une croyan
 
 #### L'exemple canonique : Beta–Binomiale
 
-Le couple le plus instructif modélise l'apprentissage d'une probabilité inconnue $`\theta`$ (ex. le taux de clic d'une publicité, le biais d'une pièce ; le **biais** d'une pièce, c'est **son penchant** à tomber plutôt sur pile que sur face, autrement dit sa probabilité de pile : $`\tfrac12`$ pour une pièce honnête, plus ou moins pour une pièce truquée).
+Le couple le plus instructif modélise l'apprentissage d'une probabilité inconnue $`\theta`$ (par exemple le taux de clic d'une publicité, ou le **biais** d'une pièce).
+
+> **Que veut dire le « biais » d'une pièce ?** C'est **son penchant** à tomber plutôt sur pile que sur face, autrement dit sa probabilité de pile : $`\tfrac12`$ pour une pièce honnête, plus ou moins pour une pièce truquée.
 
 > **La loi Beta** $`\mathrm{Beta}(\alpha, \beta)`$ vit sur $`[0,1]`$, parfaite pour modéliser une probabilité inconnue. Sa densité est $`p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}`$. Les paramètres $`\alpha, \beta`$ (les deux premières lettres grecques, qui se lisent **« alpha »** et **« bêta »** : ce sont ici les deux réglages de la loi) s'interprètent comme des **pseudo-comptes**: $`\alpha-1`$ « succès imaginaires » et $`\beta-1`$ « échecs imaginaires » déjà observés avant les vraies données. Son espérance est $`\frac{\alpha}{\alpha+\beta}`$.
 
@@ -910,7 +924,9 @@ Soit $`X\sim\mathcal N(\mu,\sigma^2)`$ et $`Y = e^{X}`$. Trouvez la densité de 
 
 #### Exercice 8 : Moindres carrés comme maximum de vraisemblance gaussien
 
-Montrez que, sous l'hypothèse $`y_i = \mathbf w^\top\mathbf x_i + \varepsilon_i`$ avec $`\varepsilon_i\sim\mathcal N(0,\sigma^2)`$ i.i.d., maximiser la vraisemblance des données revient à minimiser la somme des carrés des résidus (un **résidu** est l'**écart entre la vraie valeur observée et la valeur prédite par le modèle** : ce qui « reste » d'erreur une fois la prédiction faite).
+Montrez que, sous l'hypothèse $`y_i = \mathbf w^\top\mathbf x_i + \varepsilon_i`$ avec $`\varepsilon_i\sim\mathcal N(0,\sigma^2)`$ i.i.d., maximiser la vraisemblance des données revient à minimiser la somme des carrés des **résidus**.
+
+> **Que veut dire « résidu » ?** Un **résidu** est l'**écart entre la vraie valeur observée et la valeur prédite par le modèle** : ce qui « reste » d'erreur une fois la prédiction faite.
 
 > **Corrigé.** Sous ces hypothèses, $`y_i\mid\mathbf x_i\sim\mathcal N(\mathbf w^\top\mathbf x_i,\ \sigma^2)`$, donc chaque observation a pour densité
 > ```math

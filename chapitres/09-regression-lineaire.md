@@ -4,7 +4,11 @@
 
 ### Formulation de la régression linéaire
 
-La régression linéaire est le point de départ de presque tout l'apprentissage statistique (c'est-à-dire l'art de faire apprendre à une machine, à partir d'exemples chiffrés, à deviner une réponse qu'on ne lui a pas donnée). On cherche à prédire une grandeur numérique (un nombre : un prix, une température, une concentration) à partir d'une ou plusieurs grandeurs mesurées. L'hypothèse centrale, d'une simplicité trompeuse, est que la grandeur à prédire s'exprime comme une combinaison pondérée des grandeurs observées (c'est-à-dire qu'on multiplie chaque grandeur par un nombre, son « poids », et qu'on additionne le tout, comme un prix total est la somme de chaque article multiplié par sa quantité), plus un petit écart inexplicable.
+La régression linéaire est le point de départ de presque tout l'**apprentissage statistique**. On cherche à prédire une grandeur numérique (un nombre : un prix, une température, une concentration) à partir d'une ou plusieurs grandeurs mesurées. L'hypothèse centrale, d'une simplicité trompeuse, est que la grandeur à prédire s'exprime comme une **combinaison pondérée** des grandeurs observées, plus un petit écart inexplicable.
+
+> **Que veut dire « apprentissage statistique » ?** C'est l'art de faire apprendre à une machine, à partir d'exemples chiffrés, à deviner une réponse qu'on ne lui a pas donnée.
+
+> **Que veut dire « combinaison pondérée » ?** On multiplie chaque grandeur par un nombre, son « poids », et on additionne le tout, comme un prix total est la somme de chaque article multiplié par sa quantité.
 
 > **Que veut dire « linéaire » ?** Le mot vient de « ligne ». Une relation est **linéaire** quand elle est *proportionnelle et additive* : si vous doublez l'entrée, la sortie double ; et l'effet de deux causes est la somme de leurs effets séparés. Pas de courbe, pas de seuil : tout se fait « en ligne droite ». Exemple : si 1 kg de pommes coûte 2 euros, alors 2 kg coûtent 4 euros, 3 kg coûtent 6 euros (proportionnel) ; et le total pommes + poires est la somme du prix des pommes et du prix des poires (additif).
 
@@ -145,7 +149,9 @@ print("residus     :", residus)      # [ 0.5  0.8  0. ]
 
 ### Estimation des paramètres et moindres carrés
 
-On cherche le $`\mathbf{w}`$ qui rend les prédictions $`\mathbf{X}\mathbf{w}`$ aussi proches que possible des cibles $`\mathbf{y}`$. Reste à définir « proche ». Le choix historique, géométriquement et statistiquement justifié, est la somme des carrés des erreurs (d'où le nom *moindres carrés* : on cherche les réglages qui rendent cette somme de carrés la plus petite, « moindre » voulant dire « le plus petit possible »).
+On cherche le $`\mathbf{w}`$ qui rend les prédictions $`\mathbf{X}\mathbf{w}`$ aussi proches que possible des cibles $`\mathbf{y}`$. Reste à définir « proche ». Le choix historique, géométriquement et statistiquement justifié, est la somme des carrés des erreurs, d'où le nom de **moindres carrés**.
+
+> **Pourquoi « moindres carrés » ?** On cherche les réglages qui rendent cette somme de carrés la plus petite, « moindre » voulant dire « le plus petit possible ».
 
 #### La fonction de coût des moindres carrés
 
@@ -289,7 +295,9 @@ Via la SVD $`\mathbf{X}=\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top`$, on a $`\
 
 #### Propriétés statistiques de l'estimateur OLS
 
-Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}`$, $`\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)`$, et $`\mathbf{X}`$ de rang plein déterministe (*déterministe* veut dire « fixé d'avance, pas tiré au hasard » : on considère le tableau $`\mathbf{X}`$ comme connu et figé, seul le bruit $`\boldsymbol{\varepsilon}`$ étant aléatoire) :
+Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}`$, $`\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)`$, et $`\mathbf{X}`$ de rang plein **déterministe** :
+
+> **Que veut dire « déterministe » ?** Cela veut dire « fixé d'avance, pas tiré au hasard » : on considère le tableau $`\mathbf{X}`$ comme connu et figé, seul le bruit $`\boldsymbol{\varepsilon}`$ étant aléatoire.
 
 > **Le symbole $`\mathbb{E}`$ (espérance) et $`\mathrm{Cov}`$ (covariance), rappel d'usage.** L'espérance $`\mathbb{E}[\cdot]`$ est la *moyenne théorique* sur tous les tirages possibles du bruit : ce qu'on obtiendrait en répétant l'expérience une infinité de fois. La matrice de covariance $`\mathrm{Cov}(\hat{\mathbf{w}})`$ décrit la *dispersion* de l'estimateur autour de cette moyenne : sa diagonale donne la variance de chaque coefficient, ses cases hors diagonale disent si deux coefficients varient ensemble d'un tirage à l'autre.
 
@@ -316,7 +324,9 @@ La règle de mise à jour, avec pas $`\eta>0`$:
 
 > **Le symbole $`\lambda_{\max}(\mathbf{X}^\top\mathbf{X})`$ (plus grande valeur propre), rappel d'usage.** Une *valeur propre* d'une matrice symétrique mesure de combien elle étire l'espace dans une direction privilégiée (le *vecteur propre* associé). $`\lambda_{\max}`$ est l'étirement maximal ; il fixe la courbure la plus raide du coût, donc la limite au-delà de laquelle un pas $`\eta`$ trop grand fait diverger la descente.
 
-Comme $`J`$ est convexe et lisse, la descente de gradient converge vers le minimum global pour $`0<\eta<2/\lambda_{\max}(\mathbf X^\top\mathbf X)`$. En pratique sur grands jeux de données on utilise la version **stochastique** (le mot « stochastique » veut simplement dire « au hasard », « aléatoire » ; en anglais *SGD*, pour *stochastic gradient descent*, soit « descente de gradient au hasard ») : au lieu de calculer le gradient sur la totalité des exemples à chaque pas, on l'estime sur un petit lot (en anglais *mini-batch*) d'exemples tirés au hasard. C'est une estimation un peu bruitée du vrai gradient, mais bien moins coûteuse à calculer, donc on peut faire beaucoup plus de pas dans le même temps.
+Comme $`J`$ est convexe et lisse, la descente de gradient converge vers le minimum global pour $`0<\eta<2/\lambda_{\max}(\mathbf X^\top\mathbf X)`$. En pratique sur grands jeux de données on utilise la version **stochastique** : au lieu de calculer le gradient sur la totalité des exemples à chaque pas, on l'estime sur un petit lot (en anglais *mini-batch*) d'exemples tirés au hasard. C'est une estimation un peu bruitée du vrai gradient, mais bien moins coûteuse à calculer, donc on peut faire beaucoup plus de pas dans le même temps.
+
+> **Que veut dire « stochastique » ?** Le mot veut simplement dire « au hasard », « aléatoire ». En anglais on parle de *SGD*, pour *stochastic gradient descent*, soit « descente de gradient au hasard ».
 
 ```python
 import numpy as np
@@ -675,7 +685,9 @@ print(w)                                          # ~ [0.03 -0.03 1.01]
 
 #### Le passage au dual : tout via les produits scalaires
 
-Observons la solution ridge sous un autre angle. Une identité matricielle (un *lemme* est un petit résultat outil qui sert à en démontrer un plus grand ; celui-ci, le lemme de Woodbury, aussi appelé *push-through*, est une égalité toujours vraie entre deux écritures d'une même matrice) donne :
+Observons la solution ridge sous un autre angle. Une identité matricielle, le **lemme de Woodbury**, donne :
+
+> **Que veut dire « lemme » ?** Un lemme est un petit résultat outil qui sert à en démontrer un plus grand. Celui-ci, le lemme de Woodbury, aussi appelé *push-through*, est une égalité toujours vraie entre deux écritures d'une même matrice.
 
 > **Les mots « primal » et « dual ».** Résoudre un problème sous sa forme *primale*, c'est travailler directement avec les poids $`\mathbf{w}`$ (une coordonnée par caractéristique). Le passer au *dual*, c'est le réécrire en travaillant plutôt avec un coefficient par *exemple d'entraînement* : deux points de vue sur le même problème, comme regarder une maison de face ou de derrière. On choisira celui qui mène à la plus petite matrice à inverser.
 

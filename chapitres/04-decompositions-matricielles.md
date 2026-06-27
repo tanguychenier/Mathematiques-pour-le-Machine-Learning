@@ -155,7 +155,9 @@ Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant
 
 - **Vraisemblance gaussienne (likelihood):** la densité d'une loi normale multivariée contient le terme $`\frac{1}{\sqrt{(2\pi)^n \det(\Sigma)}}`$. Le déterminant de la matrice de covariance $`\Sigma`$ mesure le « volume » de dispersion des données. En pratique on calcule $`\log \det(\Sigma)`$ (plus stable).
 - **Entropie d'une gaussienne :** l'entropie différentielle d'une loi $`\mathcal{N}(\mu,\Sigma)`$ vaut $`\frac12 \log\big((2\pi e)^n \det(\Sigma)\big)`$, donc croît comme $`\frac12 \log\det(\Sigma)`$, un déterminant élevé signifie une distribution très étalée, donc incertaine. Pour situer les mots : $`\mathcal{N}(\mu,\Sigma)`$ désigne une **loi normale** (la fameuse courbe en cloche, en plusieurs dimensions ici) de moyenne $`\mu`$ et de covariance $`\Sigma`$ ; et l'**entropie** mesure l'incertitude, l'étalement d'une distribution (plus elle est grande, moins on sait prédire où va tomber un tirage). Intuitivement, plus le déterminant de la covariance est grand, plus la gaussienne est étalée, donc imprévisible : grand déterminant et grande entropie vont de pair.
-- **Régularisation et trace :** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$. Quelques mots pour les non-initiés (ces notions sont détaillées dans les chapitres consacrés à l'apprentissage) : la **régression Ridge** est une régression à laquelle on ajoute une pénalité $`\|w\|^2`$ (les doubles barres $`\|\cdot\|`$ se lisent « **norme** » et désignent la **longueur** d'un vecteur, comme la longueur d'une flèche mesurée à la règle ; donc $`\|w\|^2`$ est la longueur au carré du vecteur de coefficients) pour empêcher ceux-ci de devenir trop grands et ainsi éviter le surapprentissage, c'est-à-dire un modèle qui colle au bruit des données plutôt qu'à leur tendance ; et le **nombre de degrés de liberté effectifs** mesure, en gros, combien de paramètres le modèle utilise réellement une fois cette pénalité appliquée (plus la pénalité est forte, plus ce nombre diminue).
+- **Régularisation et trace :** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$. Quelques mots pour les non-initiés (ces notions sont détaillées dans les chapitres consacrés à l'apprentissage) : la **régression Ridge** est une régression à laquelle on ajoute une pénalité $`\|w\|^2`$ (sa **norme** au carré) pour empêcher ceux-ci de devenir trop grands et ainsi éviter le surapprentissage, c'est-à-dire un modèle qui colle au bruit des données plutôt qu'à leur tendance ; et le **nombre de degrés de liberté effectifs** mesure, en gros, combien de paramètres le modèle utilise réellement une fois cette pénalité appliquée (plus la pénalité est forte, plus ce nombre diminue).
+
+> **Le symbole $`\|\cdot\|`$ (« norme »).** Les doubles barres $`\|\cdot\|`$ se lisent « norme » et désignent la **longueur** d'un vecteur, comme la longueur d'une flèche mesurée à la règle. Ainsi $`\|w\|^2`$ est la longueur au carré du vecteur de coefficients.
 - **Jacobien des flux normalisants (normalizing flows):** pour transformer une densité, on a besoin de $`\log\left|\det \frac{\partial f}{\partial x}\right|`$. Toute l'ingénierie des flux modernes consiste à concevoir des transformations dont ce log-déterminant est calculable rapidement.
 
 > **« Jacobien » et le symbole $`\partial`$.** Le symbole **$`\partial`$** (un « d » arrondi) se lit « **d rond** » et sert à écrire une **dérivée partielle** : $`\frac{\partial f}{\partial x}`$ se lit « dérivée partielle de $`f`$ par rapport à $`x`$ », c'est-à-dire **la vitesse à laquelle $`f`$ change quand on bouge un peu $`x`$** (en laissant les autres variables tranquilles), comme la pente d'une route quand on n'avance que vers l'est. Le **Jacobien** est la matrice qui rassemble toutes ces dérivées partielles d'une transformation : il dit, localement, comment celle-ci étire l'espace.
@@ -301,7 +303,10 @@ Donc $`v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}`$.
 
 #### Application en machine learning
 
-- **PageRank:** le score d'importance des pages web est le **vecteur propre dominant** (le mot **dominant** désigne ici celui qui correspond à la **plus grande** valeur propre, donc la direction la plus « forte ») (associé à $`\lambda = 1`$) d'une matrice stochastique de transition. On le calcule par la **méthode de la puissance** (power iteration).
+- **PageRank:** le score d'importance des pages web est le **vecteur propre dominant** (associé à $`\lambda = 1`$) d'une matrice stochastique de transition. On le calcule par la **méthode de la puissance** (power iteration).
+
+> **Que veut dire « dominant » ?** Le mot **dominant** désigne ici le vecteur propre qui correspond à la **plus grande** valeur propre, donc la direction la plus « forte ».
+
 - **Stabilité de l'entraînement:** la plus grande valeur propre de la matrice hessienne contrôle le pas maximal admissible d'une descente de gradient. La courbure (les $`\lambda`$ du hessien) gouverne la vitesse de convergence (**converger**, c'est se rapprocher de plus en plus d'une valeur cible ; la **vitesse de convergence** dit à quel point on s'en approche vite, comme une voiture qui ralentit en arrivant au but).
 - **Convolutions et théorie spectrale des graphes:** les réseaux de neurones sur graphes (GNN) reposent sur les valeurs/vecteurs propres du **laplacien** du graphe.
 
@@ -428,7 +433,9 @@ Cholesky coûte **deux fois moins** que LU : c'est la méthode de choix dès que
 
 > **Notation.** Ici le symbole **$`\sim`$** se lit « **suit la loi** » (et non « de l'ordre de » comme dans le tableau de coûts) : « $`x \sim \mathcal{N}(\mu,\Sigma)`$ » se lit « $`x`$ est tiré au hasard selon la loi normale de moyenne $`\mu`$ et de covariance $`\Sigma`$ ». **Tirer** un vecteur, c'est en fabriquer un au hasard. Et $`\mathrm{Cov}(\cdot)`$ désigne la **covariance** du résultat (sa dispersion).
 
-3. **Processus gaussiens (GP).** Toute l'inférence (l'**inférence**, c'est le fait de **tirer des conclusions à partir des données** : deviner, prédire, estimer) (prédiction, log-vraisemblance) passe par la factorisation de Cholesky de la matrice de noyau $`K + \sigma^2 I`$. Le terme $`\log\det(K+\sigma^2 I) = 2\sum_i \log \ell_{ii}`$ se lit gratuitement sur la diagonale de $`L`$.
+3. **Processus gaussiens (GP).** Toute l'**inférence** (prédiction, log-vraisemblance) passe par la factorisation de Cholesky de la matrice de noyau $`K + \sigma^2 I`$. Le terme $`\log\det(K+\sigma^2 I) = 2\sum_i \log \ell_{ii}`$ se lit gratuitement sur la diagonale de $`L`$.
+
+> **Que veut dire « inférence » ?** L'**inférence**, c'est le fait de **tirer des conclusions à partir des données** : deviner, prédire, estimer.
 
 > **Mise à jour 2026.** Pour des matrices de noyau gigantesques (GP à $`n > 10^5`$), on remplace la factorisation exacte par des **approximations creuses** (points inducteurs) ou par le **gradient conjugué préconditionné** sans jamais former $`L`$ explicitement, avec préconditionnement par Cholesky pivoté partiel. Côté deep learning, des couches imposant la structure $`LL^\top`$ (paramétrisation de Cholesky) garantissent qu'une matrice apprise reste SPD pendant tout l'entraînement par descente de gradient, technique standard pour apprendre des covariances ou des métriques.
 
@@ -574,10 +581,12 @@ Voici la décomposition la plus puissante et la plus universelle de toute l'alg�
 
 #### L'intuition : toute matrice est rotation–étirement–rotation
 
-Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice, même rectangulaire (une matrice **rectangulaire** a un nombre de lignes différent du nombre de colonnes, par opposition à une carrée), agit géométriquement comme la succession de trois opérations simples :
+Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice, même **rectangulaire**, agit géométriquement comme la succession de trois opérations simples :
 1. une **rotation** (ou réflexion) dans l'espace de départ ;
 2. un **étirement** le long des axes (les valeurs singulières), avec éventuel changement de dimension ;
 3. une **rotation** (ou réflexion) dans l'espace d'arrivée.
+
+> **Que veut dire « rectangulaire » ?** Une matrice **rectangulaire** a un nombre de lignes différent du nombre de colonnes, par opposition à une matrice carrée.
 
 > **Image.** Prenez la sphère unité (le cercle unité en dimension 2). Appliquez n'importe quelle matrice : vous obtenez toujours une **ellipse** (un ellipsoïde en dimension supérieure), éventuellement aplati. La SVD identifie les axes de cette ellipse (leurs directions = vecteurs singuliers à gauche, leurs demi-longueurs = valeurs singulières) et les rotations qui amènent de la sphère à l'ellipse.
 
@@ -679,8 +688,14 @@ On vérifie $`\|u_1\| = \frac{1}{\sqrt6}\sqrt{1+4+1} = 1`$ et $`\|u_2\| = \frac{
 
 - **ACP, vraiment:** la SVD de la matrice de données centrée $`X = U\Sigma V^\top`$ donne directement les axes principaux ($`V`$) et les variances ($`\sigma_i^2/n`$), sans former la covariance. Plus stable que la décomposition propre.
 - **Moindres carrés et pseudo-inverse:** la solution $`\min_w \|Xw-y\|`$ est $`w = X^+ y = V\Sigma^+ U^\top y`$, robuste même si $`X^\top X`$ est mal conditionnée.
-- **Systèmes de recommandation:** la factorisation de la matrice utilisateurs×items (Netflix) est une SVD tronquée, qui révèle des « facteurs latents » (genres implicites). (Un **facteur latent** est une cause cachée, non mesurée directement, qui explique les données : par exemple un « goût pour la comédie » qu'on ne demande jamais mais qu'on devine d'après les notes données.)
-- **Compression et débruitage:** garder les grandes valeurs singulières, jeter les petites (section suivante). (Le **débruitage** consiste à **enlever le bruit**, c'est-à-dire les petites imperfections aléatoires, pour ne garder que le signal utile : comme nettoyer une photo granuleuse.)
+- **Systèmes de recommandation:** la factorisation de la matrice utilisateurs×items (Netflix) est une SVD tronquée, qui révèle des « facteurs latents » (genres implicites).
+
+> **Que veut dire « facteur latent » ?** Un **facteur latent** est une cause cachée, non mesurée directement, qui explique les données : par exemple un « goût pour la comédie » qu'on ne demande jamais mais qu'on devine d'après les notes données.
+
+- **Compression et débruitage:** garder les grandes valeurs singulières, jeter les petites (section suivante).
+
+> **Que veut dire « débruitage » ?** Le **débruitage** consiste à **enlever le bruit**, c'est-à-dire les petites imperfections aléatoires, pour ne garder que le signal utile : comme nettoyer une photo granuleuse.
+
 - **Word embeddings:** la SVD de matrices de co-occurrence (LSA) fut l'ancêtre de Word2Vec.
 
 ```python

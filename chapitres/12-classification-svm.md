@@ -118,7 +118,9 @@ Sous cette convention, les deux hyperplans qui bordent la marge sont $`\mathbf{w
 
 En effet, prenons un point $`\mathbf{x}_+`$ sur le bord positif ($`\mathbf{w}^\top\mathbf{x}_+ + b = 1`$) et $`\mathbf{x}_-`$ sur le bord négatif ($`\mathbf{w}^\top\mathbf{x}_- + b = -1`$). En soustrayant : $`\mathbf{w}^\top(\mathbf{x}_+ - \mathbf{x}_-) = 2`$. La distance entre les deux bords est la projection de $`\mathbf{x}_+ - \mathbf{x}_-`$ sur la direction unitaire $`\mathbf{w}/\lVert\mathbf{w}\rVert`$, soit $`\dfrac{\mathbf{w}^\top(\mathbf{x}_+-\mathbf{x}_-)}{\lVert\mathbf{w}\rVert} = \dfrac{2}{\lVert\mathbf{w}\rVert}`$.
 
-**Conséquence fondamentale.** Maximiser la marge $`\dfrac{2}{\lVert\mathbf{w}\rVert}`$ revient à minimiser $`\lVert\mathbf{w}\rVert`$, donc à minimiser $`\tfrac{1}{2}\lVert\mathbf{w}\rVert^2`$ (le carré et le facteur $`1/2`$ sont là pour rendre la fonction lisse et l'optimisation agréable). Voici le pont entre géométrie et optimisation, que nous formaliserons dans la section suivante.
+**Conséquence fondamentale.** Maximiser la marge $`\dfrac{2}{\lVert\mathbf{w}\rVert}`$ revient à minimiser $`\lVert\mathbf{w}\rVert`$, donc à minimiser le **carré** $`\tfrac{1}{2}\lVert\mathbf{w}\rVert^2`$ . Voici le pont entre géométrie et optimisation, que nous formaliserons dans la section suivante.
+
+> **Pourquoi le carré et le facteur $`1/2`$ ?** Élever au carré et placer le facteur $`1/2`$ ne change rien à l'endroit du minimum : on les ajoute seulement pour rendre la fonction lisse et l'optimisation agréable.
 
 > **« Maximiser », « minimiser », « optimiser », « lisse ».** **Maximiser** une quantité, c'est la rendre *la plus grande possible* ; **minimiser**, *la plus petite possible*. L'**optimisation**, c'est l'art de chercher le meilleur réglage : trouver les valeurs qui rendent une quantité aussi grande (ou aussi petite) que possible, comme régler le four à la température idéale. Astuce importante : rendre la marge *la plus large* possible, c'est exactement la même chose que rendre la longueur $`\lVert\mathbf{w}\rVert`$ *la plus petite* possible (puisque la marge vaut $`2/\lVert\mathbf{w}\rVert`$ : plus le bas de la fraction est petit, plus la fraction est grande). Une fonction **lisse**, c'est une courbe sans coin ni cassure, toute douce, sur laquelle un calcul de pente glisse facilement.
 
@@ -269,7 +271,9 @@ Cette écriture révèle la SVM sous un jour moderne : c'est une **minimisation 
 
 #### Exemple chiffré déroulé (marge souple, calcul à la main)
 
-Reprenons $`x_1=+1\,(y_1=+1)`$, $`x_2=-1\,(y_2=-1)`$ en dimension 1, et ajoutons un intrus $`x_3 = -0.2`$ étiqueté $`y_3 = +1`$ (un "plus" tombé du côté des "moins"). Avec $`w=1, b=0`$ (la frontière précédente), les pertes charnière valent (dans ce qui suit, le point « $`\cdot`$ » est simplement le signe de la **multiplication**, comme le « × » de l'école : $`1\cdot 1`$ veut dire $`1\times 1`$) :
+Reprenons $`x_1=+1\,(y_1=+1)`$, $`x_2=-1\,(y_2=-1)`$ en dimension 1, et ajoutons un intrus $`x_3 = -0.2`$ étiqueté $`y_3 = +1`$ (un "plus" tombé du côté des "moins"). Avec $`w=1, b=0`$ (la frontière précédente), les pertes charnière valent (le point $`\cdot`$ y désigne la **multiplication**) :
+
+> **Le symbole $`\cdot`$ .** Dans tout ce qui suit, le point $`\cdot`$ est simplement le signe de la multiplication, comme le « × » de l'école : $`1\cdot 1`$ veut dire $`1\times 1`$ .
 
 - point 1 : $`\max(0, 1 - 1\cdot(1\cdot 1)) = \max(0,0) = 0`$ ;
 - point 2 : $`\max(0, 1 - (-1)\cdot(1\cdot(-1))) = \max(0, 1 - 1) = 0`$ ;

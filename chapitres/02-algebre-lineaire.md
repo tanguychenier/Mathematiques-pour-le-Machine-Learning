@@ -99,7 +99,11 @@ $`(x_1 + x_2) + (x_1 - x_2) = 10 + 2`$, soit $`2x_1 = 12`$, donc $`x_1 = 6`$.
 A\mathbf{x} = \mathbf{b}.
 ```
 
-Nous définirons proprement ce produit dans les deux prochaines sections. Retenez déjà l'idée : **un système = une équation matricielle**. C'est la pierre angulaire de tout le chapitre, et la raison pour laquelle l'algèbre linéaire est le langage natif du machine learning : ajuster un modèle linéaire à des données, c'est résoudre (au sens des moindres carrés : c'est-à-dire en cherchant la réponse qui rend l'erreur totale la plus petite possible, en additionnant les carrés des écarts, faute de pouvoir tomber juste partout ; on y revient en détail plus loin) un système $`A\mathbf{x} = \mathbf{b}`$ où $`A`$ contient les données et $`\mathbf{x}`$ les paramètres à apprendre (les réglages que la machine cherche, comme les boutons d'une radio qu'on tourne jusqu'à capter la bonne station).
+Nous définirons proprement ce produit dans les deux prochaines sections. Retenez déjà l'idée : **un système = une équation matricielle**. C'est la pierre angulaire de tout le chapitre, et la raison pour laquelle l'algèbre linéaire est le langage natif du machine learning : ajuster un modèle linéaire à des données, c'est résoudre, au sens des **moindres carrés**, un système $`A\mathbf{x} = \mathbf{b}`$ où $`A`$ contient les données et $`\mathbf{x}`$ les **paramètres à apprendre**.
+
+> **Que veut dire « au sens des moindres carrés » ?** Cela signifie qu'on cherche la réponse qui rend l'erreur totale la plus petite possible, en additionnant les carrés des écarts, faute de pouvoir tomber juste partout. On y revient en détail plus loin.
+
+> **Que veut dire « paramètres à apprendre » ?** Ce sont les réglages que la machine cherche, comme les boutons d'une radio qu'on tourne jusqu'à capter la bonne station.
 
 #### En Python
 
@@ -286,7 +290,11 @@ A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}, \quad \det A = ad - bc, \qquad
 
 #### Application machine learning
 
-Le produit matriciel **est** le calcul fondamental des réseaux de neurones (un **réseau de neurones** est un programme qui apprend à partir d'exemples : il enchaîne des transformations simples des nombres d'entrée pour produire une réponse, et on l'« entraîne » en réglant ces transformations jusqu'à ce qu'il se trompe le moins possible). Une couche dense (fully connected : une **couche** est une étape du calcul, et « dense » veut dire que chaque entrée influence chaque sortie) qui transforme un vecteur d'entrée $`\mathbf{x} \in \mathbb{R}^n`$ en sortie $`\mathbf{y}\in\mathbb{R}^m`$ s'écrit $`\mathbf{y} = W\mathbf{x} + \mathbf{b}`$, où $`W \in \mathbb{R}^{m\times n}`$ est la matrice de **poids** (weights) et $`\mathbf{b}`$ le **biais** (bias). Empiler $`L`$ couches, c'est composer des produits matriciels (entrecoupés de non-linéarités). Entraîner un réseau, c'est ajuster les coefficients de tous les $`W`$.
+Le produit matriciel **est** le calcul fondamental des **réseaux de neurones**. Une **couche dense** (fully connected) qui transforme un vecteur d'entrée $`\mathbf{x} \in \mathbb{R}^n`$ en sortie $`\mathbf{y}\in\mathbb{R}^m`$ s'écrit $`\mathbf{y} = W\mathbf{x} + \mathbf{b}`$, où $`W \in \mathbb{R}^{m\times n}`$ est la matrice de **poids** (weights) et $`\mathbf{b}`$ le **biais** (bias). Empiler $`L`$ couches, c'est composer des produits matriciels (entrecoupés de non-linéarités). Entraîner un réseau, c'est ajuster les coefficients de tous les $`W`$.
+
+> **Que veut dire « réseau de neurones » ?** C'est un programme qui apprend à partir d'exemples : il enchaîne des transformations simples des nombres d'entrée pour produire une réponse, et on l'« entraîne » en réglant ces transformations jusqu'à ce qu'il se trompe le moins possible.
+
+> **Que veut dire « couche dense » ?** Une **couche** est une étape du calcul, et « dense » veut dire que chaque entrée influence chaque sortie.
 
 > **Mise à jour 2026.** Sur GPU et TPU, le produit matriciel est l'opération reine : les bibliothèques modernes (cuBLAS, et les noyaux Triton/CUTLASS, qui sont des outils logiciels spécialisés pour calculer vite, dont les noms importent peu ici) y consacrent l'essentiel de leur optimisation, et les unités matérielles dédiées (Tensor Cores) calculent des produits de blocs en **précision mixte**. La précision mixte consiste à coder les nombres sur moins de bits (les formats bfloat16 et FP8, plus légers que les nombres habituels) pour aller plus vite, au prix d'un peu de précision. Côté logiciel, JAX et PyTorch reposent sur des outils dédiés (`einsum` pour écrire les produits de façon compacte, l'auto-vectorisation `vmap` pour les appliquer en masse) ; ne retenez ici qu'une chose : un modèle de langage de plusieurs centaines de milliards de paramètres n'est, au fond, qu'une longue chaîne de produits matriciels optimisés.
 
@@ -520,13 +528,19 @@ En revanche $`G=\{(x,y,z):x+2y-z = 5\}`$ n'en est pas un : $`\mathbf{0}\notin G`
 > ```
 > C'est le **plus petit** sous-espace contenant $`S`$.
 
-Intuition : $`\mathrm{Vect}(\mathbf{v})`$ est la droite portée par $`\mathbf{v}`$ (si $`\mathbf{v}\ne\mathbf{0}`$) ; $`\mathrm{Vect}(\mathbf{u},\mathbf{v})`$ est le plan qu'ils tendent (si non colinéaires : deux vecteurs sont **colinéaires** quand ils pointent dans la même direction ou la direction opposée, c'est-à-dire que l'un est un multiple de l'autre, comme deux flèches portées par une même ligne). « Engendrer » l'espace, c'est pouvoir l'atteindre **entièrement** par combinaisons.
+Intuition : $`\mathrm{Vect}(\mathbf{v})`$ est la droite portée par $`\mathbf{v}`$ (si $`\mathbf{v}\ne\mathbf{0}`$) ; $`\mathrm{Vect}(\mathbf{u},\mathbf{v})`$ est le plan qu'ils tendent, à condition qu'ils ne soient pas **colinéaires**. « Engendrer » l'espace, c'est pouvoir l'atteindre **entièrement** par combinaisons.
+
+> **Que veut dire « colinéaires » ?** Deux vecteurs sont colinéaires quand ils pointent dans la même direction ou la direction opposée, c'est-à-dire que l'un est un multiple de l'autre, comme deux flèches portées par une même ligne.
 
 ![Combinaison lineaire : on etire deux directions de base puis on les met bout a bout pour atteindre un point](../assets/combinaison-lineaire.svg)
 
 #### Application machine learning
 
-L'espace des **paramètres** d'un modèle est un espace vectoriel : un réseau à $`P`$ poids vit dans $`\mathbb{R}^P`$; l'optimisation se promène dans cet espace. (**Optimiser**, c'est chercher le meilleur réglage possible : la valeur des paramètres qui rend l'erreur la plus faible, comme on règle la hauteur d'une chaise jusqu'à la position la plus confortable.) L'espace des **caractéristiques** (features) est lui aussi vectoriel. Additionner deux plongements (embeddings) de mots, c'est de l'algèbre vectorielle, et c'est ce qui rend possibles les fameuses analogies « roi $`-`$ homme $`+`$ femme $`\approx`$ reine ». Enfin, l'ensemble des fonctions représentables par une architecture donnée n'est pas toujours un espace vectoriel (à cause des non-linéarités), mais beaucoup de raisonnements locaux (autour d'un point, via la différentielle) **le sont**: c'est tout l'intérêt de la linéarisation.
+L'espace des **paramètres** d'un modèle est un espace vectoriel : un réseau à $`P`$ poids vit dans $`\mathbb{R}^P`$; l'**optimisation** se promène dans cet espace. L'espace des **caractéristiques** (features) est lui aussi vectoriel.
+
+> **Que veut dire « optimiser » ?** C'est chercher le meilleur réglage possible : la valeur des paramètres qui rend l'erreur la plus faible, comme on règle la hauteur d'une chaise jusqu'à la position la plus confortable.
+
+Additionner deux plongements (embeddings) de mots, c'est de l'algèbre vectorielle, et c'est ce qui rend possibles les fameuses analogies « roi $`-`$ homme $`+`$ femme $`\approx`$ reine ». Enfin, l'ensemble des fonctions représentables par une architecture donnée n'est pas toujours un espace vectoriel (à cause des non-linéarités), mais beaucoup de raisonnements locaux (autour d'un point, via la différentielle) **le sont**: c'est tout l'intérêt de la linéarisation.
 
 ```python
 import numpy as np
@@ -605,7 +619,13 @@ ns = np.linalg.svd(V)[2][r:].T    # base du noyau (a transposer)
 print(np.round(ns / ns[np.argmax(np.abs(ns))], 3).ravel())  # ~ (-2,-1,1) a un facteur pres
 ```
 
-> **Application machine learning : la multicolinéarité.** Quand deux caractéristiques (colonnes de la matrice de données) sont (presque) linéairement dépendantes, on parle de **multicolinéarité**. Elle rend les paramètres d'une régression (une **régression** est la recherche de la formule qui relie au mieux des données à une quantité à prédire, par exemple deviner le prix d'un appartement à partir de sa surface) instables (la matrice $`X^\top X`$ devient mal conditionnée, presque singulière). Détecter et traiter cette dépendance, par sélection de variables, par **régularisation** (la **régularisation** consiste à ajouter une petite contrainte qui empêche le modèle de partir dans les extrêmes et le rend plus stable ; Ridge ajoute $`\lambda I`$ pour rendre $`X^\top X + \lambda I`$ inversible), ou par ACP (l'**analyse en composantes principales**, détaillée plus loin : une méthode qui résume les données en gardant les quelques directions les plus importantes), est une tâche quotidienne du praticien.
+> **Application machine learning : la multicolinéarité.** Quand deux caractéristiques (colonnes de la matrice de données) sont (presque) linéairement dépendantes, on parle de **multicolinéarité**. Elle rend les paramètres d'une **régression** instables (la matrice $`X^\top X`$ devient mal conditionnée, presque singulière). Détecter et traiter cette dépendance, par sélection de variables, par **régularisation**, ou par **ACP**, est une tâche quotidienne du praticien.
+
+> **Que veut dire « régression » ?** C'est la recherche de la formule qui relie au mieux des données à une quantité à prédire, par exemple deviner le prix d'un appartement à partir de sa surface.
+
+> **Que veut dire « régularisation » ?** Elle consiste à ajouter une petite contrainte qui empêche le modèle de partir dans les extrêmes et le rend plus stable. Ridge ajoute $`\lambda I`$ pour rendre $`X^\top X + \lambda I`$ inversible.
+
+> **Que veut dire « ACP » ?** L'**analyse en composantes principales**, détaillée plus loin, est une méthode qui résume les données en gardant les quelques directions les plus importantes.
 
 ---
 
@@ -699,7 +719,9 @@ Une **application linéaire** est une fonction entre espaces vectoriels qui **re
 > ```math
 > \forall \mathbf{u},\mathbf{v}\in E,\ \forall \lambda\in\mathbb{R}:\quad f(\mathbf{u}+\mathbf{v}) = f(\mathbf{u})+f(\mathbf{v}) \quad\text{et}\quad f(\lambda\mathbf{u}) = \lambda f(\mathbf{u}).
 > ```
-> De manière équivalente, en une seule condition : $`f(\lambda\mathbf{u}+\mu\mathbf{v}) = \lambda f(\mathbf{u})+\mu f(\mathbf{v})`$. On note $`\mathcal{L}(E,F)`$ l'ensemble de ces applications. Si $`E=F`$, $`f`$ est un **endomorphisme** (le mot dit « transformation qui reste dans le même espace » : le départ et l'arrivée sont le même monde) ; une application linéaire bijective est un **isomorphisme** (« même forme » : une transformation parfaitement réversible, qui apparie chaque vecteur de départ à un unique vecteur d'arrivée sans rien perdre ni mélanger, comme une traduction qu'on peut faire dans les deux sens sans perte). Une application est **bijective** quand elle réalise un appariement un-pour-un parfait entre départ et arrivée : à chaque entrée correspond exactement une sortie, et réciproquement.
+> De manière équivalente, en une seule condition : $`f(\lambda\mathbf{u}+\mu\mathbf{v}) = \lambda f(\mathbf{u})+\mu f(\mathbf{v})`$. On note $`\mathcal{L}(E,F)`$ l'ensemble de ces applications. Si $`E=F`$, $`f`$ est un **endomorphisme** (le mot dit « transformation qui reste dans le même espace » : le départ et l'arrivée sont le même monde) ; une application linéaire bijective est un **isomorphisme**. Une application est **bijective** quand elle réalise un appariement un-pour-un parfait entre départ et arrivée : à chaque entrée correspond exactement une sortie, et réciproquement.
+
+> **Que veut dire « isomorphisme » ?** Le mot signifie « même forme » : c'est une transformation parfaitement réversible, qui apparie chaque vecteur de départ à un unique vecteur d'arrivée sans rien perdre ni mélanger, comme une traduction qu'on peut faire dans les deux sens sans perte.
 
 Conséquence immédiate : $`f(\mathbf{0}_E) = \mathbf{0}_F`$ (poser $`\lambda=0`$ dans $`f(\lambda\mathbf{u}) = \lambda f(\mathbf{u})`$). Une application linéaire **fixe toujours l'origine**, d'où l'exclusion des translations.
 
@@ -771,7 +793,11 @@ C'est **vide** ($`\mathbf{b}\notin\mathrm{Im} A`$), un **point** ($`\ker A=\{\ma
 
 #### Application machine learning
 
-Un réseau de neurones **sans** fonction d'activation (une **fonction d'activation** est une petite opération qui « courbe » le calcul entre deux couches, par exemple en mettant à zéro les valeurs négatives ; sans elle, tout resterait des lignes droites) s'effondrerait en une **seule** application affine (composition d'applications affines = application affine), incapable d'apprendre des frontières courbes : c'est précisément pour briser cette linéarité qu'on intercale des non-linéarités (ReLU, GELU). À l'inverse, la **rétropropagation** (backpropagation : la méthode par laquelle le réseau, après s'être trompé, remonte le calcul de la fin vers le début pour savoir comment corriger chaque poids ; on « propage l'erreur en arrière ») est, à chaque pas, du calcul **linéaire**: le gradient se propage en arrière par des produits avec les **transposées** des matrices de poids (la jacobienne d'une couche linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$ est la matrice de poids $`W`$ elle-même). La **jacobienne** d'une fonction est le tableau de toutes ses dérivées partielles, c'est-à-dire de combien chaque sortie bouge quand on bouge légèrement chacune des entrées ; pour une application linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$, ce tableau est tout simplement $`W`$. Le calcul détaillé des jacobiennes relève du chapitre d'analyse (comme celui du gradient) ; on s'en sert ici comme d'un objet linéaire de plus. Comprendre noyau et image éclaire aussi la **capacité** d'un modèle et les directions que le réseau ne « voit » pas.
+Un réseau de neurones **sans** **fonction d'activation** s'effondrerait en une **seule** application affine (composition d'applications affines = application affine), incapable d'apprendre des frontières courbes : c'est précisément pour briser cette linéarité qu'on intercale des non-linéarités (ReLU, GELU). À l'inverse, la **rétropropagation** (backpropagation) est, à chaque pas, du calcul **linéaire**: le gradient se propage en arrière par des produits avec les **transposées** des matrices de poids (la jacobienne d'une couche linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$ est la matrice de poids $`W`$ elle-même). La **jacobienne** d'une fonction est le tableau de toutes ses dérivées partielles, c'est-à-dire de combien chaque sortie bouge quand on bouge légèrement chacune des entrées ; pour une application linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$, ce tableau est tout simplement $`W`$. Le calcul détaillé des jacobiennes relève du chapitre d'analyse (comme celui du gradient) ; on s'en sert ici comme d'un objet linéaire de plus. Comprendre noyau et image éclaire aussi la **capacité** d'un modèle et les directions que le réseau ne « voit » pas.
+
+> **Que veut dire « fonction d'activation » ?** C'est une petite opération qui « courbe » le calcul entre deux couches, par exemple en mettant à zéro les valeurs négatives ; sans elle, tout resterait des lignes droites.
+
+> **Que veut dire « rétropropagation » ?** C'est la méthode par laquelle le réseau, après s'être trompé, remonte le calcul de la fin vers le début pour savoir comment corriger chaque poids ; on « propage l'erreur en arrière ».
 
 ```python
 import numpy as np
@@ -842,7 +868,11 @@ La contrainte $`\sum\lambda_i = 1`$ est ce qui rend l'opération **bien définie
 
 #### Application machine learning
 
-La frontière de décision d'un classifieur linéaire (un **classifieur** est un programme qui range les exemples dans des catégories, par exemple « chat » ou « chien » ; la **frontière de décision** est la limite qui sépare ces catégories, comme un trait de craie au sol entre deux camps) est un **hyperplan affine** $`\{\mathbf{x}: \mathbf{w}^\top\mathbf{x} + b = 0\}`$: c'est le terme de **biais** $`b`$ qui le décolle de l'origine, le transformant d'un hyperplan vectoriel en hyperplan **affine**.
+La **frontière de décision** d'un **classifieur** linéaire est un **hyperplan affine** $`\{\mathbf{x}: \mathbf{w}^\top\mathbf{x} + b = 0\}`$: c'est le terme de **biais** $`b`$ qui le décolle de l'origine, le transformant d'un hyperplan vectoriel en hyperplan **affine**.
+
+> **Que veut dire « classifieur » ?** C'est un programme qui range les exemples dans des catégories, par exemple « chat » ou « chien ».
+
+> **Que veut dire « frontière de décision » ?** C'est la limite qui sépare ces catégories, comme un trait de craie au sol entre deux camps.
 
 > **Le mot « hyperplan ».** Un **hyperplan** est la généralisation de l'idée de « plan » à n'importe quelle dimension : c'est une « tranche plate » qui coupe l'espace en deux moitiés. En dimension 2 (une feuille), un hyperplan est une simple **droite** ; en dimension 3 (l'espace usuel), c'est un **plan** ordinaire ; en dimension plus grande, on ne peut plus le dessiner, mais c'est toujours « la cloison plate qui sépare en deux ». Le préfixe « hyper » dit juste « en dimension quelconque, possiblement très grande ». La couche $`\mathbf{x}\mapsto W\mathbf{x}+\mathbf{b}`$ est une **transformation affine** (linéaire + translation), brique élémentaire de tout réseau. Et l'**interpolation** entre deux modèles ou deux embeddings, $`(1-t)\boldsymbol{\theta}_1 + t\boldsymbol{\theta}_2`$, est une combinaison affine, au cœur du **model merging** (fusion de modèles).
 
@@ -876,7 +906,11 @@ Cette section rassemble et approfondit les liens déjà semés, pour montrer que
 
 #### Les données sont des matrices
 
-Un jeu de données de $`N`$ exemples à $`d`$ caractéristiques est une matrice $`X\in\mathbb{R}^{N\times d}`$: une **ligne par exemple**, une **colonne par caractéristique**. Une image est un vecteur (ou un tenseur : un **tenseur** est la généralisation du tableau de nombres à plus de deux dimensions ; un nombre seul est un tenseur à 0 dimension, un vecteur à 1 dimension, une matrice à 2 dimensions, et une image couleur, qui a une hauteur, une largeur et trois couleurs, est un tenseur à 3 dimensions, comme un empilement de feuilles) ; un corpus de texte devient une matrice terme-document ou une pile de plongements. Le premier réflexe du praticien est **toujours**: « quelle est la forme (shape) de mon tableau, que représentent ses lignes et ses colonnes ? »
+Un jeu de données de $`N`$ exemples à $`d`$ caractéristiques est une matrice $`X\in\mathbb{R}^{N\times d}`$: une **ligne par exemple**, une **colonne par caractéristique**. Une image est un vecteur (ou un **tenseur**) ; un corpus de texte devient une matrice terme-document ou une pile de plongements.
+
+> **Que veut dire « tenseur » ?** C'est la généralisation du tableau de nombres à plus de deux dimensions : un nombre seul est un tenseur à 0 dimension, un vecteur à 1 dimension, une matrice à 2 dimensions, et une image couleur, qui a une hauteur, une largeur et trois couleurs, est un tenseur à 3 dimensions, comme un empilement de feuilles.
+
+Le premier réflexe du praticien est **toujours**: « quelle est la forme (shape) de mon tableau, que représentent ses lignes et ses colonnes ? »
 
 #### La régression linéaire et les moindres carrés
 
@@ -914,13 +948,19 @@ print(np.round(beta_hat, 3))                        # ~ [ 2. -1.  0.5]
 
 #### Le produit scalaire, les normes et la similarité
 
-Le produit scalaire $`\mathbf{u}^\top\mathbf{v}`$ mesure l'alignement de deux vecteurs ; normalisé, il donne la **similarité cosinus** $`\cos(\mathbf{u},\mathbf{v}) = \frac{\mathbf{u}^\top\mathbf{v}}{\lVert\mathbf{u}\rVert\,\lVert\mathbf{v}\rVert}`$, omniprésente dans la recherche sémantique et les recommandations. C'est exactement le cœur de l'**attention** des Transformers (l'**attention** est le mécanisme par lequel un modèle de langage décide, pour chaque mot, quels autres mots du texte sont les plus pertinents à regarder ; un **Transformer** est l'architecture de réseau qui équipe les grands modèles de langage actuels) : les scores $`\mathbf{q}^\top\mathbf{k}`$ entre requêtes (queries) et clés (keys) sont des produits scalaires, organisés en un grand produit matriciel $`QK^\top`$.
+Le produit scalaire $`\mathbf{u}^\top\mathbf{v}`$ mesure l'alignement de deux vecteurs ; normalisé, il donne la **similarité cosinus** $`\cos(\mathbf{u},\mathbf{v}) = \frac{\mathbf{u}^\top\mathbf{v}}{\lVert\mathbf{u}\rVert\,\lVert\mathbf{v}\rVert}`$, omniprésente dans la recherche sémantique et les recommandations. C'est exactement le cœur de l'**attention** des **Transformers** : les scores $`\mathbf{q}^\top\mathbf{k}`$ entre requêtes (queries) et clés (keys) sont des produits scalaires, organisés en un grand produit matriciel $`QK^\top`$.
+
+> **Que veut dire « attention » ?** C'est le mécanisme par lequel un modèle de langage décide, pour chaque mot, quels autres mots du texte sont les plus pertinents à regarder.
+
+> **Que veut dire « Transformer » ?** C'est l'architecture de réseau qui équipe les grands modèles de langage actuels.
 
 #### Valeurs propres, décomposition spectrale et SVD
 
 > **Le symbole valeur propre $`\lambda`$ et vecteur propre $`\mathbf{v}`$.** Pour une matrice carrée $`A`$, un **vecteur propre** (eigenvector) est une direction **que $`A`$ ne fait que dilater** sans la dévier : $`A\mathbf{v} = \lambda\mathbf{v}`$ avec $`\mathbf{v}\ne\mathbf{0}`$, où le scalaire $`\lambda`$ (valeur propre, eigenvalue) est le **facteur d'étirement** le long de cette direction. Ce sont les « axes naturels » de la transformation.
 
-> **Définition (valeurs/vecteurs propres).** $`\lambda\in\mathbb{R}`$ est **valeur propre** de $`A\in\mathbb{R}^{n\times n}`$ s'il existe $`\mathbf{v}\ne\mathbf{0}`$ avec $`A\mathbf{v}=\lambda\mathbf{v}`$. Cela équivaut à $`\det(A-\lambda I_n)=0`$ (le **polynôme caractéristique** : en développant ce déterminant, on obtient une expression où $`\lambda`$ est la seule lettre inconnue, et résoudre « cette expression = 0 » donne précisément les valeurs propres). Attention : une matrice réelle peut n'avoir **aucune** valeur propre réelle (par exemple la rotation d'angle 90° du plan, qui ne laisse aucune direction inchangée) ; l'équivalence ci-dessus porte alors sur les seuls $`\lambda`$ réels. En revanche, si $`A`$ est **symétrique** ($`A=A^\top`$), le **théorème spectral** garantit que toutes ses valeurs propres sont réelles et qu'il existe une base orthonormée de vecteurs propres : $`A = Q\Lambda Q^\top`$ avec $`Q`$ orthogonale ($`Q^\top Q = I_n`$) et $`\Lambda`$ diagonale.
+> **Définition (valeurs/vecteurs propres).** $`\lambda\in\mathbb{R}`$ est **valeur propre** de $`A\in\mathbb{R}^{n\times n}`$ s'il existe $`\mathbf{v}\ne\mathbf{0}`$ avec $`A\mathbf{v}=\lambda\mathbf{v}`$. Cela équivaut à $`\det(A-\lambda I_n)=0`$, l'équation du **polynôme caractéristique**. Attention : une matrice réelle peut n'avoir **aucune** valeur propre réelle (par exemple la rotation d'angle 90° du plan, qui ne laisse aucune direction inchangée) ; l'équivalence ci-dessus porte alors sur les seuls $`\lambda`$ réels. En revanche, si $`A`$ est **symétrique** ($`A=A^\top`$), le **théorème spectral** garantit que toutes ses valeurs propres sont réelles et qu'il existe une base orthonormée de vecteurs propres : $`A = Q\Lambda Q^\top`$ avec $`Q`$ orthogonale ($`Q^\top Q = I_n`$) et $`\Lambda`$ diagonale.
+
+> **Que veut dire « polynôme caractéristique » ?** En développant le déterminant $`\det(A-\lambda I_n)`$, on obtient une expression où $`\lambda`$ est la seule lettre inconnue, et résoudre « cette expression = 0 » donne précisément les valeurs propres.
 
 La **décomposition en valeurs singulières** (SVD) généralise cela à **toute** matrice $`A\in\mathbb{R}^{m\times n}`$:
 ```math
@@ -930,7 +970,9 @@ avec $`U\in\mathbb{R}^{m\times m}`$ et $`V\in\mathbb{R}^{n\times n}`$ orthogonal
 
 #### L'analyse en composantes principales (ACP)
 
-> **Définition (ACP / PCA).** Sur des données **centrées** $`X`$ (**centrer** les données, c'est leur retrancher leur moyenne pour que le nuage de points soit recalé autour de zéro, comme remettre l'aiguille d'une balance à zéro avant de peser), l'**analyse en composantes principales** cherche les directions orthogonales de **variance maximale** (les directions le long desquelles le nuage de points est le plus étalé). Ce sont les vecteurs propres de la matrice de covariance $`C = \tfrac{1}{N}X^\top X`$, ou, de manière équivalente et numériquement préférable, les vecteurs singuliers droits ($`V`$) de $`X`$. La **matrice de covariance** regroupe, dans sa case $`(i,j)`$, la **covariance** entre la caractéristique $`i`$ et la caractéristique $`j`$, c'est-à-dire leur tendance à varier ensemble (positive si elles montent en même temps, négative si l'une monte quand l'autre descend) ; sur sa diagonale, on retrouve la variance de chaque caractéristique. Projeter sur les $`k`$ premières composantes **comprime** les données en perdant le moins de variance possible.
+> **Définition (ACP / PCA).** Sur des données **centrées** $`X`$, l'**analyse en composantes principales** cherche les directions orthogonales de **variance maximale** (les directions le long desquelles le nuage de points est le plus étalé). Ce sont les vecteurs propres de la matrice de covariance $`C = \tfrac{1}{N}X^\top X`$, ou, de manière équivalente et numériquement préférable, les vecteurs singuliers droits ($`V`$) de $`X`$. La **matrice de covariance** regroupe, dans sa case $`(i,j)`$, la **covariance** entre la caractéristique $`i`$ et la caractéristique $`j`$, c'est-à-dire leur tendance à varier ensemble (positive si elles montent en même temps, négative si l'une monte quand l'autre descend) ; sur sa diagonale, on retrouve la variance de chaque caractéristique. Projeter sur les $`k`$ premières composantes **comprime** les données en perdant le moins de variance possible.
+
+> **Que veut dire « centrer » les données ?** C'est leur retrancher leur moyenne pour que le nuage de points soit recalé autour de zéro, comme remettre l'aiguille d'une balance à zéro avant de peser.
 
 ```python
 import numpy as np

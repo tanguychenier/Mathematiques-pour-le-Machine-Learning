@@ -14,7 +14,11 @@ Avant de parler de géométrie, il faut savoir **mesurer**. En géométrie analy
 
 Imaginez une flèche dessinée sur une feuille, partant de l'origine. Sa norme, c'est tout simplement sa **longueur**: la distance entre la pointe et la queue. Si la flèche est deux fois plus longue, sa norme double. Si la flèche est réduite à un point (le vecteur nul), sa norme vaut zéro. Une norme ne peut jamais être négative : une longueur négative n'a aucun sens.
 
-Mais, et c'est le cœur de l'affaire, il existe **plusieurs façons légitimes** de mesurer une « longueur ». À vol d'oiseau (la distance euclidienne usuelle ; le mot **euclidienne** vient d'Euclide, un mathématicien grec de l'Antiquité, et désigne la géométrie « ordinaire » de la règle et du compas que l'on apprend à l'école), ou à la manière d'un taxi qui ne peut rouler que dans des rues perpendiculaires (deux directions **perpendiculaires** forment un angle droit, comme le coin d'une feuille ; c'est la distance de Manhattan). Ce sont des normes différentes, toutes valides.
+Mais, et c'est le cœur de l'affaire, il existe **plusieurs façons légitimes** de mesurer une « longueur ». À vol d'oiseau (la distance **euclidienne** usuelle), ou à la manière d'un taxi qui ne peut rouler que dans des rues **perpendiculaires** (la distance de Manhattan). Ce sont des normes différentes, toutes valides.
+
+> **Que veut dire « euclidienne » ?** Le mot **euclidienne** vient d'Euclide, un mathématicien grec de l'Antiquité, et désigne la géométrie « ordinaire » de la règle et du compas, celle que l'on apprend à l'école. La distance euclidienne est donc la distance « à vol d'oiseau », la longueur usuelle.
+
+> **Que veut dire « perpendiculaire » ?** Deux directions sont **perpendiculaires** lorsqu'elles forment un angle droit, comme les deux bords qui se rejoignent au coin d'une feuille.
 
 #### Définition rigoureuse
 
