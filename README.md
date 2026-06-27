@@ -1193,13 +1193,13 @@ La colonne de $x_3$ n'a pas de pivot : posons $x_3 = t$, $t\in\mathbb{R}$. Alors
 
 #### Theoreme de Rouche-Capelli
 
-> **Le symbole rang, $\operatorname{rg}(A)$.** Le **rang** d'une matrice est le **nombre de pivots** obtenus apres elimination, autrement dit le nombre d'equations vraiment « independantes » (qui apportent une information nouvelle). On le definira rigoureusement plus loin ; ici, comptez les pivots.
+> **Le symbole rang, $\mathrm{rg}(A)$.** Le **rang** d'une matrice est le **nombre de pivots** obtenus apres elimination, autrement dit le nombre d'equations vraiment « independantes » (qui apportent une information nouvelle). On le definira rigoureusement plus loin ; ici, comptez les pivots.
 
 > **Theoreme (Rouche-Capelli).** Le systeme $A\mathbf{x}=\mathbf{b}$, avec $A\in\mathbb{R}^{m\times n}$, est :
-> - **compatible** (au moins une solution) si et seulement si $\operatorname{rg}(A) = \operatorname{rg}([A\mid \mathbf{b}])$ ;
-> - dans ce cas, la solution est **unique** si $\operatorname{rg}(A) = n$, et il y a une **infinite** de solutions a $n - \operatorname{rg}(A)$ parametres libres si $\operatorname{rg}(A) < n$.
+> - **compatible** (au moins une solution) si et seulement si $\mathrm{rg}(A) = \mathrm{rg}([A\mid \mathbf{b}])$ ;
+> - dans ce cas, la solution est **unique** si $\mathrm{rg}(A) = n$, et il y a une **infinite** de solutions a $n - \mathrm{rg}(A)$ parametres libres si $\mathrm{rg}(A) < n$.
 
-**Idee de preuve.** Apres elimination, une incompatibilite se manifeste par une ligne $[0\ \cdots\ 0 \mid c]$ avec $c\ne 0$ (l'equation $0 = c$ est absurde) : cela arrive exactement quand ajouter la colonne $\mathbf{b}$ cree un pivot supplementaire, c'est-a-dire $\operatorname{rg}([A\mid\mathbf{b}]) > \operatorname{rg}(A)$. S'il n'y a pas une telle ligne, le nombre d'inconnues libres est $n - \operatorname{rg}(A)$ : nul (solution unique) ou strictement positif (infinite). $\blacksquare$
+**Idee de preuve.** Apres elimination, une incompatibilite se manifeste par une ligne $[0\ \cdots\ 0 \mid c]$ avec $c\ne 0$ (l'equation $0 = c$ est absurde) : cela arrive exactement quand ajouter la colonne $\mathbf{b}$ cree un pivot supplementaire, c'est-a-dire $\mathrm{rg}([A\mid\mathbf{b}]) > \mathrm{rg}(A)$. S'il n'y a pas une telle ligne, le nombre d'inconnues libres est $n - \mathrm{rg}(A)$ : nul (solution unique) ou strictement positif (infinite). $\blacksquare$
 
 #### Complexite et stabilite numerique
 
@@ -1297,13 +1297,13 @@ En revanche $G=\{(x,y,z):x+2y-z = 5\}$ n'en est pas un : $\mathbf{0}\notin G$.
 
 > **Definition (combinaison lineaire).** Une **combinaison lineaire** des vecteurs $\mathbf{v}_1,\dots,\mathbf{v}_k$ est tout vecteur de la forme $\lambda_1\mathbf{v}_1 + \cdots + \lambda_k\mathbf{v}_k = \sum_{i=1}^{k}\lambda_i\mathbf{v}_i$ avec $\lambda_i\in\mathbb{R}$.
 
-> **Definition (sous-espace engendre).** Le **sous-espace engendre** par $S=\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$, note $\operatorname{Vect}(S)$ ou $\operatorname{span}(S)$, est l'ensemble de **toutes** leurs combinaisons lineaires :
+> **Definition (sous-espace engendre).** Le **sous-espace engendre** par $S=\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$, note $\mathrm{Vect}(S)$ ou $\mathrm{span}(S)$, est l'ensemble de **toutes** leurs combinaisons lineaires :
 > ```math
-> \operatorname{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k) = \Big\{ \sum_{i=1}^{k}\lambda_i \mathbf{v}_i : \lambda_i\in\mathbb{R} \Big\}.
+> \mathrm{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k) = \Big\{ \sum_{i=1}^{k}\lambda_i \mathbf{v}_i : \lambda_i\in\mathbb{R} \Big\}.
 > ```
 > C'est le **plus petit** sous-espace contenant $S$.
 
-Intuition : $\operatorname{Vect}(\mathbf{v})$ est la droite portee par $\mathbf{v}$ (si $\mathbf{v}\ne\mathbf{0}$) ; $\operatorname{Vect}(\mathbf{u},\mathbf{v})$ est le plan qu'ils tendent (si non colineaires). « Engendrer » l'espace, c'est pouvoir l'atteindre **entierement** par combinaisons.
+Intuition : $\mathrm{Vect}(\mathbf{v})$ est la droite portee par $\mathbf{v}$ (si $\mathbf{v}\ne\mathbf{0}$) ; $\mathrm{Vect}(\mathbf{u},\mathbf{v})$ est le plan qu'ils tendent (si non colineaires). « Engendrer » l'espace, c'est pouvoir l'atteindre **entierement** par combinaisons.
 
 #### Application machine learning
 
@@ -1369,7 +1369,7 @@ De la 1re : $\lambda_1 = -2\lambda_3$. Dans la 2e : $-4\lambda_3 + \lambda_2 + 5
 
 #### Lien avec le rang et les systemes
 
-Tester l'independance de $k$ vecteurs de $\mathbb{R}^n$, c'est resoudre un systeme homogene $A\boldsymbol{\lambda} = \mathbf{0}$ ou $A$ a ces vecteurs **en colonnes**. La famille est libre $\iff$ ce systeme n'a **que** la solution nulle $\iff \operatorname{rg}(A) = k$ (un pivot par colonne). C'est le pont direct entre independance et elimination de Gauss.
+Tester l'independance de $k$ vecteurs de $\mathbb{R}^n$, c'est resoudre un systeme homogene $A\boldsymbol{\lambda} = \mathbf{0}$ ou $A$ a ces vecteurs **en colonnes**. La famille est libre $\iff$ ce systeme n'a **que** la solution nulle $\iff \mathrm{rg}(A) = k$ (un pivot par colonne). C'est le pont direct entre independance et elimination de Gauss.
 
 ```python
 import numpy as np
@@ -1398,7 +1398,7 @@ Pour reperer n'importe quel point d'une ville, deux directions suffisent et sont
 
 #### Definitions
 
-> **Definition (famille generatrice).** Une famille $(\mathbf{v}_1,\dots,\mathbf{v}_k)$ **engendre** $E$ (est **generatrice**) si $\operatorname{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k) = E$ : tout vecteur de $E$ est combinaison lineaire des $\mathbf{v}_i$.
+> **Definition (famille generatrice).** Une famille $(\mathbf{v}_1,\dots,\mathbf{v}_k)$ **engendre** $E$ (est **generatrice**) si $\mathrm{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k) = E$ : tout vecteur de $E$ est combinaison lineaire des $\mathbf{v}_i$.
 
 > **Definition (base).** Une **base** de $E$ est une famille a la fois **libre** et **generatrice**.
 
@@ -1426,15 +1426,15 @@ Pour reperer n'importe quel point d'une ville, deux directions suffisent et sont
 
 #### Le rang, proprement
 
-> **Definition (rang).** Le **rang** d'une famille de vecteurs est la dimension du sous-espace qu'ils engendrent : $\operatorname{rg}(\mathbf{v}_1,\dots,\mathbf{v}_k) = \dim \operatorname{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k)$. Le **rang d'une matrice** $A$ est le rang de la famille de ses **colonnes**.
+> **Definition (rang).** Le **rang** d'une famille de vecteurs est la dimension du sous-espace qu'ils engendrent : $\mathrm{rg}(\mathbf{v}_1,\dots,\mathbf{v}_k) = \dim \mathrm{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k)$. Le **rang d'une matrice** $A$ est le rang de la famille de ses **colonnes**.
 
-> **Theoreme (rang lignes = rang colonnes).** Pour toute matrice $A\in\mathbb{R}^{m\times n}$, le rang de la famille des colonnes egale le rang de la famille des lignes. On parle donc simplement du **rang de $A$**, et $\operatorname{rg}(A) \le \min(m,n)$.
+> **Theoreme (rang lignes = rang colonnes).** Pour toute matrice $A\in\mathbb{R}^{m\times n}$, le rang de la famille des colonnes egale le rang de la famille des lignes. On parle donc simplement du **rang de $A$**, et $\mathrm{rg}(A) \le \min(m,n)$.
 
-C'est un theoreme profond : l'« information » portee par les lignes et par les colonnes est la **meme quantite**. Operationnellement, $\operatorname{rg}(A)$ est le nombre de pivots de la forme echelonnee — invariant par operations elementaires.
+C'est un theoreme profond : l'« information » portee par les lignes et par les colonnes est la **meme quantite**. Operationnellement, $\mathrm{rg}(A)$ est le nombre de pivots de la forme echelonnee — invariant par operations elementaires.
 
 > **Le theoreme du rang (rang-nullite).** Pour $A\in\mathbb{R}^{m\times n}$ :
 > ```math
-> \operatorname{rg}(A) + \dim\big(\ker A\big) = n,
+> \mathrm{rg}(A) + \dim\big(\ker A\big) = n,
 > ```
 > ou $\ker A = \{\mathbf{x}\in\mathbb{R}^n : A\mathbf{x}=\mathbf{0}\}$ est le **noyau**. Autrement dit : (dimensions atteintes) + (dimensions ecrasees) = (dimensions de depart).
 
@@ -1442,7 +1442,7 @@ C'est un theoreme profond : l'« information » portee par les lignes et par les
 
 #### Exemple chiffre
 
-Pour $A=\begin{pmatrix}1&2&3\\2&4&6\\1&1&1\end{pmatrix}$ : la 2e ligne est le double de la 1re, donc apres elimination il reste 2 pivots, $\operatorname{rg}(A)=2$. Par le theoreme du rang, $\dim\ker A = 3 - 2 = 1$ : le noyau est une droite. Determinons-la : $A\mathbf{x}=\mathbf{0}$ se reduit a $\{\,x+2y+3z=0,\ x+y+z=0\,\}$ (la 2e equation est redondante). En soustrayant, $y + 2z = 0$, soit $y=-2z$ ; puis $x = -y - z = 2z - z = z$. Avec $z=1$, on obtient la direction $(1,-2,1)$. Verification : $A\,(1,-2,1)^\top = (1-4+3,\,2-8+6,\,1-2+1) = (0,0,0)$. Donc $\ker A = \operatorname{Vect}(1,-2,1)$.
+Pour $A=\begin{pmatrix}1&2&3\\2&4&6\\1&1&1\end{pmatrix}$ : la 2e ligne est le double de la 1re, donc apres elimination il reste 2 pivots, $\mathrm{rg}(A)=2$. Par le theoreme du rang, $\dim\ker A = 3 - 2 = 1$ : le noyau est une droite. Determinons-la : $A\mathbf{x}=\mathbf{0}$ se reduit a $\{\,x+2y+3z=0,\ x+y+z=0\,\}$ (la 2e equation est redondante). En soustrayant, $y + 2z = 0$, soit $y=-2z$ ; puis $x = -y - z = 2z - z = z$. Avec $z=1$, on obtient la direction $(1,-2,1)$. Verification : $A\,(1,-2,1)^\top = (1-4+3,\,2-8+6,\,1-2+1) = (0,0,0)$. Donc $\ker A = \mathrm{Vect}(1,-2,1)$.
 
 ```python
 import numpy as np
@@ -1513,36 +1513,36 @@ Pour $\theta=90^\circ$ : $R = \begin{pmatrix}0&-1\\1&0\end{pmatrix}$, et $R\begi
 
 > **Definition (noyau et image).** Pour $f:E\to F$ lineaire :
 > - le **noyau** $\ker f = \{\mathbf{x}\in E : f(\mathbf{x})=\mathbf{0}_F\}$ (ce que $f$ ecrase sur zero) ;
-> - l'**image** $\operatorname{Im} f = \{ f(\mathbf{x}) : \mathbf{x}\in E\}$ (tout ce que $f$ peut produire).
+> - l'**image** $\mathrm{Im} f = \{ f(\mathbf{x}) : \mathbf{x}\in E\}$ (tout ce que $f$ peut produire).
 >
 > Ce sont des **sous-espaces** (de $E$ et de $F$ respectivement). La dimension de l'image s'appelle le **rang de $f$**.
 
 > **Theoreme du rang (forme generale).** Si $E$ est de dimension finie et $f:E\to F$ lineaire :
 > ```math
-> \dim E = \dim(\ker f) + \dim(\operatorname{Im} f) = \dim(\ker f) + \operatorname{rg}(f).
+> \dim E = \dim(\ker f) + \dim(\mathrm{Im} f) = \dim(\ker f) + \mathrm{rg}(f).
 > ```
 
-**Preuve.** Soit $(\mathbf{u}_1,\dots,\mathbf{u}_p)$ une base de $\ker f$, completee (base incomplete) en une base $(\mathbf{u}_1,\dots,\mathbf{u}_p,\mathbf{w}_1,\dots,\mathbf{w}_q)$ de $E$, avec $p+q=\dim E$. Montrons que $(f(\mathbf{w}_1),\dots,f(\mathbf{w}_q))$ est une base de $\operatorname{Im} f$.
+**Preuve.** Soit $(\mathbf{u}_1,\dots,\mathbf{u}_p)$ une base de $\ker f$, completee (base incomplete) en une base $(\mathbf{u}_1,\dots,\mathbf{u}_p,\mathbf{w}_1,\dots,\mathbf{w}_q)$ de $E$, avec $p+q=\dim E$. Montrons que $(f(\mathbf{w}_1),\dots,f(\mathbf{w}_q))$ est une base de $\mathrm{Im} f$.
 *Generatrice* : tout $f(\mathbf{x})$ avec $\mathbf{x}=\sum a_i\mathbf{u}_i + \sum b_j\mathbf{w}_j$ vaut $\sum b_j f(\mathbf{w}_j)$ (car $f(\mathbf{u}_i)=\mathbf{0}$).
 *Libre* : si $\sum b_j f(\mathbf{w}_j)=\mathbf{0}$, alors $f(\sum b_j\mathbf{w}_j)=\mathbf{0}$, donc $\sum b_j\mathbf{w}_j\in\ker f$, donc $\sum b_j\mathbf{w}_j = \sum a_i\mathbf{u}_i$ pour certains $a_i$ ; mais la base totale est libre, donc tous les $b_j=0$.
-Ainsi $\operatorname{rg}(f)=q$ et $\dim\ker f = p$, d'ou $\dim E = p+q$. $\blacksquare$
+Ainsi $\mathrm{rg}(f)=q$ et $\dim\ker f = p$, d'ou $\dim E = p+q$. $\blacksquare$
 
 #### Injectivite, surjectivite, bijectivite
 
 > **Proposition (criteres).** Pour $f:E\to F$ lineaire :
 > - $f$ **injective** $\iff \ker f = \{\mathbf{0}\}$ (rien d'autre que zero ne s'ecrase) ;
-> - $f$ **surjective** $\iff \operatorname{Im} f = F$ ;
+> - $f$ **surjective** $\iff \mathrm{Im} f = F$ ;
 > - en **dimension finie egale** ($\dim E = \dim F$) : injective $\iff$ surjective $\iff$ bijective.
 
 **Preuve du critere d'injectivite.** Si $f$ est injective et $f(\mathbf{x})=\mathbf{0}=f(\mathbf{0})$, alors $\mathbf{x}=\mathbf{0}$ : le noyau est trivial. Reciproquement, si $\ker f=\{\mathbf{0}\}$ et $f(\mathbf{x})=f(\mathbf{y})$, alors $f(\mathbf{x}-\mathbf{y})=\mathbf{0}$, donc $\mathbf{x}-\mathbf{y}\in\ker f=\{\mathbf{0}\}$, donc $\mathbf{x}=\mathbf{y}$. $\blacksquare$
 
 #### Retour sur les systemes : structure de l'ensemble solution
 
-On peut enfin justifier la phrase « solution generale = particuliere + noyau ». Le systeme $A\mathbf{x}=\mathbf{b}$ a une solution $\iff \mathbf{b}\in\operatorname{Im} A$. S'il est compatible, soit $\mathbf{x}_p$ une solution particuliere ; alors $\mathbf{x}$ est solution $\iff A(\mathbf{x}-\mathbf{x}_p)=\mathbf{0} \iff \mathbf{x}-\mathbf{x}_p \in \ker A$. Donc l'ensemble solution est
+On peut enfin justifier la phrase « solution generale = particuliere + noyau ». Le systeme $A\mathbf{x}=\mathbf{b}$ a une solution $\iff \mathbf{b}\in\mathrm{Im} A$. S'il est compatible, soit $\mathbf{x}_p$ une solution particuliere ; alors $\mathbf{x}$ est solution $\iff A(\mathbf{x}-\mathbf{x}_p)=\mathbf{0} \iff \mathbf{x}-\mathbf{x}_p \in \ker A$. Donc l'ensemble solution est
 ```math
 \mathbf{x}_p + \ker A = \{\mathbf{x}_p + \mathbf{z} : \mathbf{z}\in\ker A\}.
 ```
-C'est **vide** ($\mathbf{b}\notin\operatorname{Im} A$), un **point** ($\ker A=\{\mathbf{0}\}$), ou un **espace affine** de dimension $\dim\ker A > 0$ : on retrouve rigoureusement les trois cas (0, 1, $\infty$).
+C'est **vide** ($\mathbf{b}\notin\mathrm{Im} A$), un **point** ($\ker A=\{\mathbf{0}\}$), ou un **espace affine** de dimension $\dim\ker A > 0$ : on retrouve rigoureusement les trois cas (0, 1, $\infty$).
 
 #### Application machine learning
 
@@ -1664,7 +1664,7 @@ Le modele lineaire predit $\hat{\mathbf{y}} = X\boldsymbol{\beta}$. Comme il y a
 > X^\top X\,\boldsymbol{\beta} = X^\top \mathbf{y}, \qquad\text{d'ou}\qquad \boldsymbol{\beta}^\star = (X^\top X)^{-1} X^\top \mathbf{y} \ \text{ si } X^\top X \text{ est inversible.}
 > ```
 
-**Idee de preuve (geometrique).** La norme de l'erreur $X\boldsymbol{\beta}-\mathbf{y}$ est minimale quand $X\boldsymbol{\beta}$ est la **projection orthogonale** de $\mathbf{y}$ sur $\operatorname{Im}X$ ; le vecteur d'erreur est alors orthogonal a $\operatorname{Im}X$. L'orthogonalite a toutes les colonnes de $X$ s'ecrit $X^\top(X\boldsymbol{\beta}-\mathbf{y})=\mathbf{0}$, soit les equations normales. $\blacksquare$
+**Idee de preuve (geometrique).** La norme de l'erreur $X\boldsymbol{\beta}-\mathbf{y}$ est minimale quand $X\boldsymbol{\beta}$ est la **projection orthogonale** de $\mathbf{y}$ sur $\mathrm{Im}X$ ; le vecteur d'erreur est alors orthogonal a $\mathrm{Im}X$. L'orthogonalite a toutes les colonnes de $X$ s'ecrit $X^\top(X\boldsymbol{\beta}-\mathbf{y})=\mathbf{0}$, soit les equations normales. $\blacksquare$
 
 > **Mise a jour 2026.** En pratique, on ne calcule **jamais** $(X^\top X)^{-1}$ : former $X^\top X$ **carre** le conditionnement et amplifie les erreurs. On resout via **QR** ou directement par **SVD** (`np.linalg.lstsq`). Pour des $X$ enormes, on prefere la **descente de gradient (stochastique)** — qui est aussi ce qui passe a l'echelle pour les modeles non lineaires.
 
@@ -1790,17 +1790,17 @@ Les vecteurs $(1,1,0)$, $(0,1,1)$, $(1,0,1)$ de $\mathbb{R}^3$ sont-ils libres ?
 
 #### Exercice 5 — Rang et noyau
 
-Pour $A=\begin{pmatrix}1&2&1\\2&4&2\\3&6&4\end{pmatrix}$, donner $\operatorname{rg}(A)$, $\dim\ker A$, et une base du noyau.
+Pour $A=\begin{pmatrix}1&2&1\\2&4&2\\3&6&4\end{pmatrix}$, donner $\mathrm{rg}(A)$, $\dim\ker A$, et une base du noyau.
 
-> **Corrige.** $L_2\leftarrow L_2-2L_1 \Rightarrow (0,0,0)$ ; $L_3\leftarrow L_3-3L_1 \Rightarrow (0,0,1)$. Restent **2 pivots** (colonnes 1 et 3) : $\operatorname{rg}(A)=2$. Par le theoreme du rang, $\dim\ker A = 3-2 = 1$. Pour le noyau, la colonne 2 n'a pas de pivot : posons $y=t$. La ligne $(0,0,1)$ donne $z=0$, et la ligne 1 donne $x+2t+z=0\Rightarrow x=-2t$. Base du noyau : $(-2,1,0)$. Verification : $A(-2,1,0)^\top = (-2+2+0,\,-4+4+0,\,-6+6+0)=(0,0,0)$. Correct.
+> **Corrige.** $L_2\leftarrow L_2-2L_1 \Rightarrow (0,0,0)$ ; $L_3\leftarrow L_3-3L_1 \Rightarrow (0,0,1)$. Restent **2 pivots** (colonnes 1 et 3) : $\mathrm{rg}(A)=2$. Par le theoreme du rang, $\dim\ker A = 3-2 = 1$. Pour le noyau, la colonne 2 n'a pas de pivot : posons $y=t$. La ligne $(0,0,1)$ donne $z=0$, et la ligne 1 donne $x+2t+z=0\Rightarrow x=-2t$. Base du noyau : $(-2,1,0)$. Verification : $A(-2,1,0)^\top = (-2+2+0,\,-4+4+0,\,-6+6+0)=(0,0,0)$. Correct.
 
 #### Exercice 6 — Application lineaire et matrice
 
-Soit $f:\mathbb{R}^2\to\mathbb{R}^2$ la projection orthogonale sur la droite $y=x$. Donner sa matrice dans la base canonique, puis $\ker f$ et $\operatorname{Im} f$.
+Soit $f:\mathbb{R}^2\to\mathbb{R}^2$ la projection orthogonale sur la droite $y=x$. Donner sa matrice dans la base canonique, puis $\ker f$ et $\mathrm{Im} f$.
 
 > **Corrige.** La projection sur la droite dirigee par le vecteur unitaire $\mathbf{u}=\tfrac{1}{\sqrt2}(1,1)$ est $f(\mathbf{x})=(\mathbf{x}\cdot\mathbf{u})\mathbf{u}$, de matrice $P=\mathbf{u}\mathbf{u}^\top=\tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$.
 > Verification : $f(\mathbf{e}_1)=\tfrac12(1,1)$, $f(\mathbf{e}_2)=\tfrac12(1,1)$ — ce sont bien les colonnes de $P$.
-> $\operatorname{Im} f$ = la droite $y=x$ (dimension 1). $\ker f$ = la droite **orthogonale** $y=-x$ (les vecteurs envoyes sur $\mathbf{0}$), dimension 1. On verifie le theoreme du rang : $1+1=2$. Idempotence : $P^2=P$ (projeter deux fois = projeter une fois).
+> $\mathrm{Im} f$ = la droite $y=x$ (dimension 1). $\ker f$ = la droite **orthogonale** $y=-x$ (les vecteurs envoyes sur $\mathbf{0}$), dimension 1. On verifie le theoreme du rang : $1+1=2$. Idempotence : $P^2=P$ (projeter deux fois = projeter une fois).
 
 #### Exercice 7 — Espace affine et systeme
 
@@ -1810,7 +1810,7 @@ Decrire geometriquement l'ensemble solution de $\begin{cases} x+y+z=3 \\ x - y +
 > ```math
 > (2,0,1) + t\,(-3,1,2),\quad t\in\mathbb{R}.
 > ```
-> C'est une **droite affine** : le point particulier $(2,0,1)$ translate de la droite vectorielle $\ker A = \operatorname{Vect}(-3,1,2)$. Dimension 1, conforme a $n-\operatorname{rg}(A)=3-2=1$.
+> C'est une **droite affine** : le point particulier $(2,0,1)$ translate de la droite vectorielle $\ker A = \mathrm{Vect}(-3,1,2)$. Dimension 1, conforme a $n-\mathrm{rg}(A)=3-2=1$.
 
 #### Exercice 8 — Moindres carres a la main
 
@@ -1825,7 +1825,7 @@ Ajuster une droite $y = a x + b$ aux points $(0,1), (1,2), (2,2)$ par les equati
 
 1. Si $AB = 0$ alors $A=0$ ou $B=0$.
 2. Toute matrice carree est inversible.
-3. $\operatorname{rg}(A) = \operatorname{rg}(A^\top)$.
+3. $\mathrm{rg}(A) = \mathrm{rg}(A^\top)$.
 4. Une famille de 3 vecteurs dans $\mathbb{R}^2$ est toujours liee.
 
 > **Corrige.**
@@ -2529,10 +2529,10 @@ donc $w$ est orthogonal à toute la base de $U$, donc à $U$ entier : $w \in U^\
 Le complément orthogonal éclaire les **quatre sous-espaces fondamentaux** d'une matrice $A \in \mathbb{R}^{m\times n}$ :
 
 ```math
-\big(\operatorname{Im} A\big)^\perp = \ker A^\top, \qquad \big(\ker A\big)^\perp = \operatorname{Im} A^\top.
+\big(\mathrm{Im} A\big)^\perp = \ker A^\top, \qquad \big(\ker A\big)^\perp = \mathrm{Im} A^\top.
 ```
 
-> **Notations.** $\operatorname{Im} A$ (l'**image**, ou *column space*) est l'ensemble des $Ax$ possibles. $\ker A$ (le **noyau**, ou *null space*) est l'ensemble des $x$ tels que $Ax = 0$. Ces relations, parfois appelées « théorème fondamental de l'algèbre linéaire », disent que l'espace des colonnes et le noyau de la transposée sont des **mondes perpendiculaires** : c'est *exactement* ce qui rend les moindres carrés solubles.
+> **Notations.** $\mathrm{Im} A$ (l'**image**, ou *column space*) est l'ensemble des $Ax$ possibles. $\ker A$ (le **noyau**, ou *null space*) est l'ensemble des $x$ tels que $Ax = 0$. Ces relations, parfois appelées « théorème fondamental de l'algèbre linéaire », disent que l'espace des colonnes et le noyau de la transposée sont des **mondes perpendiculaires** : c'est *exactement* ce qui rend les moindres carrés solubles.
 
 #### Exemple chiffré
 
@@ -2570,7 +2570,7 @@ residual = b - A @ x_hat
 print(np.round(A.T @ residual, 10))   # ~ 0 : le residu est orthogonal aux colonnes de A
 ```
 
-> **Pourquoi ça compte en ML.** Tout l'édifice des **moindres carrés** (régression linéaire) repose là-dessus : la meilleure approximation $A\hat{x}$ de $b$ est sa projection sur $\operatorname{Im} A$, et le **résidu** $b - A\hat x$ est orthogonal à cet espace, donc dans $\ker A^\top$. C'est ce qui donne les **équations normales** $A^\top A \hat x = A^\top b$, que nous retrouvons dans la section suivante.
+> **Pourquoi ça compte en ML.** Tout l'édifice des **moindres carrés** (régression linéaire) repose là-dessus : la meilleure approximation $A\hat{x}$ de $b$ est sa projection sur $\mathrm{Im} A$, et le **résidu** $b - A\hat x$ est orthogonal à cet espace, donc dans $\ker A^\top$. C'est ce qui donne les **équations normales** $A^\top A \hat x = A^\top b$, que nous retrouvons dans la section suivante.
 
 ---
 
@@ -2693,10 +2693,10 @@ Commençons par le cas le plus simple : projeter $v$ sur la droite dirigée par 
 
 > **Définition / formule.** La **projection orthogonale** de $v$ sur la droite $\text{Vect}\{u\}$ est
 > ```math
-> \operatorname{proj}_u(v) = \frac{\langle v, u\rangle}{\langle u, u\rangle}\, u = \frac{\langle v, u\rangle}{\|u\|^2}\, u.
+> \mathrm{proj}_u(v) = \frac{\langle v, u\rangle}{\langle u, u\rangle}\, u = \frac{\langle v, u\rangle}{\|u\|^2}\, u.
 > ```
 
-> **Le symbole $\operatorname{proj}_u(v)$.** Cet opérateur « proj » est une **machine à aplatir** : elle prend un vecteur $v$ et l'écrase sur la droite portée par $u$, en gardant uniquement « la part de $v$ qui va dans la direction de $u$ ». Le coefficient $\frac{\langle v,u\rangle}{\|u\|^2}$ mesure *combien* de $u$ il faut prendre. Si $u$ est déjà de norme $1$, la formule se simplifie en $\langle v, u\rangle\, u$ : on l'avait déjà rencontrée dans la décomposition en base orthonormale !
+> **Le symbole $\mathrm{proj}_u(v)$.** Cet opérateur « proj » est une **machine à aplatir** : elle prend un vecteur $v$ et l'écrase sur la droite portée par $u$, en gardant uniquement « la part de $v$ qui va dans la direction de $u$ ». Le coefficient $\frac{\langle v,u\rangle}{\|u\|^2}$ mesure *combien* de $u$ il faut prendre. Si $u$ est déjà de norme $1$, la formule se simplifie en $\langle v, u\rangle\, u$ : on l'avait déjà rencontrée dans la décomposition en base orthonormale !
 
 *Pourquoi cette formule ?* On cherche $p = c\,u$ (un multiple de $u$) tel que le résidu $v - p$ soit orthogonal à $u$ :
 
@@ -2706,9 +2706,9 @@ Commençons par le cas le plus simple : projeter $v$ sur la droite dirigée par 
 
 #### Projection sur un sous-espace : les équations normales
 
-Cas général : projeter $b \in \mathbb{R}^m$ sur le sous-espace $\operatorname{Im} A$ engendré par les colonnes d'une matrice $A \in \mathbb{R}^{m\times n}$ (colonnes supposées indépendantes).
+Cas général : projeter $b \in \mathbb{R}^m$ sur le sous-espace $\mathrm{Im} A$ engendré par les colonnes d'une matrice $A \in \mathbb{R}^{m\times n}$ (colonnes supposées indépendantes).
 
-> **Théorème (projection et équations normales).** La projection orthogonale de $b$ sur $\operatorname{Im} A$ est $p = A\hat x$, où $\hat x$ résout les **équations normales** :
+> **Théorème (projection et équations normales).** La projection orthogonale de $b$ sur $\mathrm{Im} A$ est $p = A\hat x$, où $\hat x$ résout les **équations normales** :
 > ```math
 > A^\top A\, \hat x = A^\top b \qquad\Longrightarrow\qquad \hat x = (A^\top A)^{-1} A^\top b.
 > ```
@@ -2717,7 +2717,7 @@ Cas général : projeter $b \in \mathbb{R}^m$ sur le sous-espace $\operatorname{
 > P = A(A^\top A)^{-1} A^\top.
 > ```
 
-*Démonstration.* On cherche $p = A\hat x \in \operatorname{Im} A$ tel que le résidu $b - A\hat x$ soit orthogonal à **toutes** les colonnes de $A$, c'est-à-dire $A^\top(b - A\hat x) = 0$. Cela donne directement $A^\top A\hat x = A^\top b$. Comme les colonnes de $A$ sont indépendantes, $A^\top A$ est inversible (symétrique définie positive), d'où $\hat x$, puis $p = A\hat x = A(A^\top A)^{-1}A^\top b$. $\blacksquare$
+*Démonstration.* On cherche $p = A\hat x \in \mathrm{Im} A$ tel que le résidu $b - A\hat x$ soit orthogonal à **toutes** les colonnes de $A$, c'est-à-dire $A^\top(b - A\hat x) = 0$. Cela donne directement $A^\top A\hat x = A^\top b$. Comme les colonnes de $A$ sont indépendantes, $A^\top A$ est inversible (symétrique définie positive), d'où $\hat x$, puis $p = A\hat x = A(A^\top A)^{-1}A^\top b$. $\blacksquare$
 
 #### Propriétés d'une matrice de projection
 
@@ -2730,7 +2730,7 @@ Cas général : projeter $b \in \mathbb{R}^m$ sur le sous-espace $\operatorname{
 |---|---|---|
 | Idempotence | $P^2 = P$ | Projeter une ombre ne la change plus (elle est déjà sur la table). |
 | Symétrie | $P^\top = P$ | La projection est *orthogonale* (et non oblique). |
-| Projection complémentaire | $I - P$ projette sur $(\operatorname{Im}A)^\perp$ | $(I-P)b = b - p$ est le résidu. |
+| Projection complémentaire | $I - P$ projette sur $(\mathrm{Im}A)^\perp$ | $(I-P)b = b - p$ est le résidu. |
 | Valeurs propres | $\lambda \in \{0, 1\}$ | $1$ sur le sous-espace, $0$ sur l'orthogonal. |
 
 > **Le symbole $P^2 = P$ (idempotence).** « Idempotent » signifie « qui ne change plus après une première application ». $P^2 = P$ dit : appliquer $P$ une fois ou deux fois donne le même résultat. C'est logique : une fois le crayon aplati en ombre sur la table, ré-aplatir l'ombre ne fait rien — elle est déjà plate sur la table.
@@ -2751,7 +2751,7 @@ Cas général : projeter $b \in \mathbb{R}^m$ sur le sous-espace $\operatorname{
 
 avec égalité ssi $\|p - u\|^2 = 0$, c'est-à-dire $u = p$. $\blacksquare$
 
-C'est **précisément** ce qui justifie les moindres carrés : la solution $\hat x$ minimise $\|b - Ax\|^2$, donc $A\hat x$ est la meilleure approximation de $b$ atteignable dans $\operatorname{Im}A$.
+C'est **précisément** ce qui justifie les moindres carrés : la solution $\hat x$ minimise $\|b - Ax\|^2$, donc $A\hat x$ est la meilleure approximation de $b$ atteignable dans $\mathrm{Im}A$.
 
 #### Exemple chiffré déroulé (régression linéaire)
 
@@ -2975,7 +2975,7 @@ Projeter $v = (4, 2)$ sur la droite dirigée par $u = (3, 1)$.
 > **Corrigé.**
 > $\langle v, u\rangle = 12 + 2 = 14$, $\|u\|^2 = 9 + 1 = 10$. Donc
 > ```math
-> \operatorname{proj}_u(v) = \frac{14}{10}(3, 1) = \frac{7}{5}(3,1) = (4{,}2,\ 1{,}4).
+> \mathrm{proj}_u(v) = \frac{14}{10}(3, 1) = \frac{7}{5}(3,1) = (4{,}2,\ 1{,}4).
 > ```
 > Vérification d'orthogonalité du résidu : $v - p = (-0{,}2,\ 0{,}6)$, et $\langle (-0{,}2, 0{,}6), (3,1)\rangle = -0{,}6 + 0{,}6 = 0$. ✓
 
@@ -3047,15 +3047,15 @@ Imaginons une matrice carrée $A$ de taille $n \times n$ comme une **machine qui
 
 > **Définition (déterminant).** Soit $A = (a_{ij})_{1 \le i,j \le n}$ une matrice carrée à coefficients dans $\mathbb{R}$ (ou $\mathbb{C}$). Le déterminant est l'unique forme $n$-linéaire alternée des colonnes de $A$ valant $1$ sur la matrice identité. Explicitement (formule de Leibniz) :
 > ```math
-> \det(A) = \sum_{\sigma \in \mathfrak{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)}
+> \det(A) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)}
 > ```
-> où $\mathfrak{S}_n$ est l'ensemble des permutations de $\{1,\dots,n\}$ et $\varepsilon(\sigma) \in \{-1,+1\}$ est la signature de la permutation $\sigma$.
+> où $\mathcal{S}_n$ est l'ensemble des permutations de $\{1,\dots,n\}$ et $\varepsilon(\sigma) \in \{-1,+1\}$ est la signature de la permutation $\sigma$.
 
-> **Le symbole $\sum$ (sigma majuscule).** Ce symbole représente une **somme**. C'est comme une boucle qui additionne plein de morceaux. En dessous on écrit où la boucle commence (ici $\sigma \in \mathfrak{S}_n$ : « pour chaque permutation $\sigma$ »), et on additionne tout ce qui est écrit à droite. Ici, on parcourt toutes les façons de réordonner les colonnes et on additionne un produit signé pour chacune.
+> **Le symbole $\sum$ (sigma majuscule).** Ce symbole représente une **somme**. C'est comme une boucle qui additionne plein de morceaux. En dessous on écrit où la boucle commence (ici $\sigma \in \mathcal{S}_n$ : « pour chaque permutation $\sigma$ »), et on additionne tout ce qui est écrit à droite. Ici, on parcourt toutes les façons de réordonner les colonnes et on additionne un produit signé pour chacune.
 
 > **Le symbole $\prod$ (pi majuscule).** Ce symbole représente un **produit** : la même idée que $\sum$, mais on **multiplie** au lieu d'additionner. $\prod_{i=1}^{n} a_{i,\sigma(i)}$ veut dire « multiplie ensemble les nombres $a_{1,\sigma(1)} \times a_{2,\sigma(2)} \times \dots \times a_{n,\sigma(n)}$ ».
 
-> **Le symbole $\sigma$ (sigma minuscule) et $\mathfrak{S}_n$.** $\sigma$ est ici une **permutation** : une façon de mélanger les nombres $1, 2, \dots, n$, comme rebattre un jeu de cartes. $\mathfrak{S}_n$ est le **paquet de toutes ces façons** ($n!$ en tout). La signature $\varepsilon(\sigma)$ vaut $+1$ si on peut revenir à l'ordre initial en un nombre **pair** d'échanges, $-1$ si c'est **impair**.
+> **Le symbole $\sigma$ (sigma minuscule) et $\mathcal{S}_n$.** $\sigma$ est ici une **permutation** : une façon de mélanger les nombres $1, 2, \dots, n$, comme rebattre un jeu de cartes. $\mathcal{S}_n$ est le **paquet de toutes ces façons** ($n!$ en tout). La signature $\varepsilon(\sigma)$ vaut $+1$ si on peut revenir à l'ordre initial en un nombre **pair** d'échanges, $-1$ si c'est **impair**.
 
 La formule de Leibniz est théoriquement parfaite mais inutilisable en pratique : elle contient $n!$ termes. Pour $n = 20$, cela fait plus de $2 \times 10^{18}$ termes. On l'utilise pour **prouver des propriétés**, jamais pour **calculer**.
 
@@ -3100,38 +3100,38 @@ Pour calculer un déterminant en pratique, on **triangularise** la matrice par �
 
 #### La trace : la somme de la diagonale
 
-> **Le symbole $\operatorname{tr}$.** Ce symbole représente la **trace** d'une matrice carrée. C'est très simple : on additionne tous les nombres posés sur la **diagonale** (du coin haut-gauche au coin bas-droit). Imagine une matrice comme un damier de nombres ; la trace, c'est la somme de la « ligne en diagonale » seulement. On note $\operatorname{tr}(A)$.
+> **Le symbole $\mathrm{tr}$.** Ce symbole représente la **trace** d'une matrice carrée. C'est très simple : on additionne tous les nombres posés sur la **diagonale** (du coin haut-gauche au coin bas-droit). Imagine une matrice comme un damier de nombres ; la trace, c'est la somme de la « ligne en diagonale » seulement. On note $\mathrm{tr}(A)$.
 
 > **Définition (trace).** Pour $A = (a_{ij}) \in \mathbb{R}^{n \times n}$,
 > ```math
-> \operatorname{tr}(A) = \sum_{i=1}^{n} a_{ii}.
+> \mathrm{tr}(A) = \sum_{i=1}^{n} a_{ii}.
 > ```
 
-> **Exemple chiffré.** Pour $A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$, $\operatorname{tr}(A) = 2 + 3 = 5$.
+> **Exemple chiffré.** Pour $A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$, $\mathrm{tr}(A) = 2 + 3 = 5$.
 
 ##### Propriétés fondamentales de la trace
 
 | Propriété | Énoncé |
 |---|---|
-| Linéarité | $\operatorname{tr}(A + B) = \operatorname{tr}(A) + \operatorname{tr}(B)$ et $\operatorname{tr}(\lambda A) = \lambda \operatorname{tr}(A)$ |
-| Transposée | $\operatorname{tr}(A^\top) = \operatorname{tr}(A)$ |
-| Invariance cyclique | $\operatorname{tr}(AB) = \operatorname{tr}(BA)$ |
-| Similitude | $\operatorname{tr}(P^{-1} A P) = \operatorname{tr}(A)$ |
+| Linéarité | $\mathrm{tr}(A + B) = \mathrm{tr}(A) + \mathrm{tr}(B)$ et $\mathrm{tr}(\lambda A) = \lambda \mathrm{tr}(A)$ |
+| Transposée | $\mathrm{tr}(A^\top) = \mathrm{tr}(A)$ |
+| Invariance cyclique | $\mathrm{tr}(AB) = \mathrm{tr}(BA)$ |
+| Similitude | $\mathrm{tr}(P^{-1} A P) = \mathrm{tr}(A)$ |
 
-> **Démonstration de l'invariance cyclique $\operatorname{tr}(AB) = \operatorname{tr}(BA)$.** Soit $A \in \mathbb{R}^{m\times n}$ et $B \in \mathbb{R}^{n\times m}$ (de sorte que $AB$ et $BA$ sont carrées). Par définition,
+> **Démonstration de l'invariance cyclique $\mathrm{tr}(AB) = \mathrm{tr}(BA)$.** Soit $A \in \mathbb{R}^{m\times n}$ et $B \in \mathbb{R}^{n\times m}$ (de sorte que $AB$ et $BA$ sont carrées). Par définition,
 > ```math
-> \operatorname{tr}(AB) = \sum_{i=1}^{m} (AB)_{ii} = \sum_{i=1}^{m} \sum_{k=1}^{n} a_{ik} b_{ki} = \sum_{k=1}^{n} \sum_{i=1}^{m} b_{ki} a_{ik} = \sum_{k=1}^{n} (BA)_{kk} = \operatorname{tr}(BA).
+> \mathrm{tr}(AB) = \sum_{i=1}^{m} (AB)_{ii} = \sum_{i=1}^{m} \sum_{k=1}^{n} a_{ik} b_{ki} = \sum_{k=1}^{n} \sum_{i=1}^{m} b_{ki} a_{ik} = \sum_{k=1}^{n} (BA)_{kk} = \mathrm{tr}(BA).
 > ```
 > On a juste échangé l'ordre des deux sommes finies. $\quad\blacksquare$
 
-La conséquence sur la similitude est centrale : $\operatorname{tr}(P^{-1}AP) = \operatorname{tr}\big((P^{-1}A)P\big) = \operatorname{tr}\big(P(P^{-1}A)\big) = \operatorname{tr}(A)$. **La trace ne dépend pas de la base** dans laquelle on regarde l'application linéaire. Idem pour le déterminant : $\det(P^{-1}AP) = \det(P^{-1})\det(A)\det(P) = \det(A)$. Ce sont des **invariants**.
+La conséquence sur la similitude est centrale : $\mathrm{tr}(P^{-1}AP) = \mathrm{tr}\big((P^{-1}A)P\big) = \mathrm{tr}\big(P(P^{-1}A)\big) = \mathrm{tr}(A)$. **La trace ne dépend pas de la base** dans laquelle on regarde l'application linéaire. Idem pour le déterminant : $\det(P^{-1}AP) = \det(P^{-1})\det(A)\det(P) = \det(A)$. Ce sont des **invariants**.
 
 #### Lien profond avec les valeurs propres (annonce)
 
 Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant le résultat qui irrigue tout le chapitre. Si $\lambda_1, \dots, \lambda_n$ sont les valeurs propres de $A$ (comptées avec multiplicité, dans $\mathbb{C}$) :
 
 ```math
-\det(A) = \prod_{i=1}^{n} \lambda_i \qquad\text{et}\qquad \operatorname{tr}(A) = \sum_{i=1}^{n} \lambda_i.
+\det(A) = \prod_{i=1}^{n} \lambda_i \qquad\text{et}\qquad \mathrm{tr}(A) = \sum_{i=1}^{n} \lambda_i.
 ```
 
 > **Intuition.** Le déterminant est le **produit** des facteurs d'étirement propres ; la trace en est la **somme**. Si une seule valeur propre est nulle, le produit s'annule : la matrice écrase une direction, elle n'est pas inversible.
@@ -3140,10 +3140,10 @@ Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant
 
 - **Vraisemblance gaussienne (likelihood) :** la densité d'une loi normale multivariée contient le terme $\frac{1}{\sqrt{(2\pi)^n \det(\Sigma)}}$. Le déterminant de la matrice de covariance $\Sigma$ mesure le « volume » de dispersion des données. En pratique on calcule $\log \det(\Sigma)$ (plus stable).
 - **Entropie d'une gaussienne :** l'entropie différentielle d'une loi $\mathcal{N}(\mu,\Sigma)$ vaut $\frac12 \log\big((2\pi e)^n \det(\Sigma)\big)$, donc croît comme $\frac12 \log\det(\Sigma)$ — un déterminant élevé signifie une distribution très étalée, donc incertaine.
-- **Régularisation et trace :** la pénalité de Ridge s'écrit $\|w\|^2$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $\operatorname{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)$.
+- **Régularisation et trace :** la pénalité de Ridge s'écrit $\|w\|^2$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)$.
 - **Jacobien des flux normalisants (normalizing flows) :** pour transformer une densité, on a besoin de $\log\left|\det \frac{\partial f}{\partial x}\right|$. Toute l'ingénierie des flux modernes consiste à concevoir des transformations dont ce log-déterminant est calculable rapidement.
 
-> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $\log\det$ par factorisation dense $O(n^3)$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $\log\det(A) = \operatorname{tr}(\log A)$, et on estime cette trace via $\operatorname{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j$ avec $z_j$ des vecteurs aléatoires (Rademacher, donc $\mathbb{E}[z_j z_j^\top] = I$). Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
+> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $\log\det$ par factorisation dense $O(n^3)$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $\log\det(A) = \mathrm{tr}(\log A)$, et on estime cette trace via $\mathrm{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j$ avec $z_j$ des vecteurs aléatoires (Rademacher, donc $\mathbb{E}[z_j z_j^\top] = I$). Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
 
 ```python
 import numpy as np
@@ -3236,7 +3236,7 @@ Prenons $A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}$.
 
 **Étape 2 — racines :** $\lambda^2 - 7\lambda + 10 = (\lambda - 5)(\lambda - 2)$, donc $\lambda_1 = 5$ et $\lambda_2 = 2$.
 
-> **Vérification immédiate.** Somme des valeurs propres $5 + 2 = 7 = \operatorname{tr}(A)$. Produit $5 \times 2 = 10 = \det(A) = 4\cdot3 - 1\cdot2$. Cohérent.
+> **Vérification immédiate.** Somme des valeurs propres $5 + 2 = 7 = \mathrm{tr}(A)$. Produit $5 \times 2 = 10 = \det(A) = 4\cdot3 - 1\cdot2$. Cohérent.
 
 **Étape 3 — vecteur propre pour $\lambda_1 = 5$ :** on résout $(A - 5I)v = 0$ :
 ```math
@@ -3256,9 +3256,9 @@ Donc $v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$.
 
 > **Théorème (relations trace–déterminant–coefficients).** Pour $A \in \mathbb{C}^{n\times n}$ de valeurs propres $\lambda_1,\dots,\lambda_n$ (avec multiplicité) :
 > ```math
-> \operatorname{tr}(A) = \sum_i \lambda_i, \qquad \det(A) = \prod_i \lambda_i.
+> \mathrm{tr}(A) = \sum_i \lambda_i, \qquad \det(A) = \prod_i \lambda_i.
 > ```
-> **Démonstration.** Le polynôme caractéristique factorisé vaut $\chi_A(\lambda) = \prod_i(\lambda_i - \lambda)$. Le coefficient de $\lambda^{n-1}$ y est $(-1)^{n-1}\sum_i \lambda_i$ et le terme constant $\chi_A(0) = \prod_i \lambda_i$. En développant directement $\det(A-\lambda I)$, le terme constant est $\det(A)$ et le coefficient de $\lambda^{n-1}$ est $(-1)^{n-1}\operatorname{tr}(A)$. L'identification donne les deux relations (formules de Viète appliquées à $\chi_A$). $\quad\blacksquare$
+> **Démonstration.** Le polynôme caractéristique factorisé vaut $\chi_A(\lambda) = \prod_i(\lambda_i - \lambda)$. Le coefficient de $\lambda^{n-1}$ y est $(-1)^{n-1}\sum_i \lambda_i$ et le terme constant $\chi_A(0) = \prod_i \lambda_i$. En développant directement $\det(A-\lambda I)$, le terme constant est $\det(A)$ et le coefficient de $\lambda^{n-1}$ est $(-1)^{n-1}\mathrm{tr}(A)$. L'identification donne les deux relations (formules de Viète appliquées à $\chi_A$). $\quad\blacksquare$
 
 > **Théorème de Cayley–Hamilton.** Toute matrice annule son propre polynôme caractéristique : $\chi_A(A) = 0$. Autrement dit, en remplaçant $\lambda$ par $A$ (et le terme constant $c$ par $cI$), on obtient la matrice nulle.
 
@@ -3386,7 +3386,7 @@ Cholesky coûte **deux fois moins** que LU : c'est la méthode de choix dès que
 
 1. **Résolution de systèmes SPD.** Pour résoudre $Ax = b$ avec $A$ SPD, on factorise $A = LL^\top$ puis on résout deux systèmes triangulaires (descente $Ly = b$ puis remontée $L^\top x = y$). C'est le cœur des **moindres carrés** via les équations normales $X^\top X\, w = X^\top y$.
 
-2. **Échantillonnage gaussien.** Pour tirer $x \sim \mathcal{N}(\mu, \Sigma)$, on calcule $\Sigma = LL^\top$, on tire $z \sim \mathcal{N}(0, I)$ (gaussiennes standard indépendantes), et $x = \mu + Lz$ a exactement la covariance voulue. En effet, $\operatorname{Cov}(Lz) = L\,\operatorname{Cov}(z)\,L^\top = L I L^\top = \Sigma$. C'est **la** méthode de simulation gaussienne.
+2. **Échantillonnage gaussien.** Pour tirer $x \sim \mathcal{N}(\mu, \Sigma)$, on calcule $\Sigma = LL^\top$, on tire $z \sim \mathcal{N}(0, I)$ (gaussiennes standard indépendantes), et $x = \mu + Lz$ a exactement la covariance voulue. En effet, $\mathrm{Cov}(Lz) = L\,\mathrm{Cov}(z)\,L^\top = L I L^\top = \Sigma$. C'est **la** méthode de simulation gaussienne.
 
 3. **Processus gaussiens (GP).** Toute l'inférence (prédiction, log-vraisemblance) passe par la factorisation de Cholesky de la matrice de noyau $K + \sigma^2 I$. Le terme $\log\det(K+\sigma^2 I) = 2\sum_i \log \ell_{ii}$ se lit gratuitement sur la diagonale de $L$.
 
@@ -3432,11 +3432,11 @@ Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **
 > ```math
 > A = P D P^{-1},
 > ```
-> où $P$ a pour colonnes les vecteurs propres et $D = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$ est la matrice diagonale des valeurs propres correspondantes.
+> où $P$ a pour colonnes les vecteurs propres et $D = \mathrm{diag}(\lambda_1, \dots, \lambda_n)$ est la matrice diagonale des valeurs propres correspondantes.
 
 > **Le symbole $P$ (matrice de passage).** $P$ est la matrice dont les **colonnes** sont les $n$ vecteurs propres choisis. Comme ils sont linéairement indépendants, $P$ est inversible. Elle traduit les coordonnées de la base des vecteurs propres vers la base de départ ; $P^{-1}$ fait la traduction inverse.
 
-> **Le symbole $D = \operatorname{diag}(\lambda_1,\dots,\lambda_n)$.** $\operatorname{diag}(\cdots)$ représente une matrice **diagonale** : des nombres sur la diagonale, des zéros partout ailleurs. C'est la forme la plus simple de matrice, celle qui étire chaque axe indépendamment sans rien mélanger.
+> **Le symbole $D = \mathrm{diag}(\lambda_1,\dots,\lambda_n)$.** $\mathrm{diag}(\cdots)$ représente une matrice **diagonale** : des nombres sur la diagonale, des zéros partout ailleurs. C'est la forme la plus simple de matrice, celle qui étire chaque axe indépendamment sans rien mélanger.
 
 > **Lecture de $A = PDP^{-1}$ comme un sandwich.** Lis de droite à gauche : $P^{-1}$ **traduit** un vecteur dans le langage des vecteurs propres ; $D$ **étire** chaque coordonnée par sa valeur propre ; $P$ **retraduit** dans le langage d'origine. Trois étapes : traduire, étirer, retraduire.
 
@@ -3446,11 +3446,11 @@ Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **
 
 > **Calcul de puissances.** Si $A = PDP^{-1}$, alors
 > ```math
-> A^k = P D^k P^{-1}, \qquad D^k = \operatorname{diag}(\lambda_1^k, \dots, \lambda_n^k).
+> A^k = P D^k P^{-1}, \qquad D^k = \mathrm{diag}(\lambda_1^k, \dots, \lambda_n^k).
 > ```
 > **Démonstration.** $A^2 = (PDP^{-1})(PDP^{-1}) = PD(P^{-1}P)DP^{-1} = PD^2P^{-1}$, et par récurrence $A^k = PD^kP^{-1}$. Élever une matrice diagonale à la puissance $k$ revient à élever chaque coefficient diagonal à la puissance $k$ — immédiat. $\quad\blacksquare$
 
-C'est spectaculaire : calculer $A^{1000}$ directement coûterait $999$ produits matriciels ; via la diagonalisation, c'est **une** diagonalisation puis $n$ exponentiations scalaires. Cela permet aussi de définir des **fonctions de matrices** : $\exp(A) = P \exp(D) P^{-1}$ où $\exp(D) = \operatorname{diag}(e^{\lambda_i})$.
+C'est spectaculaire : calculer $A^{1000}$ directement coûterait $999$ produits matriciels ; via la diagonalisation, c'est **une** diagonalisation puis $n$ exponentiations scalaires. Cela permet aussi de définir des **fonctions de matrices** : $\exp(A) = P \exp(D) P^{-1}$ où $\exp(D) = \mathrm{diag}(e^{\lambda_i})$.
 
 #### Exemple chiffré déroulé pas à pas
 
@@ -3476,7 +3476,7 @@ Pour les matrices symétriques réelles, la diagonalisation est encore plus bell
 > 2. il existe une base **orthonormée** de vecteurs propres ;
 > 3. $A$ se diagonalise par une matrice **orthogonale** $Q$ (vérifiant $Q^\top Q = I$, donc $Q^{-1} = Q^\top$) :
 > ```math
-> A = Q \Lambda Q^\top, \qquad \Lambda = \operatorname{diag}(\lambda_1,\dots,\lambda_n).
+> A = Q \Lambda Q^\top, \qquad \Lambda = \mathrm{diag}(\lambda_1,\dots,\lambda_n).
 > ```
 
 > **Le symbole $Q^\top Q = I$ (matrice orthogonale).** Une matrice **orthogonale** $Q$ a des colonnes qui sont des vecteurs unitaires deux à deux perpendiculaires. Sa magie : elle **préserve les longueurs et les angles** (c'est une rotation, éventuellement composée d'une réflexion), et son inverse est simplement sa transposée. Pas de calcul d'inverse coûteux : $Q^{-1} = Q^\top$.
@@ -3544,13 +3544,13 @@ Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice
 > où :
 > - $U \in \mathbb{R}^{m\times m}$ est **orthogonale** ($U^\top U = I_m$) ; ses colonnes sont les **vecteurs singuliers à gauche** ;
 > - $V \in \mathbb{R}^{n\times n}$ est **orthogonale** ($V^\top V = I_n$) ; ses colonnes sont les **vecteurs singuliers à droite** ;
-> - $\Sigma \in \mathbb{R}^{m\times n}$ est « diagonale » (coefficients $\Sigma_{ii} = \sigma_i$, nuls hors diagonale) avec $\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0$ et $\sigma_{r+1} = \dots = 0$, les **valeurs singulières**, où $r = \operatorname{rang}(A)$.
+> - $\Sigma \in \mathbb{R}^{m\times n}$ est « diagonale » (coefficients $\Sigma_{ii} = \sigma_i$, nuls hors diagonale) avec $\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0$ et $\sigma_{r+1} = \dots = 0$, les **valeurs singulières**, où $r = \mathrm{rang}(A)$.
 
 > **Le symbole $\Sigma$ (sigma majuscule, ici une matrice).** Attention : ce $\Sigma$ n'est **pas** une somme ! Ici c'est le **nom d'une matrice** quasi-diagonale qui contient les valeurs singulières $\sigma_i$ (sigma minuscule) sur sa diagonale. Chaque $\sigma_i$ est un **facteur d'étirement**, et il est toujours $\ge 0$ (contrairement aux valeurs propres qui peuvent être négatives ou complexes).
 
 > **Le symbole $\sigma_i$ (sigma minuscule, valeur singulière).** $\sigma_i$ représente la **demi-longueur du $i$-ème axe de l'ellipse** image de la sphère unité. C'est de combien la matrice étire dans la $i$-ème direction privilégiée. On les range toujours du plus grand au plus petit.
 
-> **Le symbole $\operatorname{rang}(A)$ (rang, rank).** Le rang représente le **nombre de dimensions réellement utilisées** par la matrice en sortie : le nombre de directions non écrasées. C'est aussi le nombre de valeurs singulières strictement positives.
+> **Le symbole $\mathrm{rang}(A)$ (rang, rank).** Le rang représente le **nombre de dimensions réellement utilisées** par la matrice en sortie : le nombre de directions non écrasées. C'est aussi le nombre de valeurs singulières strictement positives.
 
 > **Lecture de $A = U\Sigma V^\top$.** De droite à gauche : $V^\top$ tourne l'espace de départ pour aligner les axes privilégiés ; $\Sigma$ étire chaque axe par $\sigma_i$ (et change éventuellement de dimension) ; $U$ tourne le résultat dans l'espace d'arrivée. Rotation, étirement, rotation.
 
@@ -3563,7 +3563,7 @@ La SVD n'est pas magique : elle **est** la décomposition propre de deux matrice
 > - les colonnes de $U$ sont les vecteurs propres de $A A^\top$ ($m\times m$) ;
 > - les valeurs singulières sont $\sigma_i = \sqrt{\lambda_i}$, où $\lambda_i \ge 0$ sont les valeurs propres de $A^\top A$ (et $AA^\top$ partagent les mêmes valeurs propres non nulles).
 >
-> **Démonstration (esquisse).** $A^\top A$ est symétrique semi-définie positive, donc par le théorème spectral $A^\top A = V \Lambda V^\top$ avec $\Lambda = \operatorname{diag}(\lambda_i)$, $\lambda_i \ge 0$. Pose $\sigma_i = \sqrt{\lambda_i}$ et, pour $\sigma_i > 0$, $u_i = \frac{1}{\sigma_i} A v_i$. On vérifie que les $u_i$ sont orthonormés ($u_i^\top u_j = \frac{1}{\sigma_i\sigma_j} v_i^\top A^\top A v_j = \frac{\lambda_j}{\sigma_i\sigma_j} v_i^\top v_j = \delta_{ij}$) et que $A v_i = \sigma_i u_i$, ce qui équivaut à $A = U\Sigma V^\top$ après complétion des bases (les $v_i$ tels que $\sigma_i = 0$ engendrent $\ker A$, et l'on complète les $u_i$ en base orthonormée de $\mathbb{R}^m$). $\quad\blacksquare$
+> **Démonstration (esquisse).** $A^\top A$ est symétrique semi-définie positive, donc par le théorème spectral $A^\top A = V \Lambda V^\top$ avec $\Lambda = \mathrm{diag}(\lambda_i)$, $\lambda_i \ge 0$. Pose $\sigma_i = \sqrt{\lambda_i}$ et, pour $\sigma_i > 0$, $u_i = \frac{1}{\sigma_i} A v_i$. On vérifie que les $u_i$ sont orthonormés ($u_i^\top u_j = \frac{1}{\sigma_i\sigma_j} v_i^\top A^\top A v_j = \frac{\lambda_j}{\sigma_i\sigma_j} v_i^\top v_j = \delta_{ij}$) et que $A v_i = \sigma_i u_i$, ce qui équivaut à $A = U\Sigma V^\top$ après complétion des bases (les $v_i$ tels que $\sigma_i = 0$ engendrent $\ker A$, et l'on complète les $u_i$ en base orthonormée de $\mathbb{R}^m$). $\quad\blacksquare$
 
 > **Le symbole $\delta_{ij}$ (delta de Kronecker).** $\delta_{ij}$ vaut $1$ si $i = j$ et $0$ sinon. C'est une façon compacte de dire « les vecteurs sont orthonormés » : leur produit scalaire vaut $1$ avec eux-mêmes, $0$ avec les autres.
 
@@ -3601,7 +3601,7 @@ u_1 = \frac{1}{\sqrt3}A v_1 = \frac{1}{\sqrt3}\cdot\frac{1}{\sqrt2}\begin{pmatri
 u_2 = \frac{1}{1}A v_2 = \frac{1}{\sqrt2}\begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}.
 ```
 
-On vérifie $\|u_1\| = \frac{1}{\sqrt6}\sqrt{1+4+1} = 1$ et $\|u_2\| = \frac{1}{\sqrt2}\sqrt{1+0+1} = 1$. Avec $U = [u_1\ u_2]$ (forme réduite, $3\times 2$), $\Sigma = \operatorname{diag}(\sqrt3, 1)$ et $V = [v_1\ v_2]$, on a $A = U\Sigma V^\top$. 
+On vérifie $\|u_1\| = \frac{1}{\sqrt6}\sqrt{1+4+1} = 1$ et $\|u_2\| = \frac{1}{\sqrt2}\sqrt{1+0+1} = 1$. Avec $U = [u_1\ u_2]$ (forme réduite, $3\times 2$), $\Sigma = \mathrm{diag}(\sqrt3, 1)$ et $V = [v_1\ v_2]$, on a $A = U\Sigma V^\top$. 
 
 #### Propriétés majeures lisibles sur la SVD
 
@@ -3611,7 +3611,7 @@ On vérifie $\|u_1\| = \frac{1}{\sqrt6}\sqrt{1+4+1} = 1$ et $\|u_2\| = \frac{1}{
 | Norme spectrale | $\|A\|_2 = \sigma_1$ (la plus grande) |
 | Norme de Frobenius | $\|A\|_F = \sqrt{\sum_i \sigma_i^2}$ |
 | Conditionnement | $\kappa(A) = \sigma_1/\sigma_r$ |
-| Pseudo-inverse | $A^+ = V \Sigma^+ U^\top$, $\Sigma^+ = \operatorname{diag}(1/\sigma_i)$ pour $\sigma_i > 0$ |
+| Pseudo-inverse | $A^+ = V \Sigma^+ U^\top$, $\Sigma^+ = \mathrm{diag}(1/\sigma_i)$ pour $\sigma_i > 0$ |
 | Espace image | engendré par les $u_i$ avec $\sigma_i>0$ |
 | Noyau | engendré par les $v_i$ avec $\sigma_i=0$ |
 
@@ -3680,15 +3680,15 @@ Chaque terme $\sigma_i u_i v_i^\top$ est une matrice de **rang 1** (une couche).
 
 > **Théorème (Eckart–Young–Mirsky).** Soit $A = U\Sigma V^\top$ et $A_k = \sum_{i=1}^{k} \sigma_i u_i v_i^\top$ (la SVD **tronquée** au rang $k$). Alors $A_k$ est la **meilleure approximation de rang $\le k$** de $A$, à la fois pour la norme spectrale et pour la norme de Frobenius :
 > ```math
-> \min_{\operatorname{rang}(B) \le k} \|A - B\|_2 = \|A - A_k\|_2 = \sigma_{k+1},
+> \min_{\mathrm{rang}(B) \le k} \|A - B\|_2 = \|A - A_k\|_2 = \sigma_{k+1},
 > ```
 > ```math
-> \min_{\operatorname{rang}(B) \le k} \|A - B\|_F = \|A - A_k\|_F = \sqrt{\sum_{i=k+1}^{r} \sigma_i^2}.
+> \min_{\mathrm{rang}(B) \le k} \|A - B\|_F = \|A - A_k\|_F = \sqrt{\sum_{i=k+1}^{r} \sigma_i^2}.
 > ```
 
 > **Intuition.** L'erreur qu'on commet en tronquant au rang $k$ est exactement gouvernée par les valeurs singulières **qu'on a jetées**. Si elles sont minuscules, l'approximation est quasi parfaite. Aucune autre matrice de rang $k$ ne fait mieux : la SVD tronquée est **optimale**, pas seulement bonne.
 
-> **Démonstration (norme spectrale, esquisse).** $\|A - A_k\|_2 = \sigma_{k+1}$ est immédiat car $A - A_k = \sum_{i>k}\sigma_i u_i v_i^\top$ a pour plus grande valeur singulière $\sigma_{k+1}$. Pour la borne inférieure : soit $B$ de rang $\le k$. Son noyau est de dimension $\ge n-k$. L'espace engendré par $v_1,\dots,v_{k+1}$ est de dimension $k+1$. Ces deux sous-espaces de $\mathbb{R}^n$ se rencontrent ailleurs qu'en zéro (la somme de leurs dimensions $(n-k)+(k+1) = n+1 > n$) : il existe $x$ unitaire dans $\ker(B) \cap \operatorname{vect}(v_1,\dots,v_{k+1})$. Alors $\|(A-B)x\|^2 = \|Ax\|^2 = \sum_{i\le k+1}\sigma_i^2 (v_i^\top x)^2 \ge \sigma_{k+1}^2\sum_{i\le k+1}(v_i^\top x)^2 = \sigma_{k+1}^2$, donc $\|A-B\|_2 \ge \sigma_{k+1}$. $\quad\blacksquare$
+> **Démonstration (norme spectrale, esquisse).** $\|A - A_k\|_2 = \sigma_{k+1}$ est immédiat car $A - A_k = \sum_{i>k}\sigma_i u_i v_i^\top$ a pour plus grande valeur singulière $\sigma_{k+1}$. Pour la borne inférieure : soit $B$ de rang $\le k$. Son noyau est de dimension $\ge n-k$. L'espace engendré par $v_1,\dots,v_{k+1}$ est de dimension $k+1$. Ces deux sous-espaces de $\mathbb{R}^n$ se rencontrent ailleurs qu'en zéro (la somme de leurs dimensions $(n-k)+(k+1) = n+1 > n$) : il existe $x$ unitaire dans $\ker(B) \cap \mathrm{vect}(v_1,\dots,v_{k+1})$. Alors $\|(A-B)x\|^2 = \|Ax\|^2 = \sum_{i\le k+1}\sigma_i^2 (v_i^\top x)^2 \ge \sigma_{k+1}^2\sum_{i\le k+1}(v_i^\top x)^2 = \sigma_{k+1}^2$, donc $\|A-B\|_2 \ge \sigma_{k+1}$. $\quad\blacksquare$
 
 #### Exemple chiffré déroulé pas à pas
 
@@ -3840,13 +3840,13 @@ flowchart LR
 #### Exercice 1 — Déterminant et trace (échauffement)
 
 Soit $A = \begin{pmatrix} 3 & 2 \\ 1 & 4 \end{pmatrix}$.
-**(a)** Calculer $\det(A)$ et $\operatorname{tr}(A)$.
+**(a)** Calculer $\det(A)$ et $\mathrm{tr}(A)$.
 **(b)** En déduire la somme et le produit des valeurs propres sans les calculer.
 **(c)** Vérifier $\det(2A) = 2^2 \det(A)$.
 
 > **Corrigé.**
-> **(a)** $\det(A) = 3\cdot4 - 2\cdot1 = 10$. $\operatorname{tr}(A) = 3+4 = 7$.
-> **(b)** $\lambda_1 + \lambda_2 = \operatorname{tr}(A) = 7$ et $\lambda_1\lambda_2 = \det(A) = 10$. (Ce sont $\lambda=5$ et $\lambda=2$, racines de $\lambda^2-7\lambda+10$.)
+> **(a)** $\det(A) = 3\cdot4 - 2\cdot1 = 10$. $\mathrm{tr}(A) = 3+4 = 7$.
+> **(b)** $\lambda_1 + \lambda_2 = \mathrm{tr}(A) = 7$ et $\lambda_1\lambda_2 = \det(A) = 10$. (Ce sont $\lambda=5$ et $\lambda=2$, racines de $\lambda^2-7\lambda+10$.)
 > **(c)** $2A = \begin{pmatrix} 6 & 4 \\ 2 & 8 \end{pmatrix}$, $\det(2A) = 48 - 8 = 40 = 4\cdot 10 = 2^2\det(A)$. $\checkmark$
 
 #### Exercice 2 — Valeurs et vecteurs propres
@@ -4228,12 +4228,12 @@ Beaucoup de fonctions courantes ont des jacobiennes tres simples ; les connaitre
 |---|---|---|
 | $A\mathbf{x}$ (application lineaire) | $A$ | $m\times n$ |
 | $\mathbf{x}$ (identite) | $I_n$ | $n\times n$ |
-| $\mathbf{a} \odot \mathbf{x}$ (produit terme a terme) | $\operatorname{diag}(\mathbf{a})$ | $n\times n$ |
-| $\sigma(\mathbf{x})$ (activation appliquee composante par composante) | $\operatorname{diag}\big(\sigma'(x_1),\dots,\sigma'(x_n)\big)$ | $n\times n$ |
+| $\mathbf{a} \odot \mathbf{x}$ (produit terme a terme) | $\mathrm{diag}(\mathbf{a})$ | $n\times n$ |
+| $\sigma(\mathbf{x})$ (activation appliquee composante par composante) | $\mathrm{diag}\big(\sigma'(x_1),\dots,\sigma'(x_n)\big)$ | $n\times n$ |
 
 > **Le symbole $I_n$ (matrice identite).** Vue au chapitre 2, c'est la matrice carree $n\times n$ avec des $1$ sur la diagonale et des $0$ ailleurs ; elle laisse tout vecteur inchange ($I_n\mathbf{x}=\mathbf{x}$). Rien d'etonnant donc a ce que la jacobienne de la fonction identite ($\mathbf x\mapsto\mathbf x$) soit precisement $I_n$ : bouger une entree d'un cran bouge la sortie correspondante d'exactement un cran, sans melange.
 
-> **Le symbole $\operatorname{diag}(\cdot)$.** Ce symbole construit une **matrice diagonale** : on prend une liste de nombres et on les pose sur la diagonale principale, des zeros partout ailleurs. C'est comme un standard telephonique ou chaque ligne ne parle qu'a elle-meme : l'entree $j$ n'affecte que la sortie $j$. Cela arrive des qu'une fonction agit « composante par composante » sans melanger les coordonnees.
+> **Le symbole $\mathrm{diag}(\cdot)$.** Ce symbole construit une **matrice diagonale** : on prend une liste de nombres et on les pose sur la diagonale principale, des zeros partout ailleurs. C'est comme un standard telephonique ou chaque ligne ne parle qu'a elle-meme : l'entree $j$ n'affecte que la sortie $j$. Cela arrive des qu'une fonction agit « composante par composante » sans melanger les coordonnees.
 
 > **Le symbole $\odot$ (produit de Hadamard).** Ce symbole (un point dans un cercle) represente la multiplication **terme a terme** de deux vecteurs de meme taille : $(\mathbf{a}\odot\mathbf{x})_i = a_i x_i$. A ne pas confondre avec le produit scalaire (qui additionne tout en un seul nombre). Ici on garde un vecteur : case par case, on multiplie les vis-a-vis.
 
@@ -4279,7 +4279,7 @@ J_{\mathbf{f}}(0,0) = \begin{bmatrix}0 & 1\\ 0 & 0\end{bmatrix}, \qquad J_{\math
 
 La fonction **softmax** transforme un vecteur de scores en une distribution de probabilites :
 ```math
-\operatorname{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{k=1}^{n} e^{z_k}} =: p_i.
+\mathrm{softmax}(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{k=1}^{n} e^{z_k}} =: p_i.
 ```
 
 > **Le symbole $\sum$ (somme sigma).** Cette grande lettre grecque represente une **boucle qui additionne**. $\sum_{k=1}^{n} a_k$ se lit « somme, pour $k$ allant de 1 a $n$, des $a_k$ » et vaut $a_1 + a_2 + \dots + a_n$. Pensez a une caisse enregistreuse qui scanne les articles un a un et cumule le total. Le « $k=1$ » dessous est le point de depart, le « $n$ » dessus l'arrivee.
@@ -4288,7 +4288,7 @@ La fonction **softmax** transforme un vecteur de scores en une distribution de p
 
 Sa jacobienne a une forme remarquable, omnipresente en classification :
 ```math
-\frac{\partial p_i}{\partial z_j} = p_i(\delta_{ij} - p_j), \qquad\text{soit}\qquad J = \operatorname{diag}(\mathbf{p}) - \mathbf{p}\,\mathbf{p}^\top.
+\frac{\partial p_i}{\partial z_j} = p_i(\delta_{ij} - p_j), \qquad\text{soit}\qquad J = \mathrm{diag}(\mathbf{p}) - \mathbf{p}\,\mathbf{p}^\top.
 ```
 
 > **Le symbole $\delta_{ij}$ (delta de Kronecker).** Ce symbole vaut $1$ si $i=j$ et $0$ sinon. C'est un **detecteur d'egalite** : il s'allume (1) quand les deux indices sont identiques, reste eteint (0) sinon. Pratique pour ecrire « le terme diagonal » d'une formule en une seule expression compacte.
@@ -4333,11 +4333,11 @@ Pour les fonctions matricielles, calculer case par case devient vite ingerable. 
 
 > **Principe (identification du gradient).** Pour une fonction scalaire $y = f(W)$, on calcule la differentielle et on l'ecrit sous la forme
 > ```math
-> \mathrm{d}y = \operatorname{tr}\!\big(G^\top\, \mathrm{d}W\big) \quad\Longrightarrow\quad \frac{\partial y}{\partial W} = G.
+> \mathrm{d}y = \mathrm{tr}\!\big(G^\top\, \mathrm{d}W\big) \quad\Longrightarrow\quad \frac{\partial y}{\partial W} = G.
 > ```
-> Le facteur $G$ qui apparait en regard de $\mathrm{d}W$ dans la trace **est** le gradient. Cela marche parce que $\operatorname{tr}(A^\top B) = \sum_{ij} A_{ij}B_{ij}$ est le produit scalaire des matrices.
+> Le facteur $G$ qui apparait en regard de $\mathrm{d}W$ dans la trace **est** le gradient. Cela marche parce que $\mathrm{tr}(A^\top B) = \sum_{ij} A_{ij}B_{ij}$ est le produit scalaire des matrices.
 
-> **Le symbole $\operatorname{tr}(\cdot)$ (trace).** Ce symbole represente la **somme des elements diagonaux** d'une matrice carree : $\operatorname{tr}(A) = \sum_i A_{ii}$. Imaginez la diagonale d'un damier de haut-gauche a bas-droite : on additionne juste les cases sur cette ligne. La trace possede une propriete reine : $\operatorname{tr}(ABC) = \operatorname{tr}(BCA) = \operatorname{tr}(CAB)$ (invariance par permutation circulaire), qu'on utilise sans cesse.
+> **Le symbole $\mathrm{tr}(\cdot)$ (trace).** Ce symbole represente la **somme des elements diagonaux** d'une matrice carree : $\mathrm{tr}(A) = \sum_i A_{ii}$. Imaginez la diagonale d'un damier de haut-gauche a bas-droite : on additionne juste les cases sur cette ligne. La trace possede une propriete reine : $\mathrm{tr}(ABC) = \mathrm{tr}(BCA) = \mathrm{tr}(CAB)$ (invariance par permutation circulaire), qu'on utilise sans cesse.
 
 > **Le symbole $A^\top$ (transposee).** Ce petit T en exposant represente la **matrice retournee** : on echange lignes et colonnes, $(A^\top)_{ij} = A_{ji}$. C'est comme basculer un tableau autour de sa diagonale, ou retourner une carte le long d'un axe. Un vecteur colonne devient une ligne, et inversement.
 
@@ -4352,10 +4352,10 @@ Le tableau suivant rassemble les derivees matricielles les plus utilisees (conve
 | $\mathbf{a}^\top \mathbf{x}$ | $\partial/\partial\mathbf{x} = \mathbf{a}$ |
 | $\mathbf{x}^\top A\,\mathbf{x}$ | $\partial/\partial\mathbf{x} = (A + A^\top)\mathbf{x}$ |
 | $\mathbf{x}^\top A\,\mathbf{x}$, $A$ symetrique | $\partial/\partial\mathbf{x} = 2A\mathbf{x}$ |
-| $\operatorname{tr}(W^\top A)$ | $\partial/\partial W = A$ |
-| $\operatorname{tr}(AWB)$ | $\partial/\partial W = A^\top B^\top$ |
+| $\mathrm{tr}(W^\top A)$ | $\partial/\partial W = A$ |
+| $\mathrm{tr}(AWB)$ | $\partial/\partial W = A^\top B^\top$ |
 | $\mathbf{a}^\top W \mathbf{b}$ | $\partial/\partial W = \mathbf{a}\,\mathbf{b}^\top$ |
-| $\operatorname{tr}(W^\top W)=\|W\|_F^2$ | $\partial/\partial W = 2W$ |
+| $\mathrm{tr}(W^\top W)=\|W\|_F^2$ | $\partial/\partial W = 2W$ |
 | $\ln\det(W)$ | $\partial/\partial W = (W^{-1})^\top = W^{-\top}$ |
 | $\det(W)$ | $\partial/\partial W = \det(W)\,W^{-\top}$ |
 
@@ -4427,7 +4427,7 @@ Cette section regroupe, demontre et illustre la « boite a outils » du praticie
 | 4 | $A\mathbf{x}$ | $\mathbf{x}$ | $A$ (jacobienne) |
 | 5 | $\|A\mathbf{x}-\mathbf{b}\|^2$ | $\mathbf{x}$ | $2A^\top(A\mathbf{x}-\mathbf{b})$ |
 | 6 | $\mathbf{a}^\top W\mathbf{b}$ | $W$ | $\mathbf{a}\mathbf{b}^\top$ |
-| 7 | $\operatorname{tr}(AW)$ | $W$ | $A^\top$ |
+| 7 | $\mathrm{tr}(AW)$ | $W$ | $A^\top$ |
 | 8 | $\|W\|_F^2$ | $W$ | $2W$ |
 | 9 | $\ln\det W$ | $W$ | $W^{-\top}$ |
 | 10 | $\mathbf{x}^\top W \mathbf{x}$ | $W$ | $\mathbf{x}\mathbf{x}^\top$ |
@@ -4840,13 +4840,13 @@ Soit $f(x,y) = x^2 + xy + y^2 - 3x$. Trouver le point critique, ecrire le develo
 
 #### Exercice 7 — Gradient matriciel
 
-Demontrer que $\nabla_W\,\operatorname{tr}(AWB) = A^\top B^\top$, puis en deduire $\nabla_W\,\|XW - Y\|_F^2$.
+Demontrer que $\nabla_W\,\mathrm{tr}(AWB) = A^\top B^\top$, puis en deduire $\nabla_W\,\|XW - Y\|_F^2$.
 
-> **Corrige.** **Partie 1.** Par linearite de la trace, $\mathrm{d}\,\operatorname{tr}(AWB) = \operatorname{tr}(A\,\mathrm{d}W\,B) = \operatorname{tr}(BA\,\mathrm{d}W)$ (permutation circulaire). Or la forme canonique est $\mathrm{d}y = \operatorname{tr}(G^\top \mathrm{d}W)$ avec $G = \nabla_W y$ ; ici $G^\top = BA$, donc $G = (BA)^\top = A^\top B^\top$. $\blacksquare$
+> **Corrige.** **Partie 1.** Par linearite de la trace, $\mathrm{d}\,\mathrm{tr}(AWB) = \mathrm{tr}(A\,\mathrm{d}W\,B) = \mathrm{tr}(BA\,\mathrm{d}W)$ (permutation circulaire). Or la forme canonique est $\mathrm{d}y = \mathrm{tr}(G^\top \mathrm{d}W)$ avec $G = \nabla_W y$ ; ici $G^\top = BA$, donc $G = (BA)^\top = A^\top B^\top$. $\blacksquare$
 >
-> **Partie 2.** Posons $R = XW - Y$. Alors $\|R\|_F^2 = \operatorname{tr}(R^\top R)$ et
+> **Partie 2.** Posons $R = XW - Y$. Alors $\|R\|_F^2 = \mathrm{tr}(R^\top R)$ et
 > ```math
-> \mathrm{d}\,\|R\|_F^2 = 2\operatorname{tr}(R^\top \mathrm{d}R) = 2\operatorname{tr}(R^\top X\,\mathrm{d}W) = \operatorname{tr}\!\big((2X^\top R)^\top \mathrm{d}W\big).
+> \mathrm{d}\,\|R\|_F^2 = 2\mathrm{tr}(R^\top \mathrm{d}R) = 2\mathrm{tr}(R^\top X\,\mathrm{d}W) = \mathrm{tr}\!\big((2X^\top R)^\top \mathrm{d}W\big).
 > ```
 > Donc $\nabla_W\,\|XW-Y\|_F^2 = 2X^\top(XW - Y)$. C'est la version matricielle des equations normales, et **exactement** le gradient utilise pour entrainer une couche lineaire par descente de gradient. $\blacksquare$
 
@@ -6291,7 +6291,7 @@ Beaucoup de fonctions convexes utiles ont des **coins** (valeur absolue, norme $
 
 C'est le fondement de la **descente de sous-gradient** et des méthodes **proximales** qui rendent le Lasso ($\min \tfrac12\|Ax-b\|^2 + \lambda\|x\|_1$) résoluble efficacement — l'opérateur proximal de $\|\cdot\|_1$ étant le **seuillage doux** (soft-thresholding), qui annule les petits coefficients et réalise la sélection de variables.
 
-> **Exemple chiffré (seuillage doux).** L'opérateur proximal $\operatorname{prox}_{\lambda|\cdot|}(z) = \arg\min_x \big(\tfrac12 (x-z)^2 + \lambda|x|\big)$ vaut $\operatorname{sign}(z)\max(|z|-\lambda, 0)$. Avec $\lambda = 0{,}5$ : $z = 2 \Rightarrow x = 1{,}5$ ; $z = 0{,}3 \Rightarrow x = 0$ (annulé !) ; $z = -1{,}2 \Rightarrow x = -0{,}7$. C'est ce « rabotage vers zéro » qui rend les solutions Lasso **parcimonieuses** (sparse).
+> **Exemple chiffré (seuillage doux).** L'opérateur proximal $\mathrm{prox}_{\lambda|\cdot|}(z) = \arg\min_x \big(\tfrac12 (x-z)^2 + \lambda|x|\big)$ vaut $\mathrm{sign}(z)\max(|z|-\lambda, 0)$. Avec $\lambda = 0{,}5$ : $z = 2 \Rightarrow x = 1{,}5$ ; $z = 0{,}3 \Rightarrow x = 0$ (annulé !) ; $z = -1{,}2 \Rightarrow x = -0{,}7$. C'est ce « rabotage vers zéro » qui rend les solutions Lasso **parcimonieuses** (sparse).
 
 ```python
 import numpy as np
@@ -6403,7 +6403,7 @@ Pour chaque fonction, dire si elle est convexe sur son domaine, en justifiant pa
 > - Si $x < 0$ : $0 = x - z - \lambda \Rightarrow x = z + \lambda$, valable si $z < -\lambda$.
 > - Si $x = 0$ : il faut $0 \in (0 - z) + \lambda[-1,1] = [-z-\lambda,\ -z+\lambda]$, soit $|z| \le \lambda$.
 >
-> En rassemblant : $x^\star = \operatorname{sign}(z)\max(|z| - \lambda, 0)$ — le **seuillage doux**, qui annule toute entrée d'amplitude $\le \lambda$ et rétrécit les autres de $\lambda$ vers zéro.
+> En rassemblant : $x^\star = \mathrm{sign}(z)\max(|z| - \lambda, 0)$ — le **seuillage doux**, qui annule toute entrée d'amplitude $\le \lambda$ et rétrécit les autres de $\lambda$ vers zéro.
 
 #### Exercice 7 — Implémentation et observation (au choix, avec ordinateur)
 
@@ -7516,16 +7516,16 @@ Annuler ce gradient donne les **equations normales** :
 \boxed{\ \mathbf{X}^\top \mathbf{X}\, \hat{\mathbf{w}} = \mathbf{X}^\top \mathbf{y}\ }
 ```
 
-> **Theoreme (existence, unicite, solution OLS).** Le cout $J$ est convexe (sa hessienne $\mathbf{X}^\top\mathbf{X}$ est semi-definie positive). Tout minimiseur verifie les equations normales. Si $\mathbf{X}$ est de rang plein en colonnes ($\operatorname{rang}\mathbf{X} = d$, ce qui exige $n \ge d$ et des colonnes lineairement independantes), alors $\mathbf{X}^\top\mathbf{X}$ est inversible et le minimiseur est **unique** :
+> **Theoreme (existence, unicite, solution OLS).** Le cout $J$ est convexe (sa hessienne $\mathbf{X}^\top\mathbf{X}$ est semi-definie positive). Tout minimiseur verifie les equations normales. Si $\mathbf{X}$ est de rang plein en colonnes ($\mathrm{rang}\mathbf{X} = d$, ce qui exige $n \ge d$ et des colonnes lineairement independantes), alors $\mathbf{X}^\top\mathbf{X}$ est inversible et le minimiseur est **unique** :
 > ```math
 > \hat{\mathbf{w}} = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}.
 > ```
 
 > **Le symbole $\nabla^2 J$ (hessienne) — rappel d'usage.** La hessienne est la matrice des derivees secondes : sa case $(j,k)$ vaut $\partial^2 J / \partial w_j \partial w_k$. Elle decrit la *courbure* du cout. Pour une fonction d'une variable, le signe de la derivee seconde dit si l'on est dans un creux (positif) ou sur une bosse ; en plusieurs variables, le role est tenu par le caractere defini positif de la hessienne.
 
-> **Le symbole $\operatorname{rang}\mathbf{X}$ (rang) — rappel d'usage.** Le rang est le nombre de colonnes *vraiment independantes* (non redondantes) de $\mathbf{X}$ : le nombre de directions reellement distinctes que portent les caracteristiques. Si deux colonnes sont identiques ou proportionnelles (ex. une surface en m² et la meme en cm²), elles n'apportent qu'une seule direction : le rang chute, et $\mathbf{X}^\top\mathbf{X}$ devient non inversible.
+> **Le symbole $\mathrm{rang}\mathbf{X}$ (rang) — rappel d'usage.** Le rang est le nombre de colonnes *vraiment independantes* (non redondantes) de $\mathbf{X}$ : le nombre de directions reellement distinctes que portent les caracteristiques. Si deux colonnes sont identiques ou proportionnelles (ex. une surface en m² et la meme en cm²), elles n'apportent qu'une seule direction : le rang chute, et $\mathbf{X}^\top\mathbf{X}$ devient non inversible.
 
-*Demonstration.* La hessienne de $J$ est $\nabla^2 J = \mathbf{X}^\top\mathbf{X}$. Pour tout $\mathbf{v}$, $\mathbf{v}^\top \mathbf{X}^\top\mathbf{X}\mathbf{v} = \lVert \mathbf{X}\mathbf{v}\rVert_2^2 \ge 0$, donc $J$ est convexe et un point critique est un minimum global. Si $\operatorname{rang}\mathbf{X}=d$, alors $\mathbf{X}\mathbf{v}=\mathbf{0} \Rightarrow \mathbf{v}=\mathbf{0}$, donc $\mathbf{v}^\top\mathbf{X}^\top\mathbf{X}\mathbf{v}>0$ pour $\mathbf{v}\neq\mathbf0$ : $\mathbf{X}^\top\mathbf{X}$ est definie positive, donc inversible, d'ou l'unicite et la formule. $\blacksquare$
+*Demonstration.* La hessienne de $J$ est $\nabla^2 J = \mathbf{X}^\top\mathbf{X}$. Pour tout $\mathbf{v}$, $\mathbf{v}^\top \mathbf{X}^\top\mathbf{X}\mathbf{v} = \lVert \mathbf{X}\mathbf{v}\rVert_2^2 \ge 0$, donc $J$ est convexe et un point critique est un minimum global. Si $\mathrm{rang}\mathbf{X}=d$, alors $\mathbf{X}\mathbf{v}=\mathbf{0} \Rightarrow \mathbf{v}=\mathbf{0}$, donc $\mathbf{v}^\top\mathbf{X}^\top\mathbf{X}\mathbf{v}>0$ pour $\mathbf{v}\neq\mathbf0$ : $\mathbf{X}^\top\mathbf{X}$ est definie positive, donc inversible, d'ou l'unicite et la formule. $\blacksquare$
 
 > **Le symbole $\mathbf{X}^\top \mathbf{X}$ (matrice de Gram / de covariance non normalisee).** Ce produit, de taille $d \times d$, contient *tous les produits scalaires entre colonnes* : sa case $(j,k)$ vaut $\sum_i x_{ij}x_{ik}$, c'est-a-dire « a quel point la caracteristique $j$ et la caracteristique $k$ varient ensemble ». C'est le coeur de calcul de la regression : tout se joue dans cette petite matrice carree, meme si on a des millions de lignes.
 
@@ -7586,7 +7586,7 @@ systeme triangulaire resolu par simple remontee, sans jamais former $\mathbf{X}^
 
 #### Le cas sous-determine et la pseudo-inverse
 
-Si $\operatorname{rang}\mathbf{X}<d$ (colonnes redondantes, ou plus de caracteristiques que d'exemples, $d>n$), les equations normales ont une *infinite* de solutions : on peut ajouter a $\hat{\mathbf{w}}$ n'importe quel vecteur du noyau de $\mathbf{X}$ sans changer $\mathbf{X}\hat{\mathbf{w}}$. On selectionne alors classiquement la solution de **norme minimale**, donnee par la pseudo-inverse de Moore-Penrose $\mathbf{X}^+$ :
+Si $\mathrm{rang}\mathbf{X}<d$ (colonnes redondantes, ou plus de caracteristiques que d'exemples, $d>n$), les equations normales ont une *infinite* de solutions : on peut ajouter a $\hat{\mathbf{w}}$ n'importe quel vecteur du noyau de $\mathbf{X}$ sans changer $\mathbf{X}\hat{\mathbf{w}}$. On selectionne alors classiquement la solution de **norme minimale**, donnee par la pseudo-inverse de Moore-Penrose $\mathbf{X}^+$ :
 
 ```math
 \hat{\mathbf{w}}_{\min} = \mathbf{X}^+ \mathbf{y}.
@@ -7602,10 +7602,10 @@ Via la SVD $\mathbf{X}=\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top$, on a $\mat
 
 Sous le modele gaussien $\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}$, $\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)$, et $\mathbf{X}$ de rang plein deterministe :
 
-> **Le symbole $\mathbb{E}$ (esperance) et $\operatorname{Cov}$ (covariance) — rappel d'usage.** L'esperance $\mathbb{E}[\cdot]$ est la *moyenne theorique* sur tous les tirages possibles du bruit : ce qu'on obtiendrait en repetant l'experience une infinite de fois. La matrice de covariance $\operatorname{Cov}(\hat{\mathbf{w}})$ decrit la *dispersion* de l'estimateur autour de cette moyenne : sa diagonale donne la variance de chaque coefficient, ses cases hors diagonale disent si deux coefficients varient ensemble d'un tirage a l'autre.
+> **Le symbole $\mathbb{E}$ (esperance) et $\mathrm{Cov}$ (covariance) — rappel d'usage.** L'esperance $\mathbb{E}[\cdot]$ est la *moyenne theorique* sur tous les tirages possibles du bruit : ce qu'on obtiendrait en repetant l'experience une infinite de fois. La matrice de covariance $\mathrm{Cov}(\hat{\mathbf{w}})$ decrit la *dispersion* de l'estimateur autour de cette moyenne : sa diagonale donne la variance de chaque coefficient, ses cases hors diagonale disent si deux coefficients varient ensemble d'un tirage a l'autre.
 
 - **Sans biais (en anglais *unbiased*).** $\mathbb{E}[\hat{\mathbf{w}}] = \mathbf{w}_\star$. En effet $\hat{\mathbf{w}}=(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y=\mathbf w_\star+(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\boldsymbol\varepsilon$, et $\mathbb E[\boldsymbol\varepsilon]=\mathbf0$.
-- **Covariance.** $\operatorname{Cov}(\hat{\mathbf{w}}) = \sigma^2 (\mathbf{X}^\top\mathbf{X})^{-1}$. Plus les donnees sont nombreuses et « etalees », plus $\mathbf X^\top\mathbf X$ est grande, plus la covariance est petite : l'estimation se resserre.
+- **Covariance.** $\mathrm{Cov}(\hat{\mathbf{w}}) = \sigma^2 (\mathbf{X}^\top\mathbf{X})^{-1}$. Plus les donnees sont nombreuses et « etalees », plus $\mathbf X^\top\mathbf X$ est grande, plus la covariance est petite : l'estimation se resserre.
 - **Loi exacte.** $\hat{\mathbf{w}} \sim \mathcal N\bigl(\mathbf{w}_\star,\ \sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\bigr)$ (combinaison lineaire de gaussiennes).
 - **Theoreme de Gauss-Markov.** Parmi *tous* les estimateurs lineaires en $\mathbf{y}$ et sans biais, OLS a la plus petite variance (il est *BLUE*, en anglais *Best Linear Unbiased Estimator*). Remarquable : ce resultat ne suppose meme pas la normalite, seulement bruit centre, non correle, de variance constante.
 
@@ -7717,7 +7717,7 @@ flowchart LR
 Il n'existe pas de formule fermee generale ($|\cdot|$ n'est pas derivable en 0). On resout par des methodes adaptees : descente par coordonnees (en anglais *coordinate descent*, le standard de scikit-learn), ou gradient proximal (ISTA/FISTA). Le coeur de ces methodes est l'**operateur de seuillage doux** (en anglais *soft-thresholding*), solution du sous-probleme scalaire $\min_w \tfrac12(w-z)^2+\lambda|w|$ :
 
 ```math
-S_\lambda(z)=\operatorname{sign}(z)\,\max(|z|-\lambda,\ 0)=
+S_\lambda(z)=\mathrm{sign}(z)\,\max(|z|-\lambda,\ 0)=
 \begin{cases} z-\lambda & z>\lambda\\ 0 & |z|\le\lambda\\ z+\lambda & z<-\lambda\end{cases}.
 ```
 
@@ -7877,15 +7877,15 @@ Le seul terme dependant de $\mathbf w$ est la somme des carres d'erreur, *avec u
 
 #### L'interpretation geometrique : projection orthogonale
 
-Placons-nous dans $\mathbb R^n$ (un axe par *observation*, pas par caracteristique). Le vecteur cible $\mathbf y$ est un point de cet espace. Les predictions accessibles $\mathbf X\mathbf w$, quand $\mathbf w$ parcourt $\mathbb R^d$, decrivent exactement le **sous-espace engendre par les colonnes** de $\mathbf X$, note $\operatorname{Col}(\mathbf X)$ — un sous-espace de dimension $\le d$.
+Placons-nous dans $\mathbb R^n$ (un axe par *observation*, pas par caracteristique). Le vecteur cible $\mathbf y$ est un point de cet espace. Les predictions accessibles $\mathbf X\mathbf w$, quand $\mathbf w$ parcourt $\mathbb R^d$, decrivent exactement le **sous-espace engendre par les colonnes** de $\mathbf X$, note $\mathrm{Col}(\mathbf X)$ — un sous-espace de dimension $\le d$.
 
-> **Le symbole $\operatorname{Col}(\mathbf X)$ (espace des colonnes) — rappel d'usage.** C'est l'ensemble de *toutes* les combinaisons ponderees des colonnes de $\mathbf X$, c'est-a-dire tous les $\mathbf X\mathbf w$ possibles : exactement l'eventail des predictions que le modele peut produire. Si $\mathbf X$ a $d$ colonnes independantes, c'est un « plan » de dimension $d$ plonge dans $\mathbb R^n$.
+> **Le symbole $\mathrm{Col}(\mathbf X)$ (espace des colonnes) — rappel d'usage.** C'est l'ensemble de *toutes* les combinaisons ponderees des colonnes de $\mathbf X$, c'est-a-dire tous les $\mathbf X\mathbf w$ possibles : exactement l'eventail des predictions que le modele peut produire. Si $\mathbf X$ a $d$ colonnes independantes, c'est un « plan » de dimension $d$ plonge dans $\mathbb R^n$.
 
-> **Intuition « ombre au soleil ».** $\mathbf y$ est un oiseau en l'air ; $\operatorname{Col}(\mathbf X)$ est le sol (le plan des predictions atteignables). Minimiser $\lVert\mathbf y-\mathbf X\mathbf w\rVert$, c'est trouver le point du sol *le plus proche* de l'oiseau : son **ombre a midi**, pile a la verticale. Cette ombre, c'est la *projection orthogonale* $\hat{\mathbf y}$. Le rayon de soleil vertical (le residu $\mathbf y-\hat{\mathbf y}$) est *perpendiculaire au sol*.
+> **Intuition « ombre au soleil ».** $\mathbf y$ est un oiseau en l'air ; $\mathrm{Col}(\mathbf X)$ est le sol (le plan des predictions atteignables). Minimiser $\lVert\mathbf y-\mathbf X\mathbf w\rVert$, c'est trouver le point du sol *le plus proche* de l'oiseau : son **ombre a midi**, pile a la verticale. Cette ombre, c'est la *projection orthogonale* $\hat{\mathbf y}$. Le rayon de soleil vertical (le residu $\mathbf y-\hat{\mathbf y}$) est *perpendiculaire au sol*.
 
-> **Theoreme (projection orthogonale).** $\hat{\mathbf y}=\mathbf X\hat{\mathbf w}$ est la projection orthogonale de $\mathbf y$ sur $\operatorname{Col}(\mathbf X)$. Le residu $\mathbf y-\hat{\mathbf y}$ est orthogonal a *toutes* les colonnes de $\mathbf X$ : $\mathbf X^\top(\mathbf y-\hat{\mathbf y})=\mathbf 0$ — ce qui *est* exactement l'equation normale.
+> **Theoreme (projection orthogonale).** $\hat{\mathbf y}=\mathbf X\hat{\mathbf w}$ est la projection orthogonale de $\mathbf y$ sur $\mathrm{Col}(\mathbf X)$. Le residu $\mathbf y-\hat{\mathbf y}$ est orthogonal a *toutes* les colonnes de $\mathbf X$ : $\mathbf X^\top(\mathbf y-\hat{\mathbf y})=\mathbf 0$ — ce qui *est* exactement l'equation normale.
 
-*Demonstration.* L'equation normale $\mathbf X^\top(\mathbf y-\mathbf X\hat{\mathbf w})=\mathbf0$ dit que le residu est orthogonal a chaque colonne de $\mathbf X$, donc a tout $\operatorname{Col}(\mathbf X)$. Par le theoreme de projection dans un espace de Hilbert (ici $\mathbb R^n$ euclidien), il existe un unique point de $\operatorname{Col}(\mathbf X)$ realisant la distance minimale a $\mathbf y$, caracterise precisement par cette orthogonalite. Donc $\mathbf X\hat{\mathbf w}$ est cette projection. $\blacksquare$
+*Demonstration.* L'equation normale $\mathbf X^\top(\mathbf y-\mathbf X\hat{\mathbf w})=\mathbf0$ dit que le residu est orthogonal a chaque colonne de $\mathbf X$, donc a tout $\mathrm{Col}(\mathbf X)$. Par le theoreme de projection dans un espace de Hilbert (ici $\mathbb R^n$ euclidien), il existe un unique point de $\mathrm{Col}(\mathbf X)$ realisant la distance minimale a $\mathbf y$, caracterise precisement par cette orthogonalite. Donc $\mathbf X\hat{\mathbf w}$ est cette projection. $\blacksquare$
 
 ```mermaid
 flowchart TB
@@ -7911,10 +7911,10 @@ La projection s'ecrit lineairement en $\mathbf y$ :
 Proprietes (caracteristiques d'un *projecteur orthogonal*) :
 - **Idempotente** : $\mathbf H^2=\mathbf H$ (projeter l'ombre ne la bouge plus).
 - **Symetrique** : $\mathbf H^\top=\mathbf H$ (projection *orthogonale*).
-- $\operatorname{trace}(\mathbf H)=\operatorname{rang}(\mathbf X)=d$ : la trace compte les degres de liberte du modele.
+- $\mathrm{trace}(\mathbf H)=\mathrm{rang}(\mathbf X)=d$ : la trace compte les degres de liberte du modele.
 - $\mathbf I-\mathbf H$ projette sur l'orthogonal (l'espace des residus), de dimension $n-d$ — d'ou le diviseur $n-d$ de $\hat\sigma^2$.
 
-> **Le symbole $\operatorname{trace}$ (trace) — rappel d'usage.** La trace d'une matrice carree est la *somme de ses coefficients diagonaux*. Pour un projecteur, elle egale la dimension du sous-espace sur lequel on projette : ici $\operatorname{trace}(\mathbf H) = d$ compte donc le nombre de directions reellement ajustees, c'est-a-dire les degres de liberte du modele. Propriete cle utilisee : l'invariance cyclique $\operatorname{trace}(\mathbf A\mathbf B) = \operatorname{trace}(\mathbf B\mathbf A)$.
+> **Le symbole $\mathrm{trace}$ (trace) — rappel d'usage.** La trace d'une matrice carree est la *somme de ses coefficients diagonaux*. Pour un projecteur, elle egale la dimension du sous-espace sur lequel on projette : ici $\mathrm{trace}(\mathbf H) = d$ compte donc le nombre de directions reellement ajustees, c'est-a-dire les degres de liberte du modele. Propriete cle utilisee : l'invariance cyclique $\mathrm{trace}(\mathbf A\mathbf B) = \mathrm{trace}(\mathbf B\mathbf A)$.
 
 Via la QR ($\mathbf X=\mathbf Q\mathbf R$), $\mathbf H=\mathbf Q\mathbf Q^\top$ : la projection est immediate dans la base orthonormee $\mathbf Q$. La SVD donne $\mathbf H=\mathbf U_d\mathbf U_d^\top$ (ou $\mathbf U_d$ regroupe les colonnes de $\mathbf U$ associees aux valeurs singulieres non nulles).
 
@@ -7933,7 +7933,7 @@ print("trace(H) =", np.trace(H), " (= d = 2)")
 print("leviers H_ii :", np.diag(H))
 ```
 
-> **Le triangle a retenir.** *Statistique* (maximum de vraisemblance sous bruit gaussien) = *optimisation* (minimiser la somme des carres) = *geometrie* (projeter orthogonalement $\mathbf y$ sur $\operatorname{Col}\mathbf X$). Trois langages, une seule verite. C'est ce socle qui, etendu, donne le filtrage, le moindre carre recursif, et la couche lineaire finale de tout reseau de neurones.
+> **Le triangle a retenir.** *Statistique* (maximum de vraisemblance sous bruit gaussien) = *optimisation* (minimiser la somme des carres) = *geometrie* (projeter orthogonalement $\mathbf y$ sur $\mathrm{Col}\mathbf X$). Trois langages, une seule verite. C'est ce socle qui, etendu, donne le filtrage, le moindre carre recursif, et la couche lineaire finale de tout reseau de neurones.
 
 ---
 
@@ -8076,7 +8076,7 @@ On a une seule caracteristique centree, $\mathbf X^\top\mathbf X=s$ (un scalaire
 
 Minimisez $g(w)=\tfrac12(w-3)^2+\lambda|w|$ pour $\lambda=1$, puis $\lambda=4$. Generalisez.
 
-> **Corrige.** Pour $w>0$ : $g'(w)=(w-3)+\lambda=0\Rightarrow w=3-\lambda$, valable si $3-\lambda>0$. Pour $\lambda=1$ : $w^\star=2>0$ $\checkmark$. Pour $\lambda=4$ : $3-\lambda=-1<0$ donc pas de solution positive ; par symetrie pas de solution negative (le terme $-3$ tire vers le positif) ; le minimum est en $w^\star=0$. C'est exactement $S_\lambda(3)=\operatorname{sign}(3)\max(|3|-\lambda,0)$ : vaut $2$ pour $\lambda=1$, vaut $0$ pour $\lambda=4$. La lasso met le coefficient *a zero* des que la « preuve » $|z|$ ne depasse pas le seuil $\lambda$.
+> **Corrige.** Pour $w>0$ : $g'(w)=(w-3)+\lambda=0\Rightarrow w=3-\lambda$, valable si $3-\lambda>0$. Pour $\lambda=1$ : $w^\star=2>0$ $\checkmark$. Pour $\lambda=4$ : $3-\lambda=-1<0$ donc pas de solution positive ; par symetrie pas de solution negative (le terme $-3$ tire vers le positif) ; le minimum est en $w^\star=0$. C'est exactement $S_\lambda(3)=\mathrm{sign}(3)\max(|3|-\lambda,0)$ : vaut $2$ pour $\lambda=1$, vaut $0$ pour $\lambda=4$. La lasso met le coefficient *a zero* des que la « preuve » $|z|$ ne depasse pas le seuil $\lambda$.
 
 #### Exercice 4 — Ridge = MAP gaussien (redemonstration)
 
@@ -8086,9 +8086,9 @@ Montrez directement que maximiser $p(\mathbf w\mid\mathbf y)$ avec vraisemblance
 
 #### Exercice 5 — Idempotence de la matrice chapeau
 
-Montrez que $\mathbf H=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top$ verifie $\mathbf H^2=\mathbf H$ et $\mathbf H^\top=\mathbf H$, et que $\operatorname{trace}(\mathbf H)=d$.
+Montrez que $\mathbf H=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top$ verifie $\mathbf H^2=\mathbf H$ et $\mathbf H^\top=\mathbf H$, et que $\mathrm{trace}(\mathbf H)=d$.
 
-> **Corrige.** Symetrie : $\mathbf H^\top=\mathbf X\bigl((\mathbf X^\top\mathbf X)^{-1}\bigr)^\top\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H$ (l'inverse d'une symetrique est symetrique). Idempotence : $\mathbf H^2=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\underbrace{\mathbf X^\top\mathbf X(\mathbf X^\top\mathbf X)^{-1}}_{=\mathbf I}\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H$. Trace : $\operatorname{trace}(\mathbf H)=\operatorname{trace}\bigl(\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\bigr)=\operatorname{trace}\bigl((\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf X\bigr)=\operatorname{trace}(\mathbf I_d)=d$ (invariance cyclique de la trace). $\checkmark$
+> **Corrige.** Symetrie : $\mathbf H^\top=\mathbf X\bigl((\mathbf X^\top\mathbf X)^{-1}\bigr)^\top\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H$ (l'inverse d'une symetrique est symetrique). Idempotence : $\mathbf H^2=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\underbrace{\mathbf X^\top\mathbf X(\mathbf X^\top\mathbf X)^{-1}}_{=\mathbf I}\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H$. Trace : $\mathrm{trace}(\mathbf H)=\mathrm{trace}\bigl(\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\bigr)=\mathrm{trace}\bigl((\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf X\bigr)=\mathrm{trace}(\mathbf I_d)=d$ (invariance cyclique de la trace). $\checkmark$
 
 #### Exercice 6 — Variance predictive bayesienne qui enfle en extrapolation
 
@@ -8120,13 +8120,13 @@ Supposez $y_i=\mathbf x_i^\top\mathbf w+\varepsilon_i$ avec $\varepsilon_i$ i.i.
 
 #### Exercice 10 — Degres de liberte de la ridge
 
-Pour la ridge, les valeurs ajustees sont $\hat{\mathbf y}=\mathbf H_\lambda\mathbf y$ avec $\mathbf H_\lambda=\mathbf X(\mathbf X^\top\mathbf X+\lambda\mathbf I)^{-1}\mathbf X^\top$. Exprimez $\operatorname{trace}(\mathbf H_\lambda)$ via les valeurs singulieres $\sigma_k$ de $\mathbf X$ et interpretez.
+Pour la ridge, les valeurs ajustees sont $\hat{\mathbf y}=\mathbf H_\lambda\mathbf y$ avec $\mathbf H_\lambda=\mathbf X(\mathbf X^\top\mathbf X+\lambda\mathbf I)^{-1}\mathbf X^\top$. Exprimez $\mathrm{trace}(\mathbf H_\lambda)$ via les valeurs singulieres $\sigma_k$ de $\mathbf X$ et interpretez.
 
-> **Corrige.** Avec $\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top$, on calcule $\mathbf H_\lambda=\mathbf U\,\operatorname{diag}\!\bigl(\tfrac{\sigma_k^2}{\sigma_k^2+\lambda}\bigr)\,\mathbf U^\top$, donc
+> **Corrige.** Avec $\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top$, on calcule $\mathbf H_\lambda=\mathbf U\,\mathrm{diag}\!\bigl(\tfrac{\sigma_k^2}{\sigma_k^2+\lambda}\bigr)\,\mathbf U^\top$, donc
 > ```math
-> \operatorname{df}(\lambda)=\operatorname{trace}(\mathbf H_\lambda)=\sum_{k}\frac{\sigma_k^2}{\sigma_k^2+\lambda}.
+> \mathrm{df}(\lambda)=\mathrm{trace}(\mathbf H_\lambda)=\sum_{k}\frac{\sigma_k^2}{\sigma_k^2+\lambda}.
 > ```
-> Interpretation : chaque direction propre contribue par un facteur entre $0$ et $1$. A $\lambda=0$ : tous les facteurs valent $1$, $\operatorname{df}=\operatorname{rang}(\mathbf X)=d$ (modele OLS plein). Quand $\lambda$ croit, chaque facteur decroit vers $0$, donc les *degres de liberte effectifs* diminuent continument de $d$ vers $0$. La ridge realise une complexite *continue*, intermediaire entre le modele complet et le modele nul — c'est pour cela qu'elle generalise souvent mieux qu'une selection brutale de variables.
+> Interpretation : chaque direction propre contribue par un facteur entre $0$ et $1$. A $\lambda=0$ : tous les facteurs valent $1$, $\mathrm{df}=\mathrm{rang}(\mathbf X)=d$ (modele OLS plein). Quand $\lambda$ croit, chaque facteur decroit vers $0$, donc les *degres de liberte effectifs* diminuent continument de $d$ vers $0$. La ridge realise une complexite *continue*, intermediaire entre le modele complet et le modele nul — c'est pour cela qu'elle generalise souvent mieux qu'une selection brutale de variables.
 
 [↑ Retour à la table des matières](#table-des-matières)
 
@@ -8264,7 +8264,7 @@ Premiere facon de raconter l'ACP. On cherche **la direction le long de laquelle 
 Projeter un point centre $\tilde{\mathbf{x}}_i$ sur la direction $\mathbf{u}$ donne le nombre $\tilde{\mathbf{x}}_i^{\top}\mathbf{u}$ : c'est la **coordonnee** du point le long de $\mathbf{u}$, la position de son ombre sur l'axe. La moyenne de ces projections est nulle (les donnees sont centrees), donc leur **variance** vaut :
 
 ```math
-\operatorname{Var}\big(\tilde{\mathbf{x}}^{\top}\mathbf{u}\big) = \frac{1}{n}\sum_{i=1}^{n}\big(\tilde{\mathbf{x}}_i^{\top}\mathbf{u}\big)^2 = \frac{1}{n}\sum_{i=1}^{n} \mathbf{u}^{\top}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\mathbf{u} = \mathbf{u}^{\top}\!\left(\frac{1}{n}\sum_{i=1}^{n}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\right)\!\mathbf{u} = \mathbf{u}^{\top} S\,\mathbf{u}.
+\mathrm{Var}\big(\tilde{\mathbf{x}}^{\top}\mathbf{u}\big) = \frac{1}{n}\sum_{i=1}^{n}\big(\tilde{\mathbf{x}}_i^{\top}\mathbf{u}\big)^2 = \frac{1}{n}\sum_{i=1}^{n} \mathbf{u}^{\top}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\mathbf{u} = \mathbf{u}^{\top}\!\left(\frac{1}{n}\sum_{i=1}^{n}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\right)\!\mathbf{u} = \mathbf{u}^{\top} S\,\mathbf{u}.
 ```
 
 Ce petit calcul est le pivot de toute la section. Il dit : **la variance projetee sur $\mathbf{u}$ se lit directement sur la matrice de covariance**, via la *forme quadratique* $\mathbf{u}^{\top} S\,\mathbf{u}$. Trouver la direction de variance maximale, c'est donc resoudre :
@@ -8319,11 +8319,11 @@ Le meme calcul de Lagrange (avec deux contraintes) montre que $\mathbf{u}_2$ est
 > ```
 > l'inegalite venant de $\lambda_j \le \lambda_k$ pour $j \ge k$. Le maximum $\lambda_k$ est atteint en prenant $c_k = 1$ et les autres nuls, c'est-a-dire $\mathbf{u} = \mathbf{u}_k$. Par recurrence, $\mathbf{u}_1,\dots,\mathbf{u}_k$ realisent l'optimum et la variance totale captee est $\sum_{j=1}^k \lambda_j$. $\blacksquare$
 
-> **Lien avec la trace.** La variance **totale** du nuage (somme des variances de toutes les colonnes) vaut $\operatorname{tr}(S) = \sum_{j=1}^d \lambda_j$, car la trace est invariante par changement de base orthonormee et egale la somme des valeurs propres. C'est pourquoi on parle de *part* de variance : chaque $\lambda_j$ est une part du gateau total $\operatorname{tr}(S)$.
+> **Lien avec la trace.** La variance **totale** du nuage (somme des variances de toutes les colonnes) vaut $\mathrm{tr}(S) = \sum_{j=1}^d \lambda_j$, car la trace est invariante par changement de base orthonormee et egale la somme des valeurs propres. C'est pourquoi on parle de *part* de variance : chaque $\lambda_j$ est une part du gateau total $\mathrm{tr}(S)$.
 
 > **Le symbole « variance expliquee ».** La *variance expliquee* (explained variance) par les $k$ premieres composantes represente **la fraction de l'etalement total du nuage que notre resume conserve**. C'est un pourcentage de fidelite : si les deux premieres composantes expliquent 95 % de la variance, cela veut dire que notre dessin en 2D garde 95 % de la « richesse » du nuage d'origine, et qu'on n'en perd que 5 %. On la calcule par le *ratio de variance expliquee* :
 > ```math
-> \text{ratio}_k = \frac{\lambda_1 + \dots + \lambda_k}{\lambda_1 + \dots + \lambda_d} = \frac{\sum_{j=1}^{k}\lambda_j}{\operatorname{tr}(S)}.
+> \text{ratio}_k = \frac{\lambda_1 + \dots + \lambda_k}{\lambda_1 + \dots + \lambda_d} = \frac{\sum_{j=1}^{k}\lambda_j}{\mathrm{tr}(S)}.
 > ```
 
 #### Exemple chiffre deroule pas a pas
@@ -8412,7 +8412,7 @@ Voici le moment cle. Pour chaque point centre $\tilde{\mathbf{x}}_i$, decomposon
 En moyennant sur les $n$ points :
 
 ```math
-\underbrace{\frac{1}{n}\sum_i \|\tilde{\mathbf{x}}_i\|^2}_{\text{variance totale } = \,\operatorname{tr}(S)} = \underbrace{\frac{1}{n}\sum_i \|U_kU_k^{\top}\tilde{\mathbf{x}}_i\|^2}_{\text{variance projetee}} + \underbrace{J(U_k)}_{\text{erreur}}.
+\underbrace{\frac{1}{n}\sum_i \|\tilde{\mathbf{x}}_i\|^2}_{\text{variance totale } = \,\mathrm{tr}(S)} = \underbrace{\frac{1}{n}\sum_i \|U_kU_k^{\top}\tilde{\mathbf{x}}_i\|^2}_{\text{variance projetee}} + \underbrace{J(U_k)}_{\text{erreur}}.
 ```
 
 > **La revelation.** Le membre de gauche, la variance totale, est une **constante** : elle ne depend pas du sous-espace choisi, seulement des donnees. Donc **maximiser la variance projetee** (perspective 1) revient **exactement** a **minimiser l'erreur de reconstruction** $J$ (perspective 2). Ce ne sont pas deux methodes qui se ressemblent : c'est **une seule et meme equation** lue de deux cotes. Tout ce qui est gagne d'un cote (variance gardee) est exactement ce qui est perdu de l'autre (erreur).
@@ -8437,7 +8437,7 @@ La matrice de covariance (calcul direct, $\tfrac1n$ avec $n=5$) vaut
 ```math
 S = \begin{pmatrix} 2.00 & 1.94 \\ 1.94 & 1.90 \end{pmatrix},
 ```
-de valeurs propres $\lambda_1 \approx 3{,}89$ et $\lambda_2 \approx 0{,}009$, de premiere composante $\mathbf{u}_1 \approx (0{,}716,\ 0{,}698)$ (quasi la diagonale). La variance totale vaut $\operatorname{tr}(S) = 3{,}9$.
+de valeurs propres $\lambda_1 \approx 3{,}89$ et $\lambda_2 \approx 0{,}009$, de premiere composante $\mathbf{u}_1 \approx (0{,}716,\ 0{,}698)$ (quasi la diagonale). La variance totale vaut $\mathrm{tr}(S) = 3{,}9$.
 
 - **Si on projette sur $\mathbf{u}_1$** ($k=1$) : erreur $J_{\min} = \lambda_2 \approx 0{,}009$. Quasi nulle : les points sont presque alignes, l'ombre sur $\mathbf{u}_1$ les represente tres bien.
 - **Si on projetait betement sur l'axe horizontal** $\mathbf{e}_1 = (1,0)$ : on garderait la variance $\mathbf{e}_1^{\top}S\mathbf{e}_1 = 2{,}0$ seulement, et on perdrait $3{,}9 - 2{,}0 = 1{,}9$. Soit **plus de 200 fois** l'erreur obtenue en choisissant la bonne direction.
@@ -8494,7 +8494,7 @@ avec $U \in \mathbb{R}^{n\times n}$ et $V \in \mathbb{R}^{d\times d}$ orthogonal
 
 Le lien avec $S$ est immediat. En utilisant $U^{\top}U = I_n$ :
 ```math
-S = \frac{1}{n}\tilde{X}^{\top}\tilde{X} = \frac{1}{n} V\Sigma^{\top}U^{\top}U\Sigma V^{\top} = \frac{1}{n} V\,(\Sigma^{\top}\Sigma)\,V^{\top} = V\,\operatorname{diag}\!\Big(\tfrac{\sigma_1^2}{n},\dots,\tfrac{\sigma_d^2}{n}\Big)V^{\top}.
+S = \frac{1}{n}\tilde{X}^{\top}\tilde{X} = \frac{1}{n} V\Sigma^{\top}U^{\top}U\Sigma V^{\top} = \frac{1}{n} V\,(\Sigma^{\top}\Sigma)\,V^{\top} = V\,\mathrm{diag}\!\Big(\tfrac{\sigma_1^2}{n},\dots,\tfrac{\sigma_d^2}{n}\Big)V^{\top}.
 ```
 
 C'est **exactement** une diagonalisation de $S$. On en deduit le dictionnaire de traduction, a connaitre par coeur :
@@ -8536,13 +8536,13 @@ L'ACP peut se voir comme la reponse a une question d'**algebre matricielle pure*
 
 > **Le symbole $\|\cdot\|_F$ (norme de Frobenius).** Ce symbole represente **la taille globale d'une matrice, mesuree en mettant tous ses coefficients dans un grand sac et en prenant la racine de la somme de leurs carres**. C'est la norme euclidienne, mais appliquee a une matrice vue comme une longue liste de nombres : $\|A\|_F = \sqrt{\sum_{i,j} A_{ij}^2}$. Elle mesure « a quel point deux matrices different » quand on ecrit $\|A-B\|_F$.
 
-> **Theoreme (Eckart–Young–Mirsky).** Soit $\tilde{X} = U\Sigma V^{\top}$ de valeurs singulieres $\sigma_1 \ge \dots \ge \sigma_r > 0$ (avec $r = \operatorname{rang}(\tilde{X})$). Pour tout $k < r$, la meilleure approximation de rang $\le k$ au sens de la norme de Frobenius (et aussi de la norme spectrale) est la *SVD tronquee*
+> **Theoreme (Eckart–Young–Mirsky).** Soit $\tilde{X} = U\Sigma V^{\top}$ de valeurs singulieres $\sigma_1 \ge \dots \ge \sigma_r > 0$ (avec $r = \mathrm{rang}(\tilde{X})$). Pour tout $k < r$, la meilleure approximation de rang $\le k$ au sens de la norme de Frobenius (et aussi de la norme spectrale) est la *SVD tronquee*
 > ```math
 > \tilde{X}_k = U_k \Sigma_k V_k^{\top} = \sum_{j=1}^{k} \sigma_j\,\mathbf{u}_j\,\mathbf{v}_j^{\top},
 > ```
 > ou $\mathbf{u}_j$ est le $j$-ieme vecteur singulier **a gauche** (colonne de $U$) et $\mathbf{v}_j$ le $j$-ieme vecteur singulier **a droite** (colonne de $V$). L'erreur minimale vaut
 > ```math
-> \min_{\operatorname{rang}(B)\le k}\|\tilde{X}-B\|_F^2 = \sum_{j=k+1}^{r}\sigma_j^2.
+> \min_{\mathrm{rang}(B)\le k}\|\tilde{X}-B\|_F^2 = \sum_{j=k+1}^{r}\sigma_j^2.
 > ```
 
 > **Demonstration (esquisse rigoureuse).** Ecrivons $\tilde{X} = \sum_j \sigma_j \mathbf{u}_j\mathbf{v}_j^{\top}$. Pour toute matrice $B$ de rang $\le k$, on montre via les valeurs singulieres que $\|\tilde{X}-B\|_F^2 \ge \sum_{j>k}\sigma_j^2$, l'argument cle etant l'inegalite de Weyl sur les valeurs singulieres d'une somme : tronquer la SVD apres $k$ termes annule les $k$ plus grandes contributions $\sigma_1,\dots,\sigma_k$ et ne laisse que la queue $\sigma_{k+1},\dots$, ce qui sature la borne. La borne etant atteinte par $\tilde{X}_k$, c'est bien l'optimum. Le detail complet (cas Frobenius et cas spectral) est l'objet de l'exercice 5. $\blacksquare$
@@ -8617,7 +8617,7 @@ Que se passe-t-il quand le nombre de variables **depasse** le nombre d'observati
 Premiere observation cruciale : $n$ points centres vivent dans un sous-espace de dimension **au plus** $n-1$ (le centrage « consomme » un degre de liberte, car les ecarts centres somment a zero : $\sum_i \tilde{\mathbf{x}}_i = \mathbf{0}$). Donc
 
 ```math
-\operatorname{rang}(\tilde{X}) \le \min(n-1,\ d).
+\mathrm{rang}(\tilde{X}) \le \min(n-1,\ d).
 ```
 
 Quand $d > n$, le rang est plafonne par $n-1$. Cela signifie qu'il y a **au plus $n-1$ valeurs propres non nulles** : toutes les directions au-dela sont des directions de variance strictement nulle, sans aucun interet. Inutile donc de chercher $d$ composantes : il n'en existe que $n-1$ d'utiles au maximum.
@@ -8824,7 +8824,7 @@ En integrant la cause cachee (somme de deux gaussiennes, donc gaussienne), on ob
 > W_{\star} = U_k\,(\Lambda_k - \sigma^2 I_k)^{1/2}\,R, \qquad
 > \sigma^2_{\star} = \frac{1}{d-k}\sum_{j=k+1}^{d}\lambda_j,
 > ```
-> ou $U_k$ contient les $k$ premiers vecteurs propres de $S$, $\Lambda_k = \operatorname{diag}(\lambda_1,\dots,\lambda_k)$, et $R$ est une matrice orthogonale $k\times k$ arbitraire (rotation).
+> ou $U_k$ contient les $k$ premiers vecteurs propres de $S$, $\Lambda_k = \mathrm{diag}(\lambda_1,\dots,\lambda_k)$, et $R$ est une matrice orthogonale $k\times k$ arbitraire (rotation).
 
 Decryptons ce resultat magnifique :
 
@@ -8942,7 +8942,7 @@ Soit $A=U\Sigma V^{\top}$ une SVD, $\sigma_1\ge\dots\ge\sigma_r>0$, avec $A \in 
 
 > **Corrige 5.**
 > **(a)** $A-A_k=U(\Sigma-\Sigma_k)V^{\top}$ ou $\Sigma-\Sigma_k$ ne garde que $\sigma_{k+1},\dots,\sigma_r$ sur la diagonale. Par invariance orthogonale, $\|A-A_k\|_F^2=\|\Sigma-\Sigma_k\|_F^2=\sum_{j>k}\sigma_j^2$.
-> **(b)** Soit $B$ de rang $\le k$. Son noyau $\ker(B)\subseteq\mathbb{R}^d$ a dimension $\ge d-k$ (theoreme du rang). L'espace engendre par les $k+1$ premiers vecteurs singuliers a droite $\{\mathbf{v}_1,\dots,\mathbf{v}_{k+1}\}\subseteq\mathbb{R}^d$ a dimension $k+1$. Deux sous-espaces de $\mathbb{R}^d$ dont les dimensions somment a $\ge (d-k)+(k+1)=d+1$ s'intersectent non trivialement : il existe $\mathbf{w}$ unitaire dans $\ker(B)\cap\operatorname{vect}(\mathbf{v}_1,\dots,\mathbf{v}_{k+1})$. Alors $B\mathbf{w}=\mathbf{0}$, et en ecrivant $\mathbf{w}=\sum_{j\le k+1}w_j\mathbf{v}_j$ avec $\sum w_j^2=1$, on a $\|A\mathbf{w}\|^2=\sum_{j\le k+1}\sigma_j^2 w_j^2\ge\sigma_{k+1}^2$. Donc $\|A-B\|_F^2\ge\|(A-B)\mathbf{w}\|^2=\|A\mathbf{w}\|^2\ge\sigma_{k+1}^2$. Un argument plus fin (inegalites de Weyl, appliquees direction par direction) etend cette borne a $\sum_{j>k}\sigma_j^2$, atteinte par $A_k$. $\blacksquare$
+> **(b)** Soit $B$ de rang $\le k$. Son noyau $\ker(B)\subseteq\mathbb{R}^d$ a dimension $\ge d-k$ (theoreme du rang). L'espace engendre par les $k+1$ premiers vecteurs singuliers a droite $\{\mathbf{v}_1,\dots,\mathbf{v}_{k+1}\}\subseteq\mathbb{R}^d$ a dimension $k+1$. Deux sous-espaces de $\mathbb{R}^d$ dont les dimensions somment a $\ge (d-k)+(k+1)=d+1$ s'intersectent non trivialement : il existe $\mathbf{w}$ unitaire dans $\ker(B)\cap\mathrm{vect}(\mathbf{v}_1,\dots,\mathbf{v}_{k+1})$. Alors $B\mathbf{w}=\mathbf{0}$, et en ecrivant $\mathbf{w}=\sum_{j\le k+1}w_j\mathbf{v}_j$ avec $\sum w_j^2=1$, on a $\|A\mathbf{w}\|^2=\sum_{j\le k+1}\sigma_j^2 w_j^2\ge\sigma_{k+1}^2$. Donc $\|A-B\|_F^2\ge\|(A-B)\mathbf{w}\|^2=\|A\mathbf{w}\|^2\ge\sigma_{k+1}^2$. Un argument plus fin (inegalites de Weyl, appliquees direction par direction) etend cette borne a $\sum_{j>k}\sigma_j^2$, atteinte par $A_k$. $\blacksquare$
 
 #### Exercice 6 — Astuce de Gram quand $d \gg n$
 
@@ -9687,7 +9687,7 @@ ou $\mathbf{w} \in \mathbb{R}^d$ est le **vecteur normal** (orthogonal au plan) 
 La **fonction de decision** (decision function) associee est
 
 ```math
-f(\mathbf{x}) = \operatorname{sign}\!\left(\mathbf{w}^\top \mathbf{x} + b\right),
+f(\mathbf{x}) = \mathrm{sign}\!\left(\mathbf{w}^\top \mathbf{x} + b\right),
 ```
 
 qui renvoie $+1$ ou $-1$ selon le cote de l'hyperplan ou tombe $\mathbf{x}$. La quantite $\mathbf{w}^\top \mathbf{x} + b$ avant le signe s'appelle le **score** : son amplitude indique la confiance.
@@ -9710,7 +9710,7 @@ graph LR
 Calculons la distance d'un point $\mathbf{x}_0$ a l'hyperplan $\mathbf{w}^\top \mathbf{x} + b = 0$. La distance euclidienne signee vaut
 
 ```math
-\operatorname{dist}(\mathbf{x}_0) = \frac{\mathbf{w}^\top \mathbf{x}_0 + b}{\lVert \mathbf{w} \rVert}.
+\mathrm{dist}(\mathbf{x}_0) = \frac{\mathbf{w}^\top \mathbf{x}_0 + b}{\lVert \mathbf{w} \rVert}.
 ```
 
 > **Le symbole $\lVert \mathbf{w} \rVert$.** Ce symbole (vu au chapitre 3) represente la *longueur* de la fleche $\mathbf{w}$, sa norme euclidienne. Ici il joue le role d'une unite de mesure : diviser par $\lVert \mathbf{w} \rVert$ transforme un "score" sans unite en une vraie distance en centimetres sur la feuille. C'est comme convertir des pas en metres en divisant par le nombre de pas par metre.
@@ -9981,7 +9981,7 @@ Ce theoreme justifie qu'on travaille indifferemment sur le primal (efficace en g
 En remplacant $\mathbf{w}$ par son expression, la fonction de decision s'ecrit **uniquement avec des produits scalaires** :
 
 ```math
-f(\mathbf{x}) = \operatorname{sign}\!\Bigl(\sum_{i=1}^n \alpha_i y_i\,\mathbf{x}_i^\top\mathbf{x} + b\Bigr) = \operatorname{sign}\!\Bigl(\sum_{i\in\text{SV}} \alpha_i y_i\,\mathbf{x}_i^\top\mathbf{x} + b\Bigr).
+f(\mathbf{x}) = \mathrm{sign}\!\Bigl(\sum_{i=1}^n \alpha_i y_i\,\mathbf{x}_i^\top\mathbf{x} + b\Bigr) = \mathrm{sign}\!\Bigl(\sum_{i\in\text{SV}} \alpha_i y_i\,\mathbf{x}_i^\top\mathbf{x} + b\Bigr).
 ```
 
 La somme ne porte en pratique que sur les vecteurs de support (SV). Cette forme, ou les donnees n'apparaissent que par produits scalaires, est *exactement* ce qu'il faut pour la kernelisation.
@@ -10051,7 +10051,7 @@ On remplace partout $\mathbf{x}_i^\top\mathbf{x}_j$ par $k(\mathbf{x}_i,\mathbf{
 et la prediction
 
 ```math
-f(\mathbf{x}) = \operatorname{sign}\!\Bigl(\sum_{i\in\text{SV}}\alpha_i y_i\,k(\mathbf{x}_i,\mathbf{x}) + b\Bigr).
+f(\mathbf{x}) = \mathrm{sign}\!\Bigl(\sum_{i\in\text{SV}}\alpha_i y_i\,k(\mathbf{x}_i,\mathbf{x}) + b\Bigr).
 ```
 
 On n'ecrit plus jamais $\mathbf{w}$ (il vit dans $\mathcal{H}$, potentiellement de dimension infinie) : tout passe par le noyau. C'est pourquoi on travaille sur le **dual** des qu'on kernelise.
@@ -10355,7 +10355,7 @@ Sur un jeu legerement non separable, predisez qualitativement l'evolution du nom
 
 Montrez, a partir des conditions KKT, que si un point $\mathbf{x}_i$ est strictement au-dela de la marge ($y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1$), alors necessairement $\alpha_i=0$. En quoi cela explique-t-il que la prediction ne depende que des vecteurs de support ?
 
-> **Corrige.** La condition de complementarite KKT s'ecrit $\alpha_i[y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1+\xi_i]=0$. Si $y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1$, le point respecte strictement sa contrainte avec $\xi_i=0$ (la perte charniere est nulle, donc l'ecart optimal est nul) ; le crochet vaut $y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1>0$, strictement positif. Le produit ne peut s'annuler que si $\alpha_i=0$. Donc tout point strictement hors marge a un multiplicateur nul. Comme $\mathbf{w}=\sum_i\alpha_iy_i\mathbf{x}_i$ et $f(\mathbf{x})=\operatorname{sign}(\sum_i\alpha_iy_ik(\mathbf{x}_i,\mathbf{x})+b)$, les termes a $\alpha_i=0$ disparaissent : **seuls les vecteurs de support** (sur le bord ou en violation) interviennent dans la frontiere et la prediction. D'ou la parcimonie et l'efficacite memoire/calcul de la SVM.
+> **Corrige.** La condition de complementarite KKT s'ecrit $\alpha_i[y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1+\xi_i]=0$. Si $y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1$, le point respecte strictement sa contrainte avec $\xi_i=0$ (la perte charniere est nulle, donc l'ecart optimal est nul) ; le crochet vaut $y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1>0$, strictement positif. Le produit ne peut s'annuler que si $\alpha_i=0$. Donc tout point strictement hors marge a un multiplicateur nul. Comme $\mathbf{w}=\sum_i\alpha_iy_i\mathbf{x}_i$ et $f(\mathbf{x})=\mathrm{sign}(\sum_i\alpha_iy_ik(\mathbf{x}_i,\mathbf{x})+b)$, les termes a $\alpha_i=0$ disparaissent : **seuls les vecteurs de support** (sur le bord ou en violation) interviennent dans la frontiere et la prediction. D'ou la parcimonie et l'efficacite memoire/calcul de la SVM.
 
 [↑ Retour à la table des matières](#table-des-matières)
 
