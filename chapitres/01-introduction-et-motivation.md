@@ -109,9 +109,9 @@ Ici $`a`$ est la **pente** (de combien de glaces les ventes montent quand la tem
 
 ```mermaid
 flowchart LR
-    X["Entrée x = température"] --> F["Modèle f(x) = a*x + b"]
-    F --> Y["Prédiction y-chapeau = ventes estimées"]
-    A["Paramètres a, b"] -.règlent.-> F
+    X["Entrée x = température"] --> F["Modèle : f = a·x + b"]
+    F --> Y["Prédiction : ventes estimées"]
+    A["Paramètres a et b"] -.règlent.-> F
 ```
 
 #### Les paramètres : les boutons réglables du modèle
