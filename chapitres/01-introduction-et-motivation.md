@@ -250,11 +250,13 @@ L'objet central pour résumer une variable aléatoire est l'**espérance** (expe
 
 > **Le symbole $`\mathbb{E}`$ (espérance).** $`\mathbb{E}[Z]`$ se lit « espérance de $`Z`$ » et représente la **moyenne qu'on obtiendrait en répétant l'expérience une infinité de fois**. Pensez à un jeu de dé équilibré à six faces où vous gagnez le nombre affiché : vous ne savez pas ce que vous gagnerez au prochain lancer, mais sur des milliers de lancers, vous gagnez en moyenne $`\frac{1+2+3+4+5+6}{6} = 3{,}5`$ par lancer, c'est l'espérance. C'est le « centre de gravité » de la variable aléatoire.
 
-Le bruit du marchand se modélise typiquement ainsi : la vraie valeur est la droite plus un aléa $`\varepsilon`$ (epsilon) de moyenne nulle (un *aléa* est une **petite quantité tirée au hasard**, qui change à chaque fois ; « de moyenne nulle » veut dire qu'en s'accumulant ces hasards se compensent et tournent autour de zéro, autant en plus qu'en moins),
+Le bruit du marchand se modélise typiquement ainsi : la vraie valeur est la droite plus un **aléa** $`\varepsilon`$ (epsilon) de moyenne nulle,
 
 ```math
 y_i = a\, x_i + b + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal{N}(0, \sigma^2).
 ```
+
+> **Que veut dire « aléa » et « de moyenne nulle » ?** Un *aléa* est une **petite quantité tirée au hasard**, qui change à chaque fois. « De moyenne nulle » signifie qu'en s'accumulant, ces hasards se compensent et tournent autour de zéro, autant en plus qu'en moins.
 
 > **Les symboles $`\varepsilon`$, $`\sim`$ et $`\mathcal{N}(0,\sigma^2)`$.** La lettre $`\varepsilon`$ (epsilon grec) désigne par tradition une **petite quantité**, ici le **bruit** qui s'ajoute à la prédiction idéale. Le symbole $`\sim`$ se lit « **suit la loi** » : il dit *de quelle façon le hasard est distribué*. Enfin $`\mathcal{N}(0, \sigma^2)`$ désigne la célèbre **loi normale** (normal distribution), la fameuse « courbe en cloche » : la plupart des valeurs sont proches du centre ($`0`$ ici), les valeurs extrêmes sont rares. Le $`\sigma^2`$ (sigma au carré) est la **variance**, qui mesure *l'étalement* de la cloche : petit $`\sigma^2`$, cloche étroite et bruit faible ; grand $`\sigma^2`$, cloche large et bruit fort. Imaginez des fléchettes lancées vers un centre : $`0`$ est la cible visée, $`\sigma`$ dit à quel point elles se dispersent autour.
 
@@ -262,7 +264,11 @@ Ce point de vue probabiliste est fécond : il transforme « ajuster une droite �
 
 #### Pilier 4 : La statistique : estimer et valider
 
-La statistique se demande : *à partir d'un échantillon fini, que peut-on conclure, et avec quelle confiance ?* (Un *échantillon* est une **poignée d'exemples prélevés** dans un ensemble bien plus vaste, comme la cuillerée de soupe qu'on goûte pour juger toute la marmite ; *fini* veut dire « en nombre limité », on n'a pas l'infinité des cas possibles.) Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance de l'estimateur** (variance, l'instabilité d'un échantillon à l'autre).
+La statistique se demande : *à partir d'un **échantillon** fini, que peut-on conclure, et avec quelle confiance ?*
+
+> **Que veut dire « échantillon » et « fini » ?** Un *échantillon* est une **poignée d'exemples prélevés** dans un ensemble bien plus vaste, comme la cuillerée de soupe qu'on goûte pour juger toute la marmite. *Fini* veut dire « en nombre limité » : on n'a pas l'infinité des cas possibles.
+
+Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance de l'estimateur** (variance, l'instabilité d'un échantillon à l'autre).
 
 > **Attention, ce mot « variance » ne désigne pas la même chose qu'avant.** Le mot **étalement** veut simplement dire « à quel point des nombres sont éparpillés » : serrés autour de leur centre, c'est un petit étalement ; très dispersés, c'est un grand étalement. Le piège, ici, c'est que deux choses différentes s'éparpillent.
 >
