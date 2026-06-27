@@ -4,9 +4,9 @@
 
 ### Cadre de la réduction de dimension
 
-Imaginez que vous disposiez d'un immense tableau de chiffres: chaque ligne décrit un objet (une photo, un client, une fleur, une cellule biologique) et chaque colonne mesure une caractéristique de cet objet (le nombre de pixels rouges, l'âge du client, la longueur d'un pétale, l'expression d'un gène). Quand il y a deux ou trois colonnes, on peut dessiner les points sur une feuille de papier ou dans une maquette en relief, et l'œil comprend tout de suite la forme du nuage. Mais que faire avec **mille** colonnes ? On ne peut plus dessiner. Pire: avec autant de dimensions, les distances se brouillent, les calculs deviennent lourds, et beaucoup de colonnes racontent en réalité **la même histoire** sous des habits différents.
+Imaginez que vous disposiez d'un immense tableau de chiffres : chaque ligne décrit un objet (une photo, un client, une fleur, une cellule biologique) et chaque colonne mesure une caractéristique de cet objet (le nombre de pixels rouges, l'âge du client, la longueur d'un pétale, l'expression d'un gène). Quand il y a deux ou trois colonnes, on peut dessiner les points sur une feuille de papier ou dans une maquette en relief, et l'œil comprend tout de suite la forme du nuage. Mais que faire avec **mille** colonnes ? On ne peut plus dessiner. Pire : avec autant de dimensions, les distances se brouillent, les calculs deviennent lourds, et beaucoup de colonnes racontent en réalité **la même histoire** sous des habits différents.
 
-La **réduction de dimension** (dimensionality reduction) répond a ce problème. Son idée: remplacer un tableau a beaucoup de colonnes par un tableau a peu de colonnes, **en perdant le moins d'information possible**. C'est exactement ce que fait un bon résumé de roman: on passe de cinq cents pages a une page, et pourtant l'essentiel de l'intrigue est conservé. L'**analyse en composantes principales** (Principal Component Analysis, ACP, ou *PCA* en anglais) est la méthode la plus célèbre et la plus utilisée pour ce résumé.
+La **réduction de dimension** (dimensionality reduction) répond a ce problème. Son idée : remplacer un tableau a beaucoup de colonnes par un tableau a peu de colonnes, **en perdant le moins d'information possible**. C'est exactement ce que fait un bon résumé de roman : on passe de cinq cents pages a une page, et pourtant l'essentiel de l'intrigue est conservé. L'**analyse en composantes principales** (Principal Component Analysis, ACP, ou *PCA* en anglais) est la méthode la plus célèbre et la plus utilisée pour ce résumé.
 
 #### Pourquoi tant de dimensions posent problème
 
@@ -15,27 +15,27 @@ Avant de construire l'ACP, prenons le temps de comprendre **pourquoi** on veut r
 > **Définition, Données, observations, variables.**
 > On appelle **données** un tableau de nombres. Chaque **ligne** est une *observation* (un individu, un exemple), notée par un vecteur $`\mathbf{x}_i`$. Chaque **colonne** est une *variable* (une caractéristique mesurée), aussi appelée *feature* en anglais. Le tableau complet, avec $`n`$ lignes et $`d`$ colonnes, est rassemblé dans une matrice $`X \in \mathbb{R}^{n \times d}`$.
 
-> **Le symbole $`\mathbf{x}_i`$.** Ce symbole représente **un objet décrit par plusieurs nombres a la fois**. Imaginez une carte d'identité: au lieu d'écrire « Marie, 28 ans, 1m65 » en toutes lettres, on empile les nombres dans une petite colonne $`\mathbf{x}_i = (28, 165, \dots)`$. Le gras nous rappelle que ce n'est pas un seul nombre mais **un paquet de nombres**. Le petit $`i`$ en bas est juste **l'étiquette du tiroir**: $`\mathbf{x}_1`$ est le premier objet, $`\mathbf{x}_2`$ le deuxième, et ainsi de suite. Dans tout ce chapitre, $`\mathbf{x}_i \in \mathbb{R}^d`$ est un vecteur **colonne**; quand on l'écrit en ligne dans le tableau $`X`$, c'est sa transposée $`\mathbf{x}_i^{\top}`$ qui forme la $`i`$-ième ligne.
+> **Le symbole $`\mathbf{x}_i`$.** Ce symbole représente **un objet décrit par plusieurs nombres a la fois**. Imaginez une carte d'identité : au lieu d'écrire « Marie, 28 ans, 1m65 » en toutes lettres, on empile les nombres dans une petite colonne $`\mathbf{x}_i = (28, 165, \dots)`$. Le gras nous rappelle que ce n'est pas un seul nombre mais **un paquet de nombres**. Le petit $`i`$ en bas est juste **l'étiquette du tiroir**: $`\mathbf{x}_1`$ est le premier objet, $`\mathbf{x}_2`$ le deuxième, et ainsi de suite. Dans tout ce chapitre, $`\mathbf{x}_i \in \mathbb{R}^d`$ est un vecteur **colonne**; quand on l'écrit en ligne dans le tableau $`X`$, c'est sa transposée $`\mathbf{x}_i^{\top}`$ qui forme la $`i`$-ième ligne.
 
 > **Les symboles $`n`$ et $`d`$.** Le symbole $`n`$ représente **combien on a d'objets** (le nombre de lignes, comme le nombre de personnes dans une salle). Le symbole $`d`$ représente **combien de mesures on prend sur chaque objet** (le nombre de colonnes, comme le nombre de questions d'un questionnaire). Si on photographie $`n=1000`$ visages et que chaque image fait $`d=100\times100 = 10\,000`$ pixels, alors notre tableau a mille lignes et dix mille colonnes.
 
-**1. Le fléau de la dimension (curse of dimensionality).** En grande dimension, l'espace est tellement vaste que les points deviennent presque tous « loin » les uns des autres, et les notions de proximité, de densité, de plus proche voisin perdent leur sens. Un petit exemple frappant: le volume d'une boule de rayon $`1`$ rapporté au volume du cube $`[-1,1]^d`$ qui la contient tend vers $`0`$ quand $`d`$ grandit (de $`0{,}52`$ en dimension 3, il chute a $`0{,}0025`$ en dimension 10, puis a $`2{,}5\cdot10^{-8}`$ en dimension 20). Autrement dit, en grande dimension, **presque tout le volume d'un cube est dans ses coins**, loin du centre. Les algorithmes qui s'appuient sur les distances (k plus proches voisins, regroupement / clustering) en souffrent directement.
+**1. Le fléau de la dimension (curse of dimensionality).** En grande dimension, l'espace est tellement vaste que les points deviennent presque tous « loin » les uns des autres, et les notions de proximité, de densité, de plus proche voisin perdent leur sens. Un petit exemple frappant : le volume d'une boule de rayon $`1`$ rapporté au volume du cube $`[-1,1]^d`$ qui la contient tend vers $`0`$ quand $`d`$ grandit (de $`0{,}52`$ en dimension 3, il chute a $`0{,}0025`$ en dimension 10, puis a $`2{,}5\cdot10^{-8}`$ en dimension 20). Autrement dit, en grande dimension, **presque tout le volume d'un cube est dans ses coins**, loin du centre. Les algorithmes qui s'appuient sur les distances (k plus proches voisins, regroupement / clustering) en souffrent directement.
 
 **2. Le coût de calcul et de stockage.** Beaucoup de colonnes signifient beaucoup de mémoire et des calculs plus lents. Réduire $`d`$ de $`10\,000`$ a $`50`$ peut transformer un entraînement de plusieurs heures en quelques secondes.
 
-**3. La redondance et le bruit.** Dans la vraie vie, les colonnes ne sont presque jamais indépendantes. La taille en centimètres et la taille en pouces seraient parfaitement redondantes; la taille et le poids le sont partiellement (les grandes personnes pèsent souvent plus). Cette redondance veut dire que l'information « vraie » vit dans un espace **plus petit** que le tableau ne le laisse croire. L'ACP cherche précisément cet espace caché.
+**3. La redondance et le bruit.** Dans la vraie vie, les colonnes ne sont presque jamais indépendantes. La taille en centimètres et la taille en pouces seraient parfaitement redondantes ; la taille et le poids le sont partiellement (les grandes personnes pèsent souvent plus). Cette redondance veut dire que l'information « vraie » vit dans un espace **plus petit** que le tableau ne le laisse croire. L'ACP cherche précisément cet espace caché.
 
-> **Intuition centrale.** Les données réelles, même décrites par mille colonnes, sont souvent « aplaties »: elles vivent au voisinage d'un sous-espace de petite dimension, comme une feuille de papier froissée flotte dans une pièce. Le papier est en relief (dimension 3) mais reste fondamentalement une surface (dimension 2). La réduction de dimension cherche a **déplier** ou au moins a **retrouver** cette feuille.
+> **Intuition centrale.** Les données réelles, même décrites par mille colonnes, sont souvent « aplaties » : elles vivent au voisinage d'un sous-espace de petite dimension, comme une feuille de papier froissée flotte dans une pièce. Le papier est en relief (dimension 3) mais reste fondamentalement une surface (dimension 2). La réduction de dimension cherche a **déplier** ou au moins a **retrouver** cette feuille.
 
-#### Le sous-espace linéaire: le cadre de l'ACP
+#### Le sous-espace linéaire : le cadre de l'ACP
 
-L'ACP fait une hypothèse simple et puissante: le sous-espace caché est **linéaire**, c'est-a-dire un *sous-espace affine* (une droite, un plan, un hyperplan passant par un point central). Ce n'est pas toujours vrai, une donnée enroulée en spirale ne sera pas bien capturée par un plan, mais cette hypothèse rend les calculs exacts, rapides et interprétables. Les méthodes non linéaires (t-SNE, UMAP, autoencodeurs) viendront plus tard; l'ACP est la fondation.
+L'ACP fait une hypothèse simple et puissante : le sous-espace caché est **linéaire**, c'est-a-dire un *sous-espace affine* (une droite, un plan, un hyperplan passant par un point central). Ce n'est pas toujours vrai, une donnée enroulée en spirale ne sera pas bien capturée par un plan, mais cette hypothèse rend les calculs exacts, rapides et interprétables. Les méthodes non linéaires (t-SNE, UMAP, autoencodeurs) viendront plus tard ; l'ACP est la fondation.
 
 > **Le symbole $`k`$.** Ce symbole représente **le nombre de colonnes qu'on veut garder a la fin**, la taille du résumé. On a toujours $`k \le d`$: on résume, on n'invente pas de colonnes. Si on passe de $`d=10\,000`$ pixels a $`k=50`$ nombres, alors $`k=50`$. Pensez a $`k`$ comme au nombre de phrases que vous vous autorisez pour résumer un livre.
 
-Formellement, voici le contrat de l'ACP. On dispose de $`n`$ points $`\mathbf{x}_1, \dots, \mathbf{x}_n`$ dans $`\mathbb{R}^d`$. On veut trouver:
+Formellement, voici le contrat de l'ACP. On dispose de $`n`$ points $`\mathbf{x}_1, \dots, \mathbf{x}_n`$ dans $`\mathbb{R}^d`$. On veut trouver :
 
-- un **point d'ancrage** (en général la moyenne du nuage), autour duquel tout se joue;
+- un **point d'ancrage** (en général la moyenne du nuage), autour duquel tout se joue ;
 - $`k`$ directions privilégiées (les futures « composantes principales »), formant une base orthonormée d'un sous-espace de dimension $`k`$;
 - pour chaque point, $`k`$ **coordonnées** dans ce sous-espace (le résumé), telles qu'on puisse **reconstruire** au mieux le point d'origine a partir de son résumé.
 
@@ -48,18 +48,18 @@ flowchart LR
     C -.->|"variance expliquee"| F["Choix de k"]
 ```
 
-Deux grandes lectures mènent **exactement au même calcul** mais éclairent l'ACP différemment:
+Deux grandes lectures mènent **exactement au même calcul** mais éclairent l'ACP différemment :
 
 | Perspective | Question posée | Critère optimisé |
 |---|---|---|
 | **Variance maximale** | Quelle direction « étale » le plus le nuage ? | *Maximiser* la variance des projections |
 | **Projection / reconstruction** | Quel sous-espace approche le mieux les points ? | *Minimiser* l'erreur de reconstruction |
 
-C'est l'un des plus beaux résultats du domaine: ces deux objectifs en apparence opposés (maximiser l'un, minimiser l'autre) donnent **la même réponse**. Nous le démontrerons. Mais d'abord, un objet incontournable: la matrice de covariance.
+C'est l'un des plus beaux résultats du domaine : ces deux objectifs en apparence opposés (maximiser l'un, minimiser l'autre) donnent **la même réponse**. Nous le démontrerons. Mais d'abord, un objet incontournable : la matrice de covariance.
 
 #### Centrage et matrice de covariance
 
-Toute l'ACP repose sur la **dispersion** du nuage: comment les points s'éloignent de leur centre, et comment les variables varient **ensemble**. L'outil qui encode cela est la matrice de covariance. Avant de la définir, on doit **centrer** les données.
+Toute l'ACP repose sur la **dispersion** du nuage : comment les points s'éloignent de leur centre, et comment les variables varient **ensemble**. L'outil qui encode cela est la matrice de covariance. Avant de la définir, on doit **centrer** les données.
 
 > **Le symbole $`\bar{\mathbf{x}}`$ (la moyenne).** La barre au-dessus signifie « moyenne ». Ce symbole représente **le point situé au milieu du nuage**, son centre de gravité. Pour le calculer, on additionne tous les points et on divise par leur nombre, exactement comme on fait la moyenne des notes d'une classe, sauf qu'ici chaque « note » est un vecteur, donc on fait la moyenne colonne par colonne. Si trois points valent $`(0,0)`$, $`(2,0)`$, $`(4,3)`$, leur moyenne est $`\big(\tfrac{0+2+4}{3}, \tfrac{0+0+3}{3}\big) = (2, 1)`$.
 
@@ -67,33 +67,33 @@ Toute l'ACP repose sur la **dispersion** du nuage: comment les points s'éloigne
 \bar{\mathbf{x}} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i \in \mathbb{R}^d
 ```
 
-> Rappel de lecture: le grand $`\sum`$ est « la boucle qui additionne » déjà vue; ici elle parcourt les $`n`$ objets et les empile, puis on divise par $`n`$.
+> Rappel de lecture : le grand $`\sum`$ est « la boucle qui additionne » déjà vue ; ici elle parcourt les $`n`$ objets et les empile, puis on divise par $`n`$.
 
-**Centrer** veut dire déplacer l'origine du repère sur ce centre de gravité, c'est-a-dire soustraire $`\bar{\mathbf{x}}`$ a chaque point:
+**Centrer** veut dire déplacer l'origine du repère sur ce centre de gravité, c'est-a-dire soustraire $`\bar{\mathbf{x}}`$ a chaque point :
 
 ```math
 \tilde{\mathbf{x}}_i = \mathbf{x}_i - \bar{\mathbf{x}}.
 ```
 
-> **Pourquoi centrer ?** Sans centrage, la « plus grande direction de variation » se confondrait avec la direction qui pointe vers le nuage depuis l'origine arbitraire du repère, une information sans intérêt, qui dépend de la fois ou on a placé le zéro. En centrant, on dit: « ce qui m'intéresse, ce n'est pas *ou* est le nuage, mais *comment il s'étale* ». La tilde $`\tilde{\ }`$ signale simplement « version centrée ».
+> **Pourquoi centrer ?** Sans centrage, la « plus grande direction de variation » se confondrait avec la direction qui pointe vers le nuage depuis l'origine arbitraire du repère, une information sans intérêt, qui dépend de la fois ou on a placé le zéro. En centrant, on dit : « ce qui m'intéresse, ce n'est pas *ou* est le nuage, mais *comment il s'étale* ». La tilde $`\tilde{\ }`$ signale simplement « version centrée ».
 
 On range les points centrés en lignes dans une matrice $`\tilde{X} \in \mathbb{R}^{n \times d}`$ (la $`i`$-ième ligne est $`\tilde{\mathbf{x}}_i^{\top}`$). On peut alors définir l'objet vedette.
 
-> **Le symbole $`S`$, la matrice de covariance des données.** Ce symbole représente **un tableau carré qui mesure comment les variables bougent ensemble**. Sur sa diagonale, on lit la *variance* de chaque colonne (a quel point cette variable, seule, s'étale). En dehors de la diagonale, on lit la *covariance* entre deux colonnes: un nombre positif si elles montent ensemble (taille et poids), négatif si l'une monte quand l'autre descend (altitude et température), proche de zéro si elles n'ont rien a voir. Imaginez un tableau a double entrée « variable contre variable » dont chaque case dit: « quand celle-ci augmente, qu'arrive-t-il a celle-la ? ». C'est le cœur battant de l'ACP: toute la géométrie du nuage y est résumée.
+> **Le symbole $`S`$, la matrice de covariance des données.** Ce symbole représente **un tableau carré qui mesure comment les variables bougent ensemble**. Sur sa diagonale, on lit la *variance* de chaque colonne (a quel point cette variable, seule, s'étale). En dehors de la diagonale, on lit la *covariance* entre deux colonnes : un nombre positif si elles montent ensemble (taille et poids), négatif si l'une monte quand l'autre descend (altitude et température), proche de zéro si elles n'ont rien a voir. Imaginez un tableau a double entrée « variable contre variable » dont chaque case dit : « quand celle-ci augmente, qu'arrive-t-il a celle-la ? ». C'est le cœur battant de l'ACP : toute la géométrie du nuage y est résumée.
 
 ```math
 S = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - \bar{\mathbf{x}})^{\top} = \frac{1}{n}\, \tilde{X}^{\top}\tilde{X} \;\in\; \mathbb{R}^{d \times d}.
 ```
 
-> **Pourquoi ce produit $`(\cdot)(\cdot)^{\top}`$ ?** Un vecteur colonne $`\tilde{\mathbf{x}}`$ ($`d\times 1`$) multiplié par sa propre transposée (en ligne, $`1\times d`$) donne une matrice $`d\times d`$ dont la case $`(j,\ell)`$ vaut $`\tilde{x}_j\,\tilde{x}_\ell`$: le produit de l'écart de la variable $`j`$ par l'écart de la variable $`\ell`$. En moyennant sur tous les points, la case $`(j,\ell)`$ devient exactement la covariance entre la variable $`j`$ et la variable $`\ell`$. C'est ce qu'on appelle un *produit extérieur* (outer product): il fabrique une matrice a partir de deux vecteurs.
+> **Pourquoi ce produit $`(\cdot)(\cdot)^{\top}`$ ?** Un vecteur colonne $`\tilde{\mathbf{x}}`$ ($`d\times 1`$) multiplié par sa propre transposée (en ligne, $`1\times d`$) donne une matrice $`d\times d`$ dont la case $`(j,\ell)`$ vaut $`\tilde{x}_j\,\tilde{x}_\ell`$: le produit de l'écart de la variable $`j`$ par l'écart de la variable $`\ell`$. En moyennant sur tous les points, la case $`(j,\ell)`$ devient exactement la covariance entre la variable $`j`$ et la variable $`\ell`$. C'est ce qu'on appelle un *produit extérieur* (outer product) : il fabrique une matrice a partir de deux vecteurs.
 
-> **Remarque, diviser par $`n`$ ou par $`n-1`$ ?** Avec $`\tfrac{1}{n}`$ on obtient l'estimateur du *maximum de vraisemblance* (biaisé); avec $`\tfrac{1}{n-1}`$ l'estimateur *non biaisé* (correction de Bessel). Pour l'ACP cela ne change **rien** aux directions principales (on multiplie $`S`$ par une constante, les vecteurs propres sont identiques, les valeurs propres juste rééchelonnées). On gardera $`\tfrac{1}{n}`$ par simplicité, sauf mention contraire.
+> **Remarque, diviser par $`n`$ ou par $`n-1`$ ?** Avec $`\tfrac{1}{n}`$ on obtient l'estimateur du *maximum de vraisemblance* (biaisé) ; avec $`\tfrac{1}{n-1}`$ l'estimateur *non biaisé* (correction de Bessel). Pour l'ACP cela ne change **rien** aux directions principales (on multiplie $`S`$ par une constante, les vecteurs propres sont identiques, les valeurs propres juste rééchelonnées). On gardera $`\tfrac{1}{n}`$ par simplicité, sauf mention contraire.
 
-**Trois propriétés fondamentales de $`S`$** (elles justifient tout ce qui suit):
+**Trois propriétés fondamentales de $`S`$** (elles justifient tout ce qui suit) :
 
-1. $`S`$ est **symétrique**: $`S^{\top} = S`$. En effet $`(\tilde{X}^{\top}\tilde{X})^{\top} = \tilde{X}^{\top}\tilde{X}`$. Conséquence majeure (théorème spectral, vu au chapitre 4): $`S`$ possède une base **orthonormée** de vecteurs propres et toutes ses valeurs propres sont **réelles**.
-2. $`S`$ est **semi-définie positive**: pour tout vecteur $`\mathbf{u}`$, $`\mathbf{u}^{\top} S \,\mathbf{u} = \tfrac{1}{n}\sum_i (\tilde{\mathbf{x}}_i^{\top}\mathbf{u})^2 \ge 0`$. C'est une somme de carrés. Conséquence: toutes les valeurs propres de $`S`$ sont $`\ge 0`$. Ce sont, on le verra, des **variances**, et une variance ne peut pas être négative.
-3. La quantité $`\mathbf{u}^{\top} S\, \mathbf{u}`$ a une interprétation limpide: c'est **la variance des données une fois projetées sur la direction $`\mathbf{u}`$** (quand $`\|\mathbf{u}\|=1`$). Cette formule sera la cle de la perspective « variance maximale ».
+1. $`S`$ est **symétrique**: $`S^{\top} = S`$. En effet $`(\tilde{X}^{\top}\tilde{X})^{\top} = \tilde{X}^{\top}\tilde{X}`$. Conséquence majeure (théorème spectral, vu au chapitre 4) : $`S`$ possède une base **orthonormée** de vecteurs propres et toutes ses valeurs propres sont **réelles**.
+2. $`S`$ est **semi-définie positive**: pour tout vecteur $`\mathbf{u}`$, $`\mathbf{u}^{\top} S \,\mathbf{u} = \tfrac{1}{n}\sum_i (\tilde{\mathbf{x}}_i^{\top}\mathbf{u})^2 \ge 0`$. C'est une somme de carrés. Conséquence : toutes les valeurs propres de $`S`$ sont $`\ge 0`$. Ce sont, on le verra, des **variances**, et une variance ne peut pas être négative.
+3. La quantité $`\mathbf{u}^{\top} S\, \mathbf{u}`$ a une interprétation limpide : c'est **la variance des données une fois projetées sur la direction $`\mathbf{u}`$** (quand $`\|\mathbf{u}\|=1`$). Cette formule sera la cle de la perspective « variance maximale ».
 
 ```python
 import numpy as np
@@ -117,27 +117,27 @@ print("S symetrique ?", np.allclose(S, S.T))
 print("valeurs propres >= 0 ?", np.all(np.linalg.eigvalsh(S) >= -1e-12))
 ```
 
-Avec ce cadre, un nuage centré, une matrice de covariance $`S`$ symétrique semi-définie positive, nous avons tout pour attaquer l'ACP. Le plan: (i) la lire comme une recherche de variance maximale, (ii) la relire comme une projection optimale, (iii) montrer que les deux coïncident et se calculent par les vecteurs propres de $`S`$ (ou la SVD de $`\tilde{X}`$).
+Avec ce cadre, un nuage centré, une matrice de covariance $`S`$ symétrique semi-définie positive, nous avons tout pour attaquer l'ACP. Le plan : (i) la lire comme une recherche de variance maximale, (ii) la relire comme une projection optimale, (iii) montrer que les deux coïncident et se calculent par les vecteurs propres de $`S`$ (ou la SVD de $`\tilde{X}`$).
 
 ---
 
 ### Perspective de la variance maximale
 
-Première façon de raconter l'ACP. On cherche **la direction le long de laquelle le nuage de points est le plus étale**. Pourquoi ? Parce que l'étalement, c'est l'information: une variable qui ne varie pas (tout le monde a la même valeur) ne distingue personne et n'apprend rien. La direction de plus forte variance est celle qui « voit » le plus de différences entre les objets.
+Première façon de raconter l'ACP. On cherche **la direction le long de laquelle le nuage de points est le plus étale**. Pourquoi ? Parce que l'étalement, c'est l'information : une variable qui ne varie pas (tout le monde a la même valeur) ne distingue personne et n'apprend rien. La direction de plus forte variance est celle qui « voit » le plus de différences entre les objets.
 
-> **Image.** Posez une baguette de pain sur la table et éclairez-la avec une lampe. Selon l'orientation de la lampe, l'ombre de la baguette sur le mur est longue ou courte. La direction qui donne **l'ombre la plus longue** est celle qui suit la baguette dans sa longueur: c'est sa direction de plus grande variation. L'ACP cherche cette direction, puis la suivante (la plus longue parmi celles perpendiculaires a la première), et ainsi de suite.
+> **Image.** Posez une baguette de pain sur la table et éclairez-la avec une lampe. Selon l'orientation de la lampe, l'ombre de la baguette sur le mur est longue ou courte. La direction qui donne **l'ombre la plus longue** est celle qui suit la baguette dans sa longueur : c'est sa direction de plus grande variation. L'ACP cherche cette direction, puis la suivante (la plus longue parmi celles perpendiculaires a la première), et ainsi de suite.
 
 #### La première composante principale
 
-> **Le symbole $`\mathbf{u}`$, une direction unitaire.** Ce symbole représente **une flèche qui pointe dans une direction, de longueur exactement 1**. On s'en sert comme d'une boussole: elle indique *vers ou regarder*, sans information de distance (la longueur est fixée a 1 pour ne comparer que les orientations). La contrainte $`\|\mathbf{u}\| = 1`$, c'est-a-dire $`\mathbf{u}^{\top}\mathbf{u} = 1`$, dit simplement « cette flèche mesure une unité ».
+> **Le symbole $`\mathbf{u}`$, une direction unitaire.** Ce symbole représente **une flèche qui pointe dans une direction, de longueur exactement 1**. On s'en sert comme d'une boussole : elle indique *vers ou regarder*, sans information de distance (la longueur est fixée a 1 pour ne comparer que les orientations). La contrainte $`\|\mathbf{u}\| = 1`$, c'est-a-dire $`\mathbf{u}^{\top}\mathbf{u} = 1`$, dit simplement « cette flèche mesure une unité ».
 
-Projeter un point centré $`\tilde{\mathbf{x}}_i`$ sur la direction $`\mathbf{u}`$ donne le nombre $`\tilde{\mathbf{x}}_i^{\top}\mathbf{u}`$: c'est la **coordonnée** du point le long de $`\mathbf{u}`$, la position de son ombre sur l'axe. La moyenne de ces projections est nulle (les données sont centrées), donc leur **variance** vaut:
+Projeter un point centré $`\tilde{\mathbf{x}}_i`$ sur la direction $`\mathbf{u}`$ donne le nombre $`\tilde{\mathbf{x}}_i^{\top}\mathbf{u}`$: c'est la **coordonnée** du point le long de $`\mathbf{u}`$, la position de son ombre sur l'axe. La moyenne de ces projections est nulle (les données sont centrées), donc leur **variance** vaut :
 
 ```math
 \mathrm{Var}\big(\tilde{\mathbf{x}}^{\top}\mathbf{u}\big) = \frac{1}{n}\sum_{i=1}^{n}\big(\tilde{\mathbf{x}}_i^{\top}\mathbf{u}\big)^2 = \frac{1}{n}\sum_{i=1}^{n} \mathbf{u}^{\top}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\mathbf{u} = \mathbf{u}^{\top}\!\left(\frac{1}{n}\sum_{i=1}^{n}\tilde{\mathbf{x}}_i\,\tilde{\mathbf{x}}_i^{\top}\right)\!\mathbf{u} = \mathbf{u}^{\top} S\,\mathbf{u}.
 ```
 
-Ce petit calcul est le pivot de toute la section. Il dit: **la variance projetée sur $`\mathbf{u}`$ se lit directement sur la matrice de covariance**, via la *forme quadratique* $`\mathbf{u}^{\top} S\,\mathbf{u}`$. Une *forme quadratique*, c'est simplement une machine qui prend une direction $`\mathbf{u}`$ et recrache un seul nombre, en faisant intervenir des produits de deux coordonnées à la fois (jamais une coordonnée seule); ici, ce nombre n'est autre que la variance le long de $`\mathbf{u}`$. Trouver la direction de variance maximale, c'est donc résoudre:
+Ce petit calcul est le pivot de toute la section. Il dit : **la variance projetée sur $`\mathbf{u}`$ se lit directement sur la matrice de covariance**, via la *forme quadratique* $`\mathbf{u}^{\top} S\,\mathbf{u}`$. Une *forme quadratique*, c'est simplement une machine qui prend une direction $`\mathbf{u}`$ et recrache un seul nombre, en faisant intervenir des produits de deux coordonnées à la fois (jamais une coordonnée seule) ; ici, ce nombre n'est autre que la variance le long de $`\mathbf{u}`$. Trouver la direction de variance maximale, c'est donc résoudre :
 
 ```math
 \boxed{\;\mathbf{u}_1 = \arg\max_{\mathbf{u}\,:\,\|\mathbf{u}\|=1}\; \mathbf{u}^{\top} S\,\mathbf{u}.\;}
@@ -161,19 +161,19 @@ On annule le gradient par rapport a $`\mathbf{u}`$. Comme $`\nabla_{\mathbf{u}}(
 \nabla_{\mathbf{u}}\mathcal{L} = 2 S\,\mathbf{u} - 2\lambda\,\mathbf{u} = \mathbf{0} \quad\Longleftrightarrow\quad \boxed{\,S\,\mathbf{u} = \lambda\,\mathbf{u}.\,}
 ```
 
-Voilà le cœur de l'ACP: la direction de variance maximale est un **vecteur propre** (eigenvector) de la matrice de covariance, et le multiplicateur $`\lambda`$ associé en est la **valeur propre** (eigenvalue). Mais laquelle des $`d`$ valeurs propres choisir ? Reportons $`S\mathbf{u} = \lambda\mathbf{u}`$ dans la quantité a maximiser:
+Voilà le cœur de l'ACP : la direction de variance maximale est un **vecteur propre** (eigenvector) de la matrice de covariance, et le multiplicateur $`\lambda`$ associé en est la **valeur propre** (eigenvalue). Mais laquelle des $`d`$ valeurs propres choisir ? Reportons $`S\mathbf{u} = \lambda\mathbf{u}`$ dans la quantité a maximiser :
 
 ```math
 \mathbf{u}^{\top} S\,\mathbf{u} = \mathbf{u}^{\top}(\lambda \mathbf{u}) = \lambda\,(\mathbf{u}^{\top}\mathbf{u}) = \lambda.
 ```
 
-La variance projetée **est égale a la valeur propre**. Pour la maximiser, on prend donc la **plus grande** valeur propre $`\lambda_1`$, et $`\mathbf{u}_1`$ son vecteur propre. Ce vecteur $`\mathbf{u}_1`$ est la **première composante principale** (first principal component); la valeur $`\lambda_1`$ est la variance des données le long de cette direction.
+La variance projetée **est égale a la valeur propre**. Pour la maximiser, on prend donc la **plus grande** valeur propre $`\lambda_1`$, et $`\mathbf{u}_1`$ son vecteur propre. Ce vecteur $`\mathbf{u}_1`$ est la **première composante principale** (first principal component) ; la valeur $`\lambda_1`$ est la variance des données le long de cette direction.
 
-> **Le symbole « composante principale ».** Une composante principale représente **une nouvelle direction de regard sur les données, taillée sur mesure pour le nuage**. La première est l'axe le plus étale; la deuxième, l'axe le plus étale parmi ceux perpendiculaires au premier; etc. Ce sont les axes « naturels » du nuage, comme les axes d'une ellipse: on tourne le repère pour qu'il épouse la forme réelle des données au lieu de garder les colonnes d'origine, souvent mal orientées.
+> **Le symbole « composante principale ».** Une composante principale représente **une nouvelle direction de regard sur les données, taillée sur mesure pour le nuage**. La première est l'axe le plus étale ; la deuxième, l'axe le plus étale parmi ceux perpendiculaires au premier ; etc. Ce sont les axes « naturels » du nuage, comme les axes d'une ellipse : on tourne le repère pour qu'il épouse la forme réelle des données au lieu de garder les colonnes d'origine, souvent mal orientées.
 
 #### Les composantes suivantes
 
-Pour la deuxième direction, on impose qu'elle soit **orthogonale** a la première (sinon on retrouverait la même information):
+Pour la deuxième direction, on impose qu'elle soit **orthogonale** a la première (sinon on retrouverait la même information) :
 
 ```math
 \mathbf{u}_2 = \arg\max_{\substack{\|\mathbf{u}\|=1 \\ \mathbf{u}^{\top}\mathbf{u}_1 = 0}} \mathbf{u}^{\top} S\,\mathbf{u}.
@@ -183,15 +183,15 @@ Le même calcul de Lagrange (avec deux contraintes) montre que $`\mathbf{u}_2`$ 
 
 > **Théorème (ACP par diagonalisation de la covariance).** Soit $`S`$ la matrice de covariance, symétrique semi-définie positive. Notons ses valeurs propres rangées par ordre décroissant $`\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_d \ge 0`$ et $`\mathbf{u}_1, \dots, \mathbf{u}_d`$ une base orthonormée de vecteurs propres associés. Alors, pour tout $`k`$, le sous-espace qui maximise la variance totale projetée parmi tous les sous-espaces de dimension $`k`$ est engendré par $`\mathbf{u}_1, \dots, \mathbf{u}_k`$. La variance capturée vaut $`\lambda_1 + \dots + \lambda_k`$.
 
-> **Démonstration (récurrence).** Le cas $`k=1`$ est établi ci-dessus. Supposons le résultat vrai jusqu'au rang $`k-1`$, avec composantes $`\mathbf{u}_1,\dots,\mathbf{u}_{k-1}`$. On cherche $`\mathbf{u}_k`$ unitaire, orthogonal aux précédents, maximisant $`\mathbf{u}^{\top}S\mathbf{u}`$. Décomposons tout vecteur candidat dans la base propre: $`\mathbf{u} = \sum_{j=1}^{d} c_j \mathbf{u}_j`$ avec $`\sum_j c_j^2 = 1`$ (norme 1) et, par orthogonalité aux précédents, $`c_1 = \dots = c_{k-1} = 0`$. Alors, en utilisant $`S\mathbf{u}_j = \lambda_j \mathbf{u}_j`$ et l'orthonormalité,
+> **Démonstration (récurrence).** Le cas $`k=1`$ est établi ci-dessus. Supposons le résultat vrai jusqu'au rang $`k-1`$, avec composantes $`\mathbf{u}_1,\dots,\mathbf{u}_{k-1}`$. On cherche $`\mathbf{u}_k`$ unitaire, orthogonal aux précédents, maximisant $`\mathbf{u}^{\top}S\mathbf{u}`$. Décomposons tout vecteur candidat dans la base propre : $`\mathbf{u} = \sum_{j=1}^{d} c_j \mathbf{u}_j`$ avec $`\sum_j c_j^2 = 1`$ (norme 1) et, par orthogonalité aux précédents, $`c_1 = \dots = c_{k-1} = 0`$. Alors, en utilisant $`S\mathbf{u}_j = \lambda_j \mathbf{u}_j`$ et l'orthonormalité,
 > ```math
 > \mathbf{u}^{\top}S\mathbf{u} = \sum_{j=k}^{d} \lambda_j c_j^2 \le \lambda_k \sum_{j=k}^{d} c_j^2 = \lambda_k,
 > ```
 > l'inégalité venant de $`\lambda_j \le \lambda_k`$ pour $`j \ge k`$. Le maximum $`\lambda_k`$ est atteint en prenant $`c_k = 1`$ et les autres nuls, c'est-a-dire $`\mathbf{u} = \mathbf{u}_k`$. Par récurrence, $`\mathbf{u}_1,\dots,\mathbf{u}_k`$ réalisent l'optimum et la variance totale captée est $`\sum_{j=1}^k \lambda_j`$. $`\blacksquare`$
 
-> **Lien avec la trace.** La variance **totale** du nuage (somme des variances de toutes les colonnes) vaut $`\mathrm{tr}(S) = \sum_{j=1}^d \lambda_j`$, car la trace est invariante par changement de base orthonormée et égale la somme des valeurs propres. C'est pourquoi on parle de *part* de variance: chaque $`\lambda_j`$ est une part du gâteau total $`\mathrm{tr}(S)`$.
+> **Lien avec la trace.** La variance **totale** du nuage (somme des variances de toutes les colonnes) vaut $`\mathrm{tr}(S) = \sum_{j=1}^d \lambda_j`$, car la trace est invariante par changement de base orthonormée et égale la somme des valeurs propres. C'est pourquoi on parle de *part* de variance : chaque $`\lambda_j`$ est une part du gâteau total $`\mathrm{tr}(S)`$.
 
-> **Le symbole « variance expliquée ».** La *variance expliquée* (explained variance) par les $`k`$ premières composantes représente **la fraction de l'étalement total du nuage que notre résumé conserve**. C'est un pourcentage de fidélité: si les deux premières composantes expliquent 95 % de la variance, cela veut dire que notre dessin en 2D garde 95 % de la « richesse » du nuage d'origine, et qu'on n'en perd que 5 %. On la calcule par le *ratio de variance expliquée*:
+> **Le symbole « variance expliquée ».** La *variance expliquée* (explained variance) par les $`k`$ premières composantes représente **la fraction de l'étalement total du nuage que notre résumé conserve**. C'est un pourcentage de fidélité : si les deux premières composantes expliquent 95 % de la variance, cela veut dire que notre dessin en 2D garde 95 % de la « richesse » du nuage d'origine, et qu'on n'en perd que 5 %. On la calcule par le *ratio de variance expliquée*:
 > ```math
 > \text{ratio}_k = \frac{\lambda_1 + \dots + \lambda_k}{\lambda_1 + \dots + \lambda_d} = \frac{\sum_{j=1}^{k}\lambda_j}{\mathrm{tr}(S)}.
 > ```
@@ -204,18 +204,18 @@ Ils sont parfaitement alignés sur la droite $`y=x`$: une seule direction porte 
 
 **Étape 1, moyenne.** $`\bar{\mathbf{x}} = \big(\tfrac{1+2+3+4+5}{5}, \tfrac{1+2+3+4+5}{5}\big) = (3,3)`$.
 
-**Étape 2, centrage.** Les points centrés: $`(-2,-2),(-1,-1),(0,0),(1,1),(2,2)`$.
+**Étape 2, centrage.** Les points centrés : $`(-2,-2),(-1,-1),(0,0),(1,1),(2,2)`$.
 
-**Étape 3, covariance.** Variance de la colonne 1: $`\tfrac{1}{5}(4+1+0+1+4) = 2`$. Idem colonne 2: $`2`$. Covariance: $`\tfrac{1}{5}((-2)(-2)+(-1)(-1)+0+1\cdot1+2\cdot2) = \tfrac{10}{5}=2`$. Donc
+**Étape 3, covariance.** Variance de la colonne 1 : $`\tfrac{1}{5}(4+1+0+1+4) = 2`$. Idem colonne 2 : $`2`$. Covariance : $`\tfrac{1}{5}((-2)(-2)+(-1)(-1)+0+1\cdot1+2\cdot2) = \tfrac{10}{5}=2`$. Donc
 ```math
 S = \begin{pmatrix} 2 & 2 \\ 2 & 2 \end{pmatrix}.
 ```
 
 **Étape 4, valeurs propres.** $`\det(S - \lambda I) = (2-\lambda)^2 - 4 = \lambda^2 - 4\lambda = \lambda(\lambda - 4)`$. D'ou $`\lambda_1 = 4`$, $`\lambda_2 = 0`$.
 
-**Étape 5, vecteurs propres.** Pour $`\lambda_1=4`$: $`(S-4I)\mathbf{u}=0`$ donne $`-2u_1+2u_2=0`$, soit $`u_1=u_2`$; normalisé: $`\mathbf{u}_1 = \tfrac{1}{\sqrt2}(1,1)`$. Pour $`\lambda_2=0`$: $`\mathbf{u}_2 = \tfrac{1}{\sqrt2}(1,-1)`$.
+**Étape 5, vecteurs propres.** Pour $`\lambda_1=4`$: $`(S-4I)\mathbf{u}=0`$ donne $`-2u_1+2u_2=0`$, soit $`u_1=u_2`$; normalisé : $`\mathbf{u}_1 = \tfrac{1}{\sqrt2}(1,1)`$. Pour $`\lambda_2=0`$: $`\mathbf{u}_2 = \tfrac{1}{\sqrt2}(1,-1)`$.
 
-**Lecture.** La première composante pointe **exactement le long de $`y=x`$**: l'ACP a retrouvé la droite porteuse. La variance le long de $`\mathbf{u}_1`$ vaut $`\lambda_1=4`$, le long de $`\mathbf{u}_2`$ vaut $`\lambda_2=0`$: il n'y a aucune dispersion perpendiculaire (les points sont alignés). Le ratio de variance expliqué par la 1re composante: $`\tfrac{4}{4+0}=100\%`$. On peut donc résumer ces points 2D par **un seul nombre** (leur position le long de $`\mathbf{u}_1`$) sans rien perdre.
+**Lecture.** La première composante pointe **exactement le long de $`y=x`$**: l'ACP a retrouvé la droite porteuse. La variance le long de $`\mathbf{u}_1`$ vaut $`\lambda_1=4`$, le long de $`\mathbf{u}_2`$ vaut $`\lambda_2=0`$: il n'y a aucune dispersion perpendiculaire (les points sont alignés). Le ratio de variance expliqué par la 1re composante : $`\tfrac{4}{4+0}=100\%`$. On peut donc résumer ces points 2D par **un seul nombre** (leur position le long de $`\mathbf{u}_1`$) sans rien perdre.
 
 ```python
 import numpy as np
@@ -233,15 +233,15 @@ print("1re composante  :", np.round(vecteurs[:, 0], 6))
 print("ratio variance  :", np.round(valeurs / valeurs.sum(), 6))
 ```
 
-> **Application en machine learning.** En reconnaissance de visages, l'ACP appliquée a des milliers d'images produit des *eigenfaces* (visages propres): les premières composantes capturent l'éclairage et la forme globale du visage, les suivantes des détails. Garder $`k\approx 100`$ composantes sur des images de $`10\,000`$ pixels suffit souvent a reconnaître une personne, tout en divisant par 100 la taille des données. La variance expliquée guide le choix de $`k`$: on prend assez de composantes pour atteindre, disons, 95 %.
+> **Application en machine learning.** En reconnaissance de visages, l'ACP appliquée a des milliers d'images produit des *eigenfaces* (visages propres) : les premières composantes capturent l'éclairage et la forme globale du visage, les suivantes des détails. Garder $`k\approx 100`$ composantes sur des images de $`10\,000`$ pixels suffit souvent a reconnaître une personne, tout en divisant par 100 la taille des données. La variance expliquée guide le choix de $`k`$: on prend assez de composantes pour atteindre, disons, 95 %.
 
 ---
 
 ### Perspective de la projection
 
-Changeons complètement de point de vue, et pourtant nous allons retomber sur les mêmes vecteurs propres. Au lieu de demander « quelle direction étale le plus le nuage ? », demandons: « si je dois écraser les points sur un sous-espace de dimension $`k`$, **quel sous-espace déforme le moins les points** ? ». C'est la perspective de la **reconstruction**: on veut pouvoir reconstruire chaque point a partir de son résumé avec le minimum d'erreur.
+Changeons complètement de point de vue, et pourtant nous allons retomber sur les mêmes vecteurs propres. Au lieu de demander « quelle direction étale le plus le nuage ? », demandons : « si je dois écraser les points sur un sous-espace de dimension $`k`$, **quel sous-espace déforme le moins les points** ? ». C'est la perspective de la **reconstruction**: on veut pouvoir reconstruire chaque point a partir de son résumé avec le minimum d'erreur.
 
-> **Image.** Vous photographiez une sculpture en relief: la photo est plate (dimension 2), la sculpture est en relief (dimension 3). Selon l'angle de prise de vue, la photo trahit plus ou moins la forme réelle. La perspective de la projection cherche **le meilleur angle**, celui sous lequel on pourra le mieux « deviner » la sculpture a partir de la photo. La distance entre chaque point réel et son ombre sur la photo, c'est l'erreur; on veut la rendre minimale.
+> **Image.** Vous photographiez une sculpture en relief : la photo est plate (dimension 2), la sculpture est en relief (dimension 3). Selon l'angle de prise de vue, la photo trahit plus ou moins la forme réelle. La perspective de la projection cherche **le meilleur angle**, celui sous lequel on pourra le mieux « deviner » la sculpture a partir de la photo. La distance entre chaque point réel et son ombre sur la photo, c'est l'erreur ; on veut la rendre minimale.
 
 #### Projeter, reconstruire, mesurer l'erreur
 
@@ -249,45 +249,45 @@ On se donne un repère orthonormé $`\mathbf{u}_1, \dots, \mathbf{u}_k`$ du sous
 
 > **Le symbole $`\mathbf{z}_i`$, le code, le résumé du point.** Ce symbole représente **les quelques nombres qui résument un objet** dans le nouveau repère. Si $`\mathbf{x}_i`$ était une longue carte d'identité a $`d`$ cases, alors $`\mathbf{z}_i`$ en est la version « carte de visite » a $`k`$ cases. On l'appelle aussi le *code* ou les *scores* du point. Passer de $`\mathbf{x}_i`$ a $`\mathbf{z}_i`$, c'est *encoder*; revenir en arrière, c'est *décoder*.
 
-**Encodage** (projection sur le sous-espace): la coordonnée du point centré le long de chaque axe est un produit scalaire, donc
+**Encodage** (projection sur le sous-espace) : la coordonnée du point centré le long de chaque axe est un produit scalaire, donc
 ```math
 \mathbf{z}_i = U_k^{\top}(\mathbf{x}_i - \bar{\mathbf{x}}) \in \mathbb{R}^k.
 ```
 
-> **Le symbole « reconstruction ».** La *reconstruction* représente **le point qu'on obtient en repartant du résumé pour reconstruire l'objet d'origine**. C'est la « meilleure devinette » de $`\mathbf{x}_i`$ qu'on puisse faire en ne connaissant que son code $`\mathbf{z}_i`$ et les axes choisis. Comme on a jeté une partie de l'information (les directions hors du sous-espace), cette devinette est en général imparfaite: l'écart entre le vrai point et sa reconstruction est l'**erreur de reconstruction**.
+> **Le symbole « reconstruction ».** La *reconstruction* représente **le point qu'on obtient en repartant du résumé pour reconstruire l'objet d'origine**. C'est la « meilleure devinette » de $`\mathbf{x}_i`$ qu'on puisse faire en ne connaissant que son code $`\mathbf{z}_i`$ et les axes choisis. Comme on a jeté une partie de l'information (les directions hors du sous-espace), cette devinette est en général imparfaite : l'écart entre le vrai point et sa reconstruction est l'**erreur de reconstruction**.
 
-**Décodage** (reconstruction): on replace le code dans l'espace d'origine et on rajoute le centre,
+**Décodage** (reconstruction) : on replace le code dans l'espace d'origine et on rajoute le centre,
 ```math
 \hat{\mathbf{x}}_i = \bar{\mathbf{x}} + U_k\,\mathbf{z}_i = \bar{\mathbf{x}} + U_k U_k^{\top}(\mathbf{x}_i - \bar{\mathbf{x}}).
 ```
 
 La matrice $`P = U_k U_k^{\top} \in \mathbb{R}^{d\times d}`$ est un **projecteur orthogonal**: elle vérifie $`P^{\top}=P`$ et $`P^2 = P`$ (projeter deux fois ne change rien de plus que projeter une fois). Elle envoie chaque point centré sur le sous-espace.
 
-L'**erreur de reconstruction** moyenne, qu'on cherche a minimiser, est la moyenne des distances au carré entre points réels et reconstructions:
+L'**erreur de reconstruction** moyenne, qu'on cherche a minimiser, est la moyenne des distances au carré entre points réels et reconstructions :
 
 ```math
 J(U_k) = \frac{1}{n}\sum_{i=1}^{n}\big\|\mathbf{x}_i - \hat{\mathbf{x}}_i\big\|^2 = \frac{1}{n}\sum_{i=1}^{n}\big\|\tilde{\mathbf{x}}_i - U_k U_k^{\top}\tilde{\mathbf{x}}_i\big\|^2.
 ```
 
-> **Le symbole $`J`$.** Ce symbole représente **la note de mauvaise qualité du résumé**: plus $`J`$ est grand, plus on a déformé les points; plus $`J`$ est petit, plus la reconstruction est fidèle. C'est une *fonction de coût* (cost / loss). Notre but: choisir le sous-espace $`U_k`$ qui rend cette note la plus basse possible. La double barre $`\|\cdot\|`$ est la longueur (norme) du vecteur d'écart, et le carré évite les signes négatifs tout en pénalisant fort les gros écarts.
+> **Le symbole $`J`$.** Ce symbole représente **la note de mauvaise qualité du résumé**: plus $`J`$ est grand, plus on a déformé les points ; plus $`J`$ est petit, plus la reconstruction est fidèle. C'est une *fonction de coût* (cost / loss). Notre but : choisir le sous-espace $`U_k`$ qui rend cette note la plus basse possible. La double barre $`\|\cdot\|`$ est la longueur (norme) du vecteur d'écart, et le carré évite les signes négatifs tout en pénalisant fort les gros écarts.
 
 #### Le théorème de Pythagore qui relie les deux perspectives
 
-Voici le moment cle. Pour chaque point centré $`\tilde{\mathbf{x}}_i`$, décomposons-le en sa part **dans** le sous-espace ($`U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, gardée) et sa part **perpendiculaire** ($`\tilde{\mathbf{x}}_i - U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, jetée). Ces deux parts sont orthogonales (propriété du projecteur orthogonal), donc le théorème de Pythagore donne:
+Voici le moment cle. Pour chaque point centré $`\tilde{\mathbf{x}}_i`$, décomposons-le en sa part **dans** le sous-espace ($`U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, gardée) et sa part **perpendiculaire** ($`\tilde{\mathbf{x}}_i - U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, jetée). Ces deux parts sont orthogonales (propriété du projecteur orthogonal), donc le théorème de Pythagore donne :
 
 ```math
 \|\tilde{\mathbf{x}}_i\|^2 = \underbrace{\|U_kU_k^{\top}\tilde{\mathbf{x}}_i\|^2}_{\text{garde (projection)}} + \underbrace{\|\tilde{\mathbf{x}}_i - U_kU_k^{\top}\tilde{\mathbf{x}}_i\|^2}_{\text{jete (erreur)}}.
 ```
 
-En moyennant sur les $`n`$ points:
+En moyennant sur les $`n`$ points :
 
 ```math
 \underbrace{\frac{1}{n}\sum_i \|\tilde{\mathbf{x}}_i\|^2}_{\text{variance totale } = \,\mathrm{tr}(S)} = \underbrace{\frac{1}{n}\sum_i \|U_kU_k^{\top}\tilde{\mathbf{x}}_i\|^2}_{\text{variance projetee}} + \underbrace{J(U_k)}_{\text{erreur}}.
 ```
 
-> **La révélation.** Le membre de gauche, la variance totale, est une **constante**: elle ne dépend pas du sous-espace choisi, seulement des données. Donc **maximiser la variance projetée** (perspective 1) revient **exactement** a **minimiser l'erreur de reconstruction** $`J`$ (perspective 2). Ce ne sont pas deux méthodes qui se ressemblent: c'est **une seule et même équation** lue de deux côtés. Tout ce qui est gagné d'un côté (variance gardée) est exactement ce qui est perdu de l'autre (erreur).
+> **La révélation.** Le membre de gauche, la variance totale, est une **constante**: elle ne dépend pas du sous-espace choisi, seulement des données. Donc **maximiser la variance projetée** (perspective 1) revient **exactement** a **minimiser l'erreur de reconstruction** $`J`$ (perspective 2). Ce ne sont pas deux méthodes qui se ressemblent : c'est **une seule et même équation** lue de deux côtés. Tout ce qui est gagné d'un côté (variance gardée) est exactement ce qui est perdu de l'autre (erreur).
 
-Comme la variance projetée est maximale pour $`U_k = (\mathbf{u}_1,\dots,\mathbf{u}_k)`$ (vu a la section précédente), on en déduit:
+Comme la variance projetée est maximale pour $`U_k = (\mathbf{u}_1,\dots,\mathbf{u}_k)`$ (vu a la section précédente), on en déduit :
 
 > **Théorème (ACP comme meilleure approximation linéaire).** Parmi tous les sous-espaces affines de dimension $`k`$, celui qui minimise l'erreur quadratique moyenne de reconstruction est l'espace affine passant par $`\bar{\mathbf{x}}`$ et engendré par les $`k`$ premiers vecteurs propres $`\mathbf{u}_1, \dots, \mathbf{u}_k`$ de la matrice de covariance $`S`$. L'erreur minimale vaut la somme des valeurs propres **abandonnées**:
 > ```math
@@ -296,9 +296,9 @@ Comme la variance projetée est maximale pour $`U_k = (\mathbf{u}_1,\dots,\mathb
 
 > **Démonstration.** La variance projetée maximale vaut $`\sum_{j=1}^k \lambda_j`$ (théorème précédent). La variance totale vaut $`\sum_{j=1}^d \lambda_j`$. Par l'égalité de Pythagore moyennée, $`J_{\min} = \sum_{j=1}^d \lambda_j - \sum_{j=1}^k \lambda_j = \sum_{j=k+1}^d \lambda_j`$. $`\blacksquare`$
 
-Cela donne une lecture très concrète des valeurs propres: $`\lambda_{k+1},\dots,\lambda_d`$ sont **exactement ce qu'on perd** en se limitant a $`k`$ composantes. Si ces valeurs propres « de queue » sont minuscules, on peut couper sans remords.
+Cela donne une lecture très concrète des valeurs propres : $`\lambda_{k+1},\dots,\lambda_d`$ sont **exactement ce qu'on perd** en se limitant a $`k`$ composantes. Si ces valeurs propres « de queue » sont minuscules, on peut couper sans remords.
 
-#### Exemple chiffré: projeter sur la meilleure droite
+#### Exemple chiffré : projeter sur la meilleure droite
 
 Reprenons un nuage légèrement bruité autour de la droite $`y=x`$. Soit les points **déjà centrés** (leur moyenne est bien $`(0,0)`$)
 $`(-2,-1.8),\ (-1,-1.2),\ (0,0.1),\ (1,0.9),\ (2,2.0).`$
@@ -309,10 +309,10 @@ S = \begin{pmatrix} 2.00 & 1.94 \\ 1.94 & 1.90 \end{pmatrix},
 ```
 de valeurs propres $`\lambda_1 \approx 3{,}89`$ et $`\lambda_2 \approx 0{,}009`$, de première composante $`\mathbf{u}_1 \approx (0{,}716,\ 0{,}698)`$ (quasi la diagonale). La variance totale vaut $`\mathrm{tr}(S) = 3{,}9`$.
 
-- **Si on projette sur $`\mathbf{u}_1`$** ($`k=1`$): erreur $`J_{\min} = \lambda_2 \approx 0{,}009`$. Quasi nulle: les points sont presque alignés, l'ombre sur $`\mathbf{u}_1`$ les représente très bien.
+- **Si on projette sur $`\mathbf{u}_1`$** ($`k=1`$) : erreur $`J_{\min} = \lambda_2 \approx 0{,}009`$. Quasi nulle : les points sont presque alignés, l'ombre sur $`\mathbf{u}_1`$ les représente très bien.
 - **Si on projetait bêtement sur l'axe horizontal** $`\mathbf{e}_1 = (1,0)`$: on garderait la variance $`\mathbf{e}_1^{\top}S\mathbf{e}_1 = 2{,}0`$ seulement, et on perdrait $`3{,}9 - 2{,}0 = 1{,}9`$. Soit **plus de 200 fois** l'erreur obtenue en choisissant la bonne direction.
 
-C'est tout l'intérêt de l'ACP: choisir la projection **intelligente** plutôt que de jeter naïvement des colonnes.
+C'est tout l'intérêt de l'ACP : choisir la projection **intelligente** plutôt que de jeter naïvement des colonnes.
 
 ```python
 import numpy as np
@@ -340,9 +340,9 @@ print("erreur ACP                  :", round(err_pca, 4))
 print("erreur projection naive (x) :", round(err_naif, 4))
 ```
 
-> **Application en machine learning.** La perspective reconstruction fait de l'ACP l'ancêtre linéaire de l'*autoencodeur* (autoencoder). Un autoencodeur linéaire a une couche cachée de taille $`k`$, entraîné a minimiser l'erreur quadratique de reconstruction, **converge vers le sous-espace de l'ACP** (a une transformation inversible près dans l'espace latent). C'est aussi la base de la *compression*: on stocke les codes $`\mathbf{z}_i`$ (légers) et la matrice $`U_k`$ une seule fois, plutôt que les images entières. Et c'est un détecteur d'anomalies: un point dont l'erreur de reconstruction est anormalement grande « ne ressemble pas » aux données d'entraînement.
+> **Application en machine learning.** La perspective reconstruction fait de l'ACP l'ancêtre linéaire de l'*autoencodeur* (autoencoder). Un autoencodeur linéaire a une couche cachée de taille $`k`$, entraîné a minimiser l'erreur quadratique de reconstruction, **converge vers le sous-espace de l'ACP** (a une transformation inversible près dans l'espace latent). C'est aussi la base de la *compression*: on stocke les codes $`\mathbf{z}_i`$ (légers) et la matrice $`U_k`$ une seule fois, plutôt que les images entières. Et c'est un détecteur d'anomalies : un point dont l'erreur de reconstruction est anormalement grande « ne ressemble pas » aux données d'entraînement.
 
-> **Mise a jour 2026.** La parenté ACP ↔ autoencodeur reste un repère pédagogique majeur, mais on sait depuis quelques années la nuancer: avec des non-linéarités et des régularisations modernes, un autoencodeur profond peut capturer des structures **courbes** que l'ACP rate. En pratique 2026, on essaie quasi systématiquement l'ACP **d'abord** (rapide, déterministe, interprétable) comme référence et comme pre-réduction avant un modèle non linéaire (UMAP, autoencodeur variationnel). « ACP d'abord, sophistication ensuite » est devenu un réflexe sain.
+> **Mise a jour 2026.** La parenté ACP ↔ autoencodeur reste un repère pédagogique majeur, mais on sait depuis quelques années la nuancer : avec des non-linéarités et des régularisations modernes, un autoencodeur profond peut capturer des structures **courbes** que l'ACP rate. En pratique 2026, on essaie quasi systématiquement l'ACP **d'abord** (rapide, déterministe, interprétable) comme référence et comme pre-réduction avant un modèle non linéaire (UMAP, autoencodeur variationnel). « ACP d'abord, sophistication ensuite » est devenu un réflexe sain.
 
 ---
 
@@ -350,11 +350,11 @@ print("erreur projection naive (x) :", round(err_naif, 4))
 
 On sait *quoi* calculer (les vecteurs propres de $`S`$). Reste *comment* le faire, efficacement, de manière stable, et a grande échelle. Cette section relie l'ACP a la **décomposition en valeurs singulières** (SVD), donne les algorithmes pratiques, et établit le lien fondamental avec l'**approximation de rang faible** (low-rank approximation) via le théorème d'Eckart–Young.
 
-#### ACP via la SVD: la voie royale
+#### ACP via la SVD : la voie royale
 
-Calculer $`S = \tfrac{1}{n}\tilde{X}^{\top}\tilde{X}`$ puis la diagonaliser fonctionne, mais ce n'est **ni la méthode la plus stable ni la plus efficace**. Former $`\tilde{X}^{\top}\tilde{X}`$ élève au carré le *conditionnement* du problème (les petites valeurs singulières deviennent minuscules et se noient dans les erreurs d'arrondi) et coûte $`O(nd^2)`$. Le *conditionnement*, c'est une note de fragilité du calcul: il mesure de combien les résultats peuvent se dérégler quand les nombres de départ sont à peine perturbés (par exemple par les arrondis de l'ordinateur); plus il est grand, plus le calcul est délicat. L'élever au carré, c'est donc rendre le calcul nettement plus fragile. La SVD de $`\tilde{X}`$ contourne ces deux écueils.
+Calculer $`S = \tfrac{1}{n}\tilde{X}^{\top}\tilde{X}`$ puis la diagonaliser fonctionne, mais ce n'est **ni la méthode la plus stable ni la plus efficace**. Former $`\tilde{X}^{\top}\tilde{X}`$ élève au carré le *conditionnement* du problème (les petites valeurs singulières deviennent minuscules et se noient dans les erreurs d'arrondi) et coûte $`O(nd^2)`$. Le *conditionnement*, c'est une note de fragilité du calcul : il mesure de combien les résultats peuvent se dérégler quand les nombres de départ sont à peine perturbés (par exemple par les arrondis de l'ordinateur) ; plus il est grand, plus le calcul est délicat. L'élever au carré, c'est donc rendre le calcul nettement plus fragile. La SVD de $`\tilde{X}`$ contourne ces deux écueils.
 
-Rappel (chapitre 4): toute matrice $`\tilde{X} \in \mathbb{R}^{n\times d}`$ s'écrit
+Rappel (chapitre 4) : toute matrice $`\tilde{X} \in \mathbb{R}^{n\times d}`$ s'écrit
 ```math
 \tilde{X} = U\,\Sigma\,V^{\top},
 ```
@@ -367,7 +367,7 @@ Le lien avec $`S`$ est immédiat. En utilisant $`U^{\top}U = I_n`$:
 S = \frac{1}{n}\tilde{X}^{\top}\tilde{X} = \frac{1}{n} V\Sigma^{\top}U^{\top}U\Sigma V^{\top} = \frac{1}{n} V\,(\Sigma^{\top}\Sigma)\,V^{\top} = V\,\mathrm{diag}\!\Big(\tfrac{\sigma_1^2}{n},\dots,\tfrac{\sigma_d^2}{n}\Big)V^{\top}.
 ```
 
-C'est **exactement** une diagonalisation de $`S`$. On en déduit le dictionnaire de traduction, a connaître par cœur:
+C'est **exactement** une diagonalisation de $`S`$. On en déduit le dictionnaire de traduction, a connaître par cœur :
 
 | Objet ACP | Donne par la SVD de $`\tilde{X}`$ |
 |---|---|
@@ -375,7 +375,7 @@ C'est **exactement** une diagonalisation de $`S`$. On en déduit le dictionnaire
 | Valeurs propres de $`S`$ (variances) | $`\lambda_j = \sigma_j^2 / n`$ |
 | Codes / scores $`\mathbf{z}_i`$ (projection des points) | lignes de $`\tilde{X}V_k = U_k\Sigma_k`$ |
 
-Autrement dit: **les directions principales sont les vecteurs singuliers a droite de $`\tilde{X}`$**, et **les valeurs propres sont les carrés des valeurs singulières divisés par $`n`$**. On n'a jamais besoin de former $`S`$.
+Autrement dit : **les directions principales sont les vecteurs singuliers a droite de $`\tilde{X}`$**, et **les valeurs propres sont les carrés des valeurs singulières divisés par $`n`$**. On n'a jamais besoin de former $`S`$.
 
 ```python
 import numpy as np
@@ -398,13 +398,13 @@ print("ratio cumule       :", np.round(np.cumsum(ratio), 3))
 print("forme des scores   :", Z.shape)
 ```
 
-#### Le théorème d'Eckart–Young: l'ACP est la meilleure approximation de rang faible
+#### Le théorème d'Eckart–Young : l'ACP est la meilleure approximation de rang faible
 
-L'ACP peut se voir comme la réponse a une question d'**algèbre matricielle pure**, indépendante de toute statistique: *quelle matrice de rang au plus $`k`$ approche le mieux $`\tilde{X}`$ ?* La réponse est l'un des théorèmes les plus importants de l'algèbre linéaire numérique.
+L'ACP peut se voir comme la réponse a une question d'**algèbre matricielle pure**, indépendante de toute statistique : *quelle matrice de rang au plus $`k`$ approche le mieux $`\tilde{X}`$ ?* La réponse est l'un des théorèmes les plus importants de l'algèbre linéaire numérique.
 
-> **Le symbole « rang $`k`$ ».** Le *rang* d'une matrice représente **le nombre de directions vraiment indépendantes qu'elle contient**. Une matrice de rang 1 est « pauvre »: toutes ses lignes sont des multiples d'une seule. Demander une approximation de rang $`k`$, c'est demander la meilleure version « comprimée a $`k`$ directions » de la matrice. C'est exactement l'idée de la réduction de dimension, traduite en langage matriciel.
+> **Le symbole « rang $`k`$ ».** Le *rang* d'une matrice représente **le nombre de directions vraiment indépendantes qu'elle contient**. Une matrice de rang 1 est « pauvre » : toutes ses lignes sont des multiples d'une seule. Demander une approximation de rang $`k`$, c'est demander la meilleure version « comprimée a $`k`$ directions » de la matrice. C'est exactement l'idée de la réduction de dimension, traduite en langage matriciel.
 
-> **Le symbole $`\|\cdot\|_F`$ (norme de Frobenius).** Ce symbole représente **la taille globale d'une matrice, mesurée en mettant tous ses coefficients dans un grand sac et en prenant la racine de la somme de leurs carrés**. C'est la norme euclidienne, mais appliquée a une matrice vue comme une longue liste de nombres: $`\|A\|_F = \sqrt{\sum_{i,j} A_{ij}^2}`$. Elle mesure « a quel point deux matrices différent » quand on écrit $`\|A-B\|_F`$.
+> **Le symbole $`\|\cdot\|_F`$ (norme de Frobenius).** Ce symbole représente **la taille globale d'une matrice, mesurée en mettant tous ses coefficients dans un grand sac et en prenant la racine de la somme de leurs carrés**. C'est la norme euclidienne, mais appliquée a une matrice vue comme une longue liste de nombres : $`\|A\|_F = \sqrt{\sum_{i,j} A_{ij}^2}`$. Elle mesure « a quel point deux matrices différent » quand on écrit $`\|A-B\|_F`$.
 
 > **Théorème (Eckart–Young–Mirsky).** Soit $`\tilde{X} = U\Sigma V^{\top}`$ de valeurs singulières $`\sigma_1 \ge \dots \ge \sigma_r > 0`$ (avec $`r = \mathrm{rang}(\tilde{X})`$). Pour tout $`k < r`$, la meilleure approximation de rang $`\le k`$ au sens de la norme de Frobenius (et aussi de la norme spectrale) est la *SVD tronquée*
 > ```math
@@ -415,9 +415,9 @@ L'ACP peut se voir comme la réponse a une question d'**algèbre matricielle pur
 > \min_{\mathrm{rang}(B)\le k}\|\tilde{X}-B\|_F^2 = \sum_{j=k+1}^{r}\sigma_j^2.
 > ```
 
-> **Démonstration (esquisse rigoureuse).** Écrivons $`\tilde{X} = \sum_j \sigma_j \mathbf{u}_j\mathbf{v}_j^{\top}`$. Pour toute matrice $`B`$ de rang $`\le k`$, on montre via les valeurs singulières que $`\|\tilde{X}-B\|_F^2 \ge \sum_{j>k}\sigma_j^2`$, l'argument cle étant l'inégalité de Weyl sur les valeurs singulières d'une somme: tronquer la SVD après $`k`$ termes annule les $`k`$ plus grandes contributions $`\sigma_1,\dots,\sigma_k`$ et ne laisse que la queue $`\sigma_{k+1},\dots`$, ce qui sature la borne. La borne étant atteinte par $`\tilde{X}_k`$, c'est bien l'optimum. Le détail complet (cas Frobenius et cas spectral) est l'objet de l'exercice 5. $`\blacksquare`$
+> **Démonstration (esquisse rigoureuse).** Écrivons $`\tilde{X} = \sum_j \sigma_j \mathbf{u}_j\mathbf{v}_j^{\top}`$. Pour toute matrice $`B`$ de rang $`\le k`$, on montre via les valeurs singulières que $`\|\tilde{X}-B\|_F^2 \ge \sum_{j>k}\sigma_j^2`$, l'argument cle étant l'inégalité de Weyl sur les valeurs singulières d'une somme : tronquer la SVD après $`k`$ termes annule les $`k`$ plus grandes contributions $`\sigma_1,\dots,\sigma_k`$ et ne laisse que la queue $`\sigma_{k+1},\dots`$, ce qui sature la borne. La borne étant atteinte par $`\tilde{X}_k`$, c'est bien l'optimum. Le détail complet (cas Frobenius et cas spectral) est l'objet de l'exercice 5. $`\blacksquare`$
 
-Le lien avec l'ACP saute aux yeux: la reconstruction ACP de tous les points (centrés), empilée en matrice, est **précisément** $`\tilde{X}_k`$. L'erreur de reconstruction de l'ACP $`J_{\min} = \tfrac{1}{n}\sum_{j>k}\sigma_j^2 = \sum_{j>k}\lambda_j`$ est l'erreur d'Eckart–Young divisée par $`n`$. **L'ACP n'est rien d'autre que la SVD tronquée des données centrées.**
+Le lien avec l'ACP saute aux yeux : la reconstruction ACP de tous les points (centrés), empilée en matrice, est **précisément** $`\tilde{X}_k`$. L'erreur de reconstruction de l'ACP $`J_{\min} = \tfrac{1}{n}\sum_{j>k}\sigma_j^2 = \sum_{j>k}\lambda_j`$ est l'erreur d'Eckart–Young divisée par $`n`$. **L'ACP n'est rien d'autre que la SVD tronquée des données centrées.**
 
 ```python
 import numpy as np
@@ -436,14 +436,14 @@ B = U[:, :k] @ np.diag(s[:k]) @ Vt[:k] + 1e-3*rng.normal(size=A.shape)  # rang <
 print("erreur d'un B concurrent (>=) :", round(np.linalg.norm(A - B, 'fro')**2, 4))
 ```
 
-#### Méthodes de calcul: exact, itératif, randomisé
+#### Méthodes de calcul : exact, itératif, randomisé
 
 Selon la taille du problème, on choisit l'une de ces stratégies.
 
 | Méthode | Quand l'utiliser | Coût indicatif |
 |---|---|---|
 | Diagonalisation de $`S`$ (`eigh`) | $`d`$ petit ($`\lesssim`$ quelques milliers), $`n`$ quelconque | $`O(nd^2 + d^3)`$ |
-| SVD complète de $`\tilde{X}`$ (`svd`) | $`n,d`$ modérés; meilleure stabilité | $`O(\min(nd^2, n^2d))`$ |
+| SVD complète de $`\tilde{X}`$ (`svd`) | $`n,d`$ modérés ; meilleure stabilité | $`O(\min(nd^2, n^2d))`$ |
 | **Itération de la puissance / Lanczos** | on ne veut que $`k \ll d`$ composantes | $`O(ndk)`$ par balayage |
 | **SVD randomisée** | $`n,d`$ très grands, $`k`$ petit | $`O(ndk)`$, très rapide |
 
@@ -472,9 +472,9 @@ print("plus grande valeur propre :", round(lam, 6))   # ~ 4
 print("vecteur propre dominant   :", np.round(np.abs(u), 6))  # ~ (0.707, 0.707)
 ```
 
-> **Mise a jour 2026.** Pour les matrices massives (génomique, NLP, recommandation), la **SVD randomisée** de Halko–Martinsson–Tropp s'est imposée comme standard: on projette $`\tilde{X}`$ sur un petit sous-espace aléatoire de dimension $`k+p`$ (avec un faible *oversampling* $`p`$, typiquement 5 a 10), on orthonormalise, puis on fait une SVD exacte sur cette esquisse minuscule. Coût $`O(ndk)`$ au lieu de $`O(nd^2)`$, avec des garanties probabilistes serrées et une précision quasi optimale. C'est ce qu'utilisent `sklearn.decomposition.PCA(svd_solver="randomized")` et `TruncatedSVD`. Combinée a l'autodiff (JAX/PyTorch) pour les pipelines bout-en-bout, et a des solveurs *out-of-core* pour les données qui ne tiennent pas en mémoire, elle rend l'ACP applicable a des matrices de plusieurs milliards de coefficients.
+> **Mise a jour 2026.** Pour les matrices massives (génomique, NLP, recommandation), la **SVD randomisée** de Halko–Martinsson–Tropp s'est imposée comme standard : on projette $`\tilde{X}`$ sur un petit sous-espace aléatoire de dimension $`k+p`$ (avec un faible *oversampling* $`p`$, typiquement 5 a 10), on orthonormalise, puis on fait une SVD exacte sur cette esquisse minuscule. Coût $`O(ndk)`$ au lieu de $`O(nd^2)`$, avec des garanties probabilistes serrées et une précision quasi optimale. C'est ce qu'utilisent `sklearn.decomposition.PCA(svd_solver="randomized")` et `TruncatedSVD`. Combinée a l'autodiff (JAX/PyTorch) pour les pipelines bout-en-bout, et a des solveurs *out-of-core* pour les données qui ne tiennent pas en mémoire, elle rend l'ACP applicable a des matrices de plusieurs milliards de coefficients.
 
-> **Piège numérique a retenir.** Ne calculez **jamais** $`S=\tilde{X}^{\top}\tilde{X}`$ pour ensuite diagonaliser si la stabilité compte: vous perdez environ la moitié des chiffres significatifs (le conditionnement est élevé au carré). Passez par la SVD de $`\tilde{X}`$ directement. C'est la différence entre un résultat juste et un résultat ou les petites composantes sont du pur bruit d'arrondi.
+> **Piège numérique a retenir.** Ne calculez **jamais** $`S=\tilde{X}^{\top}\tilde{X}`$ pour ensuite diagonaliser si la stabilité compte : vous perdez environ la moitié des chiffres significatifs (le conditionnement est élevé au carré). Passez par la SVD de $`\tilde{X}`$ directement. C'est la différence entre un résultat juste et un résultat ou les petites composantes sont du pur bruit d'arrondi.
 
 ---
 
@@ -484,29 +484,29 @@ Que se passe-t-il quand le nombre de variables **dépasse** le nombre d'observat
 
 #### Le rang est limité par le nombre de points
 
-Première observation cruciale: $`n`$ points centrés vivent dans un sous-espace de dimension **au plus** $`n-1`$ (le centrage « consomme » un degré de liberté, car les écarts centrés somment a zéro: $`\sum_i \tilde{\mathbf{x}}_i = \mathbf{0}`$). Donc
+Première observation cruciale : $`n`$ points centrés vivent dans un sous-espace de dimension **au plus** $`n-1`$ (le centrage « consomme » un degré de liberté, car les écarts centrés somment a zéro : $`\sum_i \tilde{\mathbf{x}}_i = \mathbf{0}`$). Donc
 
 ```math
 \mathrm{rang}(\tilde{X}) \le \min(n-1,\ d).
 ```
 
-Quand $`d > n`$, le rang est plafonné par $`n-1`$. Cela signifie qu'il y a **au plus $`n-1`$ valeurs propres non nulles**: toutes les directions au-delà sont des directions de variance strictement nulle, sans aucun intérêt. Inutile donc de chercher $`d`$ composantes: il n'en existe que $`n-1`$ d'utiles au maximum.
+Quand $`d > n`$, le rang est plafonné par $`n-1`$. Cela signifie qu'il y a **au plus $`n-1`$ valeurs propres non nulles**: toutes les directions au-delà sont des directions de variance strictement nulle, sans aucun intérêt. Inutile donc de chercher $`d`$ composantes : il n'en existe que $`n-1`$ d'utiles au maximum.
 
 > **Image.** Trois personnes dans une pièce tiennent chacune un ballon. Même si la pièce est immense (grande dimension $`d`$), trois points ne peuvent définir qu'un plan (dimension 2). Vouloir une « quatrième direction de variation » entre trois points n'a aucun sens. En grande dimension, le nombre de points est le vrai facteur limitant de la richesse du nuage.
 
-#### L'astuce du noyau (Gram): calculer dans le petit espace
+#### L'astuce du noyau (Gram) : calculer dans le petit espace
 
-Diagonaliser $`S`$ ($`d\times d`$) est hors de portée si $`d = 10^6`$. Mais on peut travailler avec la **matrice de Gram** $`G = \tilde{X}\tilde{X}^{\top} \in \mathbb{R}^{n\times n}`$, qui est petite (taille $`n`$, le nombre de points). L'idée: les vecteurs propres de $`S`$ et ceux de $`G`$ sont reliés par $`\tilde{X}`$.
+Diagonaliser $`S`$ ($`d\times d`$) est hors de portée si $`d = 10^6`$. Mais on peut travailler avec la **matrice de Gram** $`G = \tilde{X}\tilde{X}^{\top} \in \mathbb{R}^{n\times n}`$, qui est petite (taille $`n`$, le nombre de points). L'idée : les vecteurs propres de $`S`$ et ceux de $`G`$ sont reliés par $`\tilde{X}`$.
 
-> **Le symbole $`G`$ (matrice de Gram).** Ce symbole représente **un tableau des ressemblances entre les objets pris deux a deux**. Sa case $`(i,j)`$ vaut $`\tilde{\mathbf{x}}_i^{\top}\tilde{\mathbf{x}}_j`$: le produit scalaire entre l'objet $`i`$ et l'objet $`j`$, donc une mesure de « a quel point ils pointent dans la même direction ». La covariance $`S`$ compare les *variables* entre elles; la matrice de Gram compare les *objets* entre eux. Deux faces de la même pièce.
+> **Le symbole $`G`$ (matrice de Gram).** Ce symbole représente **un tableau des ressemblances entre les objets pris deux a deux**. Sa case $`(i,j)`$ vaut $`\tilde{\mathbf{x}}_i^{\top}\tilde{\mathbf{x}}_j`$: le produit scalaire entre l'objet $`i`$ et l'objet $`j`$, donc une mesure de « a quel point ils pointent dans la même direction ». La covariance $`S`$ compare les *variables* entre elles ; la matrice de Gram compare les *objets* entre eux. Deux faces de la même pièce.
 
 Démonstration du lien. Soit $`\mathbf{w}`$ un vecteur propre de $`G`$: $`G\mathbf{w} = \mu\,\mathbf{w}`$, soit $`\tilde{X}\tilde{X}^{\top}\mathbf{w} = \mu\mathbf{w}`$, avec $`\mu > 0`$. Multiplions a gauche par $`\tilde{X}^{\top}`$:
 ```math
 \tilde{X}^{\top}\tilde{X}\,(\tilde{X}^{\top}\mathbf{w}) = \mu\,(\tilde{X}^{\top}\mathbf{w}).
 ```
-Or $`\tilde{X}^{\top}\tilde{X} = nS`$. Donc $`\tilde{X}^{\top}\mathbf{w}`$ est vecteur propre de $`S`$ pour la valeur propre $`\mu/n`$ ! On obtient les composantes principales **sans jamais former $`S`$**, en diagonalisant la petite matrice $`G`$ ($`n\times n`$) puis en « remontant » via $`\tilde{X}^{\top}`$. Il reste a normaliser: avec $`\|\mathbf{w}\|=1`$, on a $`\|\tilde{X}^{\top}\mathbf{w}\|^2 = \mathbf{w}^{\top}\tilde{X}\tilde{X}^{\top}\mathbf{w} = \mu`$, donc le vecteur propre unitaire de $`S`$ est $`\mathbf{u} = \tilde{X}^{\top}\mathbf{w}/\sqrt{\mu}`$.
+Or $`\tilde{X}^{\top}\tilde{X} = nS`$. Donc $`\tilde{X}^{\top}\mathbf{w}`$ est vecteur propre de $`S`$ pour la valeur propre $`\mu/n`$ ! On obtient les composantes principales **sans jamais former $`S`$**, en diagonalisant la petite matrice $`G`$ ($`n\times n`$) puis en « remontant » via $`\tilde{X}^{\top}`$. Il reste a normaliser : avec $`\|\mathbf{w}\|=1`$, on a $`\|\tilde{X}^{\top}\mathbf{w}\|^2 = \mathbf{w}^{\top}\tilde{X}\tilde{X}^{\top}\mathbf{w} = \mu`$, donc le vecteur propre unitaire de $`S`$ est $`\mathbf{u} = \tilde{X}^{\top}\mathbf{w}/\sqrt{\mu}`$.
 
-> **Pourquoi ca marche: $`S`$ et $`G`$ partagent leurs valeurs propres non nulles.** Les matrices $`\tilde{X}^{\top}\tilde{X}`$ ($`d\times d`$) et $`\tilde{X}\tilde{X}^{\top}`$ ($`n\times n`$) ont **exactement les mêmes valeurs propres non nulles** (ce sont les $`\sigma_j^2`$ de la SVD). Seule change la multiplicité de la valeur propre $`0`$. On peut donc choisir de diagonaliser la plus petite des deux, un gain colossal quand $`n`$ et $`d`$ sont très déséquilibrés.
+> **Pourquoi ca marche : $`S`$ et $`G`$ partagent leurs valeurs propres non nulles.** Les matrices $`\tilde{X}^{\top}\tilde{X}`$ ($`d\times d`$) et $`\tilde{X}\tilde{X}^{\top}`$ ($`n\times n`$) ont **exactement les mêmes valeurs propres non nulles** (ce sont les $`\sigma_j^2`$ de la SVD). Seule change la multiplicité de la valeur propre $`0`$. On peut donc choisir de diagonaliser la plus petite des deux, un gain colossal quand $`n`$ et $`d`$ sont très déséquilibrés.
 
 ```python
 import numpy as np
@@ -532,15 +532,15 @@ print("forme des composantes              :", comp.shape)   # (3, 5000)
 
 #### Vers l'ACP a noyau (kernel PCA)
 
-L'astuce de Gram a une conséquence théorique majeure: puisque tout le calcul ne fait intervenir que des **produits scalaires entre objets** ($`\tilde{\mathbf{x}}_i^{\top}\tilde{\mathbf{x}}_j`$), on peut remplacer ce produit scalaire par une fonction de similarité plus riche, un **noyau** (kernel) $`\kappa(\mathbf{x}_i,\mathbf{x}_j)`$. Cela donne l'**ACP a noyau** (kernel PCA), capable de capturer des structures **non linéaires** (spirales, anneaux) en projetant implicitement les données dans un espace de très grande dimension, sans jamais y aller explicitement. C'est le pont entre l'ACP linéaire de ce chapitre et les méthodes non linéaires.
+L'astuce de Gram a une conséquence théorique majeure : puisque tout le calcul ne fait intervenir que des **produits scalaires entre objets** ($`\tilde{\mathbf{x}}_i^{\top}\tilde{\mathbf{x}}_j`$), on peut remplacer ce produit scalaire par une fonction de similarité plus riche, un **noyau** (kernel) $`\kappa(\mathbf{x}_i,\mathbf{x}_j)`$. Cela donne l'**ACP a noyau** (kernel PCA), capable de capturer des structures **non linéaires** (spirales, anneaux) en projetant implicitement les données dans un espace de très grande dimension, sans jamais y aller explicitement. C'est le pont entre l'ACP linéaire de ce chapitre et les méthodes non linéaires.
 
-> **Remarque, un fléau statistique caché.** En grande dimension, l'estimation de la covariance devient peu fiable: avec $`d`$ comparable a $`n`$, la matrice $`S`$ empirique est un mauvais estimateur de la vraie covariance (ses valeurs propres sont systématiquement étalées, phénomène décrit par la théorie des matrices aléatoires, loi de Marchenko–Pastur). En pratique 2026, on régularise (*shrinkage* de Ledoit–Wolf), on impose de la parcimonie (*sparse PCA*), ou l'on combine ACP randomisée et validation croisée pour choisir $`k`$ sans surajuster. Calculer l'ACP en grande dimension est facile; l'*interpréter* correctement demande de la prudence.
+> **Remarque, un fléau statistique caché.** En grande dimension, l'estimation de la covariance devient peu fiable : avec $`d`$ comparable a $`n`$, la matrice $`S`$ empirique est un mauvais estimateur de la vraie covariance (ses valeurs propres sont systématiquement étalées, phénomène décrit par la théorie des matrices aléatoires, loi de Marchenko–Pastur). En pratique 2026, on régularise (*shrinkage* de Ledoit–Wolf), on impose de la parcimonie (*sparse PCA*), ou l'on combine ACP randomisée et validation croisée pour choisir $`k`$ sans surajuster. Calculer l'ACP en grande dimension est facile ; l'*interpréter* correctement demande de la prudence.
 
 ---
 
 ### Les étapes de l'ACP en pratique
 
-Place a la recette complète, dans l'ordre, avec les pièges qui font échouer une ACP en production. Le calcul mathématique n'est qu'une partie du travail: le **prétraitement** et le **choix de $`k`$** décident souvent du résultat.
+Place a la recette complète, dans l'ordre, avec les pièges qui font échouer une ACP en production. Le calcul mathématique n'est qu'une partie du travail : le **prétraitement** et le **choix de $`k`$** décident souvent du résultat.
 
 #### Le pipeline pas a pas
 
@@ -560,13 +560,13 @@ flowchart TD
 
 **Étape 1, Nettoyer et cadrer.** Traiter les valeurs manquantes (imputation), repérer les valeurs aberrantes (l'ACP, fondée sur la variance et donc sur des carrés, est **très sensible aux outliers**: un seul point extrême peut détourner une composante entière).
 
-**Étape 2, Centrer (obligatoire).** Retirer la moyenne de chaque colonne. Sans centrage, ce n'est plus l'ACP: la première « composante » pointerait vers le nuage depuis une origine arbitraire.
+**Étape 2, Centrer (obligatoire).** Retirer la moyenne de chaque colonne. Sans centrage, ce n'est plus l'ACP : la première « composante » pointerait vers le nuage depuis une origine arbitraire.
 
 **Étape 3, Standardiser (souvent indispensable).** C'est le piège numéro un.
 
 > **Pourquoi standardiser ?** L'ACP maximise la variance, mais la variance dépend des **unités**. Si une colonne est en millimètres (valeurs de 0 a 10 000) et une autre en mètres (0 a 10), la première écrasera tout par sa variance énorme, uniquement a cause du choix d'unité. Standardiser, diviser chaque colonne par son écart-type après centrage, remet toutes les variables sur un pied d'égalité. Faire l'ACP sur les données standardisées revient a diagonaliser la **matrice de corrélation** plutôt que la covariance.
 
-> **Quand NE PAS standardiser ?** Si toutes les colonnes ont la **même nature et la même unité** (par exemple des pixels d'image, tous entre 0 et 255), standardiser peut *amplifier le bruit* des variables peu informatives. Règle pratique: variables hétérogènes (âge, salaire, taille) → standardiser; variables homogènes (pixels, mêmes capteurs) → souvent garder la covariance brute.
+> **Quand NE PAS standardiser ?** Si toutes les colonnes ont la **même nature et la même unité** (par exemple des pixels d'image, tous entre 0 et 255), standardiser peut *amplifier le bruit* des variables peu informatives. Règle pratique : variables hétérogènes (âge, salaire, taille) → standardiser ; variables homogènes (pixels, mêmes capteurs) → souvent garder la covariance brute.
 
 **Étape 4, Décomposer.** SVD de la matrice prétraitée (voie recommandée), ou `eigh` de $`S`$, ou astuce de Gram si $`d \gg n`$.
 
@@ -581,15 +581,15 @@ flowchart TD
 | **Règle de Kaiser** | garder les composantes de valeur propre $`> 1`$ (sur données standardisées) | heuristique, a manier avec prudence |
 | **Validation croisée** | choisir $`k`$ qui minimise l'erreur de reconstruction sur données de test | le plus rigoureux, plus coûteux |
 
-**Étape 7, Projeter.** Calculer les codes $`Z = \tilde{X}\,V_k`$ (les nouvelles coordonnées), ou $`V_k \in \mathbb{R}^{d\times k}`$ a pour colonnes les composantes principales. C'est le résultat utilisable: un tableau $`n\times k`$, léger, décorrélé.
+**Étape 7, Projeter.** Calculer les codes $`Z = \tilde{X}\,V_k`$ (les nouvelles coordonnées), ou $`V_k \in \mathbb{R}^{d\times k}`$ a pour colonnes les composantes principales. C'est le résultat utilisable : un tableau $`n\times k`$, léger, décorrélé.
 
 **Étape 8, Reconstruire / évaluer (optionnel).** Reconstruire $`\hat{X} = \bar{\mathbf{x}} + Z\,V_k^{\top}`$ et mesurer l'erreur, ou utiliser $`Z`$ comme entrée d'un modèle aval.
 
 #### Pièges classiques
 
-> **Piège 1, fuite de données (data leakage).** La moyenne, l'écart-type **et** les composantes doivent être appris **uniquement sur l'ensemble d'entraînement**, puis appliqués tels quels au test. Calculer l'ACP sur l'ensemble complet (train + test) avant de séparer **triche**: on laisse fuiter de l'information du test dans l'entraînement. En pratique: `fit` sur le train, `transform` sur le test.
+> **Piège 1, fuite de données (data leakage).** La moyenne, l'écart-type **et** les composantes doivent être appris **uniquement sur l'ensemble d'entraînement**, puis appliqués tels quels au test. Calculer l'ACP sur l'ensemble complet (train + test) avant de séparer **triche**: on laisse fuiter de l'information du test dans l'entraînement. En pratique : `fit` sur le train, `transform` sur le test.
 
-> **Piège 2, signe arbitraire des composantes.** Un vecteur propre $`\mathbf{u}`$ et son opposé $`-\mathbf{u}`$ sont **tous deux** des composantes valides (même valeur propre). Le signe que renvoie un solveur est arbitraire et peut changer d'une bibliothèque ou d'une exécution a l'autre. Ne jamais interpréter le signe absolu d'une composante; seules comptent les positions **relatives** des variables.
+> **Piège 2, signe arbitraire des composantes.** Un vecteur propre $`\mathbf{u}`$ et son opposé $`-\mathbf{u}`$ sont **tous deux** des composantes valides (même valeur propre). Le signe que renvoie un solveur est arbitraire et peut changer d'une bibliothèque ou d'une exécution a l'autre. Ne jamais interpréter le signe absolu d'une composante ; seules comptent les positions **relatives** des variables.
 
 > **Piège 3, confondre composantes et variables d'origine.** Une composante principale est une *combinaison* de toutes les variables. « La composante 1 représente la taille » est au mieux une interprétation a posteriori, jamais une garantie. Examiner les *loadings* (coefficients $`\mathbf{u}_j`$) aide, mais reste délicat.
 
@@ -640,7 +640,7 @@ print("ratio cumule (k=2)               :", round(modele.ratio_variance_.sum(), 
 print("erreur de reconstruction (k=2)   :", round(modele.erreur_reconstruction(X), 6))
 ```
 
-> **Application en machine learning.** L'ACP est un *prétraitement* omniprésent: on l'insère comme première étape d'un pipeline (`PCA` puis `LogisticRegression`, ou `PCA` puis k plus proches voisins). Elle accélère l'entraînement, **décorrèle** les variables (utile pour les modèles sensibles a la colinéarité), réduit le surapprentissage en supprimant les directions de bruit, et permet la **visualisation** en 2D/3D (on projette sur les 2-3 premières composantes pour voir les classes se séparer). Le whitening (blanchiment), diviser en plus les scores par $`\sqrt{\lambda_j}`$ pour rendre la covariance des codes égale a l'identité, est un raffinement fréquent avant certains modèles.
+> **Application en machine learning.** L'ACP est un *prétraitement* omniprésent : on l'insère comme première étape d'un pipeline (`PCA` puis `LogisticRegression`, ou `PCA` puis k plus proches voisins). Elle accélère l'entraînement, **décorrèle** les variables (utile pour les modèles sensibles a la colinéarité), réduit le surapprentissage en supprimant les directions de bruit, et permet la **visualisation** en 2D/3D (on projette sur les 2-3 premières composantes pour voir les classes se séparer). Le whitening (blanchiment), diviser en plus les scores par $`\sqrt{\lambda_j}`$ pour rendre la covariance des codes égale a l'identité, est un raffinement fréquent avant certains modèles.
 
 ---
 
@@ -648,24 +648,24 @@ print("erreur de reconstruction (k=2)   :", round(modele.erreur_reconstruction(X
 
 Jusqu'ici, l'ACP était un objet **géométrique et déterministe**: des directions, des projections, des erreurs au carré. On peut lui donner une troisième vie, **probabiliste**, en la voyant comme un *modèle génératif*, une histoire racontant **comment les données auraient pu être fabriquées** par le hasard. C'est l'**ACP probabiliste** (Probabilistic PCA, PPCA) de Tipping et Bishop. Elle éclaire l'ACP sous un jour nouveau, la relie au maximum de vraisemblance, gère proprement les données manquantes, et ouvre la porte aux modèles a variables latentes modernes (analyse factorielle, autoencodeurs variationnels).
 
-#### L'idée: une cause cachée de petite dimension
+#### L'idée : une cause cachée de petite dimension
 
-> **Le symbole $`\mathbf{z}`$, la variable latente.** Ce symbole représente **une cause cachée, invisible, de petite dimension, qui explique ce qu'on observe**. Imaginez que la « vraie » description d'un visage tienne en $`k`$ réglages secrets (rondeur, âge apparent, sourire...); on ne les voit jamais directement, on ne voit que les milliers de pixels qu'ils engendrent. Le $`\mathbf{z}`$ est ce jeu de réglages cachés. Le mot *latent* veut dire « présent mais non observé », comme une cause qu'on devine sans la voir.
+> **Le symbole $`\mathbf{z}`$, la variable latente.** Ce symbole représente **une cause cachée, invisible, de petite dimension, qui explique ce qu'on observe**. Imaginez que la « vraie » description d'un visage tienne en $`k`$ réglages secrets (rondeur, âge apparent, sourire...) ; on ne les voit jamais directement, on ne voit que les milliers de pixels qu'ils engendrent. Le $`\mathbf{z}`$ est ce jeu de réglages cachés. Le mot *latent* veut dire « présent mais non observé », comme une cause qu'on devine sans la voir.
 
-L'histoire générative de la PPCA tient en deux temps:
+L'histoire générative de la PPCA tient en deux temps :
 
-1. **Tirer une cause cachée** de petite dimension, selon une loi normale standard:
+1. **Tirer une cause cachée** de petite dimension, selon une loi normale standard :
 ```math
 \mathbf{z} \sim \mathcal{N}(\mathbf{0}, I_k).
 ```
-2. **Fabriquer l'observation** en étirant/tournant cette cause par une matrice $`W`$, en la décalant par la moyenne $`\boldsymbol\mu`$, et en ajoutant un bruit gaussien isotrope:
+2. **Fabriquer l'observation** en étirant/tournant cette cause par une matrice $`W`$, en la décalant par la moyenne $`\boldsymbol\mu`$, et en ajoutant un bruit gaussien isotrope :
 ```math
 \mathbf{x} \mid \mathbf{z} \sim \mathcal{N}\big(W\mathbf{z} + \boldsymbol\mu,\ \sigma^2 I_d\big).
 ```
 
 > **Le symbole $`W`$.** Ce symbole représente **la machine qui transforme les quelques réglages cachés en milliers de valeurs observées**. C'est une matrice $`d\times k`$: elle prend un petit vecteur $`\mathbf{z}`$ (taille $`k`$) et en fait un grand vecteur (taille $`d`$). Géométriquement, ses colonnes engendrent le sous-espace ou vivent (presque) les données, le même sous-espace que les composantes principales, on va le montrer.
 
-> **Le symbole $`\sigma^2`$ ici.** Ce symbole représente **la quantité de bruit, le flou, autour du sous-espace**. Si $`\sigma^2`$ est nul, les points tombent exactement sur le sous-espace engendré par $`W`$; plus $`\sigma^2`$ grandit, plus ils s'en écartent en un nuage diffus. C'est le « grain » de la photo: le sous-espace donne l'image nette, $`\sigma^2`$ ajoute le grain isotrope (identique dans toutes les directions, d'ou le $`I_d`$).
+> **Le symbole $`\sigma^2`$ ici.** Ce symbole représente **la quantité de bruit, le flou, autour du sous-espace**. Si $`\sigma^2`$ est nul, les points tombent exactement sur le sous-espace engendré par $`W`$; plus $`\sigma^2`$ grandit, plus ils s'en écartent en un nuage diffus. C'est le « grain » de la photo : le sous-espace donne l'image nette, $`\sigma^2`$ ajoute le grain isotrope (identique dans toutes les directions, d'ou le $`I_d`$).
 
 ```mermaid
 flowchart LR
@@ -676,17 +676,17 @@ flowchart LR
 
 #### La loi marginale des observations
 
-En intégrant la cause cachée (somme de deux gaussiennes, donc gaussienne), on obtient la loi des données observées:
+En intégrant la cause cachée (somme de deux gaussiennes, donc gaussienne), on obtient la loi des données observées :
 
 ```math
 \mathbf{x} \sim \mathcal{N}\big(\boldsymbol\mu,\ C\big), \qquad C = W W^{\top} + \sigma^2 I_d.
 ```
 
-> **Lecture de la covariance $`C`$.** Le modèle dit: la covariance des données se décompose en **une partie structurée de rang $`k`$** ($`WW^{\top}`$, le signal porté par les causes cachées) plus **du bruit isotrope** ($`\sigma^2 I_d`$, le grain dans toutes les directions). C'est une hypothèse très naturelle: « il y a $`k`$ facteurs qui structurent mes données, le reste est du bruit uniforme ». L'ACP classique correspond a la limite $`\sigma^2 \to 0`$.
+> **Lecture de la covariance $`C`$.** Le modèle dit : la covariance des données se décompose en **une partie structurée de rang $`k`$** ($`WW^{\top}`$, le signal porté par les causes cachées) plus **du bruit isotrope** ($`\sigma^2 I_d`$, le grain dans toutes les directions). C'est une hypothèse très naturelle : « il y a $`k`$ facteurs qui structurent mes données, le reste est du bruit uniforme ». L'ACP classique correspond a la limite $`\sigma^2 \to 0`$.
 
-> **Le symbole « vraisemblance ».** La *vraisemblance* (likelihood) représente **la probabilité que le modèle attribue aux données qu'on a réellement observées**. On cherche les réglages ($`W,\boldsymbol\mu,\sigma^2`$) qui rendent les données observées **les plus plausibles possibles**: c'est le principe du *maximum de vraisemblance*. Intuitivement: « quel réglage de la machine a hasard explique le mieux ce que j'ai vu ? »
+> **Le symbole « vraisemblance ».** La *vraisemblance* (likelihood) représente **la probabilité que le modèle attribue aux données qu'on a réellement observées**. On cherche les réglages ($`W,\boldsymbol\mu,\sigma^2`$) qui rendent les données observées **les plus plausibles possibles**: c'est le principe du *maximum de vraisemblance*. Intuitivement : « quel réglage de la machine a hasard explique le mieux ce que j'ai vu ? »
 
-#### Théorème: le maximum de vraisemblance redonne l'ACP
+#### Théorème : le maximum de vraisemblance redonne l'ACP
 
 > **Théorème (Tipping–Bishop, 1999).** La log-vraisemblance des données sous le modèle PPCA est maximisée par
 > ```math
@@ -696,14 +696,14 @@ En intégrant la cause cachée (somme de deux gaussiennes, donc gaussienne), on 
 > ```
 > ou $`U_k`$ contient les $`k`$ premiers vecteurs propres de $`S`$, $`\Lambda_k = \mathrm{diag}(\lambda_1,\dots,\lambda_k)`$, et $`R`$ est une matrice orthogonale $`k\times k`$ arbitraire (rotation).
 
-Décryptons ce résultat magnifique:
+Décryptons ce résultat magnifique :
 
 - **$`\boldsymbol\mu_{\star} = \bar{\mathbf{x}}`$**: le centre estimé est la moyenne empirique. Rien d'étonnant, mais c'est confirmé par la vraisemblance, pas postulé.
 - **Les colonnes de $`W_{\star}`$ engendrent le sous-espace des $`k`$ premiers vecteurs propres**: on retrouve **exactement le sous-espace de l'ACP**. La PPCA et l'ACP voient le même sous-espace.
 - **Le bruit estimé $`\sigma^2_{\star}`$ est la moyenne des valeurs propres abandonnées**: tout ce que l'ACP « jetait » comme erreur de reconstruction est ici réinterprété comme la variance du bruit, répartie sur les $`d-k`$ directions résiduelles. La quantité $`\sum_{j>k}\lambda_j`$ (l'erreur de reconstruction de l'ACP !) réapparaît, divisée cette fois par $`d-k`$.
 - **La rotation $`R`$** rappelle que le sous-espace est déterminé, mais pas une base privilégiée a l'intérieur (indétermination de rotation, comme le signe pour l'ACP classique).
 
-> **La limite sans bruit.** Quand $`\sigma^2 \to 0`$, la **reconstruction** $`W\,\mathbb{E}[\mathbf{z}\mid\mathbf{x}]`$ tend vers la projection orthogonale ACP $`U_k U_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$. (L'espérance a posteriori elle-même, $`\mathbb{E}[\mathbf{z}\mid\mathbf{x}] = (W^{\top}W + \sigma^2 I_k)^{-1}W^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$, tend vers $`\Lambda_k^{-1/2}U_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$, les scores ACP « blanchis », donc ce sont bien les *reconstructions*, et non les codes bruts, qui coïncident avec l'ACP.) La PPCA **contient** ainsi l'ACP classique comme cas limite: l'ACP est une PPCA dont on aurait fait disparaître le grain.
+> **La limite sans bruit.** Quand $`\sigma^2 \to 0`$, la **reconstruction** $`W\,\mathbb{E}[\mathbf{z}\mid\mathbf{x}]`$ tend vers la projection orthogonale ACP $`U_k U_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$. (L'espérance a posteriori elle-même, $`\mathbb{E}[\mathbf{z}\mid\mathbf{x}] = (W^{\top}W + \sigma^2 I_k)^{-1}W^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$, tend vers $`\Lambda_k^{-1/2}U_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$, les scores ACP « blanchis », donc ce sont bien les *reconstructions*, et non les codes bruts, qui coïncident avec l'ACP.) La PPCA **contient** ainsi l'ACP classique comme cas limite : l'ACP est une PPCA dont on aurait fait disparaître le grain.
 
 #### Pourquoi se compliquer la vie ? Ce que la version probabiliste apporte
 
@@ -744,9 +744,9 @@ C = W @ W.T + sigma2*np.eye(6)
 print("erreur ||C - S_emp||_F          :", round(np.linalg.norm(C - (X-mu).T@(X-mu)/len(X), 'fro'), 4))
 ```
 
-> **Application en machine learning.** La PPCA est la porte d'entrée des **modèles a variables latentes**. Elle généralise vers: l'**analyse factorielle** (bruit non isotrope, $`\sigma^2 I \to \Psi`$ diagonale), les **mélanges de PPCA** (plusieurs sous-espaces locaux, pour données multimodales), et surtout l'**autoencodeur variationnel** (Variational Autoencoder, VAE), qui remplace la transformation linéaire $`W\mathbf{z}`$ par un réseau de neurones profond et la loi a posteriori exacte par une approximation apprise. Comprendre la PPCA, c'est comprendre le squelette du VAE.
+> **Application en machine learning.** La PPCA est la porte d'entrée des **modèles a variables latentes**. Elle généralise vers : l'**analyse factorielle** (bruit non isotrope, $`\sigma^2 I \to \Psi`$ diagonale), les **mélanges de PPCA** (plusieurs sous-espaces locaux, pour données multimodales), et surtout l'**autoencodeur variationnel** (Variational Autoencoder, VAE), qui remplace la transformation linéaire $`W\mathbf{z}`$ par un réseau de neurones profond et la loi a posteriori exacte par une approximation apprise. Comprendre la PPCA, c'est comprendre le squelette du VAE.
 
-> **Mise a jour 2026.** L'angle « variable latente » domine aujourd'hui la modélisation générative. Les outils d'autodiff (JAX, PyTorch) permettent d'ajuster une PPCA, ou ses descendants non linéaires, par descente de gradient stochastique sur la log-vraisemblance, avec les optimiseurs Adam/AdamW, plutôt que par les formules fermées ci-dessus. Les formules de Tipping–Bishop restent néanmoins le **cas test de référence** (sanity check): tout modèle latent gaussien linéaire bien implémenté doit, a la limite, retomber sur l'ACP. C'est devenu un test unitaire standard des bibliothèques probabilistes.
+> **Mise a jour 2026.** L'angle « variable latente » domine aujourd'hui la modélisation générative. Les outils d'autodiff (JAX, PyTorch) permettent d'ajuster une PPCA, ou ses descendants non linéaires, par descente de gradient stochastique sur la log-vraisemblance, avec les optimiseurs Adam/AdamW, plutôt que par les formules fermées ci-dessus. Les formules de Tipping–Bishop restent néanmoins le **cas test de référence** (sanity check) : tout modèle latent gaussien linéaire bien implémenté doit, a la limite, retomber sur l'ACP. C'est devenu un test unitaire standard des bibliothèques probabilistes.
 
 ---
 
@@ -754,23 +754,23 @@ print("erreur ||C - S_emp||_F          :", round(np.linalg.norm(C - (X-mu).T@(X-
 
 Les corrigés sont détaillés. Essayez sincèrement avant de les lire.
 
-#### Exercice 1: Covariance et variance projetée (échauffement)
+#### Exercice 1 : Covariance et variance projetée (échauffement)
 
 On considère les trois points de $`\mathbb{R}^2`$: $`(0,0)`$, $`(2,0)`$, $`(4,2)`$.
 **(a)** Calculer la moyenne et centrer les points.
 **(b)** Calculer la matrice de covariance $`S`$ (avec $`\tfrac{1}{n}`$).
-**(c)** Calculer la variance des points projetés sur la direction $`\mathbf{u}=\tfrac{1}{\sqrt2}(1,1)`$, de deux façons: directement, et via $`\mathbf{u}^{\top}S\mathbf{u}`$.
+**(c)** Calculer la variance des points projetés sur la direction $`\mathbf{u}=\tfrac{1}{\sqrt2}(1,1)`$, de deux façons : directement, et via $`\mathbf{u}^{\top}S\mathbf{u}`$.
 
 > **Corrigé 1.**
-> **(a)** Moyenne: $`\big(\tfrac{0+2+4}{3},\tfrac{0+0+2}{3}\big) = (2,\tfrac{2}{3})`$. Points centrés: $`(-2,-\tfrac23),\,(0,-\tfrac23),\,(2,\tfrac43)`$.
-> **(b)** Variance colonne 1: $`\tfrac13(4+0+4)=\tfrac83`$. Variance colonne 2: $`\tfrac13\big((\tfrac23)^2+(\tfrac23)^2+(\tfrac43)^2\big)=\tfrac13\big(\tfrac49+\tfrac49+\tfrac{16}{9}\big)=\tfrac13\cdot\tfrac{24}{9}=\tfrac{8}{9}`$. Covariance: $`\tfrac13\big((-2)(-\tfrac23)+0\cdot(-\tfrac23)+2\cdot\tfrac43\big)=\tfrac13\big(\tfrac43+\tfrac83\big)=\tfrac13\cdot4=\tfrac43`$. Donc
+> **(a)** Moyenne : $`\big(\tfrac{0+2+4}{3},\tfrac{0+0+2}{3}\big) = (2,\tfrac{2}{3})`$. Points centrés : $`(-2,-\tfrac23),\,(0,-\tfrac23),\,(2,\tfrac43)`$.
+> **(b)** Variance colonne 1 : $`\tfrac13(4+0+4)=\tfrac83`$. Variance colonne 2 : $`\tfrac13\big((\tfrac23)^2+(\tfrac23)^2+(\tfrac43)^2\big)=\tfrac13\big(\tfrac49+\tfrac49+\tfrac{16}{9}\big)=\tfrac13\cdot\tfrac{24}{9}=\tfrac{8}{9}`$. Covariance : $`\tfrac13\big((-2)(-\tfrac23)+0\cdot(-\tfrac23)+2\cdot\tfrac43\big)=\tfrac13\big(\tfrac43+\tfrac83\big)=\tfrac13\cdot4=\tfrac43`$. Donc
 > ```math
 > S=\begin{pmatrix} 8/3 & 4/3 \\ 4/3 & 8/9 \end{pmatrix}.
 > ```
-> **(c)** Projections: $`\tilde{\mathbf{x}}^{\top}\mathbf{u}=\tfrac{1}{\sqrt2}(\tilde x_1+\tilde x_2)`$. Valeurs: $`\tfrac{1}{\sqrt2}(-\tfrac83),\,\tfrac{1}{\sqrt2}(-\tfrac23),\,\tfrac{1}{\sqrt2}(\tfrac{10}{3})`$. Variance $`=\tfrac13\cdot\tfrac12\big(\tfrac{64}{9}+\tfrac49+\tfrac{100}{9}\big)=\tfrac16\cdot\tfrac{168}{9}=\tfrac{168}{54}=\tfrac{28}{9}`$.
-> Vérification: $`\mathbf{u}^{\top}S\mathbf{u}=\tfrac12(S_{11}+2S_{12}+S_{22})=\tfrac12\big(\tfrac83+\tfrac83+\tfrac89\big)=\tfrac12\cdot\tfrac{56}{9}=\tfrac{28}{9}`$. Les deux coïncident. $`\checkmark`$
+> **(c)** Projections : $`\tilde{\mathbf{x}}^{\top}\mathbf{u}=\tfrac{1}{\sqrt2}(\tilde x_1+\tilde x_2)`$. Valeurs : $`\tfrac{1}{\sqrt2}(-\tfrac83),\,\tfrac{1}{\sqrt2}(-\tfrac23),\,\tfrac{1}{\sqrt2}(\tfrac{10}{3})`$. Variance $`=\tfrac13\cdot\tfrac12\big(\tfrac{64}{9}+\tfrac49+\tfrac{100}{9}\big)=\tfrac16\cdot\tfrac{168}{9}=\tfrac{168}{54}=\tfrac{28}{9}`$.
+> Vérification : $`\mathbf{u}^{\top}S\mathbf{u}=\tfrac12(S_{11}+2S_{12}+S_{22})=\tfrac12\big(\tfrac83+\tfrac83+\tfrac89\big)=\tfrac12\cdot\tfrac{56}{9}=\tfrac{28}{9}`$. Les deux coïncident. $`\checkmark`$
 
-#### Exercice 2: Diagonalisation a la main
+#### Exercice 2 : Diagonalisation a la main
 
 Soit $`S=\begin{pmatrix} 3 & 1 \\ 1 & 3\end{pmatrix}`$.
 **(a)** Trouver les valeurs propres et les vecteurs propres orthonormés.
@@ -779,32 +779,32 @@ Soit $`S=\begin{pmatrix} 3 & 1 \\ 1 & 3\end{pmatrix}`$.
 
 > **Corrigé 2.**
 > **(a)** $`\det(S-\lambda I)=(3-\lambda)^2-1=\lambda^2-6\lambda+8=(\lambda-4)(\lambda-2)`$. Donc $`\lambda_1=4,\lambda_2=2`$. Pour $`\lambda_1=4`$: $`-u_1+u_2=0\Rightarrow \mathbf{u}_1=\tfrac{1}{\sqrt2}(1,1)`$. Pour $`\lambda_2=2`$: $`u_1+u_2=0\Rightarrow \mathbf{u}_2=\tfrac{1}{\sqrt2}(1,-1)`$.
-> **(b)** Première composante $`\mathbf{u}_1=\tfrac{1}{\sqrt2}(1,1)`$. Part expliquée: $`\tfrac{\lambda_1}{\lambda_1+\lambda_2}=\tfrac{4}{6}=\tfrac23\approx 66{,}7\%`$.
+> **(b)** Première composante $`\mathbf{u}_1=\tfrac{1}{\sqrt2}(1,1)`$. Part expliquée : $`\tfrac{\lambda_1}{\lambda_1+\lambda_2}=\tfrac{4}{6}=\tfrac23\approx 66{,}7\%`$.
 > **(c)** Erreur $`=\lambda_2=2`$ (la valeur propre abandonnée). $`\checkmark`$
 
-#### Exercice 3: Pourquoi standardiser change tout
+#### Exercice 3 : Pourquoi standardiser change tout
 
-Deux variables: $`X_1`$ avec écart-type $`100`$ et $`X_2`$ avec écart-type $`1`$, faiblement corrélées (corr $`=0{,}3`$).
+Deux variables : $`X_1`$ avec écart-type $`100`$ et $`X_2`$ avec écart-type $`1`$, faiblement corrélées (corr $`=0{,}3`$).
 **(a)** Sans standardisation, vers quelle variable pointera la première composante ? Pourquoi ?
 **(b)** Après standardisation, sur quelle matrice fait-on l'ACP ?
 **(c)** En une phrase, quand vaut-il mieux NE PAS standardiser ?
 
 > **Corrigé 3.**
-> **(a)** Vers $`X_1`$, presque exclusivement. La variance de $`X_1`$ vaut $`100^2=10\,000`$, celle de $`X_2`$ vaut $`1`$. La première composante maximise la variance; elle s'alignera donc quasi parfaitement sur $`X_1`$, qui écrase tout par son échelle, alors même que ce n'est qu'un artefact d'unité.
-> **(b)** Sur la **matrice de corrélation** (covariance des données standardisées: chaque variable est ramenée a variance 1, les termes hors-diagonale deviennent les corrélations).
+> **(a)** Vers $`X_1`$, presque exclusivement. La variance de $`X_1`$ vaut $`100^2=10\,000`$, celle de $`X_2`$ vaut $`1`$. La première composante maximise la variance ; elle s'alignera donc quasi parfaitement sur $`X_1`$, qui écrase tout par son échelle, alors même que ce n'est qu'un artefact d'unité.
+> **(b)** Sur la **matrice de corrélation** (covariance des données standardisées : chaque variable est ramenée a variance 1, les termes hors-diagonale deviennent les corrélations).
 > **(c)** Quand toutes les variables ont **la même nature et la même unité** (ex. pixels), pour ne pas amplifier le bruit des variables peu informatives. $`\checkmark`$
 
-#### Exercice 4: L'équivalence variance / reconstruction
+#### Exercice 4 : L'équivalence variance / reconstruction
 
 Démontrer, pour une **seule** direction unitaire $`\mathbf{u}`$ (cas $`k=1`$), que maximiser la variance projetée équivaut a minimiser l'erreur de reconstruction. On notera la variance totale $`T=\tfrac1n\sum_i\|\tilde{\mathbf{x}}_i\|^2`$.
 
-> **Corrigé 4.** La reconstruction d'un point centré projeté sur $`\mathbf{u}`$ est $`\hat{\tilde{\mathbf{x}}}_i=(\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)\mathbf{u}`$. L'erreur, en développant le carré de la norme:
+> **Corrigé 4.** La reconstruction d'un point centré projeté sur $`\mathbf{u}`$ est $`\hat{\tilde{\mathbf{x}}}_i=(\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)\mathbf{u}`$. L'erreur, en développant le carré de la norme :
 > ```math
 > \|\tilde{\mathbf{x}}_i-(\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)\mathbf{u}\|^2 = \|\tilde{\mathbf{x}}_i\|^2 - 2(\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)^2 + (\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)^2\underbrace{\|\mathbf{u}\|^2}_{=1} = \|\tilde{\mathbf{x}}_i\|^2-(\mathbf{u}^{\top}\tilde{\mathbf{x}}_i)^2.
 > ```
-> En moyennant: $`J(\mathbf{u})=T-\mathbf{u}^{\top}S\mathbf{u}`$. Comme $`T`$ est constant (indépendant de $`\mathbf{u}`$), minimiser $`J`$ revient **exactement** a maximiser $`\mathbf{u}^{\top}S\mathbf{u}`$, la variance projetée. $`\blacksquare`$
+> En moyennant : $`J(\mathbf{u})=T-\mathbf{u}^{\top}S\mathbf{u}`$. Comme $`T`$ est constant (indépendant de $`\mathbf{u}`$), minimiser $`J`$ revient **exactement** a maximiser $`\mathbf{u}^{\top}S\mathbf{u}`$, la variance projetée. $`\blacksquare`$
 
-#### Exercice 5: Eckart–Young en norme de Frobenius
+#### Exercice 5 : Eckart–Young en norme de Frobenius
 
 Soit $`A=U\Sigma V^{\top}`$ une SVD, $`\sigma_1\ge\dots\ge\sigma_r>0`$, avec $`A \in \mathbb{R}^{m\times d}`$. On admet l'invariance de $`\|\cdot\|_F`$ par multiplication orthogonale ($`\|QAZ\|_F=\|A\|_F`$ pour $`Q,Z`$ orthogonales).
 **(a)** Montrer que $`\|A-A_k\|_F^2=\sum_{j>k}\sigma_j^2`$ pour la SVD tronquée $`A_k`$.
@@ -812,9 +812,9 @@ Soit $`A=U\Sigma V^{\top}`$ une SVD, $`\sigma_1\ge\dots\ge\sigma_r>0`$, avec $`A
 
 > **Corrigé 5.**
 > **(a)** $`A-A_k=U(\Sigma-\Sigma_k)V^{\top}`$ ou $`\Sigma-\Sigma_k`$ ne garde que $`\sigma_{k+1},\dots,\sigma_r`$ sur la diagonale. Par invariance orthogonale, $`\|A-A_k\|_F^2=\|\Sigma-\Sigma_k\|_F^2=\sum_{j>k}\sigma_j^2`$.
-> **(b)** Soit $`B`$ de rang $`\le k`$. Son noyau $`\ker(B)\subseteq\mathbb{R}^d`$ a dimension $`\ge d-k`$ (théorème du rang). L'espace engendré par les $`k+1`$ premiers vecteurs singuliers a droite $`\{\mathbf{v}_1,\dots,\mathbf{v}_{k+1}\}\subseteq\mathbb{R}^d`$ a dimension $`k+1`$. Deux sous-espaces de $`\mathbb{R}^d`$ dont les dimensions somment a $`\ge (d-k)+(k+1)=d+1`$ s'intersectent non trivialement: il existe $`\mathbf{w}`$ unitaire dans $`\ker(B)\cap\mathrm{vect}(\mathbf{v}_1,\dots,\mathbf{v}_{k+1})`$. Alors $`B\mathbf{w}=\mathbf{0}`$, et en écrivant $`\mathbf{w}=\sum_{j\le k+1}w_j\mathbf{v}_j`$ avec $`\sum w_j^2=1`$, on a $`\|A\mathbf{w}\|^2=\sum_{j\le k+1}\sigma_j^2 w_j^2\ge\sigma_{k+1}^2`$. Donc $`\|A-B\|_F^2\ge\|(A-B)\mathbf{w}\|^2=\|A\mathbf{w}\|^2\ge\sigma_{k+1}^2`$. Un argument plus fin (inégalités de Weyl, appliquées direction par direction) étend cette borne a $`\sum_{j>k}\sigma_j^2`$, atteinte par $`A_k`$. $`\blacksquare`$
+> **(b)** Soit $`B`$ de rang $`\le k`$. Son noyau $`\ker(B)\subseteq\mathbb{R}^d`$ a dimension $`\ge d-k`$ (théorème du rang). L'espace engendré par les $`k+1`$ premiers vecteurs singuliers a droite $`\{\mathbf{v}_1,\dots,\mathbf{v}_{k+1}\}\subseteq\mathbb{R}^d`$ a dimension $`k+1`$. Deux sous-espaces de $`\mathbb{R}^d`$ dont les dimensions somment a $`\ge (d-k)+(k+1)=d+1`$ s'intersectent non trivialement : il existe $`\mathbf{w}`$ unitaire dans $`\ker(B)\cap\mathrm{vect}(\mathbf{v}_1,\dots,\mathbf{v}_{k+1})`$. Alors $`B\mathbf{w}=\mathbf{0}`$, et en écrivant $`\mathbf{w}=\sum_{j\le k+1}w_j\mathbf{v}_j`$ avec $`\sum w_j^2=1`$, on a $`\|A\mathbf{w}\|^2=\sum_{j\le k+1}\sigma_j^2 w_j^2\ge\sigma_{k+1}^2`$. Donc $`\|A-B\|_F^2\ge\|(A-B)\mathbf{w}\|^2=\|A\mathbf{w}\|^2\ge\sigma_{k+1}^2`$. Un argument plus fin (inégalités de Weyl, appliquées direction par direction) étend cette borne a $`\sum_{j>k}\sigma_j^2`$, atteinte par $`A_k`$. $`\blacksquare`$
 
-#### Exercice 6: Astuce de Gram quand $`d \gg n`$
+#### Exercice 6 : Astuce de Gram quand $`d \gg n`$
 
 On a $`n=3`$ points dans $`\mathbb{R}^{1000}`$. Après centrage, on forme $`G=\tilde{X}\tilde{X}^{\top}\in\mathbb{R}^{3\times3}`$.
 **(a)** Combien de valeurs propres non nulles $`S`$ peut-elle avoir au maximum ? Pourquoi ?
@@ -824,22 +824,22 @@ On a $`n=3`$ points dans $`\mathbb{R}^{1000}`$. Après centrage, on forme $`G=\t
 > **Corrigé 6.**
 > **(a)** Au plus $`n-1=2`$. Le centrage impose $`\sum_i\tilde{\mathbf{x}}_i=\mathbf{0}`$, donc les points centrés vivent dans un sous-espace de dimension $`\le n-1=2`$; le rang de $`\tilde{X}`$, donc de $`S`$, est $`\le 2`$.
 > **(b)** $`S`$ et $`G`$ partagent les valeurs propres non nulles. Avec $`\lambda_j=\mu_j/n`$: $`\lambda_1=12/3=4`$, $`\lambda_2=6/3=2`$, $`\lambda_3=0`$. (La troisième est nulle, cohérent avec (a).)
-> **(c)** $`\mathbf{u}=\tilde{X}^{\top}\mathbf{w}`$, puis normalisation: $`\mathbf{u}\leftarrow \tilde{X}^{\top}\mathbf{w}/\sqrt{\mu}`$ (en supposant $`\|\mathbf{w}\|=1`$, ou $`\mu`$ est la valeur propre de $`G`$ associée a $`\mathbf{w}`$). $`\checkmark`$
+> **(c)** $`\mathbf{u}=\tilde{X}^{\top}\mathbf{w}`$, puis normalisation : $`\mathbf{u}\leftarrow \tilde{X}^{\top}\mathbf{w}/\sqrt{\mu}`$ (en supposant $`\|\mathbf{w}\|=1`$, ou $`\mu`$ est la valeur propre de $`G`$ associée a $`\mathbf{w}`$). $`\checkmark`$
 
-#### Exercice 7: Variance expliquée et choix de $`k`$
+#### Exercice 7 : Variance expliquée et choix de $`k`$
 
-Une ACP sur $`d=6`$ variables donne les valeurs propres: $`\lambda=(6{,}0,\ 3{,}0,\ 0{,}6,\ 0{,}3,\ 0{,}1,\ 0{,}0)`$.
+Une ACP sur $`d=6`$ variables donne les valeurs propres : $`\lambda=(6{,}0,\ 3{,}0,\ 0{,}6,\ 0{,}3,\ 0{,}1,\ 0{,}0)`$.
 **(a)** Calculer le ratio de variance expliqué par chaque composante.
 **(b)** Combien de composantes pour atteindre au moins 90 % de variance cumulée ?
 **(c)** Quelle serait l'erreur de reconstruction (somme des valeurs propres abandonnées) pour ce $`k`$ ?
 
 > **Corrigé 7.**
 > Total $`=6+3+0{,}6+0{,}3+0{,}1+0=10`$.
-> **(a)** Ratios: $`0{,}60\,;\,0{,}30\,;\,0{,}06\,;\,0{,}03\,;\,0{,}01\,;\,0`$.
-> **(b)** Cumul: $`0{,}60\,;\,0{,}90\,;\,0{,}96\,\dots`$ Des $`k=2`$, on atteint **exactement 90 %**. Donc $`k=2`$ suffit (et $`k=3`$ donne 96 %).
+> **(a)** Ratios : $`0{,}60\,;\,0{,}30\,;\,0{,}06\,;\,0{,}03\,;\,0{,}01\,;\,0`$.
+> **(b)** Cumul : $`0{,}60\,;\,0{,}90\,;\,0{,}96\,\dots`$ Des $`k=2`$, on atteint **exactement 90 %**. Donc $`k=2`$ suffit (et $`k=3`$ donne 96 %).
 > **(c)** Pour $`k=2`$: erreur $`=\lambda_3+\lambda_4+\lambda_5+\lambda_6=0{,}6+0{,}3+0{,}1+0=1{,}0`$ (soit bien $`10\%`$ de la variance totale). $`\checkmark`$
 
-#### Exercice 8: ACP probabiliste (PPCA)
+#### Exercice 8 : ACP probabiliste (PPCA)
 
 Dans le modèle PPCA, $`\mathbf{x}\sim\mathcal{N}(\boldsymbol\mu,\,WW^{\top}+\sigma^2 I_d)`$.
 **(a)** Pour $`d=5`$ variables, $`k=2`$, avec valeurs propres de $`S`$ égales a $`(5,3,0{,}4,0{,}3,0{,}3)`$, calculer l'estimation du bruit $`\sigma^2_{\star}`$.
@@ -848,10 +848,10 @@ Dans le modèle PPCA, $`\mathbf{x}\sim\mathcal{N}(\boldsymbol\mu,\,WW^{\top}+\si
 
 > **Corrigé 8.**
 > **(a)** $`\sigma^2_{\star}=\tfrac{1}{d-k}\sum_{j>k}\lambda_j=\tfrac{1}{5-2}(0{,}4+0{,}3+0{,}3)=\tfrac{1}{3}\cdot1{,}0=0{,}333`$.
-> **(b)** Les points tombent exactement sur le sous-espace engendré par $`W`$ (les $`k`$ premières composantes principales); la reconstruction $`W\,\mathbb{E}[\mathbf{z}\mid\mathbf{x}]`$ tend vers la projection orthogonale ACP $`U_kU_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$. La PPCA dégénère en ACP déterministe.
-> **(c)** Plusieurs réponses acceptables: gestion native des données manquantes (via EM), vraisemblance permettant de choisir $`k`$ par BIC/AIC, capacité générative (échantillonner de nouvelles données), quantification de l'incertitude via la loi a posteriori. $`\checkmark`$
+> **(b)** Les points tombent exactement sur le sous-espace engendré par $`W`$ (les $`k`$ premières composantes principales) ; la reconstruction $`W\,\mathbb{E}[\mathbf{z}\mid\mathbf{x}]`$ tend vers la projection orthogonale ACP $`U_kU_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$. La PPCA dégénère en ACP déterministe.
+> **(c)** Plusieurs réponses acceptables : gestion native des données manquantes (via EM), vraisemblance permettant de choisir $`k`$ par BIC/AIC, capacité générative (échantillonner de nouvelles données), quantification de l'incertitude via la loi a posteriori. $`\checkmark`$
 
-#### Exercice 9: Implémentation et vérification (au clavier)
+#### Exercice 9 : Implémentation et vérification (au clavier)
 
 Écrire une fonction qui (i) génère $`n=500`$ points dans $`\mathbb{R}^{10}`$ de vrai rang $`3`$ plus un faible bruit, (ii) calcule l'ACP par SVD, (iii) vérifie numériquement que la somme des $`7`$ plus petites valeurs propres égale l'erreur de reconstruction pour $`k=3`$.
 
@@ -878,7 +878,7 @@ Dans le modèle PPCA, $`\mathbf{x}\sim\mathcal{N}(\boldsymbol\mu,\,WW^{\top}+\si
 > assert np.isclose(err, lam[k:].sum())                         # identite J_min = somme vp queue
 > print("identite verifiee.")
 > ```
-> Le `assert` passe: l'erreur de reconstruction égale bien $`\sum_{j>k}\lambda_j`$, illustrant numériquement le théorème de la section « Perspective de la projection ». Comme le vrai rang est 3, les valeurs propres $`\lambda_4,\dots,\lambda_{10}`$ sont minuscules (de l'ordre du bruit au carré), confirmant que $`k=3`$ suffit. $`\checkmark`$
+> Le `assert` passe : l'erreur de reconstruction égale bien $`\sum_{j>k}\lambda_j`$, illustrant numériquement le théorème de la section « Perspective de la projection ». Comme le vrai rang est 3, les valeurs propres $`\lambda_4,\dots,\lambda_{10}`$ sont minuscules (de l'ordre du bruit au carré), confirmant que $`k=3`$ suffit. $`\checkmark`$
 
 ---
 

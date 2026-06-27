@@ -4,16 +4,16 @@
 
 ### Hyperplans séparateurs et marge
 
-Imaginez une feuille de papier sur laquelle vous avez dessiné deux groupes de points: des ronds bleus en bas à gauche, des croix rouges en haut à droite. Votre tâche: tracer une ligne droite qui sépare parfaitement les bleus des rouges. Vous voyez tout de suite qu'il existe une *infinité* de droites possibles. La question centrale des machines à vecteurs de support (support vector machines, abrégées SVM) est: **parmi toutes ces droites, laquelle est la meilleure ?** La réponse, géniale par sa simplicité, est: celle qui laisse le plus de place vide de part et d'autre, comme une route la plus large possible entre les deux camps.
+Imaginez une feuille de papier sur laquelle vous avez dessiné deux groupes de points : des ronds bleus en bas à gauche, des croix rouges en haut à droite. Votre tâche : tracer une ligne droite qui sépare parfaitement les bleus des rouges. Vous voyez tout de suite qu'il existe une *infinité* de droites possibles. La question centrale des machines à vecteurs de support (support vector machines, abrégées SVM) est : **parmi toutes ces droites, laquelle est la meilleure ?** La réponse, géniale par sa simplicité, est : celle qui laisse le plus de place vide de part et d'autre, comme une route la plus large possible entre les deux camps.
 
-#### Le cadre: données étiquetées et séparation linéaire
+#### Le cadre : données étiquetées et séparation linéaire
 
-On dispose de $`n`$ exemples d'apprentissage. Chaque exemple $`i`$ est un couple $`(\mathbf{x}_i, y_i)`$ où:
+On dispose de $`n`$ exemples d'apprentissage. Chaque exemple $`i`$ est un couple $`(\mathbf{x}_i, y_i)`$ où :
 
-- $`\mathbf{x}_i \in \mathbb{R}^d`$ est le **vecteur de caractéristiques** (feature vector): les mesures qui décrivent l'objet (taille, poids, intensité de pixels...);
-- $`y_i \in \{-1, +1\}`$ est l'**étiquette** (label): la classe à laquelle appartient l'objet, codée non pas par $`0/1`$ mais par $`-1`$ et $`+1`$. Ce choix de codage n'est pas un détail; il rend les formules élégantes, comme on le verra.
+- $`\mathbf{x}_i \in \mathbb{R}^d`$ est le **vecteur de caractéristiques** (feature vector) : les mesures qui décrivent l'objet (taille, poids, intensité de pixels...) ;
+- $`y_i \in \{-1, +1\}`$ est l'**étiquette** (label) : la classe à laquelle appartient l'objet, codée non pas par $`0/1`$ mais par $`-1`$ et $`+1`$. Ce choix de codage n'est pas un détail ; il rend les formules élégantes, comme on le verra.
 
-> **Le symbole $`\mathbf{x}_i`$.** Ce symbole représente un point de données, le $`i`$-ème de notre collection. Le gras indique que ce n'est pas un seul nombre mais une *liste* de nombres (un vecteur): par exemple les coordonnées $`(\text{largeur}, \text{hauteur})`$ d'une fleur. Le petit $`i`$ en bas, c'est comme le numéro du dossard d'un coureur: il dit *de quel* exemple on parle. Si on a 100 fleurs, $`i`$ va de 1 à 100.
+> **Le symbole $`\mathbf{x}_i`$.** Ce symbole représente un point de données, le $`i`$-ème de notre collection. Le gras indique que ce n'est pas un seul nombre mais une *liste* de nombres (un vecteur) : par exemple les coordonnées $`(\text{largeur}, \text{hauteur})`$ d'une fleur. Le petit $`i`$ en bas, c'est comme le numéro du dossard d'un coureur : il dit *de quel* exemple on parle. Si on a 100 fleurs, $`i`$ va de 1 à 100.
 
 > **Le symbole $`y_i`$.** Ce symbole représente la "bonne réponse" pour l'exemple numéro $`i`$: à quelle équipe il appartient. On choisit de noter les deux équipes $`+1`$ et $`-1`$ (l'équipe des plus et l'équipe des moins), comme deux pôles d'un aimant. Pourquoi pas $`0`$ et $`1`$ ? Parce qu'avec $`+1`$/$`-1`$, multiplier la prédiction par $`y_i`$ donnera un nombre positif quand on a *bon* et négatif quand on a *faux*: très pratique.
 
@@ -23,11 +23,11 @@ Un **hyperplan** dans $`\mathbb{R}^d`$ est l'ensemble des points $`\mathbf{x}`$ 
 \mathbf{w}^\top \mathbf{x} + b = 0,
 ```
 
-où $`\mathbf{w} \in \mathbb{R}^d`$ est le **vecteur normal** (orthogonal au plan) et $`b \in \mathbb{R}`$ le **biais** (ou terme constant, *intercept*). En dimension 2, un hyperplan est une droite; en dimension 3, un plan; au-delà, on garde le mot "hyperplan" faute de pouvoir le dessiner.
+où $`\mathbf{w} \in \mathbb{R}^d`$ est le **vecteur normal** (orthogonal au plan) et $`b \in \mathbb{R}`$ le **biais** (ou terme constant, *intercept*). En dimension 2, un hyperplan est une droite ; en dimension 3, un plan ; au-delà, on garde le mot "hyperplan" faute de pouvoir le dessiner.
 
-> **Le symbole $`\mathbf{w}`$.** Ce symbole représente la *direction* dans laquelle on coupe l'espace pour séparer les deux camps. Imaginez une flèche plantée perpendiculairement à la ligne de séparation, comme le mât d'un filet de tennis planté à la verticale du filet: la flèche $`\mathbf{w}`$ pointe d'un côté vers l'autre. Sa direction dit "dans quel sens penche la frontière", et on verra que sa longueur contrôle la largeur de la route.
+> **Le symbole $`\mathbf{w}`$.** Ce symbole représente la *direction* dans laquelle on coupe l'espace pour séparer les deux camps. Imaginez une flèche plantée perpendiculairement à la ligne de séparation, comme le mât d'un filet de tennis planté à la verticale du filet : la flèche $`\mathbf{w}`$ pointe d'un côté vers l'autre. Sa direction dit "dans quel sens penche la frontière", et on verra que sa longueur contrôle la largeur de la route.
 
-> **Le symbole $`b`$.** Ce symbole représente le *décalage* de la frontière par rapport au centre du repère (l'origine). Sans lui, la ligne de séparation serait obligée de passer par le point $`(0,0)`$. Le biais $`b`$ la fait coulisser: c'est le bouton qui translate la frontière pour la placer au bon endroit, comme on glisse une règle sur une feuille sans changer son inclinaison.
+> **Le symbole $`b`$.** Ce symbole représente le *décalage* de la frontière par rapport au centre du repère (l'origine). Sans lui, la ligne de séparation serait obligée de passer par le point $`(0,0)`$. Le biais $`b`$ la fait coulisser : c'est le bouton qui translate la frontière pour la placer au bon endroit, comme on glisse une règle sur une feuille sans changer son inclinaison.
 
 > **Le symbole $`\mathbf{w}^\top \mathbf{x}`$.** C'est le produit scalaire (vu au chapitre 3) entre la direction $`\mathbf{w}`$ et le point $`\mathbf{x}`$. Concrètement, il mesure "à quelle hauteur" se projette le point $`\mathbf{x}`$ le long de la flèche $`\mathbf{w}`$: un grand nombre positif = loin d'un côté, un grand nombre négatif = loin de l'autre côté, zéro = pile sur la frontière.
 
@@ -52,7 +52,7 @@ graph LR
     H --- M["marge = la route<br/>la plus large possible"]
 ```
 
-> **La marge.** La marge, c'est la largeur de la "zone tampon" autour de la frontière où l'on n'autorise aucun point. Pensez à deux pays séparés par une zone neutre: plus cette bande neutre est large, moins un petit déplacement de frontière risque de provoquer un incident (une erreur de classement). Maximiser la marge, c'est tracer la frontière la plus prudente, celle qui se trompera le moins sur des données nouvelles.
+> **La marge.** La marge, c'est la largeur de la "zone tampon" autour de la frontière où l'on n'autorise aucun point. Pensez à deux pays séparés par une zone neutre : plus cette bande neutre est large, moins un petit déplacement de frontière risque de provoquer un incident (une erreur de classement). Maximiser la marge, c'est tracer la frontière la plus prudente, celle qui se trompera le moins sur des données nouvelles.
 
 Calculons la distance d'un point $`\mathbf{x}_0`$ à l'hyperplan $`\mathbf{w}^\top \mathbf{x} + b = 0`$. La distance euclidienne signée vaut
 
@@ -60,7 +60,7 @@ Calculons la distance d'un point $`\mathbf{x}_0`$ à l'hyperplan $`\mathbf{w}^\t
 \mathrm{dist}(\mathbf{x}_0) = \frac{\mathbf{w}^\top \mathbf{x}_0 + b}{\lVert \mathbf{w} \rVert}.
 ```
 
-> **Le symbole $`\lVert \mathbf{w} \rVert`$.** Ce symbole (vu au chapitre 3) représente la *longueur* de la flèche $`\mathbf{w}`$, sa norme euclidienne. Ici il joue le rôle d'une unité de mesure: diviser par $`\lVert \mathbf{w} \rVert`$ transforme un "score" sans unité en une vraie distance en centimètres sur la feuille. C'est comme convertir des pas en mètres en divisant par le nombre de pas par mètre.
+> **Le symbole $`\lVert \mathbf{w} \rVert`$.** Ce symbole (vu au chapitre 3) représente la *longueur* de la flèche $`\mathbf{w}`$, sa norme euclidienne. Ici il joue le rôle d'une unité de mesure : diviser par $`\lVert \mathbf{w} \rVert`$ transforme un "score" sans unité en une vraie distance en centimètres sur la feuille. C'est comme convertir des pas en mètres en divisant par le nombre de pas par mètre.
 
 **Démonstration de la formule de distance.** Soit $`\mathbf{x}_p`$ la projection orthogonale de $`\mathbf{x}_0`$ sur l'hyperplan. Le vecteur $`\mathbf{x}_0 - \mathbf{x}_p`$ est parallèle à $`\mathbf{w}`$ (la normale), donc $`\mathbf{x}_0 - \mathbf{x}_p = t\,\dfrac{\mathbf{w}}{\lVert \mathbf{w}\rVert}`$ pour un scalaire signé $`t`$ qui est la distance cherchée. Comme $`\mathbf{x}_p`$ est sur l'hyperplan, $`\mathbf{w}^\top \mathbf{x}_p + b = 0`$. Alors
 
@@ -76,11 +76,11 @@ La distance est *signée*: positive d'un côté, négative de l'autre. Pour un p
 \gamma_i = \frac{y_i\,(\mathbf{w}^\top \mathbf{x}_i + b)}{\lVert \mathbf{w}\rVert}.
 ```
 
-> **Le symbole $`\gamma_i`$.** La lettre grecque "gamma" représente ici la marge d'un point: sa distance à la frontière, comptée positivement s'il est du bon côté. C'est la largeur du couloir entre ce point précis et la ligne de séparation. La marge de *tout le jeu de données* sera la plus petite de ces distances, $`\gamma = \min_i \gamma_i`$: le maillon faible, le point le plus proche du bord.
+> **Le symbole $`\gamma_i`$.** La lettre grecque "gamma" représente ici la marge d'un point : sa distance à la frontière, comptée positivement s'il est du bon côté. C'est la largeur du couloir entre ce point précis et la ligne de séparation. La marge de *tout le jeu de données* sera la plus petite de ces distances, $`\gamma = \min_i \gamma_i`$: le maillon faible, le point le plus proche du bord.
 
 #### Invariance d'échelle et normalisation canonique
 
-Remarque cruciale: l'hyperplan $`\mathbf{w}^\top\mathbf{x}+b=0`$ ne change pas si on multiplie $`(\mathbf{w}, b)`$ par une constante positive $`c`$: $`(c\mathbf{w})^\top\mathbf{x} + cb = 0`$ décrit le *même* plan. La paire $`(\mathbf{w}, b)`$ a donc un degré de liberté superflu. On le fixe par la **normalisation canonique**: on impose que le point le plus proche ait un score d'amplitude exactement 1,
+Remarque cruciale : l'hyperplan $`\mathbf{w}^\top\mathbf{x}+b=0`$ ne change pas si on multiplie $`(\mathbf{w}, b)`$ par une constante positive $`c`$: $`(c\mathbf{w})^\top\mathbf{x} + cb = 0`$ décrit le *même* plan. La paire $`(\mathbf{w}, b)`$ a donc un degré de liberté superflu. On le fixe par la **normalisation canonique**: on impose que le point le plus proche ait un score d'amplitude exactement 1,
 
 ```math
 \min_{i} \; y_i\,(\mathbf{w}^\top \mathbf{x}_i + b) = 1.
@@ -92,13 +92,13 @@ Sous cette convention, les deux hyperplans qui bordent la marge sont $`\mathbf{w
 \text{marge} = \frac{2}{\lVert \mathbf{w}\rVert}.
 ```
 
-En effet, prenons un point $`\mathbf{x}_+`$ sur le bord positif ($`\mathbf{w}^\top\mathbf{x}_+ + b = 1`$) et $`\mathbf{x}_-`$ sur le bord négatif ($`\mathbf{w}^\top\mathbf{x}_- + b = -1`$). En soustrayant: $`\mathbf{w}^\top(\mathbf{x}_+ - \mathbf{x}_-) = 2`$. La distance entre les deux bords est la projection de $`\mathbf{x}_+ - \mathbf{x}_-`$ sur la direction unitaire $`\mathbf{w}/\lVert\mathbf{w}\rVert`$, soit $`\dfrac{\mathbf{w}^\top(\mathbf{x}_+-\mathbf{x}_-)}{\lVert\mathbf{w}\rVert} = \dfrac{2}{\lVert\mathbf{w}\rVert}`$.
+En effet, prenons un point $`\mathbf{x}_+`$ sur le bord positif ($`\mathbf{w}^\top\mathbf{x}_+ + b = 1`$) et $`\mathbf{x}_-`$ sur le bord négatif ($`\mathbf{w}^\top\mathbf{x}_- + b = -1`$). En soustrayant : $`\mathbf{w}^\top(\mathbf{x}_+ - \mathbf{x}_-) = 2`$. La distance entre les deux bords est la projection de $`\mathbf{x}_+ - \mathbf{x}_-`$ sur la direction unitaire $`\mathbf{w}/\lVert\mathbf{w}\rVert`$, soit $`\dfrac{\mathbf{w}^\top(\mathbf{x}_+-\mathbf{x}_-)}{\lVert\mathbf{w}\rVert} = \dfrac{2}{\lVert\mathbf{w}\rVert}`$.
 
 **Conséquence fondamentale.** Maximiser la marge $`\dfrac{2}{\lVert\mathbf{w}\rVert}`$ revient à minimiser $`\lVert\mathbf{w}\rVert`$, donc à minimiser $`\tfrac{1}{2}\lVert\mathbf{w}\rVert^2`$ (le carré et le facteur $`1/2`$ sont là pour rendre la fonction lisse et l'optimisation agréable). Voici le pont entre géométrie et optimisation, que nous formaliserons dans la section suivante.
 
 #### Exemple chiffré minuscule
 
-Prenons en dimension $`d=1`$ (sur une droite) deux points: $`x_1 = 1`$ avec $`y_1 = +1`$, et $`x_2 = -1`$ avec $`y_2 = -1`$. Cherchons l'hyperplan (ici un simple point-frontière) $`w x + b = 0`$ de marge maximale. Par symétrie, la frontière est en $`x=0`$, donc $`b=0`$. La normalisation canonique impose $`y_i(w x_i + b) = 1`$ pour les deux points: $`1\cdot(w\cdot 1) = w = 1`$. On obtient $`w = 1`$, $`b = 0`$, et la marge vaut $`2/\lVert w\rVert = 2/1 = 2`$, ce qui correspond bien à la distance entre $`x_2=-1`$ et $`x_1=+1`$. Les deux points sont à distance $`1`$ de la frontière: ce sont les futurs **vecteurs de support**.
+Prenons en dimension $`d=1`$ (sur une droite) deux points : $`x_1 = 1`$ avec $`y_1 = +1`$, et $`x_2 = -1`$ avec $`y_2 = -1`$. Cherchons l'hyperplan (ici un simple point-frontière) $`w x + b = 0`$ de marge maximale. Par symétrie, la frontière est en $`x=0`$, donc $`b=0`$. La normalisation canonique impose $`y_i(w x_i + b) = 1`$ pour les deux points : $`1\cdot(w\cdot 1) = w = 1`$. On obtient $`w = 1`$, $`b = 0`$, et la marge vaut $`2/\lVert w\rVert = 2/1 = 2`$, ce qui correspond bien à la distance entre $`x_2=-1`$ et $`x_1=+1`$. Les deux points sont à distance $`1`$ de la frontière : ce sont les futurs **vecteurs de support**.
 
 ```python
 import numpy as np
@@ -115,15 +115,15 @@ print("marge du jeu :", marge_geometrique(w, b, X, y))
 print("largeur 2/||w|| :", 2 / np.linalg.norm(w))
 ```
 
-> **Application ML.** Les SVM linéaires restent une brique vivante: on les retrouve comme *tête de classification* (probing) posée sur les représentations figées d'un grand modèle (embeddings de transformeurs, de modèles vision-langage). On entraîne alors une SVM linéaire sur des vecteurs de très haute dimension produits par un réseau pré-entraîné; la maximisation de marge fournit un classifieur robuste et interprétable là où un réglage fin complet serait coûteux. La géométrie de la marge, elle, n'a pas pris une ride.
+> **Application ML.** Les SVM linéaires restent une brique vivante : on les retrouve comme *tête de classification* (probing) posée sur les représentations figées d'un grand modèle (embeddings de transformeurs, de modèles vision-langage). On entraîne alors une SVM linéaire sur des vecteurs de très haute dimension produits par un réseau pré-entraîné ; la maximisation de marge fournit un classifieur robuste et interprétable là où un réglage fin complet serait coûteux. La géométrie de la marge, elle, n'a pas pris une ride.
 
-### SVM primal: marge dure et marge souple
+### SVM primal : marge dure et marge souple
 
 Nous avons traduit "tracer la route la plus large" en "minimiser $`\tfrac12\lVert\mathbf{w}\rVert^2`$". Il reste à écrire les contraintes qui garantissent que chaque point est du bon côté et hors de la route. C'est le **problème primal** (primal problem).
 
 #### Marge dure (hard margin)
 
-Si les données sont **linéairement séparables** (on peut les séparer sans erreur), on exige que chaque point soit du bon côté *et* au-delà du bord de la marge:
+Si les données sont **linéairement séparables** (on peut les séparer sans erreur), on exige que chaque point soit du bon côté *et* au-delà du bord de la marge :
 
 ```math
 \begin{aligned}
@@ -132,23 +132,23 @@ Si les données sont **linéairement séparables** (on peut les séparer sans er
 \end{aligned}
 ```
 
-Chaque contrainte $`y_i(\mathbf{w}^\top\mathbf{x}_i + b)\ge 1`$ dit: "le point $`i`$, multiplié par son étiquette, doit avoir un score d'au moins 1", c'est-à-dire être du bon côté avec une distance d'au moins $`1/\lVert\mathbf{w}\rVert`$. C'est un **programme quadratique** (quadratic program, QP): objectif quadratique convexe, contraintes linéaires. La convexité (vue au chapitre 7) garantit l'existence d'un *unique* minimiseur en $`\mathbf{w}`$ (l'objectif $`\tfrac12\lVert\mathbf{w}\rVert^2`$ est strictement convexe en $`\mathbf{w}`$): pas de piège de minimum local.
+Chaque contrainte $`y_i(\mathbf{w}^\top\mathbf{x}_i + b)\ge 1`$ dit : "le point $`i`$, multiplié par son étiquette, doit avoir un score d'au moins 1", c'est-à-dire être du bon côté avec une distance d'au moins $`1/\lVert\mathbf{w}\rVert`$. C'est un **programme quadratique** (quadratic program, QP) : objectif quadratique convexe, contraintes linéaires. La convexité (vue au chapitre 7) garantit l'existence d'un *unique* minimiseur en $`\mathbf{w}`$ (l'objectif $`\tfrac12\lVert\mathbf{w}\rVert^2`$ est strictement convexe en $`\mathbf{w}`$) : pas de piège de minimum local.
 
-> **Définition (SVM à marge dure).** Étant donné un échantillon linéairement séparable $`\{(\mathbf{x}_i,y_i)\}_{i=1}^n`$, l'hyperplan à marge maximale est l'unique solution $`(\mathbf{w}^\star, b^\star)`$ du programme quadratique ci-dessus. Les points pour lesquels la contrainte est *active* (égalité $`y_i(\mathbf{w}^{\star\top}\mathbf{x}_i+b^\star)=1`$) sont les **vecteurs de support** (support vectors): ils touchent le bord de la route et la déterminent entièrement.
+> **Définition (SVM à marge dure).** Étant donné un échantillon linéairement séparable $`\{(\mathbf{x}_i,y_i)\}_{i=1}^n`$, l'hyperplan à marge maximale est l'unique solution $`(\mathbf{w}^\star, b^\star)`$ du programme quadratique ci-dessus. Les points pour lesquels la contrainte est *active* (égalité $`y_i(\mathbf{w}^{\star\top}\mathbf{x}_i+b^\star)=1`$) sont les **vecteurs de support** (support vectors) : ils touchent le bord de la route et la déterminent entièrement.
 
-> **Piège.** La marge dure exige une séparation *parfaite*. Un seul point aberrant (outlier) du mauvais côté rend le problème **infaisable** (aucun $`\mathbf{w}, b`$ ne satisfait toutes les contraintes), ou alors déforme dramatiquement la frontière pour englober l'intrus. En pratique, les données réelles sont bruitées: on a presque toujours besoin de la version souple ci-dessous.
+> **Piège.** La marge dure exige une séparation *parfaite*. Un seul point aberrant (outlier) du mauvais côté rend le problème **infaisable** (aucun $`\mathbf{w}, b`$ ne satisfait toutes les contraintes), ou alors déforme dramatiquement la frontière pour englober l'intrus. En pratique, les données réelles sont bruitées : on a presque toujours besoin de la version souple ci-dessous.
 
-#### Marge souple (soft margin): variables d'écart
+#### Marge souple (soft margin) : variables d'écart
 
-Pour tolérer quelques violations, on introduit pour chaque exemple une **variable d'écart** (slack variable) $`\xi_i \ge 0`$ qui mesure de combien le point $`i`$ enfreint sa contrainte:
+Pour tolérer quelques violations, on introduit pour chaque exemple une **variable d'écart** (slack variable) $`\xi_i \ge 0`$ qui mesure de combien le point $`i`$ enfreint sa contrainte :
 
 ```math
 y_i\,(\mathbf{w}^\top \mathbf{x}_i + b) \ge 1 - \xi_i, \qquad \xi_i \ge 0.
 ```
 
-> **Le symbole $`\xi_i`$.** La lettre grecque "xi" représente le *montant de la triche* autorisée au point $`i`$. Si $`\xi_i = 0`$, le point respecte la règle (bon côté, hors de la route). Si $`0 < \xi_i \le 1`$, il a empiété sur la route mais reste du bon côté. Si $`\xi_i > 1`$, il est carrément passé de l'autre côté: c'est une erreur de classement. Imaginez un carton de pénalité dont la taille mesure la gravité de la faute.
+> **Le symbole $`\xi_i`$.** La lettre grecque "xi" représente le *montant de la triche* autorisée au point $`i`$. Si $`\xi_i = 0`$, le point respecte la règle (bon côté, hors de la route). Si $`0 < \xi_i \le 1`$, il a empiété sur la route mais reste du bon côté. Si $`\xi_i > 1`$, il est carrément passé de l'autre côté : c'est une erreur de classement. Imaginez un carton de pénalité dont la taille mesure la gravité de la faute.
 
-On veut peu de triche: on *pénalise* la somme des écarts dans l'objectif. Le problème primal à marge souple devient
+On veut peu de triche : on *pénalise* la somme des écarts dans l'objectif. Le problème primal à marge souple devient
 
 ```math
 \begin{aligned}
@@ -158,7 +158,7 @@ On veut peu de triche: on *pénalise* la somme des écarts dans l'objectif. Le p
 \end{aligned}
 ```
 
-> **Le symbole $`\sum_{i=1}^n \xi_i`$.** Le grand sigma additionne ici toutes les pénalités, du premier au dernier exemple: c'est le "total des cartons" distribués. On cherche à le garder petit.
+> **Le symbole $`\sum_{i=1}^n \xi_i`$.** Le grand sigma additionne ici toutes les pénalités, du premier au dernier exemple : c'est le "total des cartons" distribués. On cherche à le garder petit.
 
 > **Le symbole $`C`$.** Ce symbole représente le *prix de la triche*: un curseur qui dit à quel point on déteste les violations de marge. Grand $`C`$ = "je refuse presque toute erreur" (marge étroite, on colle aux données, risque de surapprentissage). Petit $`C`$ = "je tolère des erreurs pour garder une route large" (marge large, modèle plus simple, plus robuste). C'est le bouton de réglage le plus important d'une SVM, l'arbitre entre fidélité aux données et simplicité.
 
@@ -174,7 +174,7 @@ graph TD
     P --> P3["meilleure généralisation possible"]
 ```
 
-#### Formulation équivalente sans contraintes: la perte charnière
+#### Formulation équivalente sans contraintes : la perte charnière
 
 À l'optimum, chaque $`\xi_i`$ prend la plus petite valeur compatible avec ses deux contraintes $`\xi_i \ge 1 - y_i(\mathbf{w}^\top\mathbf{x}_i+b)`$ et $`\xi_i \ge 0`$. Donc
 
@@ -182,15 +182,15 @@ graph TD
 \xi_i^\star = \max\bigl(0,\; 1 - y_i(\mathbf{w}^\top\mathbf{x}_i + b)\bigr).
 ```
 
-Cette expression a un nom: la **perte charnière** (hinge loss). En la réinjectant, le primal devient un problème d'**optimisation sans contraintes**:
+Cette expression a un nom : la **perte charnière** (hinge loss). En la réinjectant, le primal devient un problème d'**optimisation sans contraintes**:
 
 ```math
 \min_{\mathbf{w},\,b}\quad \underbrace{\tfrac{1}{2}\lVert \mathbf{w}\rVert^2}_{\text{regularisation}} + \; C\sum_{i=1}^{n}\underbrace{\max\bigl(0,\,1 - y_i(\mathbf{w}^\top\mathbf{x}_i + b)\bigr)}_{\text{perte charniere}}.
 ```
 
-> **La perte charnière (hinge loss).** Ce symbole $`\max(0,\,1 - y\,s)`$ (où $`s`$ est le score) représente une *amende qui ne se déclenche qu'en cas de faute*. Tant que le point est bien classé et au-delà de la marge ($`y\,s \ge 1`$), l'amende est nulle, comme une charnière de porte qui reste à plat. Dès que le point empiète ($`y\,s < 1`$), l'amende grandit linéairement, comme la porte qui se soulève. Le nom "charnière" vient justement de ce coude: plat puis pente.
+> **La perte charnière (hinge loss).** Ce symbole $`\max(0,\,1 - y\,s)`$ (où $`s`$ est le score) représente une *amende qui ne se déclenche qu'en cas de faute*. Tant que le point est bien classé et au-delà de la marge ($`y\,s \ge 1`$), l'amende est nulle, comme une charnière de porte qui reste à plat. Dès que le point empiète ($`y\,s < 1`$), l'amende grandit linéairement, comme la porte qui se soulève. Le nom "charnière" vient justement de ce coude : plat puis pente.
 
-Comparons la perte charnière aux pertes voisines pour la classification binaire:
+Comparons la perte charnière aux pertes voisines pour la classification binaire :
 
 | Perte | Formule (score $`s`$, étiquette $`y`$) | Zéro atteint ? | Lisse ? | Usage |
 |---|---|---|---|---|
@@ -215,23 +215,23 @@ plt.axvline(1, ls=":", c="gray"); plt.xlabel("y · score"); plt.ylabel("perte")
 plt.legend(); plt.title("Pertes de classification")
 ```
 
-Cette écriture révèle la SVM sous un jour moderne: c'est une **minimisation du risque empirique régularisé**, exactement la forme "perte + régularisation" omniprésente en apprentissage. La régularisation $`\tfrac12\lVert\mathbf{w}\rVert^2`$ correspond à une pénalité $`\ell_2`$ (la même que celle de la régression *ridge*), de poids relatif $`1/C`$ par rapport à la perte.
+Cette écriture révèle la SVM sous un jour moderne : c'est une **minimisation du risque empirique régularisé**, exactement la forme "perte + régularisation" omniprésente en apprentissage. La régularisation $`\tfrac12\lVert\mathbf{w}\rVert^2`$ correspond à une pénalité $`\ell_2`$ (la même que celle de la régression *ridge*), de poids relatif $`1/C`$ par rapport à la perte.
 
-> **Application ML.** Sous cette forme sans contraintes, on entraîne une SVM linéaire par descente de (sous-)gradient, donc avec l'outillage du deep learning: autodifférentiation (JAX, PyTorch) et optimiseurs adaptatifs (Adam, AdamW). La perte charnière reste différentiable presque partout (sauf au coude $`y\,s=1`$, de mesure nulle), et un sous-gradient y suffit. C'est ainsi qu'on intègre une "tête SVM" dans un réseau de neurones, entraînée de bout en bout par rétropropagation.
+> **Application ML.** Sous cette forme sans contraintes, on entraîne une SVM linéaire par descente de (sous-)gradient, donc avec l'outillage du deep learning : autodifférentiation (JAX, PyTorch) et optimiseurs adaptatifs (Adam, AdamW). La perte charnière reste différentiable presque partout (sauf au coude $`y\,s=1`$, de mesure nulle), et un sous-gradient y suffit. C'est ainsi qu'on intègre une "tête SVM" dans un réseau de neurones, entraînée de bout en bout par rétropropagation.
 
 #### Exemple chiffré déroulé (marge souple, calcul à la main)
 
-Reprenons $`x_1=+1\,(y_1=+1)`$, $`x_2=-1\,(y_2=-1)`$ en dimension 1, et ajoutons un intrus $`x_3 = -0.2`$ étiqueté $`y_3 = +1`$ (un "plus" tombé du côté des "moins"). Avec $`w=1, b=0`$ (la frontière précédente), les pertes charnière valent:
+Reprenons $`x_1=+1\,(y_1=+1)`$, $`x_2=-1\,(y_2=-1)`$ en dimension 1, et ajoutons un intrus $`x_3 = -0.2`$ étiqueté $`y_3 = +1`$ (un "plus" tombé du côté des "moins"). Avec $`w=1, b=0`$ (la frontière précédente), les pertes charnière valent :
 
-- point 1: $`\max(0, 1 - 1\cdot(1\cdot 1)) = \max(0,0) = 0`$;
-- point 2: $`\max(0, 1 - (-1)\cdot(1\cdot(-1))) = \max(0, 1 - 1) = 0`$;
-- point 3: $`\max(0, 1 - 1\cdot(1\cdot(-0.2))) = \max(0, 1 + 0.2) = 1.2`$.
+- point 1 : $`\max(0, 1 - 1\cdot(1\cdot 1)) = \max(0,0) = 0`$;
+- point 2 : $`\max(0, 1 - (-1)\cdot(1\cdot(-1))) = \max(0, 1 - 1) = 0`$;
+- point 3 : $`\max(0, 1 - 1\cdot(1\cdot(-0.2))) = \max(0, 1 + 0.2) = 1.2`$.
 
 Objectif $`= \tfrac12 (1)^2 + C\cdot(0 + 0 + 1.2) = 0.5 + 1.2\,C`$. Si $`C`$ est petit (disons $`0.1`$), on préfère garder $`w`$ modéré et "payer" $`0.12`$ pour l'intrus plutôt que de tordre la frontière. Si $`C`$ est énorme, le solveur déplacera la frontière pour réduire cette perte, au prix d'une marge plus étroite. Ce petit calcul illustre concrètement l'arbitrage piloté par $`C`$.
 
 ### SVM dual et vecteurs de support
 
-Le primal se résout directement, mais sa version **duale** (dual problem), obtenue par la théorie de Lagrange (vue au chapitre 7), révèle la structure profonde de la SVM: les vecteurs de support, et surtout la possibilité des noyaux. C'est la clef de voûte du chapitre.
+Le primal se résout directement, mais sa version **duale** (dual problem), obtenue par la théorie de Lagrange (vue au chapitre 7), révèle la structure profonde de la SVM : les vecteurs de support, et surtout la possibilité des noyaux. C'est la clef de voûte du chapitre.
 
 #### Construction du lagrangien
 
@@ -241,7 +241,7 @@ On part du primal à marge souple. On introduit un multiplicateur de Lagrange $`
 \mathcal{L}(\mathbf{w}, b, \boldsymbol{\xi}, \boldsymbol{\alpha}, \boldsymbol{\mu}) = \tfrac{1}{2}\lVert\mathbf{w}\rVert^2 + C\sum_i \xi_i - \sum_i \alpha_i\bigl[y_i(\mathbf{w}^\top\mathbf{x}_i + b) - 1 + \xi_i\bigr] - \sum_i \mu_i\,\xi_i.
 ```
 
-> **Le symbole $`\alpha_i`$ (multiplicateur de Lagrange).** À chaque contrainte "le point $`i`$ doit rester du bon côté" on attache un nombre $`\alpha_i \ge 0`$: le *prix de l'effort* que coûte cette contrainte. Pensez à la tension dans une corde qui retient un point: si le point ne pousse pas contre la barrière, la corde est molle ($`\alpha_i = 0`$); s'il appuie de tout son poids contre le bord de la marge, la corde est tendue ($`\alpha_i > 0`$). Ces $`\alpha_i`$ vont devenir les *vraies inconnues* du problème, et la magie est que la plupart seront nuls.
+> **Le symbole $`\alpha_i`$ (multiplicateur de Lagrange).** À chaque contrainte "le point $`i`$ doit rester du bon côté" on attache un nombre $`\alpha_i \ge 0`$: le *prix de l'effort* que coûte cette contrainte. Pensez à la tension dans une corde qui retient un point : si le point ne pousse pas contre la barrière, la corde est molle ($`\alpha_i = 0`$) ; s'il appuie de tout son poids contre le bord de la marge, la corde est tendue ($`\alpha_i > 0`$). Ces $`\alpha_i`$ vont devenir les *vraies inconnues* du problème, et la magie est que la plupart seront nuls.
 
 #### Conditions de stationnarité
 
@@ -255,7 +255,7 @@ Par rapport à $`\mathbf{w}`$:
 
 > **Le symbole $`\nabla_{\mathbf{w}}`$.** Le "nabla" est le vecteur des dérivées partielles par rapport à chaque composante de $`\mathbf{w}`$: il pointe vers la plus forte montée de $`\mathcal{L}`$. L'annuler, c'est chercher le fond de la vallée, l'endroit plat où plus aucune direction ne fait descendre. Le petit indice $`\mathbf{w}`$ précise qu'on dérive *seulement* par rapport à $`\mathbf{w}`$, en traitant le reste comme constant.
 
-Cette relation est capitale: **le vecteur normal optimal est une combinaison linéaire des points d'apprentissage**, pondérée par $`\alpha_i y_i`$. Les points avec $`\alpha_i = 0`$ ne contribuent pas: seuls les vecteurs de support comptent.
+Cette relation est capitale : **le vecteur normal optimal est une combinaison linéaire des points d'apprentissage**, pondérée par $`\alpha_i y_i`$. Les points avec $`\alpha_i = 0`$ ne contribuent pas : seuls les vecteurs de support comptent.
 
 Par rapport à $`b`$:
 
@@ -273,7 +273,7 @@ Comme $`\mu_i \ge 0`$, cette dernière égalité impose la **contrainte de boît
 
 #### Le problème dual
 
-En réinjectant $`\mathbf{w} = \sum_i\alpha_i y_i\mathbf{x}_i`$ et les relations ci-dessus dans $`\mathcal{L}`$, tous les termes en $`b`$, $`\xi`$ et $`\mu`$ disparaissent. Détaillons le terme quadratique:
+En réinjectant $`\mathbf{w} = \sum_i\alpha_i y_i\mathbf{x}_i`$ et les relations ci-dessus dans $`\mathcal{L}`$, tous les termes en $`b`$, $`\xi`$ et $`\mu`$ disparaissent. Détaillons le terme quadratique :
 
 ```math
 \tfrac12\lVert\mathbf{w}\rVert^2 = \tfrac12\Bigl(\sum_i\alpha_iy_i\mathbf{x}_i\Bigr)^{\!\top}\Bigl(\sum_j\alpha_jy_j\mathbf{x}_j\Bigr) = \tfrac12\sum_i\sum_j\alpha_i\alpha_j y_i y_j\,\mathbf{x}_i^\top\mathbf{x}_j,
@@ -289,19 +289,19 @@ et le terme linéaire $`\sum_i\alpha_i[\,y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1\,]
 \end{aligned}
 ```
 
-> **Le symbole $`\sum_{i}\sum_{j}`$ (double somme).** Deux boucles imbriquées: pour *chaque* paire de points $`(i,j)`$, on calcule un terme et on additionne tout. C'est comme remplir un tableau à double entrée (lignes $`i`$, colonnes $`j`$) puis sommer toutes les cases. Ici chaque case mesure l'interaction entre deux points via leur produit scalaire $`\mathbf{x}_i^\top\mathbf{x}_j`$.
+> **Le symbole $`\sum_{i}\sum_{j}`$ (double somme).** Deux boucles imbriquées : pour *chaque* paire de points $`(i,j)`$, on calcule un terme et on additionne tout. C'est comme remplir un tableau à double entrée (lignes $`i`$, colonnes $`j`$) puis sommer toutes les cases. Ici chaque case mesure l'interaction entre deux points via leur produit scalaire $`\mathbf{x}_i^\top\mathbf{x}_j`$.
 
 > **Définition (problème dual de la SVM).** Le dual est un programme quadratique *concave* en $`\boldsymbol\alpha`$ (on maximise), de dimension $`n`$ (le nombre d'exemples), dont les seules données sont les étiquettes $`y_i`$ et les **produits scalaires** $`\mathbf{x}_i^\top\mathbf{x}_j`$ entre exemples. C'est cette dernière observation, l'absence des $`\mathbf{x}_i`$ autrement que par leurs produits scalaires, qui ouvrira la porte aux noyaux.
 
 #### Conditions KKT et interprétation des vecteurs de support
 
-La théorie de Karush-Kuhn-Tucker (KKT) fournit les conditions de **complémentarité** liant primal et dual à l'optimum:
+La théorie de Karush-Kuhn-Tucker (KKT) fournit les conditions de **complémentarité** liant primal et dual à l'optimum :
 
 ```math
 \alpha_i\bigl[y_i(\mathbf{w}^\top\mathbf{x}_i+b) - 1 + \xi_i\bigr] = 0, \qquad \mu_i\,\xi_i = 0.
 ```
 
-En posant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, ces équations classent chaque point en trois catégories, lisibles d'un coup d'œil:
+En posant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, ces équations classent chaque point en trois catégories, lisibles d'un coup d'œil :
 
 | Cas | Valeur de $`\alpha_i`$ | Position du point | Nom |
 |---|---|---|---|
@@ -309,17 +309,17 @@ En posant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, ces équations classent cha
 | 2 | $`0 < \alpha_i < C`$ | exactement sur le bord ($`y_i s_i = 1`$, $`\xi_i=0`$) | vecteur de support *libre* |
 | 3 | $`\alpha_i = C`$ | sur la marge ou au-delà ($`\xi_i > 0`$), éventuellement mal classé | vecteur de support *borné* |
 
-> **Remarque (sparsité).** C'est le cœur de l'élégance SVM: à l'optimum, la *grande majorité* des $`\alpha_i`$ valent zéro. La solution $`\mathbf{w} = \sum_i\alpha_iy_i\mathbf{x}_i`$ ne dépend donc que d'une poignée de points, les vecteurs de support. On peut jeter tous les autres sans changer la frontière. C'est une représentation **parcimonieuse** (sparse): mémoire et prédiction économes.
+> **Remarque (sparsité).** C'est le cœur de l'élégance SVM : à l'optimum, la *grande majorité* des $`\alpha_i`$ valent zéro. La solution $`\mathbf{w} = \sum_i\alpha_iy_i\mathbf{x}_i`$ ne dépend donc que d'une poignée de points, les vecteurs de support. On peut jeter tous les autres sans changer la frontière. C'est une représentation **parcimonieuse** (sparse) : mémoire et prédiction économes.
 
-**Calcul du biais $`b`$.** Pour tout vecteur de support libre (cas 2, $`0<\alpha_i<C`$), on a $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)=1`$, donc $`b = y_i - \mathbf{w}^\top\mathbf{x}_i`$ (en multipliant par $`y_i`$ et en utilisant $`y_i^2=1`$). En pratique on moyenne sur tous les supports libres pour la stabilité numérique:
+**Calcul du biais $`b`$.** Pour tout vecteur de support libre (cas 2, $`0<\alpha_i<C`$), on a $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)=1`$, donc $`b = y_i - \mathbf{w}^\top\mathbf{x}_i`$ (en multipliant par $`y_i`$ et en utilisant $`y_i^2=1`$). En pratique on moyenne sur tous les supports libres pour la stabilité numérique :
 
 ```math
 b = \frac{1}{|S|}\sum_{i\in S}\Bigl(y_i - \sum_j \alpha_j y_j\,\mathbf{x}_j^\top\mathbf{x}_i\Bigr), \quad S = \{i : 0<\alpha_i<C\}.
 ```
 
-#### Dualité forte: pourquoi primal et dual coïncident
+#### Dualité forte : pourquoi primal et dual coïncident
 
-> **Théorème (dualité forte pour la SVM).** Le primal de la SVM à marge souple est convexe et ses contraintes sont affines; la condition de Slater est trivialement satisfaite (des contraintes d'inégalité affines suffisent). Par conséquent la dualité est **forte**: la valeur optimale du primal égale celle du dual, $`p^\star = d^\star`$, et toute solution duale $`\boldsymbol\alpha^\star`$ fournit via $`\mathbf{w}^\star=\sum_i\alpha_i^\star y_i\mathbf{x}_i`$ et les conditions KKT une solution primale optimale. Résoudre l'un *est* résoudre l'autre.
+> **Théorème (dualité forte pour la SVM).** Le primal de la SVM à marge souple est convexe et ses contraintes sont affines ; la condition de Slater est trivialement satisfaite (des contraintes d'inégalité affines suffisent). Par conséquent la dualité est **forte**: la valeur optimale du primal égale celle du dual, $`p^\star = d^\star`$, et toute solution duale $`\boldsymbol\alpha^\star`$ fournit via $`\mathbf{w}^\star=\sum_i\alpha_i^\star y_i\mathbf{x}_i`$ et les conditions KKT une solution primale optimale. Résoudre l'un *est* résoudre l'autre.
 
 Ce théorème justifie qu'on travaille indifféremment sur le primal (efficace en grande dimension $`d`$, petit $`n`$) ou sur le dual (efficace pour $`d`$ énorme voire infini via noyaux, $`n`$ modéré).
 
@@ -353,11 +353,11 @@ print("predictions :", pred, " scores :", np.round(sc,3))
 
 ### Noyaux (kernel trick)
 
-Jusqu'ici, la frontière est une droite. Mais que faire si les classes s'enroulent l'une autour de l'autre, comme deux cercles concentriques, impossibles à séparer par une droite ? L'idée, l'une des plus belles de l'apprentissage statistique, est le **truc du noyau** (kernel trick): *projeter* les données dans un espace de plus grande dimension où elles redeviennent linéairement séparables, sans jamais calculer cette projection explicitement.
+Jusqu'ici, la frontière est une droite. Mais que faire si les classes s'enroulent l'une autour de l'autre, comme deux cercles concentriques, impossibles à séparer par une droite ? L'idée, l'une des plus belles de l'apprentissage statistique, est le **truc du noyau** (kernel trick) : *projeter* les données dans un espace de plus grande dimension où elles redeviennent linéairement séparables, sans jamais calculer cette projection explicitement.
 
-#### L'intuition: relever la dimension
+#### L'intuition : relever la dimension
 
-Prenons les deux cercles concentriques en 2D: classe $`-1`$ au centre, classe $`+1`$ en couronne. Aucune droite ne marche. Mais ajoutons une troisième coordonnée $`z = x_1^2 + x_2^2`$ (le carré du rayon). Les points du centre ont un petit $`z`$, ceux de la couronne un grand $`z`$: un simple *plan horizontal* $`z = \text{seuil}`$ les sépare ! On a "soulevé" les données dans la 3e dimension pour les rendre séparables.
+Prenons les deux cercles concentriques en 2D : classe $`-1`$ au centre, classe $`+1`$ en couronne. Aucune droite ne marche. Mais ajoutons une troisième coordonnée $`z = x_1^2 + x_2^2`$ (le carré du rayon). Les points du centre ont un petit $`z`$, ceux de la couronne un grand $`z`$: un simple *plan horizontal* $`z = \text{seuil}`$ les sépare ! On a "soulevé" les données dans la 3e dimension pour les rendre séparables.
 
 ```mermaid
 graph LR
@@ -367,9 +367,9 @@ graph LR
 
 Formellement, on choisit une application $`\varphi: \mathbb{R}^d \to \mathcal{H}`$ vers un espace $`\mathcal{H}`$ (dit **espace de caractéristiques**, feature space) de dimension possiblement énorme, et on applique la SVM linéaire aux $`\varphi(\mathbf{x}_i)`$. Le dual ne fait alors intervenir que des produits scalaires $`\varphi(\mathbf{x}_i)^\top\varphi(\mathbf{x}_j)`$.
 
-#### Le truc: ne jamais calculer $`\varphi`$
+#### Le truc : ne jamais calculer $`\varphi`$
 
-L'observation géniale: on n'a **jamais besoin de $`\varphi`$ lui-même**, seulement de ses produits scalaires. On définit donc directement une **fonction noyau** (kernel function)
+L'observation géniale : on n'a **jamais besoin de $`\varphi`$ lui-même**, seulement de ses produits scalaires. On définit donc directement une **fonction noyau** (kernel function)
 
 ```math
 k(\mathbf{x}, \mathbf{x}') = \varphi(\mathbf{x})^\top \varphi(\mathbf{x}'),
@@ -377,7 +377,7 @@ k(\mathbf{x}, \mathbf{x}') = \varphi(\mathbf{x})^\top \varphi(\mathbf{x}'),
 
 qui calcule ce produit scalaire *sans construire* $`\varphi(\mathbf{x})`$ ni $`\varphi(\mathbf{x}')`$.
 
-> **La fonction noyau $`k(\mathbf{x},\mathbf{x}')`$.** Ce symbole représente une *mesure de ressemblance* entre deux objets $`\mathbf{x}`$ et $`\mathbf{x}'`$: un grand nombre si les deux se ressemblent, un petit (voire zéro) s'ils sont très différents. Le tour de force: ce nombre est *exactement* le produit scalaire des deux objets une fois relevés dans le grand espace par $`\varphi`$, mais on l'obtient par une formule directe et bon marché, sans jamais payer le coût du relevage. C'est comme connaître la distance entre deux villes sans avoir à parcourir la route.
+> **La fonction noyau $`k(\mathbf{x},\mathbf{x}')`$.** Ce symbole représente une *mesure de ressemblance* entre deux objets $`\mathbf{x}`$ et $`\mathbf{x}'`$: un grand nombre si les deux se ressemblent, un petit (voire zéro) s'ils sont très différents. Le tour de force : ce nombre est *exactement* le produit scalaire des deux objets une fois relevés dans le grand espace par $`\varphi`$, mais on l'obtient par une formule directe et bon marché, sans jamais payer le coût du relevage. C'est comme connaître la distance entre deux villes sans avoir à parcourir la route.
 
 **Exemple fondateur (noyau polynomial de degré 2 en 2D).** Posons $`\varphi(\mathbf{x}) = (x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$. Alors
 
@@ -401,7 +401,7 @@ et la prédiction
 f(\mathbf{x}) = \mathrm{sign}\!\Bigl(\sum_{i\in\text{SV}}\alpha_i y_i\,k(\mathbf{x}_i,\mathbf{x}) + b\Bigr).
 ```
 
-On n'écrit plus jamais $`\mathbf{w}`$ (il vit dans $`\mathcal{H}`$, potentiellement de dimension infinie): tout passe par le noyau. C'est pourquoi on travaille sur le **dual** dès qu'on kernelise.
+On n'écrit plus jamais $`\mathbf{w}`$ (il vit dans $`\mathcal{H}`$, potentiellement de dimension infinie) : tout passe par le noyau. C'est pourquoi on travaille sur le **dual** dès qu'on kernelise.
 
 #### Noyaux usuels
 
@@ -413,7 +413,7 @@ On n'écrit plus jamais $`\mathbf{w}`$ (il vit dans $`\mathcal{H}`$, potentielle
 | Laplacien | $`\exp(-\gamma\lVert\mathbf{x}-\mathbf{x}'\rVert)`$ | $`\gamma>0`$ | dimension infinie |
 | Sigmoïde | $`\tanh(\gamma\,\mathbf{x}^\top\mathbf{x}' + c_0)`$ | $`\gamma`$, $`c_0`$ | (pas toujours valide) |
 
-Le **noyau gaussien** (radial basis function, RBF) est le cheval de bataille. Le paramètre $`\gamma`$ règle la *portée* de la ressemblance:
+Le **noyau gaussien** (radial basis function, RBF) est le cheval de bataille. Le paramètre $`\gamma`$ règle la *portée* de la ressemblance :
 
 > **Le symbole $`\gamma`$ (dans le RBF).** Ici $`\gamma`$ contrôle à quelle vitesse la ressemblance s'évanouit avec la distance. Grand $`\gamma`$ = "je ne ressemble qu'à mes voisins très proches" (chaque point crée une petite bosse autour de lui, frontière très sinueuse, risque de surapprentissage). Petit $`\gamma`$ = "je ressemble à beaucoup de monde" (influence large, frontière lisse). On peut aussi l'écrire $`\gamma = 1/(2\sigma^2)`$ où $`\sigma`$ est la "largeur" de la gaussienne.
 
@@ -423,7 +423,7 @@ Le **noyau gaussien** (radial basis function, RBF) est le cheval de bataille. Le
 \exp(-\gamma\lVert\mathbf{x}-\mathbf{x}'\rVert^2) = e^{-\gamma\lVert\mathbf{x}\rVert^2}\,e^{-\gamma\lVert\mathbf{x}'\rVert^2}\,\exp(2\gamma\,\mathbf{x}^\top\mathbf{x}'),
 ```
 
-et le facteur central $`\exp(2\gamma\,\mathbf{x}^\top\mathbf{x}')=\sum_{k\ge0}\frac{(2\gamma)^k}{k!}(\mathbf{x}^\top\mathbf{x}')^k`$ est une somme *infinie* de noyaux polynomiaux de tous degrés: l'espace $`\mathcal{H}`$ implicite contient des monômes de degré arbitrairement grand, donc est de dimension infinie. Le truc du noyau permet de travailler dans cet espace infini en temps fini.
+et le facteur central $`\exp(2\gamma\,\mathbf{x}^\top\mathbf{x}')=\sum_{k\ge0}\frac{(2\gamma)^k}{k!}(\mathbf{x}^\top\mathbf{x}')^k`$ est une somme *infinie* de noyaux polynomiaux de tous degrés : l'espace $`\mathcal{H}`$ implicite contient des monômes de degré arbitrairement grand, donc est de dimension infinie. Le truc du noyau permet de travailler dans cet espace infini en temps fini.
 
 #### Quand une fonction est-elle un noyau valide ? Théorème de Mercer
 
@@ -433,7 +433,7 @@ Toute fonction symétrique $`k`$ n'est pas un produit scalaire déguisé. La con
 
 > **Théorème de Mercer.** Une fonction $`k`$ continue, symétrique et définie positive admet une *application de caractéristiques* $`\varphi`$ telle que $`k(\mathbf{x},\mathbf{x}')=\langle\varphi(\mathbf{x}),\varphi(\mathbf{x}')\rangle`$ dans un certain espace de Hilbert $`\mathcal{H}`$. Autrement dit, *être défini positif équivaut à être un vrai produit scalaire dans un espace relevé*. C'est ce qui garantit que le dual SVM reste un programme quadratique **concave** (la matrice de terme général $`y_iy_jK_{ij}`$ est semi-définie positive), donc bien posé.
 
-**Conséquence pratique.** Il suffit de vérifier la définie-positivité. Et l'on dispose de règles de composition qui *fabriquent* de nouveaux noyaux à partir de noyaux connus: si $`k_1, k_2`$ sont des noyaux, alors $`k_1+k_2`$, $`\lambda k_1`$ ($`\lambda\ge0`$), $`k_1 k_2`$, $`f(\mathbf{x})k_1(\mathbf{x},\mathbf{x}')f(\mathbf{x}')`$ et $`\exp(k_1)`$ le sont aussi. On compose ainsi des noyaux sur mesure (texte, graphes, séquences ADN...).
+**Conséquence pratique.** Il suffit de vérifier la définie-positivité. Et l'on dispose de règles de composition qui *fabriquent* de nouveaux noyaux à partir de noyaux connus : si $`k_1, k_2`$ sont des noyaux, alors $`k_1+k_2`$, $`\lambda k_1`$ ($`\lambda\ge0`$), $`k_1 k_2`$, $`f(\mathbf{x})k_1(\mathbf{x},\mathbf{x}')f(\mathbf{x}')`$ et $`\exp(k_1)`$ le sont aussi. On compose ainsi des noyaux sur mesure (texte, graphes, séquences ADN...).
 
 > **Piège.** Le noyau sigmoïde $`\tanh(\gamma\mathbf{x}^\top\mathbf{x}'+c_0)`$ n'est défini positif que pour *certaines* valeurs de $`\gamma, c_0`$. Hors de cette plage, la matrice de Gram a des valeurs propres négatives, le dual n'est plus concave, et le solveur peut diverger ou renvoyer une solution sans garantie. À manier avec prudence.
 
@@ -459,7 +459,7 @@ print("symetrique :", np.allclose(K, K.T))
 print("valeurs propres >= 0 :", np.all(vals > -1e-10), np.round(vals, 4))
 ```
 
-> **Application ML.** À très grande échelle, matérialiser la matrice de Gram $`n\times n`$ devient impossible. On l'approxime: **features aléatoires de Fourier** (random Fourier features) qui construisent un $`\varphi`$ explicite de dimension modérée dont le produit scalaire approche le RBF, ou approximation de **Nyström** (sous-échantillonnage de colonnes, parente des méthodes randomisées pour la SVD). Ces approximations transforment une SVM à noyau en SVM linéaire dans un espace approché, entraînable par descente de gradient sur des millions d'exemples. Par ailleurs, les *kernel machines* connaissent un regain d'intérêt théorique via le **noyau tangent neuronal** (neural tangent kernel, NTK), qui relie l'entraînement des réseaux larges à une régression à noyau.
+> **Application ML.** À très grande échelle, matérialiser la matrice de Gram $`n\times n`$ devient impossible. On l'approxime : **features aléatoires de Fourier** (random Fourier features) qui construisent un $`\varphi`$ explicite de dimension modérée dont le produit scalaire approche le RBF, ou approximation de **Nyström** (sous-échantillonnage de colonnes, parente des méthodes randomisées pour la SVD). Ces approximations transforment une SVM à noyau en SVM linéaire dans un espace approché, entraînable par descente de gradient sur des millions d'exemples. Par ailleurs, les *kernel machines* connaissent un regain d'intérêt théorique via le **noyau tangent neuronal** (neural tangent kernel, NTK), qui relie l'entraînement des réseaux larges à une régression à noyau.
 
 ### Résolution numérique
 
@@ -473,13 +473,13 @@ Posons la matrice $`Q\in\mathbb{R}^{n\times n}`$ de terme général $`Q_{ij}=y_i
 \min_{\boldsymbol\alpha}\ \tfrac12\boldsymbol\alpha^\top Q\boldsymbol\alpha - \mathbf{1}^\top\boldsymbol\alpha \quad\text{s.c.}\quad \mathbf{y}^\top\boldsymbol\alpha = 0,\ \ \mathbf{0}\le\boldsymbol\alpha\le C\mathbf{1}.
 ```
 
-(On a changé le signe pour passer du $`\max`$ au $`\min`$.) $`Q`$ étant semi-définie positive par Mercer, c'est un QP **convexe**: tout solveur QP générique (par points intérieurs) le résout en $`O(n^3)`$ environ. Acceptable pour quelques milliers d'exemples, prohibitif au-delà: $`Q`$ a $`n^2`$ entrées.
+(On a changé le signe pour passer du $`\max`$ au $`\min`$.) $`Q`$ étant semi-définie positive par Mercer, c'est un QP **convexe**: tout solveur QP générique (par points intérieurs) le résout en $`O(n^3)`$ environ. Acceptable pour quelques milliers d'exemples, prohibitif au-delà : $`Q`$ a $`n^2`$ entrées.
 
-#### SMO: optimisation minimale séquentielle
+#### SMO : optimisation minimale séquentielle
 
 L'algorithme **SMO** (sequential minimal optimization) contourne le stockage de $`Q`$ en optimisant *deux* multiplicateurs à la fois, le minimum imposé par la contrainte $`\sum_i\alpha_iy_i=0`$ (on ne peut pas bouger un seul $`\alpha`$ sans violer l'égalité). C'est l'algorithme historique de la librairie LIBSVM, encore au cœur de scikit-learn.
 
-**Principe.** À chaque itération: choisir une paire $`(\alpha_i,\alpha_j)`$ violant le plus les conditions KKT, fixer tous les autres, et résoudre le sous-problème à deux variables, qui a une **solution analytique** (pas de solveur interne). On itère jusqu'à satisfaction des KKT à une tolérance près.
+**Principe.** À chaque itération : choisir une paire $`(\alpha_i,\alpha_j)`$ violant le plus les conditions KKT, fixer tous les autres, et résoudre le sous-problème à deux variables, qui a une **solution analytique** (pas de solveur interne). On itère jusqu'à satisfaction des KKT à une tolérance près.
 
 Pour la paire $`(i,j)`$, la contrainte d'égalité impose $`\alpha_iy_i+\alpha_jy_j=\text{const}`$, donc $`\alpha_j`$ se déduit de $`\alpha_i`$: le sous-problème est *unidimensionnel*. Posons l'erreur sur l'exemple $`i`$ par $`E_i=f(\mathbf{x}_i)-y_i`$ et la courbure
 
@@ -497,7 +497,7 @@ On *projette* ensuite $`\alpha_j^{\text{new}}`$ sur l'intervalle admissible $`[L
 
 > **Le symbole $`\eta`$.** Cette lettre grecque "eta" représente ici la *courbure* du sous-problème à deux variables le long de la direction autorisée (c'est une dérivée seconde). On a $`\eta = \lVert\varphi(\mathbf{x}_i)-\varphi(\mathbf{x}_j)\rVert^2 \ge 0`$: la "vallée" est d'autant plus creusée que $`\eta`$ est grand, et le pas vers le minimum, $`\propto 1/\eta`$, est alors plus court et plus sûr. Si $`\eta=0`$ (fond plat, points identiques dans l'espace relevé), il faut un traitement spécial. C'est l'analogue 1D du dénominateur dans une étape de Newton.
 
-> **Attention au signe.** Selon les références, on rencontre la convention opposée $`\eta' = 2k(\mathbf{x}_i,\mathbf{x}_j) - k(\mathbf{x}_i,\mathbf{x}_i) - k(\mathbf{x}_j,\mathbf{x}_j) = -\eta \le 0`$; la mise à jour s'écrit alors $`\alpha_j^{\text{new}} = \alpha_j^{\text{old}} - y_j(E_i-E_j)/\eta'`$ et la condition de saut devient "passer si $`\eta'\ge 0`$". Les deux conventions donnent **exactement** le même pas; il faut simplement s'assurer que le signe du dénominateur et celui devant la mise à jour sont cohérents, sous peine de remonter la pente au lieu de la descendre.
+> **Attention au signe.** Selon les références, on rencontre la convention opposée $`\eta' = 2k(\mathbf{x}_i,\mathbf{x}_j) - k(\mathbf{x}_i,\mathbf{x}_i) - k(\mathbf{x}_j,\mathbf{x}_j) = -\eta \le 0`$; la mise à jour s'écrit alors $`\alpha_j^{\text{new}} = \alpha_j^{\text{old}} - y_j(E_i-E_j)/\eta'`$ et la condition de saut devient "passer si $`\eta'\ge 0`$". Les deux conventions donnent **exactement** le même pas ; il faut simplement s'assurer que le signe du dénominateur et celui devant la mise à jour sont cohérents, sous peine de remonter la pente au lieu de la descendre.
 
 ```mermaid
 flowchart TD
@@ -509,7 +509,7 @@ flowchart TD
     C --> L
 ```
 
-Voici une implémentation pédagogique compacte (SMO simplifié, choix aléatoire de la seconde variable):
+Voici une implémentation pédagogique compacte (SMO simplifié, choix aléatoire de la seconde variable) :
 
 ```python
 import numpy as np
@@ -564,7 +564,7 @@ print("nb vecteurs de support :", np.sum(alpha > 1e-5))
 print("w =", np.round(w,3), " b =", round(b,3))
 ```
 
-#### Résolution du primal: descente de (sous-)gradient
+#### Résolution du primal : descente de (sous-)gradient
 
 Pour la SVM *linéaire* en grande dimension (texte, $`d \gg n`$), on résout souvent directement le primal sans contraintes via la perte charnière. En notant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, le (sous-)gradient de l'objectif $`J(\mathbf{w},b)=\tfrac12\lVert\mathbf{w}\rVert^2 + C\sum_i\max(0,1-y_is_i)`$ est
 
@@ -625,13 +625,13 @@ print("exactitude validee :", round(rech.best_score_, 3))
 print("nb vecteurs de support :", rech.best_estimator_.named_steps["svc"].n_support_)
 ```
 
-> **Remarque (probabilités et multi-classes).** La SVM renvoie un score, pas une probabilité. Pour obtenir des probabilités, on calibre a posteriori (mise à l'échelle de Platt: une régression logistique sur les scores, ou calibration isotone). Pour plus de deux classes, on combine des SVM binaires en **un-contre-un** (one-vs-one, $`\binom{m}{2}`$ classifieurs, choix par vote, stratégie de LIBSVM/scikit-learn) ou **un-contre-tous** (one-vs-rest, $`m`$ classifieurs).
+> **Remarque (probabilités et multi-classes).** La SVM renvoie un score, pas une probabilité. Pour obtenir des probabilités, on calibre a posteriori (mise à l'échelle de Platt : une régression logistique sur les scores, ou calibration isotone). Pour plus de deux classes, on combine des SVM binaires en **un-contre-un** (one-vs-one, $`\binom{m}{2}`$ classifieurs, choix par vote, stratégie de LIBSVM/scikit-learn) ou **un-contre-tous** (one-vs-rest, $`m`$ classifieurs).
 
-> **Application ML.** Les solveurs de production (LIBLINEAR pour le linéaire, ThunderSVM/cuML sur GPU pour le noyau) exploitent parallélisme et cache de noyau. Pour les très grands corpus, le schéma gagnant reste: représentations apprises par un réseau pré-entraîné, réduites par random features ou Nyström, puis SVM linéaire entraînée par descente de gradient stochastique, un compromis sobre adapté aux environnements sans GPU permanent.
+> **Application ML.** Les solveurs de production (LIBLINEAR pour le linéaire, ThunderSVM/cuML sur GPU pour le noyau) exploitent parallélisme et cache de noyau. Pour les très grands corpus, le schéma gagnant reste : représentations apprises par un réseau pré-entraîné, réduites par random features ou Nyström, puis SVM linéaire entraînée par descente de gradient stochastique, un compromis sobre adapté aux environnements sans GPU permanent.
 
 ### Exercices
 
-#### Exercice 1: Géométrie de la marge (échauffement)
+#### Exercice 1 : Géométrie de la marge (échauffement)
 
 On considère en 2D l'hyperplan $`\mathbf{w}=(3,4)`$, $`b=-10`$.
 1. Quelle est la distance du point $`\mathbf{x}_0=(1,1)`$ à l'hyperplan ?
@@ -640,32 +640,32 @@ On considère en 2D l'hyperplan $`\mathbf{w}=(3,4)`$, $`b=-10`$.
 
 > **Corrigé.**
 > 1. $`\lVert\mathbf{w}\rVert=\sqrt{9+16}=5`$. Score $`=\mathbf{w}^\top\mathbf{x}_0+b=3+4-10=-3`$. Distance signée $`=-3/5=-0.6`$; distance (valeur absolue) $`=0.6`$.
-> 2. Le score est négatif: $`\mathbf{x}_0`$ est du côté $`-1`$.
+> 2. Le score est négatif : $`\mathbf{x}_0`$ est du côté $`-1`$.
 > 3. La frontière est *identique* (on a multiplié par $`c=2>0`$, le plan $`\mathbf{w}^\top\mathbf{x}+b=0`$ est inchangé). Le *score* double ($`-6`$) et la *norme* double ($`10`$), donc la distance $`-6/10=-0.6`$ est **inchangée**: la distance géométrique est invariante d'échelle, contrairement au score brut. C'est exactement pourquoi on normalise.
 
-#### Exercice 2: SVM à marge dure résolue à la main
+#### Exercice 2 : SVM à marge dure résolue à la main
 
-Trois points en 2D: $`\mathbf{x}_1=(0,0)\,(y_1=-1)`$, $`\mathbf{x}_2=(2,2)\,(y_2=+1)`$, $`\mathbf{x}_3=(2,0)\,(y_3=+1)`$.
+Trois points en 2D : $`\mathbf{x}_1=(0,0)\,(y_1=-1)`$, $`\mathbf{x}_2=(2,2)\,(y_2=+1)`$, $`\mathbf{x}_3=(2,0)\,(y_3=+1)`$.
 1. Par symétrie/intuition, proposez la direction $`\mathbf{w}`$ de marge maximale.
 2. Écrivez les contraintes de normalisation canonique et résolvez pour $`\mathbf{w},b`$.
 3. Identifiez les vecteurs de support et calculez la largeur de la marge.
 
 > **Corrigé.**
-> 1. La classe $`+1`$ ($`\mathbf{x}_2,\mathbf{x}_3`$) est à droite, la classe $`-1`$ ($`\mathbf{x}_1`$) à l'origine. La séparation la plus large est une droite verticale; on cherche $`\mathbf{w}=(w_1,0)`$.
-> 2. Posons $`\mathbf{w}=(w_1,0)`$, frontière $`w_1x+b=0`$. Vecteurs de support attendus: $`\mathbf{x}_1`$ (classe $`-1`$) et $`\mathbf{x}_3`$ (classe $`+1`$). Normalisation: $`y_1(w_1\cdot0+b)=1\Rightarrow -b=1\Rightarrow b=-1`$. $`y_3(w_1\cdot2+b)=1\Rightarrow 2w_1-1=1\Rightarrow w_1=1`$. Vérifions $`\mathbf{x}_2`$: $`y_2(1\cdot2-1)=+1\cdot1=1\ge1`$, satisfait avec égalité (il est donc lui aussi sur le bord). Donc $`\mathbf{w}=(1,0),\ b=-1`$.
-> 3. Vecteurs de support: $`\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3`$ (les trois sont sur un bord ici). Largeur de marge $`=2/\lVert\mathbf{w}\rVert=2/1=2`$. La frontière est la droite verticale $`x=1`$.
+> 1. La classe $`+1`$ ($`\mathbf{x}_2,\mathbf{x}_3`$) est à droite, la classe $`-1`$ ($`\mathbf{x}_1`$) à l'origine. La séparation la plus large est une droite verticale ; on cherche $`\mathbf{w}=(w_1,0)`$.
+> 2. Posons $`\mathbf{w}=(w_1,0)`$, frontière $`w_1x+b=0`$. Vecteurs de support attendus : $`\mathbf{x}_1`$ (classe $`-1`$) et $`\mathbf{x}_3`$ (classe $`+1`$). Normalisation : $`y_1(w_1\cdot0+b)=1\Rightarrow -b=1\Rightarrow b=-1`$. $`y_3(w_1\cdot2+b)=1\Rightarrow 2w_1-1=1\Rightarrow w_1=1`$. Vérifions $`\mathbf{x}_2`$: $`y_2(1\cdot2-1)=+1\cdot1=1\ge1`$, satisfait avec égalité (il est donc lui aussi sur le bord). Donc $`\mathbf{w}=(1,0),\ b=-1`$.
+> 3. Vecteurs de support : $`\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3`$ (les trois sont sur un bord ici). Largeur de marge $`=2/\lVert\mathbf{w}\rVert=2/1=2`$. La frontière est la droite verticale $`x=1`$.
 
-#### Exercice 3: Du primal au dual
+#### Exercice 3 : Du primal au dual
 
 Écrivez le dual du problème à marge dure (sans variables d'écart) pour deux points $`\mathbf{x}_1\,(y_1=+1)`$ et $`\mathbf{x}_2\,(y_2=-1)`$. Montrez qu'il se réduit à une optimisation à *une seule* variable et résolvez.
 
-> **Corrigé.** Dual général (marge dure: $`0\le\alpha_i`$, pas de plafond $`C`$): maximiser $`W=\alpha_1+\alpha_2-\tfrac12(\alpha_1^2 k_{11}+\alpha_2^2k_{22}-2\alpha_1\alpha_2 k_{12})`$ avec $`k_{ij}=\mathbf{x}_i^\top\mathbf{x}_j`$, sous $`\alpha_1y_1+\alpha_2y_2=0`$, soit $`\alpha_1-\alpha_2=0\Rightarrow \alpha_1=\alpha_2=\alpha`$ (le terme croisé est négatif car $`y_1y_2=-1`$). Substituons:
+> **Corrigé.** Dual général (marge dure : $`0\le\alpha_i`$, pas de plafond $`C`$) : maximiser $`W=\alpha_1+\alpha_2-\tfrac12(\alpha_1^2 k_{11}+\alpha_2^2k_{22}-2\alpha_1\alpha_2 k_{12})`$ avec $`k_{ij}=\mathbf{x}_i^\top\mathbf{x}_j`$, sous $`\alpha_1y_1+\alpha_2y_2=0`$, soit $`\alpha_1-\alpha_2=0\Rightarrow \alpha_1=\alpha_2=\alpha`$ (le terme croisé est négatif car $`y_1y_2=-1`$). Substituons :
 > ```math
 > W(\alpha)=2\alpha-\tfrac12\alpha^2(k_{11}+k_{22}-2k_{12})=2\alpha-\tfrac12\alpha^2\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2.
 > ```
-> Dérivée nulle: $`2-\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2=0\Rightarrow \alpha=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2}`$. On retrouve $`\mathbf{w}=\alpha(\mathbf{x}_1-\mathbf{x}_2)`$, donc $`\lVert\mathbf{w}\rVert=\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert}`$, et une **largeur totale de marge** $`\dfrac{2}{\lVert\mathbf{w}\rVert}=\lVert\mathbf{x}_1-\mathbf{x}_2\rVert`$: la marge occupe toute la distance entre les deux points, et la frontière passe en leur **milieu** (chaque point se trouve à la distance $`\lVert\mathbf{x}_1-\mathbf{x}_2\rVert/2`$ du séparateur). Intuition géométrique parfaitement cohérente.
+> Dérivée nulle : $`2-\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2=0\Rightarrow \alpha=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2}`$. On retrouve $`\mathbf{w}=\alpha(\mathbf{x}_1-\mathbf{x}_2)`$, donc $`\lVert\mathbf{w}\rVert=\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert}`$, et une **largeur totale de marge** $`\dfrac{2}{\lVert\mathbf{w}\rVert}=\lVert\mathbf{x}_1-\mathbf{x}_2\rVert`$: la marge occupe toute la distance entre les deux points, et la frontière passe en leur **milieu** (chaque point se trouve à la distance $`\lVert\mathbf{x}_1-\mathbf{x}_2\rVert/2`$ du séparateur). Intuition géométrique parfaitement cohérente.
 
-#### Exercice 4: Le truc du noyau à la main
+#### Exercice 4 : Le truc du noyau à la main
 
 Soit le noyau polynomial $`k(\mathbf{x},\mathbf{x}')=(\mathbf{x}^\top\mathbf{x}')^2`$ en dimension 2.
 1. Donnez une application $`\varphi`$ explicite telle que $`k(\mathbf{x},\mathbf{x}')=\varphi(\mathbf{x})^\top\varphi(\mathbf{x}')`$.
@@ -674,10 +674,10 @@ Soit le noyau polynomial $`k(\mathbf{x},\mathbf{x}')=(\mathbf{x}^\top\mathbf{x}'
 
 > **Corrigé.**
 > 1. $`\varphi(\mathbf{x})=(x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2)`$ (vu plus haut).
-> 2. Côté noyau: $`\mathbf{x}^\top\mathbf{x}'=1\cdot3+2\cdot1=5`$, donc $`k=5^2=25`$. Côté $`\varphi`$: $`\varphi(\mathbf{x})=(1,\ 2\sqrt2,\ 4)`$, $`\varphi(\mathbf{x}')=(9,\ 3\sqrt2,\ 1)`$. Produit scalaire $`=1\cdot9+2\sqrt2\cdot3\sqrt2+4\cdot1=9+12+4=25`$. Les deux coïncident.
-> 3. Via $`\varphi`$, on construit un vecteur de $`\binom{d+p-1}{p}`$ composantes pour le noyau homogène (croissance combinatoire) puis on fait le produit scalaire: irréalisable dès que $`d`$ et $`p`$ grandissent. Via $`k`$, on calcule un produit scalaire en dimension $`d`$ ($`O(d)`$) puis une puissance: coût $`O(d)`$, indépendant de $`p`$ (à part dans l'exposant). Le gain est astronomique: c'est tout l'intérêt du truc du noyau.
+> 2. Côté noyau : $`\mathbf{x}^\top\mathbf{x}'=1\cdot3+2\cdot1=5`$, donc $`k=5^2=25`$. Côté $`\varphi`$: $`\varphi(\mathbf{x})=(1,\ 2\sqrt2,\ 4)`$, $`\varphi(\mathbf{x}')=(9,\ 3\sqrt2,\ 1)`$. Produit scalaire $`=1\cdot9+2\sqrt2\cdot3\sqrt2+4\cdot1=9+12+4=25`$. Les deux coïncident.
+> 3. Via $`\varphi`$, on construit un vecteur de $`\binom{d+p-1}{p}`$ composantes pour le noyau homogène (croissance combinatoire) puis on fait le produit scalaire : irréalisable dès que $`d`$ et $`p`$ grandissent. Via $`k`$, on calcule un produit scalaire en dimension $`d`$ ($`O(d)`$) puis une puissance : coût $`O(d)`$, indépendant de $`p`$ (à part dans l'exposant). Le gain est astronomique : c'est tout l'intérêt du truc du noyau.
 
-#### Exercice 5: Effet de $`C`$ (raisonnement + code)
+#### Exercice 5 : Effet de $`C`$ (raisonnement + code)
 
 Sur un jeu légèrement non séparable, prédisez qualitativement l'évolution du nombre de vecteurs de support et de l'erreur d'apprentissage quand $`C`$ passe de $`0.01`$ à $`100`$, puis vérifiez par simulation.
 
@@ -698,11 +698,11 @@ Sur un jeu légèrement non séparable, prédisez qualitativement l'évolution d
 > ```
 > On observe la décroissance du nombre de vecteurs de support et de l'erreur d'apprentissage quand $`C`$ croît, conformément à la prédiction. (Les valeurs exactes dépendent du tirage, mais la *tendance* est robuste.)
 
-#### Exercice 6: Sparsité de la solution duale
+#### Exercice 6 : Sparsité de la solution duale
 
 Montrez, à partir des conditions KKT, que si un point $`\mathbf{x}_i`$ est strictement au-delà de la marge ($`y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1`$), alors nécessairement $`\alpha_i=0`$. En quoi cela explique-t-il que la prédiction ne dépende que des vecteurs de support ?
 
-> **Corrigé.** La condition de complémentarité KKT s'écrit $`\alpha_i[y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1+\xi_i]=0`$. Si $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1`$, le point respecte strictement sa contrainte avec $`\xi_i=0`$ (la perte charnière est nulle, donc l'écart optimal est nul); le crochet vaut $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1>0`$, strictement positif. Le produit ne peut s'annuler que si $`\alpha_i=0`$. Donc tout point strictement hors marge a un multiplicateur nul. Comme $`\mathbf{w}=\sum_i\alpha_iy_i\mathbf{x}_i`$ et $`f(\mathbf{x})=\mathrm{sign}(\sum_i\alpha_iy_ik(\mathbf{x}_i,\mathbf{x})+b)`$, les termes à $`\alpha_i=0`$ disparaissent: **seuls les vecteurs de support** (sur le bord ou en violation) interviennent dans la frontière et la prédiction. D'où la parcimonie et l'efficacité mémoire/calcul de la SVM.
+> **Corrigé.** La condition de complémentarité KKT s'écrit $`\alpha_i[y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1+\xi_i]=0`$. Si $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1`$, le point respecte strictement sa contrainte avec $`\xi_i=0`$ (la perte charnière est nulle, donc l'écart optimal est nul) ; le crochet vaut $`y_i(\mathbf{w}^\top\mathbf{x}_i+b)-1>0`$, strictement positif. Le produit ne peut s'annuler que si $`\alpha_i=0`$. Donc tout point strictement hors marge a un multiplicateur nul. Comme $`\mathbf{w}=\sum_i\alpha_iy_i\mathbf{x}_i`$ et $`f(\mathbf{x})=\mathrm{sign}(\sum_i\alpha_iy_ik(\mathbf{x}_i,\mathbf{x})+b)`$, les termes à $`\alpha_i=0`$ disparaissent : **seuls les vecteurs de support** (sur le bord ou en violation) interviennent dans la frontière et la prédiction. D'où la parcimonie et l'efficacité mémoire/calcul de la SVM.
 
 ---
 
