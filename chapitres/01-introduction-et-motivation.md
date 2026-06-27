@@ -264,7 +264,15 @@ Ce point de vue probabiliste est fécond : il transforme « ajuster une droite �
 
 La statistique se demande : *à partir d'un échantillon fini, que peut-on conclure, et avec quelle confiance ?* (Un *échantillon* est une **poignée d'exemples prélevés** dans un ensemble bien plus vaste, comme la cuillerée de soupe qu'on goûte pour juger toute la marmite ; *fini* veut dire « en nombre limité », on n'a pas l'infinité des cas possibles.) Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance de l'estimateur** (variance, l'instabilité d'un échantillon à l'autre).
 
-> **Attention, ce mot « variance » ne désigne pas la même chose qu'avant.** Plus haut, la variance $`\sigma^2`$ mesurait l'étalement du **bruit** des données (à quel point les ventes s'éparpillent autour de la vraie droite). Ici, la **variance de l'estimateur** mesure l'étalement de la **réponse de la recette d'estimation** : si l'on changeait d'échantillon, par exemple en retirant ou en remplaçant quelques jours du carnet, de combien sauteraient les valeurs trouvées $`\hat{a}`$ et $`\hat{b}`$ ? C'est la **même idée d'étalement** que $`\sigma^2`$, mais appliquée à la *sortie de la recette*, pas au bruit des données. Gardez bien les deux séparées, surtout dans le compromis biais-variance qui suit.
+> **Attention, ce mot « variance » ne désigne pas la même chose qu'avant.** Le mot **étalement** veut simplement dire « à quel point des nombres sont éparpillés » : serrés autour de leur centre, c'est un petit étalement ; très dispersés, c'est un grand étalement. Le piège, ici, c'est que deux choses différentes s'éparpillent.
+>
+> Plus haut, la variance $`\sigma^2`$ mesurait l'étalement **des données** : les ventes réelles ne tombent jamais pile sur la vraie droite, elles tremblent un peu au-dessus et un peu en-dessous, et $`\sigma^2`$ dit l'ampleur de ce tremblement. C'est le **bruit** des mesures.
+>
+> La **variance de l'estimateur**, elle, mesure l'étalement de **votre résultat**. Un estimateur est une recette qui prend les données (le carnet) et en ressort une réponse ($`\hat{a}`$ et $`\hat{b}`$, la droite trouvée). Si vous refaisiez le calcul avec un échantillon un peu différent (quelques jours du carnet retirés ou remplacés), la recette ressortirait une droite un peu différente. La variance de l'estimateur dit de combien cette droite-résultat **saute d'un échantillon à l'autre** : c'est la stabilité de votre conclusion, pas le désordre des données.
+>
+> Même mot « variance », donc, mais deux objets distincts : d'un côté le tremblement des **données brutes**, de l'autre l'instabilité de la **droite que vous calculez**. Gardez-les bien séparés, surtout dans le compromis biais-variance qui suit.
+
+![Deux variances à ne pas confondre : à gauche l'étalement des données autour de la vraie droite (le bruit, sigma au carré), à droite l'étalement de la droite estimée quand on change d'échantillon](../assets/deux-variances.svg)
 
 C'est ici que vit la tension fondamentale de tout l'apprentissage, le **compromis biais-variance** (bias-variance tradeoff) :
 
