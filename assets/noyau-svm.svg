@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="700" fill="#1b2a4a">Le truc du noyau : relever les données pour les rendre séparables</text>
+  <text x="360" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">En une dimension, le rouge (au centre) et le bleu (aux bords) sont mélangés : aucun seuil unique ne les sépare.</text>
+
+  <polyline points="202,107 209,125 216,142 223,158 230,174 238,189 245,202 252,216 259,228 266,239 274,250 281,259 288,268 295,276 302,283 310,289 317,295 324,300 331,303 338,306 346,308 353,310 360,310 367,310 374,308 382,306 389,303 396,300 403,295 410,289 418,283 425,276 432,268 439,259 446,250 454,239 461,228 468,216 475,202 482,189 490,174 497,158 504,142 511,125 518,107" fill="none" stroke="#e2e8f0" stroke-width="1.6" opacity="0"><animate attributeName="opacity" values="0;0;0;1;0" keyTimes="0;0.18;0.5;0.62;1" dur="7.0s" repeatCount="indefinite"/></polyline>
+  <line x1="150" y1="310" x2="570" y2="310" stroke="#94a3b8" stroke-width="2"/>
+  <text x="582" y="314" font-size="13" fill="#64748b">x</text>
+
+  <g opacity="0"><animate attributeName="opacity" values="0;0;0;1;0" keyTimes="0;0.18;0.5;0.62;1" dur="7.0s" repeatCount="indefinite"/>
+    <line x1="170" y1="266" x2="560" y2="266" stroke="#0f766e" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <text x="560" y="258" text-anchor="end" font-size="12.5" fill="#0f766e" font-weight="700">une droite sépare !</text>
+    <text x="600" y="146" font-size="13" fill="#1d4ed8" font-weight="700">hauteur = x²</text>
+  </g>
+
+    <circle cx="216" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;142;142;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="245" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;202;202;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="266" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;239;239;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="454" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;239;239;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="475" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;202;202;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="504" cy="310" r="6.5" fill="#3b82f6" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;142;142;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+    <circle cx="310" cy="310" r="6.5" fill="#ef4444" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;289;289;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="338" cy="310" r="6.5" fill="#ef4444" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;306;306;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="382" cy="310" r="6.5" fill="#ef4444" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;306;306;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+  <circle cx="410" cy="310" r="6.5" fill="#ef4444" stroke="#fff" stroke-width="1.2"><animate attributeName="cy" values="310;310;289;289;310" keyTimes="0;0.18;0.5;0.86;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></circle>
+
+  <text x="360" y="346" text-anchor="middle" font-size="12.5" fill="#1b2a4a">On ajoute une dimension (ici la hauteur x²) : dans cet espace relevé, une simple droite sépare les deux classes.</text>
+  <text x="360" y="366" text-anchor="middle" font-size="11" fill="#94a3b8">Le « noyau » calcule cette séparation sans jamais construire la nouvelle dimension : d'où sa rapidité.</text>
+</svg>

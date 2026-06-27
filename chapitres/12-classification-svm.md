@@ -437,6 +437,8 @@ graph LR
     B -->|"hyperplan dans<br/>l'espace relevé"| C["frontière courbe<br/>de retour dans<br/>l'espace d'origine"]
 ```
 
+![Le truc du noyau illustré en une dimension : des points non séparables par un seuil deviennent séparables par une droite une fois relevés à la hauteur x au carré](../assets/noyau-svm.svg)
+
 Formellement, on choisit une application $`\varphi: \mathbb{R}^d \to \mathcal{H}`$ vers un espace $`\mathcal{H}`$ (dit **espace de caractéristiques**, feature space) de dimension possiblement énorme, et on applique la SVM linéaire aux $`\varphi(\mathbf{x}_i)`$. Le dual ne fait alors intervenir que des produits scalaires $`\varphi(\mathbf{x}_i)^\top\varphi(\mathbf{x}_j)`$.
 
 > **Les symboles $`\varphi`$, $`\to`$, $`\mathcal{H}`$ et « application ».** Une **application** (ou fonction) est une *machine* qui prend une entrée et rend une sortie, comme un distributeur : on glisse une pièce, il rend une canette. La lettre grecque $`\varphi`$ (« phi ») nomme ici une telle machine : elle prend un point et le *relève* dans un espace plus grand. L'écriture $`\varphi: \mathbb{R}^d \to \mathcal{H}`$ se lit « $`\varphi`$ va de $`\mathbb{R}^d`$ vers $`\mathcal{H}`$ » : la flèche $`\to`$ dit « transforme un élément de l'espace de départ en un élément de l'espace d'arrivée ». $`\mathcal{H}`$ (un « H » calligraphié) est justement ce grand espace d'arrivée, l'**espace de caractéristiques**, où les données deviennent plus faciles à séparer.

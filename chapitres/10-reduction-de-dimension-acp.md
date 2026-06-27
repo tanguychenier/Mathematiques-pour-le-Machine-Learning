@@ -143,6 +143,8 @@ Première façon de raconter l'ACP. On cherche **la direction le long de laquell
 
 > **Image.** Posez une baguette de pain sur la table et éclairez-la avec une lampe. Selon l'orientation de la lampe, l'ombre de la baguette sur le mur est longue ou courte. La direction qui donne **l'ombre la plus longue** est celle qui suit la baguette dans sa longueur : c'est sa direction de plus grande variation. L'ACP cherche cette direction, puis la suivante (la plus longue parmi celles perpendiculaires à la première), et ainsi de suite.
 
+![ACP : projeter le nuage sur la direction principale conserve son étalement (on garde l'information), le projeter sur une mauvaise direction l'écrase](../assets/acp-projection.svg)
+
 #### La première composante principale
 
 > **Le symbole $`\mathbf{u}`$, une direction unitaire.** Ce symbole représente **une flèche qui pointe dans une direction, de longueur exactement 1**. On s'en sert comme d'une boussole : elle indique *vers où regarder*, sans information de distance (la longueur est fixée à 1 pour ne comparer que les orientations). La contrainte $`\|\mathbf{u}\| = 1`$, c'est-à-dire $`\mathbf{u}^{\top}\mathbf{u} = 1`$, dit simplement « cette flèche mesure une unité ».
