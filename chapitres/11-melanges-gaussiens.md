@@ -12,11 +12,15 @@ Ce chapitre répond à une question très concrète : *étant donné un nuage de
 
 On suppose connue (chapitre 6) la **densité gaussienne multivariée** sur $`\mathbb{R}^d`$. Pour un vecteur $`\mathbf{x} \in \mathbb{R}^d`$, de moyenne $`\boldsymbol{\mu} \in \mathbb{R}^d`$ et de matrice de covariance $`\boldsymbol{\Sigma}`$ (symétrique définie positive de taille $`d \times d`$), elle vaut :
 
+> **Trois mots à apprivoiser tout de suite.** *Multivariée* veut dire « en plusieurs dimensions à la fois » : on ne mesure pas que la taille, mais par exemple la taille ET le poids ensemble. *Covariance* veut dire « comment deux mesures varient ensemble » : si les grands sont aussi les plus lourds, taille et poids ont une covariance positive. *Définie positive*, pour la matrice $`\boldsymbol{\Sigma}`$, veut dire « qui décrit une vraie cloche bien formée (une ellipse), jamais une forme impossible avec une aire négative ». Vous pouvez retenir ces trois idées comme des images, les calculs précis viennent du chapitre 6.
+
 ```math
 \mathcal{N}(\mathbf{x} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma})
 = \frac{1}{(2\pi)^{d/2}\,\lvert \boldsymbol{\Sigma}\rvert^{1/2}}
 \exp\!\left(-\tfrac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\top}\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right).
 ```
+
+> **Petit glossaire express de la formule (vue au chapitre 6, on la redécortique ici).** Plusieurs symboles s'invitent d'un coup, voici leur sens en images. Le petit $`^{\top}`$ (« transposé ») veut dire qu'on couche le vecteur colonne pour le mettre en ligne, afin de pouvoir le multiplier avec ce qui suit. Le $`\boldsymbol{\Sigma}^{-1}`$ (« inverse ») est la matrice qui « défait » l'étalement de la cloche, comme une clé qui déverrouille la déformation. Le $`\lvert \boldsymbol{\Sigma}\rvert`$ (« déterminant ») mesure le volume occupé par la cloche, il sert de facteur de normalisation pour que l'aire totale fasse bien $`1`$. Enfin $`\exp`$ est la fonction exponentielle, qui transforme une « distance » en une hauteur de cloche. En une phrase : l'expression entre parenthèses mesure la distance du point $`\mathbf{x}`$ au centre $`\boldsymbol{\mu}`$, corrigée par la forme de la cloche (on l'appelle la distance de Mahalanobis), et plus cette distance est grande, plus la cloche est basse à cet endroit.
 
 > **Le symbole $`\mid`$ (barre verticale).** Ce symbole représente l'idée de « sachant que » ou « avec les réglages ». Quand on écrit $`\mathcal{N}(\mathbf{x} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma})`$, on lit : « la valeur de la cloche au point $`\mathbf{x}`$, **avec** comme réglages le centre $`\boldsymbol{\mu}`$ et l'étalement $`\boldsymbol{\Sigma}`$ ». C'est comme une machine à dessiner des cloches : à gauche de la barre, l'endroit où l'on regarde ; à droite, les boutons de réglage de la machine.
 
@@ -292,14 +296,16 @@ flowchart TD
 
 L'algorithme des **$`k`$-moyennes** (k-means) est un cas limite « dur » d'EM. Au lieu de responsabilités floues $`r_{nk} \in [0,1]`$, on assigne chaque point à sa cloche la plus proche ($`r_{nk} \in \{0,1\}`$). On le retrouve en prenant des covariances $`\boldsymbol{\Sigma}_k = \sigma^2 \mathbf{I}`$ communes et en faisant tendre $`\sigma \to 0`$: dans la formule des responsabilités, l'écart le plus petit écrase exponentiellement tous les autres, et la responsabilité se concentre entièrement sur la composante la plus proche.
 
-> **Initialisation en pratique.** On initialise presque toujours EM par **$`k`$-means++** (variante de $`k`$-moyennes à tirage initial intelligent), qui évite les mauvais minima et accélère nettement la convergence. C'est le défaut de `scikit-learn` (`init_params='kmeans'` ou `'k-means++'`). Pour de très grands jeux de données, on utilise des variantes **mini-batch / stochastiques** d'EM, dans l'esprit des optimiseurs par lots du deep learning.
+> **Pourquoi « écrase exponentiellement » ? Un exemple chiffré.** La responsabilité d'une cloche fait intervenir le facteur $`\exp(-\text{distance}^2 / 2\sigma^2)`$. Quand $`\sigma`$ devient minuscule, le nombre $`2\sigma^2`$ au dénominateur devient minuscule, donc la fraction sous l'exponentielle devient énorme et négative pour tout point qui n'est pas pile sur le centre, et l'exponentielle d'un grand nombre négatif tombe très vite vers zéro. Prenons un point à distance $`1`$ d'une cloche et à distance $`2`$ d'une autre. Avec $`\sigma = 1`$, les deux poids valent $`\exp(-1/2)\approx 0{,}607`$ et $`\exp(-4/2)\approx 0{,}135`$ : leur rapport est environ $`4{,}5`$, la cloche proche gagne mais l'autre compte encore un peu. Avec $`\sigma = 0{,}1`$, ils valent $`\exp(-1/0{,}02)`$ et $`\exp(-4/0{,}02)`$, c'est-à-dire $`\exp(-50)`$ contre $`\exp(-200)`$ : le rapport explose à $`\exp(150)`$, un nombre gigantesque. Autrement dit, la cloche la plus proche rafle toute la responsabilité (proche de $`1`$) et l'autre tombe à zéro, ce qui redonne exactement l'assignation « dure » des $`k`$-moyennes.
+
+> **Initialisation en pratique.** On initialise presque toujours EM par **$`k`$-means++** (variante de $`k`$-moyennes à tirage initial intelligent), qui évite les mauvais minima et accélère nettement la convergence. C'est le défaut de `scikit-learn` (`init_params='kmeans'` ou `'k-means++'`). Pour de très grands jeux de données, on utilise des variantes **mini-batch / stochastiques** d'EM, dans l'esprit des optimiseurs par lots du deep learning. (Vocabulaire, pour aller plus loin : un *mini-batch* est un petit paquet de données ; au lieu de relire tout le jeu à chaque tour, on met à jour les réglages à partir de petits paquets tirés au hasard, ce qui va beaucoup plus vite sur de gros volumes. Un *optimiseur par lots* est simplement un procédé qui améliore les réglages en traitant les données par tels paquets. Ces notions appartiennent au deep learning et ne sont pas indispensables ici.)
 
 | Aspect | $`k`$-moyennes | EM (GMM) |
 |---|---|---|
 | Assignation | dure ($`0`$ ou $`1`$) | molle (responsabilités $`\in [0,1]`$) |
 | Forme des groupes | sphériques, même taille | ellipsoïdes, tailles variables |
 | Sortie | étiquettes | densité de probabilité complète |
-| Cas particulier de... |, | EM avec $`\boldsymbol{\Sigma}=\sigma^2\mathbf{I}, \sigma\to 0`$ |
+| Cas particulier de... | (cas de base, rien à simplifier) | EM avec $`\boldsymbol{\Sigma}=\sigma^2\mathbf{I}, \sigma\to 0`$ |
 
 #### Garantie de convergence : la log-vraisemblance ne descend jamais
 
@@ -380,6 +386,10 @@ print("log-vraisemblance croissante :",
 #### Application concrete en machine learning
 
 > **Segmentation et détection d'anomalies.** Après apprentissage, un GMM donne pour tout nouveau point $`\mathbf{x}`$: (1) une **étiquette de groupe** $`\arg\max_k r_{k}(\mathbf{x})`$ (segmentation de clientèle, regroupement de documents) ; (2) une **densité** $`p(\mathbf{x})`$, un point où $`p(\mathbf{x})`$ est très faible est une **anomalie** (fraude, défaut industriel). La covariance `full` capture des corrélations entre variables que $`k`$-moyennes ignore totalement.
+
+> **Petite précision de notation.** Ici on écrit la responsabilité $`r_{k}(\mathbf{x})`$ avec un seul indice et le point entre parenthèses : c'est exactement la même chose que la responsabilité $`r_{nk}`$ vue plus haut, mais pour un point générique noté $`\mathbf{x}`$ (la responsabilité de la cloche $`k`$ pour CE point précis), au lieu d'un point numéroté $`n`$ du jeu d'entraînement. Pour un point unique, on peut donc lire $`r_k(\mathbf{x})`$ comme le $`r_{nk}`$ de ce point. Choisir l'étiquette par $`\arg\max_k`$, c'est simplement attribuer le point à la cloche dont la responsabilité est la plus grande.
+
+> **Comment fixer le seuil « très faible » d'anomalie ?** On ne décide pas « à l'œil » : on calibre un seuil. La façon la plus simple est de calculer la densité $`p(\mathbf{x})`$ (ou plutôt son logarithme $`\ln p(\mathbf{x})`$, plus stable) sur toutes les données d'entraînement, puis de prendre comme seuil un quantile bas, par exemple la valeur en dessous de laquelle ne tombe que $`1\%`$ des points d'entraînement. Tout nouveau point dont la densité passe sous ce seuil est alors jugé anormal. On règle ainsi la sévérité du détecteur : un seuil plus haut signale plus d'anomalies (mais plus de fausses alertes), un seuil plus bas en signale moins.
 
 > **Compression d'image par quantification.** En modélisant les couleurs (RVB, donc $`d=3`$) des pixels d'une image par un GMM à $`K`$ composantes, on remplace chaque pixel par sa composante dominante : on passe de millions de couleurs à $`K`$ couleurs représentatives. Même idée qu'une palette, mais apprise statistiquement.
 
@@ -498,6 +508,8 @@ En enchaînant : $`\ell(\boldsymbol{\theta}^{(t+1)}) \overset{(3)}{\ge} \mathcal
 > **Image finale.** Pensez à deux planches : le plafond ($`\ell`$, qu'on veut monter) et le plancher mobile ($`\mathcal{F}`$). **E** soulève le plancher jusqu'à toucher le plafond (sous eux, plus aucun espace : KL = 0). **M** pousse alors le plancher vers le haut ; comme le plafond est toujours au-dessus, il monte aussi. On alterne : on ne redescend jamais.
 
 > **Lien avec l'inférence variationnelle.** Cette décomposition $`\ell = \mathrm{ELBO} + \mathrm{KL}`$ est **exactement** la fondation des auto-encodeurs variationnels (VAE) et de l'inférence variationnelle. La différence : quand la loi a posteriori $`p(\mathbf{Z}\mid\mathbf{X})`$ est trop complexe pour être calculée exactement (réseaux profonds), on ne peut plus annuler la KL ; on choisit alors une famille paramétrée $`q_{\boldsymbol\phi}`$ et on **optimise l'ELBO par descente de gradient** (différentiation automatique, optimiseur Adam), avec l'astuce de reparamétrisation. EM sur le GMM est le cas « jouet » exactement soluble de ce cadre général : c'est pourquoi le comprendre à fond est un investissement rentable.
+
+> **Trois mots lâchés ci-dessus, pour aller plus loin (notions de chapitres ultérieurs).** La *différentiation automatique* est un outil qui calcule tout seul les dérivées d'une fonction écrite en code, sans qu'on ait à les poser à la main. L'*optimiseur Adam* est une recette très répandue pour ajuster les réglages pas à pas dans la bonne direction, une variante futée de la descente de gradient. L'*astuce de reparamétrisation* est une réécriture qui permet de dériver à travers un tirage aléatoire, en séparant le hasard des réglages. Vous pouvez ignorer ces trois termes pour le moment : ils ne servent que dans les modèles profonds et seront vus plus tard.
 
 #### Vue d'ensemble synthetique
 

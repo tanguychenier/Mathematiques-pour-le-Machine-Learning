@@ -152,6 +152,8 @@ L'image est limpide : la masse de probabilité est posée en **paquets discrets*
 | Géométrique | $`\mathcal{G}(p)`$ | $`(1-p)^{k-1}p`$ | $`k\in\{1,2,\dots\}`$ | $`1/p`$ | $`(1-p)/p^{2}`$ |
 | Poisson | $`\mathrm{Pois}(\lambda)`$ | $`e^{-\lambda}\lambda^{k}/k!`$ | $`k\in\{0,1,\dots\}`$ | $`\lambda`$ | $`\lambda`$ |
 
+> **Bernoulli et binomiale : la même lettre $`\mathcal{B}`$.** Vous remarquerez que ces deux lois partagent la notation $`\mathcal{B}`$, ce qui peut dérouter au premier abord. Retenez le lien tout simple qui les relie : la loi de Bernoulli $`\mathcal{B}(p)`$ est exactement le cas $`n=1`$ de la loi binomiale $`\mathcal{B}(n,p)`$, c'est-à-dire un seul essai (un seul lancer de pièce). La binomiale compte le nombre de succès sur $`n`$ essais ; la Bernoulli, elle, répond à la même question pour un unique essai (le résultat ne peut alors valoir que $`0`$ ou $`1`$).
+
 > **Le symbole $`\binom{n}{k}`$ (coefficient binomial).** Ce symbole représente **le nombre de façons de choisir $`k`$ objets parmi $`n`$ sans tenir compte de l'ordre**. On le lit « $`k`$ parmi $`n`$ ». Concrètement : combien d'équipes de $`k`$ joueurs peut-on former dans un groupe de $`n`$ ? Sa formule est $`\binom{n}{k} = \dfrac{n!}{k!\,(n-k)!}`$, où le symbole $`!`$ (factorielle) signifie « multiplier tous les entiers de $`1`$ jusqu'à ce nombre » : $`4! = 1\times2\times3\times4 = 24`$. Pensez à $`\binom{n}{k}`$ comme au nombre de combinaisons possibles d'une serrure où l'ordre ne compte pas.
 
 > **Exemple chiffré (binomiale).** On lance $`n=3`$ fois une pièce équilibrée ($`p=\tfrac12`$). Probabilité d'obtenir exactement $`k=2`$ piles ?
@@ -263,6 +265,8 @@ L'image est parlante : dans le tableur, la loi marginale de $`X`$, c'est la colo
 > p(x_1, x_2, \dots, x_n) = \prod_{i=1}^{n} p(x_i \mid x_1, \dots, x_{i-1}).
 > ```
 > Pensez à $`\prod`$ comme à une chaîne de probabilités : chaque maillon est conditionné par tous les précédents. C'est **exactement** la formule qu'optimise un modèle de langage autorégressif (chaque mot sachant les mots précédents).
+
+> **Le cas du tout premier facteur ($`i=1`$).** Pour $`i=1`$, le terme s'écrit $`p(x_1 \mid x_1, \dots, x_0)`$, c'est-à-dire un conditionnement sur un historique **vide** : il n'y a aucune variable avant $`x_1`$. Ne soyez pas dérouté par cette écriture de bord ; dans ce cas, le facteur vaut tout simplement la marginale $`p(x_1)`$, puisqu'on ne conditionne sur rien.
 
 #### Le theoreme de Bayes
 
@@ -403,6 +407,8 @@ Pour un **vecteur aléatoire** $`\mathbf{X} = (X_1, \dots, X_d)^\top`$, on rasse
 > ```
 > Sur la **diagonale** on trouve les variances $`\Sigma_{ii} = \mathrm{Var}(X_i)`$; **hors diagonale**, les covariances croisées. Cette matrice est **symétrique** ($`\Sigma_{ij} = \Sigma_{ji}`$) et **semi-définie positive** (toutes ses valeurs propres sont $`\ge 0`$).
 
+> **Pourquoi cette espérance produit-elle une matrice ?** Le produit $`(\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^{\top}`$ est un **produit extérieur** (une colonne fois une ligne) : multiplier un vecteur colonne de taille $`d`$ par un vecteur ligne de taille $`d`$ fabrique un tableau $`d\times d`$, et non un simple nombre. Dans la case $`(i,j)`$ de ce tableau, on trouve le produit des écarts $`(X_i - \mu_i)(X_j - \mu_j)`$; en prenant ensuite la moyenne (l'espérance) case par case, la case $`(i,j)`$ devient exactement $`\mathrm{Cov}(X_i, X_j)`$. Voilà pourquoi rassembler toutes les covariances donne naturellement un tableau $`d\times d`$, c'est-à-dire une matrice.
+
 > **Pourquoi semi-définie positive ?** Pour tout vecteur $`\mathbf{v}`$, la combinaison $`\mathbf{v}^\top \mathbf{X}`$ est une variable aléatoire scalaire, donc sa variance est $`\ge 0`$. Or $`\mathrm{Var}(\mathbf{v}^\top\mathbf{X}) = \mathbf{v}^\top \boldsymbol{\Sigma}\,\mathbf{v} \ge 0`$, ce qui est **exactement** la définition d'une matrice semi-définie positive. La structure géométrique (vecteurs/matrices des chapitres précédents) rejoint ici la probabilité.
 
 #### Independance
@@ -535,7 +541,7 @@ La structure est **identique** au cas scalaire, traduite en algèbre linéaire (
 
 > **Le symbole $`|\boldsymbol\Sigma|`$ (déterminant).** Ce symbole représente **le « volume » associé à la matrice** (vu au chapitre algèbre linéaire). Pour la covariance, $`|\boldsymbol\Sigma|`$ mesure le volume d'incertitude : plus la cloche est étalée, plus le déterminant est grand, et plus la constante de normalisation est petite (on étale la même masse $`1`$ sur un plus grand volume). Le terme $`\boldsymbol\Sigma^{-1}`$ (matrice **inverse**, dite **matrice de précision**) joue le rôle de $`1/\sigma^2`$.
 
-> **Distance de Mahalanobis.** La quantité $`(\mathbf x-\boldsymbol\mu)^\top\boldsymbol\Sigma^{-1}(\mathbf x-\boldsymbol\mu)`$ est une **distance qui tient compte de la forme** du nuage : un point peut être loin du centre en distance euclidienne ordinaire mais « proche » s'il est dans la direction où le nuage est étalé (grande variance). Les lignes de niveau de la densité sont des **ellipses** (ellipsoïdes en dimension $`d`$) dont les axes sont les vecteurs propres de $`\boldsymbol\Sigma`$. C'est la généralisation naturelle de « combien d'écarts-types suis-je loin ? ».
+> **Distance de Mahalanobis.** La quantité $`(\mathbf x-\boldsymbol\mu)^\top\boldsymbol\Sigma^{-1}(\mathbf x-\boldsymbol\mu)`$ est le **carré d'une distance qui tient compte de la forme** du nuage (la distance de Mahalanobis elle-même est la racine carrée de cette quantité, ce qui reste cohérent avec le tableau ci-dessus) : un point peut être loin du centre en distance euclidienne ordinaire mais « proche » s'il est dans la direction où le nuage est étalé (grande variance). Les lignes de niveau de la densité sont des **ellipses** (ellipsoïdes en dimension $`d`$) dont les axes sont les vecteurs propres de $`\boldsymbol\Sigma`$. C'est la généralisation naturelle de « combien d'écarts-types suis-je loin ? ».
 
 > **Application en machine learning (centrale).** La gaussienne est partout :
 > - **Hypothèse de bruit**: la régression linéaire avec erreur gaussienne $`y = \mathbf w^\top\mathbf x + \varepsilon`$, $`\varepsilon\sim\mathcal N(0,\sigma^2)`$, donne par maximum de vraisemblance exactement la **minimisation des moindres carrés** (on le démontre en exercice).
@@ -643,6 +649,8 @@ Chaque ingrédient a un sens fort :
 > p(x\mid\theta) = \exp\!\big( x\log\theta + (1-x)\log(1-\theta) \big) = \exp\!\Big( x\underbrace{\log\tfrac{\theta}{1-\theta}}_{\eta} + \log(1-\theta) \Big).
 > ```
 > On identifie : $`T(x) = x`$, paramètre naturel $`\eta = \log\frac{\theta}{1-\theta}`$ (c'est le **logit** !), $`h(x)=1`$, et $`A(\eta) = -\log(1-\theta) = \log(1+e^{\eta})`$ (le **softplus**). Vérification : $`A'(\eta) = \frac{e^\eta}{1+e^\eta} = \theta = \mathbb{E}[X]`$. La pente du log-partition redonne bien l'espérance.
+
+> **Qu'est-ce que le « logit » et le « softplus » ?** Le **logit** d'une probabilité $`\theta`$, c'est le logarithme de la **cote** succès/échec $`\frac{\theta}{1-\theta}`$ (le rapport « chances de réussir sur chances de rater ») : il transforme une probabilité, coincée dans $`[0,1]`$, en un nombre réel quelconque. Sa fonction inverse est la **sigmoïde** $`\sigma(\eta) = \frac{1}{1+e^{-\eta}}`$, que vous retrouverez juste après, et qui ramène ce réel dans $`[0,1]`$. Le **softplus** $`\log(1+e^{\eta})`$, lui, est une version **lisse** (sans angle vif) de la fonction $`\max(0, \eta)`$ : il reste toujours positif et monte en douceur, là où $`\max(0,\eta)`$ casse brutalement en $`0`$.
 
 > **Application en machine learning.** La famille exponentielle est l'ossature théorique des **modèles linéaires généralisés (GLM)**: régression logistique (Bernoulli), régression de Poisson, régression linéaire (normale) ne sont qu'un même schéma avec des membres différents de la famille. Le lien $`\eta = \log\frac{\theta}{1-\theta}`$ explique pourquoi la **fonction logit** et son inverse la **sigmoïde** $`\sigma(\eta)=\frac{1}{1+e^{-\eta}}`$ sont au cœur de la classification ; et le **softmax** est la fonction de lien inverse de la loi catégorielle (il transforme les paramètres naturels, les logits, en probabilités). La notion de statistique suffisante éclaire enfin pourquoi certains résumés de données suffisent à l'entraînement.
 

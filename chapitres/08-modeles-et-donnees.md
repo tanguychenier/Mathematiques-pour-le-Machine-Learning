@@ -77,6 +77,8 @@ Un piège guette le boulanger : il pourrait apprendre par cœur « le mardi 3 j'
 
 > **Piège (par cœur vs compréhension).** Une règle qui colle *parfaitement* aux données observées peut être *catastrophique* sur des données nouvelles : elle a appris le bruit, les détails, les accidents du cahier, au lieu de la tendance de fond. C'est le **surapprentissage** (overfitting). A l'opposé, une règle trop rigide rate la tendance : c'est le **sous-apprentissage** (underfitting). Tout l'art consiste à viser juste entre les deux, on y consacrera toute la dernière section, sur le compromis biais-variance.
 
+> **Le mot « variance ».** Ce mot reviendra souvent : retenez simplement qu'il mesure *à quel point des valeurs s'écartent les unes des autres autour de leur moyenne*, c'est-à-dire leur dispersion. Imaginez des fléchettes plantées dans une cible : si elles sont toutes serrées au même endroit, la variance est petite ; si elles sont éparpillées partout, la variance est grande. Plus précisément, c'est la moyenne des écarts au carré par rapport à la moyenne (on prend le carré pour que les écarts vers le haut et vers le bas ne s'annulent pas).
+
 Pour parler proprement de généralisation, il faut un cadre probabiliste : on suppose que les données ne tombent pas au hasard complet, mais sont **tirées** d'une certaine loi du monde.
 
 > **Le symbole $`\sim`$.** Ce petit signe ondulé se lit « suit la loi » ou « est tiré selon ». Quand on écrit $`(\mathbf{x}, y) \sim P`$, cela veut dire « le couple question-réponse est pioché au hasard dans une grande urne dont les proportions sont décrites par la loi $`P`$ ». C'est comme dire « cette boule est tirée d'un sac où il y a 70 pour cent de boules rouges » : le $`\sim`$ relie l'objet tiré au sac d'où il vient.
@@ -123,7 +125,7 @@ Le but idéal de l'apprentissage est de trouver la règle de **risque minimal**:
 h^\star = \arg\min_{h \in \mathcal{H}} R(h).
 ```
 
-> **Remarque (le mur infranchissable).** On ne peut **pas** calculer $`R(h)`$: il faudrait connaître la loi $`P`$ du monde entier, qui est précisément ce qu'on ignore ! On ne dispose que d'un échantillon fini, le cahier $`\mathcal{D}`$. Toute la suite consiste à *remplacer* cette moyenne ideale, inaccessible, par une moyenne *concrète* calculée sur nos données.
+> **Remarque (le mur infranchissable).** On ne peut **pas** calculer $`R(h)`$: il faudrait connaître la loi $`P`$ du monde entier, qui est précisément ce qu'on ignore ! On ne dispose que d'un échantillon fini, le cahier $`\mathcal{D}`$. Toute la suite consiste à *remplacer* cette moyenne idéale, inaccessible, par une moyenne *concrète* calculée sur nos données.
 
 #### Le risque empirique : la moyenne sur le cahier
 
@@ -142,7 +144,7 @@ L'idée maîtresse, le **principe de minimisation du risque empirique** (empiric
 \hat{\boldsymbol{\theta}} = \arg\min_{\boldsymbol{\theta} \in \Theta} \frac{1}{n}\sum_{i=1}^n \ell\big(h_{\boldsymbol{\theta}}(\mathbf{x}_i), y_i\big).
 ```
 
-> **Définition (ERM).** Étant donné une classe $`\mathcal{H}`$, une perte $`\ell`$ et des données $`\mathcal{D}`$, l'**estimateur du risque empirique** est tout $`\hat{h} \in \arg\min_{h\in\mathcal{H}} \hat{R}_n(h)`$. C'est le pari, fondamental et souvent justifie, que *bien faire sur les exemples vus* tend à *bien faire sur les exemples futurs*, à condition de ne pas surapprendre.
+> **Définition (ERM).** Étant donné une classe $`\mathcal{H}`$, une perte $`\ell`$ et des données $`\mathcal{D}`$, l'**estimateur du risque empirique** est tout $`\hat{h} \in \arg\min_{h\in\mathcal{H}} \hat{R}_n(h)`$. C'est le pari, fondamental et souvent justifié, que *bien faire sur les exemples vus* tend à *bien faire sur les exemples futurs*, à condition de ne pas surapprendre.
 
 > **Le symbole $`\arg\min`$ (rappel d'usage).** Il ne rend pas la *valeur* minimale de la fonction, mais *l'endroit* (ici le $`\boldsymbol{\theta}`$) où ce minimum est atteint. « $`\arg`$ » = *argument*, c'est-à-dire l'entrée qui réalise le mieux. On écrit « $`\hat{h} \in \arg\min`$ » (appartenance) plutôt que « $`\hat{h} = \arg\min`$ » quand le minimum peut être atteint en plusieurs endroits : l'$`\arg\min`$ est alors un *ensemble* de minimiseurs, et on en choisit un.
 
@@ -182,13 +184,13 @@ Empilons les exemples en une matrice de **design** $`X \in \mathbb{R}^{n \times 
 
 Pour trouver le minimum, on annule le gradient (la pente est nulle au creux de la vallée).
 
-> **Le symbole $`\nabla`$ (nabla, le gradient, rappel d'usage).** Ce symbole en triangle pointe vers le bas représente *la pente dans toutes les directions à la fois*: $`\nabla_{\boldsymbol{\theta}} g`$ est le vecteur dont chaque composante dit « de combien $`g`$ monte si je pousse ce bouton-la ». Au fond d'une vallée (un minimum d'une fonction convexe lisse), il n'y a plus de pente nulle part : le gradient est le vecteur nul. Résoudre $`\nabla_{\boldsymbol{\theta}}\hat{R}_n = \mathbf{0}`$, c'est chercher ce fond de vallée.
+> **Le symbole $`\nabla`$ (nabla, le gradient, rappel d'usage).** Ce symbole en triangle pointe vers le bas représente *la pente dans toutes les directions à la fois*: $`\nabla_{\boldsymbol{\theta}} g`$ est le vecteur dont chaque composante dit « de combien $`g`$ monte si je pousse ce bouton-la ». Au fond d'une vallée (un minimum d'une fonction convexe lisse), il n'y a plus de pente nulle part : le gradient est le vecteur nul. Résoudre $`\nabla_{\boldsymbol{\theta}}\hat{R}_n = \mathbf{0}`$, c'est chercher ce fond de vallée. Une fonction **convexe** est, en gros, une fonction en forme de bol ou de cuvette : elle n'a qu'un seul fond, et nulle part de petite bosse ou de creux secondaire où l'on pourrait rester coincé. C'est pour cela qu'ici annuler le gradient (trouver le seul endroit sans pente) donne directement LE minimum, et non un faux minimum local.
 
 Développons $`\lVert X\boldsymbol{\theta} - \mathbf{y}\rVert^2 = \boldsymbol{\theta}^\top X^\top X \boldsymbol{\theta} - 2\,\boldsymbol{\theta}^\top X^\top \mathbf{y} + \mathbf{y}^\top \mathbf{y}`$, puis dérivons :
 ```math
 \nabla_{\boldsymbol{\theta}}\, \hat{R}_n(\boldsymbol{\theta}) = \frac{2}{n}\big(X^\top X \boldsymbol{\theta} - X^\top \mathbf{y}\big).
 ```
-En annulant, on obtient les **équations normales** (normal équations) :
+En annulant, on obtient les **équations normales** (normal equations) :
 ```math
 X^\top X\, \hat{\boldsymbol{\theta}} = X^\top \mathbf{y}
 \qquad\Longrightarrow\qquad
@@ -256,7 +258,7 @@ L'objectif **régularisé** s'écrit
 | $`\lVert \boldsymbol{\theta}\rVert_2^2 = \sum_j \theta_j^2`$ | Ridge (L2, Tikhonov) | rétrécit tous les coefficients, solution unique |
 | $`\lVert \boldsymbol{\theta}\rVert_1 = \sum_j \lvert \theta_j\rvert`$ | Lasso (L1) | met des coefficients exactement à zéro (sélection de variables) |
 
-Pour la régression ridge, la solution reste explicite et *toujours* bien définie (le terme $`n\lambda I`$ rend la matrice inversible des que $`\lambda > 0`$) :
+Pour la régression ridge, la solution reste explicite et *toujours* bien définie (le terme $`n\lambda I`$ rend la matrice inversible dès que $`\lambda > 0`$) :
 ```math
 \hat{\boldsymbol{\theta}}_\lambda = (X^\top X + n\lambda I)^{-1} X^\top \mathbf{y}.
 ```
@@ -278,6 +280,7 @@ Imaginez une machine à fabriquer des données, dont le comportement dépend de 
 > ```math
 > \mathcal{L}(\boldsymbol{\theta}) = p(\mathcal{D} \mid \boldsymbol{\theta}) = \prod_{i=1}^n p(\mathbf{x}_i, y_i \mid \boldsymbol{\theta}).
 > ```
+> Une précision importante : en apprentissage supervisé, on ne cherche pas à expliquer d'où viennent les entrées $`\mathbf{x}_i`$, on cherche seulement à prédire la réponse $`y_i`$ une fois l'entrée donnée. On modélise donc la réponse sachant l'entrée, c'est-à-dire $`p(y_i \mid \mathbf{x}_i, \boldsymbol{\theta})`$, et les $`\mathbf{x}_i`$ sont traités comme de simples données fixées (le modèle ne les fabrique pas). C'est exactement ce que fait la démonstration gaussienne juste après, où l'on écrit la loi de $`y_i`$ sachant $`\mathbf{x}_i`$.
 
 > **Le symbole $`\prod`$ (produit, « pi » majuscule).** Ce symbole est le cousin multiplicatif du $`\Sigma`$: là où sigma *additionne*, pi *multiplie*. C'est une « boucle qui multiplie » : $`\prod_{i=1}^n a_i = a_1 \times a_2 \times \dots \times a_n`$. Il apparaît ici parce que la probabilité de plusieurs événements *indépendants* qui se produisent *tous* est le produit de leurs probabilités (comme « pile ET pile ET pile » à une chance sur deux puissance trois).
 
@@ -305,7 +308,7 @@ L'**estimateur du maximum de vraisemblance** (maximum likelihood estimator, MLE)
 
 Voici le résultat qui relie les deux premières sections. Maximiser une vraisemblance, c'est minimiser une perte bien choisie ($`\ell_{\text{perte}}(\hat y, y) = -\ln p`$), et inversement. Démontrons-le sur le cas roi.
 
-> **Théorème (moindres carrés = vraisemblance gaussienne).** Supposons le modèle $`y_i = \boldsymbol{\theta}^\top \mathbf{x}_i + \varepsilon_i`$ avec des bruits $`\varepsilon_i \sim \mathcal{N}(0, \sigma^2)`$ i.i.d. (et $`\sigma^2`$ fixe connu). Alors l'estimateur du maximum de vraisemblance de $`\boldsymbol{\theta}`$ coincide avec l'estimateur des moindres carrés.
+> **Théorème (moindres carrés = vraisemblance gaussienne).** Supposons le modèle $`y_i = \boldsymbol{\theta}^\top \mathbf{x}_i + \varepsilon_i`$ avec des bruits $`\varepsilon_i \sim \mathcal{N}(0, \sigma^2)`$ i.i.d. (et $`\sigma^2`$ fixe connu). Alors l'estimateur du maximum de vraisemblance de $`\boldsymbol{\theta}`$ coïncide avec l'estimateur des moindres carrés.
 
 > **Le symbole $`\varepsilon`$ (epsilon, le bruit).** Ce symbole représente *le grain de hasard* qui fait que la réalité ne tombe jamais pile sur la droite : la petite erreur de mesure, l'imprévu, l'aléa. On le suppose ici centré (moyenne nulle : il ne tire pas systématiquement vers le haut ou le bas) et de variance $`\sigma^2`$ (son ampleur typique). C'est le tremblement de la main du monde quand il écrit les données.
 
@@ -365,16 +368,16 @@ Le MLE n'est pas qu'une recette : c'est un estimateur aux propriétés remarquab
 
 #### De la vraisemblance a l'a posteriori : l'approche bayesienne
 
-Le MLE ne croît qu'aux données. Mais souvent on a une **opinion préalable**: avant de lancer la pièce, on pense raisonnablement qu'elle est à peu près équilibrée. L'approche **bayésienne** (Bayesian) formalise cela en traitant $`\boldsymbol{\theta}`$ lui-même comme une variable aléatoire, dotée d'une loi *avant* de voir les données.
+Le MLE ne croit qu'aux données. Mais souvent on a une **opinion préalable** : avant de lancer la pièce, on pense raisonnablement qu'elle est à peu près équilibrée. L'approche **bayésienne** (Bayesian) formalise cela en traitant $`\boldsymbol{\theta}`$ lui-même comme une variable aléatoire, dotée d'une loi *avant* de voir les données.
 
-> **Le symbole $`p(\boldsymbol{\theta})`$ (loi a priori, prior).** Ce symbole représente *ce qu'on croît sur les réglages avant d'avoir regarde la moindre donnée*. C'est notre opinion de départ, notre préjugé quantifié : « je pense que la pièce est probablement équilibrée », « je pense que les coefficients sont probablement petits ». C'est la carte de nos croyances initiales.
+> **Le symbole $`p(\boldsymbol{\theta})`$ (loi a priori, prior).** Ce symbole représente *ce qu'on croit sur les réglages avant d'avoir regardé la moindre donnée*. C'est notre opinion de départ, notre préjugé quantifié : « je pense que la pièce est probablement équilibrée », « je pense que les coefficients sont probablement petits ». C'est la carte de nos croyances initiales.
 
 Le théorème de Bayes met à jour cette croyance à la lumière des données :
 ```math
 \underbrace{p(\boldsymbol{\theta} \mid \mathcal{D})}_{\text{a posteriori}} = \frac{\overbrace{p(\mathcal{D} \mid \boldsymbol{\theta})}^{\text{vraisemblance}}\;\overbrace{p(\boldsymbol{\theta})}^{\text{a priori}}}{\underbrace{p(\mathcal{D})}_{\text{evidence}}}.
 ```
 
-> **Le symbole $`p(\boldsymbol{\theta} \mid \mathcal{D})`$ (loi a posteriori, posterior).** Ce symbole représente *ce qu'on croît sur les réglages APRÈS avoir vu les données*. C'est la croyance initiale, corrigée par l'expérience. La barre « $`\mid \mathcal{D}`$ » dit « sachant ce que j'ai observé ». Tout l'apprentissage bayésien tient dans une phrase : on part d'un a priori, les données parlent via la vraisemblance, et on obtient un a posteriori, la connaissance mise à jour.
+> **Le symbole $`p(\boldsymbol{\theta} \mid \mathcal{D})`$ (loi a posteriori, posterior).** Ce symbole représente *ce qu'on croit sur les réglages APRÈS avoir vu les données*. C'est la croyance initiale, corrigée par l'expérience. La barre « $`\mid \mathcal{D}`$ » dit « sachant ce que j'ai observé ». Tout l'apprentissage bayésien tient dans une phrase : on part d'un a priori, les données parlent via la vraisemblance, et on obtient un a posteriori, la connaissance mise à jour.
 
 > **Le symbole $`p(\mathcal{D})`$ (évidence, ou vraisemblance marginale).** Ce symbole représente *la probabilité totale d'observer ces données, toutes machines confondues*: $`p(\mathcal{D}) = \int p(\mathcal{D}\mid\boldsymbol{\theta})\,p(\boldsymbol{\theta})\,d\boldsymbol{\theta}`$. C'est une simple constante de normalisation (elle ne dépend pas de $`\boldsymbol{\theta}`$) qui fait que l'a posteriori, intégré sur tous les $`\boldsymbol{\theta}`$, vaut bien 1. Pour *trouver* le $`\boldsymbol{\theta}`$ le plus probable, on peut souvent l'ignorer.
 
@@ -386,7 +389,7 @@ Plutôt que de manipuler toute la distribution a posteriori, on peut se contente
 > ```math
 > \hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} p(\boldsymbol{\theta}\mid\mathcal{D}) = \arg\max_{\boldsymbol{\theta}} \big[\ln p(\mathcal{D}\mid\boldsymbol{\theta}) + \ln p(\boldsymbol{\theta})\big].
 > ```
-> On à jeté l'évidence $`p(\mathcal{D})`$ (constante en $`\boldsymbol{\theta}`$, donc sans effet sur l'$`\arg\max`$) et pris le log. Lecture : *le MAP, c'est le MLE corrigé par une prime/pénalité venue de l'a priori.* Si l'a priori est plat (on ne croît rien de particulier), $`\ln p(\boldsymbol{\theta})`$ est constant et le MAP redevient le MLE.
+> On a jeté l'évidence $`p(\mathcal{D})`$ (constante en $`\boldsymbol{\theta}`$, donc sans effet sur l'$`\arg\max`$) et pris le log. Lecture : *le MAP, c'est le MLE corrigé par une prime/pénalité venue de l'a priori.* Si l'a priori est plat (on ne croit rien de particulier), $`\ln p(\boldsymbol{\theta})`$ est constant et le MAP redevient le MLE.
 
 > **Le symbole « mode ».** Le **mode** d'une distribution est *l'endroit où elle culmine*: la valeur la plus probable. A distinguer de la moyenne (centre de gravité) et de la médiane (point qui coupe en deux). Le MAP retient le sommet de la cloche a posteriori ; l'espérance a posteriori, elle, en retiendrait le centre de gravité, les deux coïncident pour une gaussienne, mais pas en général.
 
@@ -408,7 +411,7 @@ On change de signe (le max devient min) et on multiplie par $`\frac{2\sigma^2}{n
 ```
 On reconnaît l'objectif ridge avec $`\lambda = \sigma^2/(n\tau^2)`$. $`\blacksquare`$
 
-> **Lecture profonde.** Un a priori gaussien serré (petit $`\tau`$, on croît fort que $`\boldsymbol{\theta}`$ est proche de zéro) donne un grand $`\lambda`$ (forte régularisation). Un a priori vague (grand $`\tau`$) donne $`\lambda \to 0`$: on laisse parler les données. De même, un a priori de **Laplace** (double exponentielle) sur $`\boldsymbol{\theta}`$ donne la pénalité L1 du **Lasso**. *Toute pénalité est une croyance a priori déguisée*, et réciproquement.
+> **Lecture profonde.** Un a priori gaussien serré (petit $`\tau`$, on croit fort que $`\boldsymbol{\theta}`$ est proche de zéro) donne un grand $`\lambda`$ (forte régularisation). Un a priori vague (grand $`\tau`$) donne $`\lambda \to 0`$: on laisse parler les données. De même, un a priori de **Laplace** (double exponentielle) sur $`\boldsymbol{\theta}`$ donne la pénalité L1 du **Lasso**. *Toute pénalité est une croyance a priori déguisée*, et réciproquement.
 
 | Vision « erreur » (ERM) | Vision « probabilité » (bayésienne) |
 |---|---|
@@ -445,13 +448,13 @@ print("MLE Bernoulli (frequence de faces) =", mle_bernoulli(coins))   # 0.7
 
 On observe ce qu'annonce la théorie : à $`\lambda = 0`$ les coefficients estimés collent au vrai $`\boldsymbol{\theta}`$, puis ils sont *rétrécis* vers zéro à mesure que $`\lambda`$ croît.
 
-> **Mise à jour 2026.** Quand l'a posteriori n'est pas calculable en forme close (la règle générale des que le modèle est un tant soit peu complexe), on l'*approche*. Deux grandes familles dominent : l'**inférence variationnelle** (variational inférence, qui remplace l'a posteriori par la loi la plus proche dans une famille simple, via optimisation) et les **méthodes de Monte-Carlo par chaînes de Markov** (MCMC, notamment le **Hamiltonian Monte Carlo / NUTS** des bibliothèques comme Stan, PyMC, NumPyro). Le deep learning bayésien et les **ensembles profonds** (deep ensembles) sont devenus les outils pratiques d'estimation de l'incertitude à grande échelle.
+> **Mise à jour 2026.** Quand l'a posteriori n'est pas calculable en forme close (la règle générale dès que le modèle est un tant soit peu complexe), on l'*approche*. Deux grandes familles dominent : l'**inférence variationnelle** (variational inference, qui remplace l'a posteriori par la loi la plus proche dans une famille simple, via optimisation) et les **méthodes de Monte-Carlo par chaînes de Markov** (MCMC, notamment le **Hamiltonian Monte Carlo / NUTS** des bibliothèques comme Stan, PyMC, NumPyro). Le deep learning bayésien et les **ensembles profonds** (deep ensembles) sont devenus les outils pratiques d'estimation de l'incertitude à grande échelle.
 
 ---
 
 ### Modélisation probabiliste et inférence
 
-On à vu *estimer un paramètre*. Élargissons : la **modélisation probabiliste** consiste à écrire une histoire complète de hasard reliant *toutes* les quantités, observées et cachées, puis à *interroger* ce modèle. Cette interrogation s'appelle l'**inférence** (inférence).
+On a vu *estimer un paramètre*. Élargissons : la **modélisation probabiliste** consiste à écrire une histoire complète de hasard reliant *toutes* les quantités, observées et cachées, puis à *interroger* ce modèle. Cette interrogation s'appelle l'**inférence** (inference).
 
 #### Variables observees, variables latentes
 
@@ -486,7 +489,7 @@ Illustrons sur un modèle star : le **mélange de gaussiennes** (Gaussian mixtur
 
 > **Le symbole $`\pi_k`$ (poids de mélange).** Ce symbole représente *la part de chaque groupe dans la population*: $`\pi_k`$ est la probabilité qu'un point pris au hasard appartienne au groupe $`k`$. Ce sont des nombres positifs qui somment à 1 ($`\sum_k \pi_k = 1`$), comme les tranches d'un camembert. Le symbole $`K`$ désigne simplement *le nombre de groupes* du mélange.
 
-> **Le symbole $`\mathcal{N}(x\mid\mu_k,\Sigma_k)`$ (gaussienne du groupe $`k`$).** Cette notation représente la cloche de probabilité du groupe $`k`$: $`\mu_k`$ est son centre (le point typique du groupe) et $`\Sigma_k`$ sa **matrice de covariance** (la forme et l'orientation du nuage, large ou serré, rond ou allongé). C'est l'usage habituel de la loi normale, simplement décliné pour chaque groupe.
+> **Le symbole $`\mathcal{N}(x\mid\mu_k,\Sigma_k)`$ (gaussienne du groupe $`k`$).** Cette notation représente la cloche de probabilité du groupe $`k`$: $`\mu_k`$ est son centre (le point typique du groupe) et $`\Sigma_k`$ sa **matrice de covariance** (la forme et l'orientation du nuage, large ou serré, rond ou allongé). La matrice de covariance généralise la variance à plusieurs dimensions : sur sa diagonale on lit la variance le long de chaque coordonnée (l'étalement dans chaque direction), et ailleurs les liens entre coordonnées (par exemple « quand l'une grandit, l'autre grandit aussi »). C'est l'usage habituel de la loi normale, simplement décliné pour chaque groupe.
 
 ```mermaid
 flowchart TD
@@ -502,7 +505,7 @@ Par conditionnement (Bayes), la probabilité *a posteriori* qu'un point observé
 \gamma_k(x) = p(z=k\mid x) = \frac{\pi_k\,\mathcal{N}(x\mid\mu_k,\Sigma_k)}{\sum_{j=1}^K \pi_j\,\mathcal{N}(x\mid\mu_j,\Sigma_j)}.
 ```
 
-> **Le symbole $`\gamma_k(x)`$ (responsabilité).** Ce symbole représente à quel point le groupe $`k`$ « revendique » le point $`x`$: un nombre entre 0 et 1 qui dit la probabilité que $`x`$ soit ne du groupe $`k`$. Pour un point donné, les responsabilités de tous les groupes somment à 1 (le point appartient forcément à *un* groupe). C'est une appartenance *douce*: au lieu de trancher « ce point est au groupe 2 », on dit « 70 pour cent groupe 2, 30 pour cent groupe 1 ».
+> **Le symbole $`\gamma_k(x)`$ (responsabilité).** Ce symbole représente à quel point le groupe $`k`$ « revendique » le point $`x`$: un nombre entre 0 et 1 qui dit la probabilité que $`x`$ soit né du groupe $`k`$. Pour un point donné, les responsabilités de tous les groupes somment à 1 (le point appartient forcément à *un* groupe). C'est une appartenance *douce*: au lieu de trancher « ce point est au groupe 2 », on dit « 70 pour cent groupe 2, 30 pour cent groupe 1 ».
 
 #### L'algorithme EM : apprendre avec des variables cachees
 
@@ -573,7 +576,7 @@ print("centres :", np.round(mu.ravel(), 3))   # ~ [ 2.87 -3.08]
 
 > **Lien avec k-means.** Quand on durcit les responsabilités (chaque point attribue à 100 pour cent à son groupe le plus probable) et qu'on fige des variances égales, l'EM du mélange gaussien dégénère exactement en l'algorithme **k-means**. Autrement dit, k-means est un EM « à décisions tranchées ».
 
-> **Mise à jour 2026.** L'EM est l'ancêtre direct de l'inférence variationnelle moderne : la même ELBO, maximisée par descente de gradient stochastique et autodiff, motorise les **auto-encodeurs variationnels** (variational autoencoders, VAE), ou l'étape E intraitable est remplacée par un réseau de neurones « encodeur » (inférence amortie). C'est le pont direct entre l'EM classique et le deep learning génératif.
+> **Mise à jour 2026.** L'EM est l'ancêtre direct de l'inférence variationnelle moderne : la même ELBO, maximisée par descente de gradient stochastique et autodiff, motorise les **auto-encodeurs variationnels** (variational autoencoders, VAE), où l'étape E intraitable est remplacée par un réseau de neurones « encodeur » (inférence amortie). C'est le pont direct entre l'EM classique et le deep learning génératif.
 
 ---
 
@@ -593,7 +596,7 @@ La règle d'or relie le dessin à la formule : la loi jointe se **factorise** en
 > ```
 > Lecture : la probabilité de *tout* le système est le produit, pour chaque variable, de « sa probabilité sachant ses parents ». Une variable sans parent apporte simplement sa loi marginale $`p(X_j)`$.
 
-> **Pourquoi c'est puissant.** Sans hypothèse, décrire la loi jointe de $`m`$ variables binaires demande $`2^m - 1`$ nombres, explosif. Le graphe dit *quelles dépendances on s'autorise*; chaque variable ne « coûte » que ses parents. Si chaque nœud à au plus $`p`$ parents, le coût chute à environ $`m\cdot 2^p`$: on a troqué l'exponentiel en $`m`$ contre du linéaire en $`m`$. Le graphe est une *machine à économiser des paramètres*.
+> **Pourquoi c'est puissant.** Sans hypothèse, décrire la loi jointe de $`m`$ variables binaires demande $`2^m - 1`$ nombres, explosif. Le graphe dit *quelles dépendances on s'autorise*; chaque variable ne « coûte » que ses parents. Si chaque nœud a au plus $`p`$ parents, le coût chute à environ $`m\cdot 2^p`$: on a troqué l'exponentiel en $`m`$ contre du linéaire en $`m`$. Le graphe est une *machine à économiser des paramètres*.
 
 #### Exemple deroule : un petit reseau de diagnostic
 
@@ -610,7 +613,7 @@ La factorisation se lit directement sur le dessin :
 ```math
 p(P, A, M) = p(P)\,\cdot\, p(A\mid P)\,\cdot\, p(M\mid P, A).
 ```
-$`P`$ n'a pas de parent (sa loi marginale) ; $`A`$ à pour parent $`P`$; $`M`$ à pour parents $`P`$ et $`A`$. Donnons des chiffres : $`p(P{=}1)=0{,}2`$; $`p(A{=}1\mid P{=}1)=0{,}1`$, $`p(A{=}1\mid P{=}0)=0{,}4`$; et pour la pelouse,
+$`P`$ n'a pas de parent (sa loi marginale) ; $`A`$ a pour parent $`P`$ ; $`M`$ a pour parents $`P`$ et $`A`$. Donnons des chiffres : $`p(P{=}1)=0{,}2`$; $`p(A{=}1\mid P{=}1)=0{,}1`$, $`p(A{=}1\mid P{=}0)=0{,}4`$; et pour la pelouse,
 
 | $`P`$ | $`A`$ | $`p(M{=}1\mid P,A)`$ |
 |---|---|---|
@@ -623,7 +626,7 @@ Calculons par exemple la probabilité que tout soit « allumé » : pluie, arros
 ```math
 p(P{=}1, A{=}1, M{=}1) = p(P{=}1)\,p(A{=}1\mid P{=}1)\,p(M{=}1\mid P{=}1,A{=}1) = 0{,}2 \times 0{,}1 \times 0{,}99 = 0{,}0198.
 ```
-Et l'**inférence diagnostique** (remonter de l'effet à la cause) : sachant la pelouse mouillée, à-t-il plu ? On combine marginalisation et conditionnement. Calculons d'abord $`p(M{=}1)`$ en sommant sur les quatre scénarios $`(P,A)`$:
+Et l'**inférence diagnostique** (remonter de l'effet à la cause) : sachant la pelouse mouillée, a-t-il plu ? On combine marginalisation et conditionnement. Calculons d'abord $`p(M{=}1)`$ en sommant sur les quatre scénarios $`(P,A)`$:
 
 | $`P`$ | $`A`$ | $`p(P,A)`$ | $`p(M{=}1\mid P,A)`$ | produit |
 |---|---|---|---|---|
@@ -658,13 +661,13 @@ Trois motifs élémentaires structurent toute lecture d'indépendance dans un DA
 
 #### Apprentissage et inference dans les modeles graphiques
 
-Avec un modèle graphique, on retrouve les memes deux tâches que précédemment, organisées par le graphe :
+Avec un modèle graphique, on retrouve les mêmes deux tâches que précédemment, organisées par le graphe :
 - **Apprentissage des paramètres**: estimer les tables conditionnelles $`p(X_j\mid\mathrm{pa}(X_j))`$ (par MLE/MAP, souvent en forme close grâce à la factorisation).
 - **Inférence**: calculer une marginale ou une conditionnelle d'intérêt. Sur des graphes en arbre, l'algorithme de **propagation de croyances** (belief propagation, ou somme-produit) est exact et efficace ; sur des graphes généraux, l'inférence exacte est NP-difficile et on recourt à des approximations (variationnelles, MCMC).
 
 > **Place dans le paysage.** Les réseaux bayésiens sont la branche *dirigée* (causale, générative) des modèles graphiques ; il existe une branche *non dirigée* (champs de Markov, énergie). De nombreux modèles connus *sont* des réseaux bayésiens déguisés : le **classifieur bayésien naïf** (naive Bayes) est l'étoile $`Y \to X_1, \dots, Y \to X_d`$ (toutes les caractéristiques conditionnellement indépendantes sachant la classe) ; les **chaînes de Markov cachées** (hidden Markov models, HMM) sont une chaîne de latentes $`z_1 \to z_2 \to \dots`$ émettant chacune une observation. Tous se lisent, s'estiment et s'interrogent avec la même grammaire.
 
-> **Mise à jour 2026.** Les langages de **programmation probabiliste** (probabilistic programming, PyMC, NumPyro, Stan, Pyro) permettent d'écrire le modèle génératif comme un simple programme : le moteur dérive automatiquement la loi jointe et lance l'inférence (NUTS/HMC ou variationnelle) sans calcul manuel. Côté causalité, les memes DAG, augmentés de l'opérateur d'intervention $`\mathrm{do}(\cdot)`$ de Judea Pearl, fondent l'**inférence causale** moderne, distincte de la simple corrélation.
+> **Mise à jour 2026.** Les langages de **programmation probabiliste** (probabilistic programming, PyMC, NumPyro, Stan, Pyro) permettent d'écrire le modèle génératif comme un simple programme : le moteur dérive automatiquement la loi jointe et lance l'inférence (NUTS/HMC ou variationnelle) sans calcul manuel. Côté causalité, les mêmes DAG, augmentés de l'opérateur d'intervention $`\mathrm{do}(\cdot)`$ de Judea Pearl, fondent l'**inférence causale** moderne, distincte de la simple corrélation.
 
 ---
 
@@ -817,61 +820,61 @@ flowchart LR
 #### Exercice 1 : Risque empirique a la main (echauffement)
 
 On dispose des prédictions $`\hat{\mathbf{y}} = (3, 1, 4)`$ et des vraies valeurs $`\mathbf{y} = (2, 1, 2)`$.
-(à) Calculer le risque empirique pour la perte quadratique.
+(a) Calculer le risque empirique pour la perte quadratique.
 (b) Le calculer pour la perte absolue L1.
 (c) Que vaut la perte 0–1 si l'on considère les valeurs comme des classes ?
 
 > **Corrigé.**
-> (à) Erreurs : $`3-2=1`$, $`1-1=0`$, $`4-2=2`$. Carrés : $`1, 0, 4`$. Moyenne : $`\hat R = (1+0+4)/3 = 5/3 \approx 1{,}67`$.
+> (a) Erreurs : $`3-2=1`$, $`1-1=0`$, $`4-2=2`$. Carrés : $`1, 0, 4`$. Moyenne : $`\hat R = (1+0+4)/3 = 5/3 \approx 1{,}67`$.
 > (b) Valeurs absolues : $`1, 0, 2`$. Moyenne : $`(1+0+2)/3 = 1`$.
 > (c) Indicatrices d'erreur : $`3\neq2 \Rightarrow 1`$; $`1=1 \Rightarrow 0`$; $`4\neq2 \Rightarrow 1`$. Moyenne : $`2/3 \approx 0{,}67`$. On voit que la perte quadratique punit beaucoup plus la grosse erreur (le 2) que la L1, et que la 0–1 ignore l'amplitude.
 
 #### Exercice 2 : Moindres carres sans intercept
 
 On observe $`(x,y) \in \{(1,1),(2,3),(3,4)\}`$ et on ajuste $`\hat y = \theta x`$ (droite passant par l'origine, un seul paramètre).
-(à) Écrire le risque empirique $`\hat R(\theta)`$.
+(a) Écrire le risque empirique $`\hat R(\theta)`$.
 (b) Le minimiser et donner $`\hat\theta`$.
 
 > **Corrigé.**
-> (à) $`\hat R(\theta) = \frac{1}{3}\big[(\theta-1)^2 + (2\theta-3)^2 + (3\theta-4)^2\big]`$.
+> (a) $`\hat R(\theta) = \frac{1}{3}\big[(\theta-1)^2 + (2\theta-3)^2 + (3\theta-4)^2\big]`$.
 > (b) Dérivée : $`\hat R'(\theta) = \frac{2}{3}\big[(\theta-1) + 2(2\theta-3) + 3(3\theta-4)\big] = \frac{2}{3}(14\theta - 19)`$. Annulation : $`\hat\theta = 19/14 \approx 1{,}357`$. On retrouve la formule générale $`\hat\theta = \frac{\sum x_i y_i}{\sum x_i^2} = \frac{1+6+12}{1+4+9} = \frac{19}{14}`$.
 
 #### Exercice 3 : MLE d'une loi exponentielle
 
 Des durées de vie $`t_1, \dots, t_n`$ sont supposées i.i.d. de loi exponentielle de densité $`p(t\mid\lambda) = \lambda e^{-\lambda t}`$ (pour $`t \ge 0`$, $`\lambda > 0`$).
-(à) Écrire la log-vraisemblance.
+(a) Écrire la log-vraisemblance.
 (b) Trouver l'estimateur du maximum de vraisemblance $`\hat\lambda`$.
 (c) Application : pour des durées $`\{2, 3, 5\}`$ (heures), donner $`\hat\lambda`$.
 
 > **Corrigé.**
-> (à) $`\ell(\lambda) = \sum_{i=1}^n \ln(\lambda e^{-\lambda t_i}) = n\ln\lambda - \lambda\sum_{i=1}^n t_i`$.
+> (a) $`\ell(\lambda) = \sum_{i=1}^n \ln(\lambda e^{-\lambda t_i}) = n\ln\lambda - \lambda\sum_{i=1}^n t_i`$.
 > (b) $`\ell'(\lambda) = \frac{n}{\lambda} - \sum_i t_i = 0 \Rightarrow \hat\lambda = \frac{n}{\sum_i t_i} = \frac{1}{\bar t}`$ (l'inverse de la durée moyenne). La dérivée seconde $`-n/\lambda^2 < 0`$ confirme un maximum.
-> (c) $`\sum t_i = 10`$, $`n=3`$, donc $`\hat\lambda = 3/10 = 0{,}3\ \text{h}^{-1}`$ (durée de vie moyenne estimée $`\bar t = 10/3 \approx 3{,}33`$ h).
+> (c) $`\sum t_i = 10`$, $`n=3`$, donc $`\hat\lambda = 3/10 = 0{,}3\ \text{h}^{-1}`$ (durée de vie moyenne estimée $`\bar t = 10/3 \approx 3{,}33`$ h). Ici $`\lambda`$ est un *taux* : l'unité « h$`^{-1}`$ » se lit « par heure » et signifie qu'il se produit environ 0,3 panne par heure en moyenne. C'est l'inverse d'une durée : un taux de 0,3 par heure correspond à une durée de vie moyenne de $`1/\lambda \approx 3,33`$ h, autrement dit une panne toutes les 3,33 heures environ.
 
 #### Exercice 4 : MAP avec a priori beta (le lien regularisation/a priori)
 
 On reprend la pièce truquée ($`k`$ faces sur $`n`$ lancers, paramètre $`\theta`$), avec cette fois un a priori **bêta** $`p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}`$.
-(à) Écrire la log-densité a posteriori (à une constante près).
+(a) Écrire la log-densité a posteriori (à une constante près).
 (b) Trouver l'estimateur MAP.
 (c) Avec $`\alpha=\beta=2`$ (a priori « doux » centré sur 1/2), recalculer l'estimation pour $`k=0`$ face sur $`n=3`$ lancers, et comparer au MLE.
 
 > **Corrigé.**
-> (à) $`\ln p(\theta\mid\mathcal D) = \underbrace{k\ln\theta + (n-k)\ln(1-\theta)}_{\text{vraisemblance}} + \underbrace{(\alpha-1)\ln\theta + (\beta-1)\ln(1-\theta)}_{\text{a priori}} + \text{cste}`$.
+> (a) $`\ln p(\theta\mid\mathcal D) = \underbrace{k\ln\theta + (n-k)\ln(1-\theta)}_{\text{vraisemblance}} + \underbrace{(\alpha-1)\ln\theta + (\beta-1)\ln(1-\theta)}_{\text{a priori}} + \text{cste}`$.
 > (b) Regroupons : $`(k+\alpha-1)\ln\theta + (n-k+\beta-1)\ln(1-\theta)`$. Dérivée nulle : $`\frac{k+\alpha-1}{\theta} = \frac{n-k+\beta-1}{1-\theta}`$, d'où
 > ```math
 > \hat\theta_{\text{MAP}} = \frac{k+\alpha-1}{n+\alpha+\beta-2}.
 > ```
-> (c) Avec $`\alpha=\beta=2`$: $`\hat\theta_{\text{MAP}} = \frac{k+1}{n+2} = \frac{0+1}{3+2} = \frac{1}{5} = 0{,}2`$. La, le MLE donnait l'absurde $`0`$; l'a priori à *régularisé* l'estimation vers une valeur raisonnable. C'est exactement le mécanisme de « lissage de Laplace » (add-one smoothing), et l'illustration concrète que l'a priori joue le rôle de la régularisation.
+> (c) Avec $`\alpha=\beta=2`$: $`\hat\theta_{\text{MAP}} = \frac{k+1}{n+2} = \frac{0+1}{3+2} = \frac{1}{5} = 0{,}2`$. Là, le MLE donnait l'absurde $`0`$ ; l'a priori a *régularisé* l'estimation vers une valeur raisonnable. C'est exactement le mécanisme de « lissage de Laplace » (add-one smoothing), et l'illustration concrète que l'a priori joue le rôle de la régularisation.
 
 #### Exercice 5 : Inference dans un reseau bayesien
 
-Reprenons le réseau pluie/arroseur/pelouse de la section, avec les memes chiffres.
-(à) Calculer $`p(A{=}1)`$ (probabilité marginale que l'arroseur soit allumé).
+Reprenons le réseau pluie/arroseur/pelouse de la section, avec les mêmes chiffres.
+(a) Calculer $`p(A{=}1)`$ (probabilité marginale que l'arroseur soit allumé).
 (b) Sachant que la pelouse est mouillée, l'arroseur est-il plus probablement allumé ? Calculer $`p(A{=}1\mid M{=}1)`$.
 
 > **Corrigé.**
-> (à) Marginalisation sur $`P`$: $`p(A{=}1) = p(A{=}1\mid P{=}1)p(P{=}1) + p(A{=}1\mid P{=}0)p(P{=}0) = 0{,}1\times0{,}2 + 0{,}4\times0{,}8 = 0{,}02 + 0{,}32 = 0{,}34`$.
-> (b) On à besoin de $`p(A{=}1, M{=}1)`$. D'après le tableau des produits de la section (lignes ou $`A{=}1`$) : $`(P{=}0,A{=}1) \to 0{,}256`$ et $`(P{=}1,A{=}1)\to 0{,}0198`$, somme $`0{,}2758`$. Avec $`p(M{=}1)=0{,}4378`$:
+> (a) Marginalisation sur $`P`$: $`p(A{=}1) = p(A{=}1\mid P{=}1)p(P{=}1) + p(A{=}1\mid P{=}0)p(P{=}0) = 0{,}1\times0{,}2 + 0{,}4\times0{,}8 = 0{,}02 + 0{,}32 = 0{,}34`$.
+> (b) On a besoin de $`p(A{=}1, M{=}1)`$. D'après le tableau des produits de la section (lignes où $`A{=}1`$) : $`(P{=}0,A{=}1) \to 0{,}256`$ et $`(P{=}1,A{=}1)\to 0{,}0198`$, somme $`0{,}2758`$. Avec $`p(M{=}1)=0{,}4378`$:
 > ```math
 > p(A{=}1\mid M{=}1) = \frac{0{,}2758}{0{,}4378} \approx 0{,}630.
 > ```
@@ -880,12 +883,12 @@ Reprenons le réseau pluie/arroseur/pelouse de la section, avec les memes chiffr
 #### Exercice 6 : Decomposition biais-variance d'un estimateur retreci
 
 Soit $`\hat\mu = \frac{1}{n}\sum_{i=1}^n X_i`$ la moyenne empirique de $`n`$ tirages i.i.d. d'espérance $`\mu`$ et variance $`\sigma^2`$. On considère l'estimateur *rétréci* (shrinkage) $`\hat\mu_c = c\,\hat\mu`$ avec $`c \in [0,1]`$.
-(à) Calculer le biais et la variance de $`\hat\mu_c`$.
+(a) Calculer le biais et la variance de $`\hat\mu_c`$.
 (b) Écrire l'erreur quadratique moyenne (MSE) en fonction de $`c`$.
 (c) Trouver le $`c^\star`$ qui minimise la MSE et commenter.
 
 > **Corrigé.**
-> (à) On rappelle $`\mathbb{E}[\hat\mu] = \mu`$ et $`\mathrm{Var}(\hat\mu) = \sigma^2/n`$. Biais : $`\mathbb{E}[\hat\mu_c] - \mu = c\mu - \mu = (c-1)\mu`$. Variance : $`\mathrm{Var}(c\hat\mu) = c^2\,\mathrm{Var}(\hat\mu) = c^2\sigma^2/n`$.
+> (a) On rappelle $`\mathbb{E}[\hat\mu] = \mu`$ et $`\mathrm{Var}(\hat\mu) = \sigma^2/n`$. Biais : $`\mathbb{E}[\hat\mu_c] - \mu = c\mu - \mu = (c-1)\mu`$. Variance : $`\mathrm{Var}(c\hat\mu) = c^2\,\mathrm{Var}(\hat\mu) = c^2\sigma^2/n`$.
 > (b) $`\mathrm{MSE}(c) = \text{biais}^2 + \text{variance} = (c-1)^2\mu^2 + c^2\sigma^2/n`$.
 > (c) Dérivée en $`c`$: $`2(c-1)\mu^2 + 2c\sigma^2/n = 0 \Rightarrow c^\star = \dfrac{\mu^2}{\mu^2 + \sigma^2/n}`$. Ce $`c^\star`$ est strictement *inférieur* à 1 : un peu de rétrécissement (donc un peu de biais volontaire) réduit la variance et abaisse la MSE totale sous celle de la moyenne empirique brute ($`c=1`$). C'est l'idée même de la régularisation et le cœur du paradoxe de Stein : accepter un brin de biais pour gagner beaucoup en variance. Quand $`n\to\infty`$, $`\sigma^2/n\to0`$ et $`c^\star\to1`$: avec assez de données, le rétrécissement devient inutile.
 

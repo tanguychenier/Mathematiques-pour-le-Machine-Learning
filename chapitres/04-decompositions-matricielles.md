@@ -16,6 +16,8 @@ Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine
 
 ##### Définition rigoureuse
 
+> **Le mot « $`n`$-linéaire alternée ».** Avant la définition, démêlons ces deux mots savants. « Linéaire en chaque colonne séparément » (n-linéaire) veut dire ceci : si vous figez toutes les colonnes sauf une, le déterminant se comporte comme une multiplication ordinaire vis-à-vis de cette colonne (doublez-la, le résultat double ; additionnez deux colonnes, les résultats s'additionnent). « Alternée » veut dire qu'il change de signe si vous échangez deux colonnes (et qu'il devient nul si deux colonnes sont identiques). Ces deux règles, plus la valeur $`1`$ sur la matrice identité, suffisent à fixer un unique nombre : c'est ce nombre qu'on appelle déterminant. Cette caractérisation abstraite est exactement équivalente aux formules concrètes (Leibniz, Sarrus) données juste après ; elle dit la même chose, mais en énonçant d'abord les propriétés au lieu d'une recette de calcul.
+
 > **Définition (déterminant).** Soit $`A = (a_{ij})_{1 \le i,j \le n}`$ une matrice carrée à coefficients dans $`\mathbb{R}`$ (ou $`\mathbb{C}`$). Le déterminant est l'unique forme $`n`$-linéaire alternée des colonnes de $`A`$ valant $`1`$ sur la matrice identité. Explicitement (formule de Leibniz) :
 > ```math
 > \det(A) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)}
@@ -110,11 +112,11 @@ Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant
 #### Application en machine learning
 
 - **Vraisemblance gaussienne (likelihood):** la densité d'une loi normale multivariée contient le terme $`\frac{1}{\sqrt{(2\pi)^n \det(\Sigma)}}`$. Le déterminant de la matrice de covariance $`\Sigma`$ mesure le « volume » de dispersion des données. En pratique on calcule $`\log \det(\Sigma)`$ (plus stable).
-- **Entropie d'une gaussienne:** l'entropie différentielle d'une loi $`\mathcal{N}(\mu,\Sigma)`$ vaut $`\frac12 \log\big((2\pi e)^n \det(\Sigma)\big)`$, donc croît comme $`\frac12 \log\det(\Sigma)`$, un déterminant élevé signifie une distribution très étalée, donc incertaine.
-- **Régularisation et trace:** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$.
+- **Entropie d'une gaussienne :** l'entropie différentielle d'une loi $`\mathcal{N}(\mu,\Sigma)`$ vaut $`\frac12 \log\big((2\pi e)^n \det(\Sigma)\big)`$, donc croît comme $`\frac12 \log\det(\Sigma)`$, un déterminant élevé signifie une distribution très étalée, donc incertaine. Pour situer les mots : $`\mathcal{N}(\mu,\Sigma)`$ désigne une **loi normale** (la fameuse courbe en cloche, en plusieurs dimensions ici) de moyenne $`\mu`$ et de covariance $`\Sigma`$ ; et l'**entropie** mesure l'incertitude, l'étalement d'une distribution (plus elle est grande, moins on sait prédire où va tomber un tirage). Intuitivement, plus le déterminant de la covariance est grand, plus la gaussienne est étalée, donc imprévisible : grand déterminant et grande entropie vont de pair.
+- **Régularisation et trace :** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$. Quelques mots pour les non-initiés (ces notions sont détaillées dans les chapitres consacrés à l'apprentissage) : la **régression Ridge** est une régression à laquelle on ajoute une pénalité $`\|w\|^2`$ (la longueur au carré du vecteur de coefficients) pour empêcher ceux-ci de devenir trop grands et ainsi éviter le surapprentissage, c'est-à-dire un modèle qui colle au bruit des données plutôt qu'à leur tendance ; et le **nombre de degrés de liberté effectifs** mesure, en gros, combien de paramètres le modèle utilise réellement une fois cette pénalité appliquée (plus la pénalité est forte, plus ce nombre diminue).
 - **Jacobien des flux normalisants (normalizing flows):** pour transformer une densité, on a besoin de $`\log\left|\det \frac{\partial f}{\partial x}\right|`$. Toute l'ingénierie des flux modernes consiste à concevoir des transformations dont ce log-déterminant est calculable rapidement.
 
-> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $`\log\det`$ par factorisation dense $`O(n^3)`$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $`\log\det(A) = \mathrm{tr}(\log A)`$, et on estime cette trace via $`\mathrm{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j`$ avec $`z_j`$ des vecteurs aléatoires (Rademacher, donc $`\mathbb{E}[z_j z_j^\top] = I`$). Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
+> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $`\log\det`$ par factorisation dense $`O(n^3)`$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $`\log\det(A) = \mathrm{tr}(\log A)`$, et on estime cette trace via $`\mathrm{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j`$ avec $`z_j`$ des vecteurs aléatoires (Rademacher, donc $`\mathbb{E}[z_j z_j^\top] = I`$). Deux mots de vocabulaire pour décoder cette ligne : un **vecteur de Rademacher** est un vecteur dont chaque composante vaut, au hasard, $`+1`$ ou $`-1`$ avec une chance sur deux (comme un pile ou face par coordonnée) ; et le symbole $`\mathbb{E}[\cdot]`$ désigne l'**espérance**, c'est-à-dire la moyenne de la quantité entre crochets sur tous les tirages aléatoires possibles. Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
 
 ```python
 import numpy as np
@@ -221,7 +223,7 @@ Donc $`v^{(1)} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}`$ (à un facteur près).
 ```
 Donc $`v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}`$.
 
-**Vérification:** $`A v^{(1)} = \begin{pmatrix} 4+1 \\ 2+3 \end{pmatrix} = \begin{pmatrix} 5 \\ 5 \end{pmatrix} = 5 v^{(1)}`$. 
+**Vérification (faite ici pour $`\lambda_1`$ ; le même calcul pour $`\lambda_2`$ donne bien $`A v^{(2)} = 2\, v^{(2)}`$) :** $`A v^{(1)} = \begin{pmatrix} 4+1 \\ 2+3 \end{pmatrix} = \begin{pmatrix} 5 \\ 5 \end{pmatrix} = 5 v^{(1)}`$. $`\checkmark`$
 
 #### Propriétés essentielles
 
@@ -347,7 +349,7 @@ Cholesky coûte **deux fois moins** que LU : c'est la méthode de choix dès que
 > ```math
 > A = \begin{pmatrix} a_{11} & b^\top \\ b & C \end{pmatrix}, \quad a_{11} > 0,
 > ```
-> où $`b \in \mathbb{R}^{n-1}`$ et $`C \in \mathbb{R}^{(n-1)\times(n-1)}`$. Posons $`\ell_{11} = \sqrt{a_{11}}`$ et $`\ell = b/\ell_{11}`$. Le **complément de Schur** $`S = C - \ell\,\ell^\top = C - bb^\top/a_{11}`$ est symétrique défini positif de taille $`n-1`$ (car $`A`$ l'est), donc par hypothèse de récurrence $`S = L_1 L_1^\top`$. Alors
+> où $`b \in \mathbb{R}^{n-1}`$ et $`C \in \mathbb{R}^{(n-1)\times(n-1)}`$. Posons $`\ell_{11} = \sqrt{a_{11}}`$ et $`\ell = b/\ell_{11}`$. Le **complément de Schur** $`S = C - \ell\,\ell^\top = C - bb^\top/a_{11}`$ est symétrique défini positif de taille $`n-1`$ (car $`A`$ l'est), donc par hypothèse de récurrence $`S = L_1 L_1^\top`$. (Le complément de Schur, c'est tout simplement ce qui reste de la matrice une fois qu'on a éliminé la première ligne et la première colonne ; le point clé est qu'il hérite de la positivité de $`A`$, ce qui permet d'enchaîner la récurrence.) Alors
 > ```math
 > L = \begin{pmatrix} \ell_{11} & 0 \\ \ell & L_1 \end{pmatrix} \quad\text{vérifie}\quad LL^\top = A.
 > ```
@@ -409,7 +411,7 @@ Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **
 
 > **Le symbole $`D = \mathrm{diag}(\lambda_1,\dots,\lambda_n)`$.** $`\mathrm{diag}(\cdots)`$ représente une matrice **diagonale**: des nombres sur la diagonale, des zéros partout ailleurs. C'est la forme la plus simple de matrice, celle qui étire chaque axe indépendamment sans rien mélanger.
 
-> **Lecture de $`A = PDP^{-1}`$ comme un sandwich.** Lis de droite à gauche : $`P^{-1}`$ **traduit** un vecteur dans le langage des vecteurs propres ; $`D`$ **étire** chaque coordonnée par sa valeur propre ; $`P`$ **retraduit** dans le langage d'origine. Trois étapes : traduire, étirer, retraduire.
+> **Lecture de $`A = PDP^{-1}`$ comme un sandwich.** Lisez de droite à gauche : $`P^{-1}`$ **traduit** un vecteur dans le langage des vecteurs propres ; $`D`$ **étire** chaque coordonnée par sa valeur propre ; $`P`$ **retraduit** dans le langage d'origine. Trois étapes : traduire, étirer, retraduire.
 
 > **Condition pratique.** $`A`$ est diagonalisable $`\iff`$ pour **chaque** valeur propre, multiplicité géométrique = multiplicité algébrique. Cas suffisant commode : si $`A`$ a $`n`$ valeurs propres **distinctes**, elle est automatiquement diagonalisable.
 
@@ -464,7 +466,7 @@ Pour les matrices symétriques réelles, la diagonalisation est encore plus bell
 
 #### Application reine en machine learning : l'ACP
 
-> **Analyse en composantes principales (Principal Component Analysis, PCA).** On centre les données, on forme la matrice de covariance $`C = \frac1n X^\top X`$ (symétrique, semi-définie positive), on la diagonalise $`C = Q\Lambda Q^\top`$. Les vecteurs propres (colonnes de $`Q`$) sont les **axes principaux**; les valeurs propres $`\lambda_i`$ sont les **variances** le long de ces axes. Projeter sur les $`k`$ plus grandes valeurs propres = compresser en gardant le maximum de variance.
+> **Analyse en composantes principales (Principal Component Analysis, PCA).** On centre les données, on forme la matrice de covariance $`C = \frac1n X^\top X`$ (symétrique, semi-définie positive), on la diagonalise $`C = Q\Lambda Q^\top`$. Les vecteurs propres (colonnes de $`Q`$) sont les **axes principaux**; les valeurs propres $`\lambda_i`$ sont les **variances** le long de ces axes. La variance mesure simplement l'étalement des données autour de leur moyenne : une grande variance le long d'un axe signifie que les données sont très dispersées dans cette direction, une petite variance qu'elles y sont au contraire bien resserrées. Projeter sur les $`k`$ plus grandes valeurs propres = compresser en gardant le maximum de variance.
 
 ```python
 import numpy as np
@@ -516,6 +518,8 @@ Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice
 > - $`U \in \mathbb{R}^{m\times m}`$ est **orthogonale** ($`U^\top U = I_m`$) ; ses colonnes sont les **vecteurs singuliers à gauche**;
 > - $`V \in \mathbb{R}^{n\times n}`$ est **orthogonale** ($`V^\top V = I_n`$) ; ses colonnes sont les **vecteurs singuliers à droite**;
 > - $`\Sigma \in \mathbb{R}^{m\times n}`$ est « diagonale » (coefficients $`\Sigma_{ii} = \sigma_i`$, nuls hors diagonale) avec $`\sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_r > 0`$ et $`\sigma_{r+1} = \dots = 0`$, les **valeurs singulières**, où $`r = \mathrm{rang}(A)`$.
+
+> **SVD complète vs SVD réduite.** Le théorème ci-dessus décrit la **SVD complète** : $`U`$ est carrée $`m\times m`$, $`V`$ est carrée $`n\times n`$ et $`\Sigma`$ a la taille $`m\times n`$ de la matrice de départ. Mais beaucoup de ces nombres ne servent à rien : si le rang vaut $`r`$, seules les $`r`$ premières colonnes de $`U`$, les $`r`$ premières de $`V`$ et les $`r`$ premières valeurs singulières comptent vraiment ; tout le reste se multiplie par des zéros. La **SVD réduite** ne garde donc que l'utile : $`U`$ tronquée à $`m\times r`$, $`\Sigma`$ ramenée à $`r\times r`$ et $`V`$ à $`n\times r`$. Les deux formes reconstruisent exactement la même matrice $`A`$ ; la réduite est simplement plus économique. C'est elle qu'on rencontrera dans l'exemple chiffré (un $`U`$ de taille $`3\times 2`$ et non $`3\times 3`$) et c'est elle que le code obtient avec l'option `full_matrices=False`.
 
 > **Le symbole $`\Sigma`$ (sigma majuscule, ici une matrice).** Attention : ce $`\Sigma`$ n'est **pas** une somme ! Ici c'est le **nom d'une matrice** quasi-diagonale qui contient les valeurs singulières $`\sigma_i`$ (sigma minuscule) sur sa diagonale. Chaque $`\sigma_i`$ est un **facteur d'étirement**, et il est toujours $`\ge 0`$ (contrairement aux valeurs propres qui peuvent être négatives ou complexes).
 
@@ -866,7 +870,7 @@ Une matrice $`A`$ de taille $`4\times 4`$ a pour valeurs singulières $`\sigma =
 
 > **Corrigé.**
 > **(a)** Norme spectrale : $`\|A - A_2\|_2 = \sigma_3 = 0{,}5`$. Norme de Frobenius : $`\|A - A_2\|_F = \sqrt{\sigma_3^2 + \sigma_4^2} = \sqrt{0{,}25 + 0{,}01} = \sqrt{0{,}26} \approx 0{,}51`$.
-> **(b)** Variance totale $`\propto \sum\sigma_i^2 = 100 + 36 + 0{,}25 + 0{,}01 = 136{,}26`$. Capturée par rang 2 : $`136/136{,}26 \approx 0{,}9981`$, soit **99,8 %**.
+> **(b)** Variance totale $`\propto \sum\sigma_i^2 = 100 + 36 + 0{,}25 + 0{,}01 = 136{,}26`$. Capturée par rang 2 : $`136/136{,}26 \approx 0{,}9981`$, soit **99,8 %**. (Attention : au numérateur, $`136`$ n'est pas un arrondi mais la valeur **exacte** $`100 + 36 = \sigma_1^2 + \sigma_2^2`$ ; seul le résultat de la division, $`0{,}9981`$, est arrondi.)
 > **(c)** Oui, excellent : il y a un **coude** net après $`\sigma_2`$ (chute de $`6`$ à $`0{,}5`$). Les deux dernières composantes sont quasi du bruit ; le rang $`2`$ est le choix naturel.
 
 #### Exercice 7 : Synthèse (raisonnement)

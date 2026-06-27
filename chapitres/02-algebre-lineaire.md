@@ -15,7 +15,7 @@ Le mot « linéaire » signifie que les inconnues n'apparaissent qu'à la puissa
 
 #### Definition rigoureuse
 
-> **Définition (système linéaire).** Un **système de $`m`$ équations linéaires à $`n`$ inconnues** sur le corps des réels $`\mathbb{R}`$ est une famille de $`m`$ égalités de la forme
+> **Définition (système linéaire).** Un **système de $`m`$ équations linéaires à $`n`$ inconnues** sur le corps des réels $`\mathbb{R}`$ (un corps est un ensemble de nombres où l'on peut additionner, soustraire, multiplier et diviser ; on le détaille plus loin, retenez ici simplement « les nombres réels $`\mathbb{R}`$ ») est une famille de $`m`$ égalités de la forme
 > ```math
 > \begin{cases}
 > a_{11} x_1 + a_{12} x_2 + \cdots + a_{1n} x_n = b_1 \\
@@ -284,7 +284,7 @@ A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}, \quad \det A = ad - bc, \qquad
 
 Le produit matriciel **est** le calcul fondamental des réseaux de neurones. Une couche dense (fully connected) qui transforme un vecteur d'entrée $`\mathbf{x} \in \mathbb{R}^n`$ en sortie $`\mathbf{y}\in\mathbb{R}^m`$ s'écrit $`\mathbf{y} = W\mathbf{x} + \mathbf{b}`$, où $`W \in \mathbb{R}^{m\times n}`$ est la matrice de **poids** (weights) et $`\mathbf{b}`$ le **biais** (bias). Empiler $`L`$ couches, c'est composer des produits matriciels (entrecoupés de non-linéarités). Entraîner un réseau, c'est ajuster les coefficients de tous les $`W`$.
 
-> **Mise à jour 2026.** Sur GPU et TPU, le produit matriciel est l'opération reine : les bibliothèques modernes (cuBLAS, et les noyaux Triton/CUTLASS) y consacrent l'essentiel de leur optimisation, et les unités matérielles dédiées (Tensor Cores) calculent des produits de blocs en précision mixte (bfloat16/FP8). Côté logiciel, JAX et PyTorch reposent sur `einsum` et l'auto-vectorisation (`vmap`) pour exprimer ces produits ; un modèle de langage de plusieurs centaines de milliards de paramètres n'est, au fond, qu'une longue chaîne de produits matriciels optimisés.
+> **Mise à jour 2026.** Sur GPU et TPU, le produit matriciel est l'opération reine : les bibliothèques modernes (cuBLAS, et les noyaux Triton/CUTLASS, qui sont des outils logiciels spécialisés pour calculer vite, dont les noms importent peu ici) y consacrent l'essentiel de leur optimisation, et les unités matérielles dédiées (Tensor Cores) calculent des produits de blocs en **précision mixte**. La précision mixte consiste à coder les nombres sur moins de bits (les formats bfloat16 et FP8, plus légers que les nombres habituels) pour aller plus vite, au prix d'un peu de précision. Côté logiciel, JAX et PyTorch reposent sur des outils dédiés (`einsum` pour écrire les produits de façon compacte, l'auto-vectorisation `vmap` pour les appliquer en masse) ; ne retenez ici qu'une chose : un modèle de langage de plusieurs centaines de milliards de paramètres n'est, au fond, qu'une longue chaîne de produits matriciels optimisés.
 
 ```python
 import numpy as np
@@ -520,7 +520,7 @@ Intuition : $`\mathrm{Vect}(\mathbf{v})`$ est la droite portée par $`\mathbf{v}
 
 #### Application machine learning
 
-L'espace des **paramètres** d'un modèle est un espace vectoriel : un réseau à $`P`$ poids vit dans $`\mathbb{R}^P`$; l'optimisation se promène dans cet espace. L'espace des **caractéristiques** (features) est lui aussi vectoriel, additionner deux plongements (embeddings) de mots, c'est de l'algèbre vectorielle, et c'est ce qui rend possibles les fameuses analogies « roi $`-`$ homme $`+`$ femme $`\approx`$ reine ». Enfin, l'ensemble des fonctions représentables par une architecture donnée n'est pas toujours un espace vectoriel (à cause des non-linéarités), mais beaucoup de raisonnements locaux (autour d'un point, via la différentielle) **le sont**: c'est tout l'intérêt de la linéarisation.
+L'espace des **paramètres** d'un modèle est un espace vectoriel : un réseau à $`P`$ poids vit dans $`\mathbb{R}^P`$; l'optimisation se promène dans cet espace. L'espace des **caractéristiques** (features) est lui aussi vectoriel. Additionner deux plongements (embeddings) de mots, c'est de l'algèbre vectorielle, et c'est ce qui rend possibles les fameuses analogies « roi $`-`$ homme $`+`$ femme $`\approx`$ reine ». Enfin, l'ensemble des fonctions représentables par une architecture donnée n'est pas toujours un espace vectoriel (à cause des non-linéarités), mais beaucoup de raisonnements locaux (autour d'un point, via la différentielle) **le sont**: c'est tout l'intérêt de la linéarisation.
 
 ```python
 import numpy as np
@@ -675,7 +675,7 @@ print(np.round(null_space / null_space[0], 3).ravel())  # ~ (1, -2, 1) a un fact
 print(np.round(A @ null_space, 6).ravel())              # ~ (0, 0, 0)
 ```
 
-> **Application machine learning.** La **dimension intrinsèque** des données (souvent bien plus petite que le nombre de features brutes) est l'idée derrière la **réduction de dimension**: l'ACP cherche la meilleure base de faible dimension qui capture l'essentiel de la variance. Le **rang** d'une matrice de données mesure le nombre de directions réellement informatives ; les approximations de **rang faible** (low-rank) compressent modèles et données, au cœur des systèmes de recommandation (factorisation matricielle) et des adaptateurs **LoRA** des grands modèles.
+> **Application machine learning.** La **dimension intrinsèque** des données (souvent bien plus petite que le nombre de features brutes) est l'idée derrière la **réduction de dimension**: l'ACP cherche la meilleure base de faible dimension qui capture l'essentiel de la variance. La **variance** mesure à quel point les valeurs s'éloignent de leur moyenne, c'est-à-dire l'étalement du nuage de points (une variance faible = des valeurs serrées, une variance forte = des valeurs très dispersées). Le **rang** d'une matrice de données mesure le nombre de directions réellement informatives ; les approximations de **rang faible** (low-rank) compressent modèles et données, au cœur des systèmes de recommandation (factorisation matricielle) et des adaptateurs **LoRA** des grands modèles.
 
 > **Mise à jour 2026.** Les adaptateurs **LoRA** (Low-Rank Adaptation) et leurs variantes (DoRA, QLoRA) reposent **exactement** sur cette algèbre : au lieu de modifier toute une matrice de poids $`W\in\mathbb{R}^{m\times n}`$, on lui ajoute une correction de **rang faible** $`\Delta W = BA`$ avec $`B\in\mathbb{R}^{m\times r}`$, $`A\in\mathbb{R}^{r\times n}`$ et $`r \ll \min(m,n)`$, soit $`r(m+n)`$ paramètres au lieu de $`mn`$. Affiner un modèle géant devient ainsi accessible sur un seul GPU.
 
@@ -763,7 +763,7 @@ C'est **vide** ($`\mathbf{b}\notin\mathrm{Im} A`$), un **point** ($`\ker A=\{\ma
 
 #### Application machine learning
 
-Un réseau de neurones **sans** fonction d'activation s'effondrerait en une **seule** application affine (composition d'applications affines = application affine), incapable d'apprendre des frontières courbes : c'est précisément pour briser cette linéarité qu'on intercale des non-linéarités (ReLU, GELU). À l'inverse, la **rétropropagation** (backpropagation) est, à chaque pas, du calcul **linéaire**: le gradient se propage en arrière par des produits avec les **transposées** des matrices de poids (la jacobienne d'une couche linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$ est la matrice de poids $`W`$ elle-même). Comprendre noyau et image éclaire aussi la **capacité** d'un modèle et les directions que le réseau ne « voit » pas.
+Un réseau de neurones **sans** fonction d'activation s'effondrerait en une **seule** application affine (composition d'applications affines = application affine), incapable d'apprendre des frontières courbes : c'est précisément pour briser cette linéarité qu'on intercale des non-linéarités (ReLU, GELU). À l'inverse, la **rétropropagation** (backpropagation) est, à chaque pas, du calcul **linéaire**: le gradient se propage en arrière par des produits avec les **transposées** des matrices de poids (la jacobienne d'une couche linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$ est la matrice de poids $`W`$ elle-même). La **jacobienne** d'une fonction est le tableau de toutes ses dérivées partielles, c'est-à-dire de combien chaque sortie bouge quand on bouge légèrement chacune des entrées ; pour une application linéaire $`\mathbf{x}\mapsto W\mathbf{x}`$, ce tableau est tout simplement $`W`$. Le calcul détaillé des jacobiennes relève du chapitre d'analyse (comme celui du gradient) ; on s'en sert ici comme d'un objet linéaire de plus. Comprendre noyau et image éclaire aussi la **capacité** d'un modèle et les directions que le réseau ne « voit » pas.
 
 ```python
 import numpy as np
@@ -814,7 +814,7 @@ Sur une feuille quadrillée, les **points** sont des emplacements ; les **vecteu
 
 Géométriquement : un **point** (dimension 0), une **droite affine** (dimension 1), un **plan affine** (dimension 2)… qui **n'ont pas besoin** de passer par l'origine. Un sous-espace **vectoriel** est le cas particulier où $`\mathbf{0}\in\mathcal{V}`$ (on peut alors prendre $`A=\mathbf{0}`$).
 
-> **Lien direct avec les systèmes.** L'ensemble solution d'un système **compatible** $`A\mathbf{x}=\mathbf{b}`$ est le sous-espace affine $`\mathbf{x}_p + \ker A`$: un point translaté du noyau. C'est la **vraie nature géométrique** d'un ensemble solution non homogène, il est parallèle au noyau (même direction) mais décalé. On comprend alors la rigidité 0/1/$`\infty`$: un sous-espace affine est soit vide, soit un singleton (direction $`\{\mathbf{0}\}`$), soit infini.
+> **Lien direct avec les systèmes.** L'ensemble solution d'un système **compatible** $`A\mathbf{x}=\mathbf{b}`$ est le sous-espace affine $`\mathbf{x}_p + \ker A`$: un point translaté du noyau. C'est la **vraie nature géométrique** d'un ensemble solution non homogène : il est parallèle au noyau (même direction) mais décalé. On comprend alors la rigidité 0/1/$`\infty`$: un sous-espace affine est soit vide, soit un singleton (direction $`\{\mathbf{0}\}`$), soit infini.
 
 ##### Demonstration de la rigidite (0, 1 ou l'infini)
 
@@ -885,7 +885,9 @@ Le modèle linéaire prédit $`\hat{\mathbf{y}} = X\boldsymbol{\beta}`$. Comme i
 
 **Idée de preuve (géométrique).** La norme de l'erreur $`X\boldsymbol{\beta}-\mathbf{y}`$ est minimale quand $`X\boldsymbol{\beta}`$ est la **projection orthogonale** de $`\mathbf{y}`$ sur $`\mathrm{Im}X`$; le vecteur d'erreur est alors orthogonal à $`\mathrm{Im}X`$. L'orthogonalité à toutes les colonnes de $`X`$ s'écrit $`X^\top(X\boldsymbol{\beta}-\mathbf{y})=\mathbf{0}`$, soit les équations normales. $`\blacksquare`$
 
-> **Mise à jour 2026.** En pratique, on ne calcule **jamais** $`(X^\top X)^{-1}`$: former $`X^\top X`$ **carre** le conditionnement et amplifie les erreurs. On résout via **QR** ou directement par **SVD** (`np.linalg.lstsq`). Pour des $`X`$ énormes, on préfère la **descente de gradient (stochastique)**, qui est aussi ce qui passe à l'échelle pour les modèles non linéaires.
+> **Le mot « orthogonal » (et ses amis).** Orthogonal veut dire **perpendiculaire**, à angle droit. Deux vecteurs sont orthogonaux quand leur produit scalaire est nul ($`\mathbf{u}\cdot\mathbf{v}=0`$) : ils ne « pointent pas du tout dans la même direction ». Une **base orthonormée** est faite de vecteurs deux à deux perpendiculaires et tous de longueur 1 (comme les axes d'un repère bien droit). Une **matrice orthogonale** $`Q`$ (celle qui vérifie $`Q^\top Q = I`$) représente une transformation qui **préserve les longueurs et les angles** : concrètement une rotation ou une symétrie, un mouvement rigide qui ne déforme rien.
+
+> **Mise à jour 2026.** En pratique, on ne calcule **jamais** $`(X^\top X)^{-1}`$. Le **conditionnement** d'une matrice mesure sa sensibilité aux erreurs : un grand conditionnement signifie qu'une petite erreur sur les données provoque une grosse erreur sur la solution (c'est le rapport $`\sigma_{\max}/\sigma_{\min}`$ entre la plus grande et la plus petite valeur singulière). Or calculer $`X^\top X`$ **élève ce nombre au carré**, donc amplifie d'autant l'effet des erreurs d'arrondi. On résout via **QR** ou directement par **SVD** (`np.linalg.lstsq`). Pour des $`X`$ énormes, on préfère la **descente de gradient (stochastique)**, qui est aussi ce qui passe à l'échelle pour les modèles non linéaires.
 
 ```python
 import numpy as np
@@ -908,7 +910,7 @@ Le produit scalaire $`\mathbf{u}^\top\mathbf{v}`$ mesure l'alignement de deux ve
 
 > **Le symbole valeur propre $`\lambda`$ et vecteur propre $`\mathbf{v}`$.** Pour une matrice carrée $`A`$, un **vecteur propre** (eigenvector) est une direction **que $`A`$ ne fait que dilater** sans la dévier : $`A\mathbf{v} = \lambda\mathbf{v}`$ avec $`\mathbf{v}\ne\mathbf{0}`$, où le scalaire $`\lambda`$ (valeur propre, eigenvalue) est le **facteur d'étirement** le long de cette direction. Ce sont les « axes naturels » de la transformation.
 
-> **Définition (valeurs/vecteurs propres).** $`\lambda\in\mathbb{R}`$ est **valeur propre** de $`A\in\mathbb{R}^{n\times n}`$ s'il existe $`\mathbf{v}\ne\mathbf{0}`$ avec $`A\mathbf{v}=\lambda\mathbf{v}`$. Cela équivaut à $`\det(A-\lambda I_n)=0`$ (polynôme caractéristique). Si $`A`$ est **symétrique** ($`A=A^\top`$), le **théorème spectral** garantit une base orthonormée de vecteurs propres et des valeurs propres réelles : $`A = Q\Lambda Q^\top`$ avec $`Q`$ orthogonale ($`Q^\top Q = I_n`$) et $`\Lambda`$ diagonale.
+> **Définition (valeurs/vecteurs propres).** $`\lambda\in\mathbb{R}`$ est **valeur propre** de $`A\in\mathbb{R}^{n\times n}`$ s'il existe $`\mathbf{v}\ne\mathbf{0}`$ avec $`A\mathbf{v}=\lambda\mathbf{v}`$. Cela équivaut à $`\det(A-\lambda I_n)=0`$ (polynôme caractéristique). Attention : une matrice réelle peut n'avoir **aucune** valeur propre réelle (par exemple la rotation d'angle 90° du plan, qui ne laisse aucune direction inchangée) ; l'équivalence ci-dessus porte alors sur les seuls $`\lambda`$ réels. En revanche, si $`A`$ est **symétrique** ($`A=A^\top`$), le **théorème spectral** garantit que toutes ses valeurs propres sont réelles et qu'il existe une base orthonormée de vecteurs propres : $`A = Q\Lambda Q^\top`$ avec $`Q`$ orthogonale ($`Q^\top Q = I_n`$) et $`\Lambda`$ diagonale.
 
 La **décomposition en valeurs singulières** (SVD) généralise cela à **toute** matrice $`A\in\mathbb{R}^{m\times n}`$:
 ```math
@@ -918,7 +920,7 @@ avec $`U\in\mathbb{R}^{m\times m}`$ et $`V\in\mathbb{R}^{n\times n}`$ orthogonal
 
 #### L'analyse en composantes principales (ACP)
 
-> **Définition (ACP / PCA).** Sur des données **centrées** $`X`$, l'**analyse en composantes principales** cherche les directions orthogonales de **variance maximale**. Ce sont les vecteurs propres de la matrice de covariance $`C = \tfrac{1}{N}X^\top X`$, ou, de manière équivalente et numériquement préférable, les vecteurs singuliers droits ($`V`$) de $`X`$. Projeter sur les $`k`$ premières composantes **comprime** les données en perdant le moins de variance possible.
+> **Définition (ACP / PCA).** Sur des données **centrées** $`X`$, l'**analyse en composantes principales** cherche les directions orthogonales de **variance maximale** (les directions le long desquelles le nuage de points est le plus étalé). Ce sont les vecteurs propres de la matrice de covariance $`C = \tfrac{1}{N}X^\top X`$, ou, de manière équivalente et numériquement préférable, les vecteurs singuliers droits ($`V`$) de $`X`$. La **matrice de covariance** regroupe, dans sa case $`(i,j)`$, la **covariance** entre la caractéristique $`i`$ et la caractéristique $`j`$, c'est-à-dire leur tendance à varier ensemble (positive si elles montent en même temps, négative si l'une monte quand l'autre descend) ; sur sa diagonale, on retrouve la variance de chaque caractéristique. Projeter sur les $`k`$ premières composantes **comprime** les données en perdant le moins de variance possible.
 
 ```python
 import numpy as np

@@ -1,6 +1,6 @@
 # [Tansoftware](https://www.tansoftware.com) : Mathématiques pour le Machine Learning
 
-[![Langue : FR](https://img.shields.io/badge/langue-français-ED2939?logo=googletranslate&logoColor=white)](#) [![License : MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Topic : Machine Learning](https://img.shields.io/badge/topic-Machine_Learning-008080?logo=scikitlearn&logoColor=white)](#) [![Made with Markdown](https://img.shields.io/badge/Made_with-Markdown-1f425f?logo=markdown&logoColor=white)](https://www.markdownguide.org) [^1]
+[![Langue : FR](https://img.shields.io/badge/langue-français-ED2939)](#table-des-matières) [![License : MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Topic : Machine Learning](https://img.shields.io/badge/topic-Machine_Learning-008080?logo=scikitlearn&logoColor=white)](#table-des-matières) [![Made with Markdown](https://img.shields.io/badge/Made_with-Markdown-1f425f?logo=markdown&logoColor=white)](https://www.markdownguide.org) [^1]
 
 ---
 
@@ -24,7 +24,7 @@
    - [Base et rang](chapitres/02-algebre-lineaire.md#base-et-rang)
    - [Applications linéaires](chapitres/02-algebre-lineaire.md#applications-linéaires)
    - [Espaces affines](chapitres/02-algebre-lineaire.md#espaces-affines)
-   - [L'algèbre linéaire à l'œuvre en machine learning](chapitres/02-algebre-lineaire.md#lalgèbre-linéaire-à-lœuvre-en-machine-learning)
+   - [L'algèbre linéaire à l'œuvre en Machine Learning](chapitres/02-algebre-lineaire.md#lalgèbre-linéaire-à-lœuvre-en-machine-learning)
 3. [Géométrie analytique](chapitres/03-geometrie-analytique.md)
    - [Normes](chapitres/03-geometrie-analytique.md#normes)
    - [Produits scalaires](chapitres/03-geometrie-analytique.md#produits-scalaires)
@@ -70,7 +70,7 @@
 8. [Quand les modèles rencontrent les données](chapitres/08-modeles-et-donnees.md)
    - [Données, modèles et apprentissage](chapitres/08-modeles-et-donnees.md#données-modèles-et-apprentissage)
    - [Minimisation du risque empirique](chapitres/08-modeles-et-donnees.md#minimisation-du-risque-empirique)
-   - [Estimation des paramètres : maximum de vraisemblance et MAP](chapitres/08-modeles-et-donnees.md#estimation-des-paramètres--maximum-de-vraisemblance-et-map)
+   - [Estimation des paramètres : maximum de vraisemblance et MAP (maximum a posteriori)](chapitres/08-modeles-et-donnees.md#estimation-des-paramètres--maximum-de-vraisemblance-et-map)
    - [Modélisation probabiliste et inférence](chapitres/08-modeles-et-donnees.md#modélisation-probabiliste-et-inférence)
    - [Modèles graphiques dirigés](chapitres/08-modeles-et-donnees.md#modèles-graphiques-dirigés)
    - [Sélection de modèle et compromis biais-variance](chapitres/08-modeles-et-donnees.md#sélection-de-modèle-et-compromis-biais-variance)
@@ -81,7 +81,7 @@
    - [Régression linéaire bayésienne](chapitres/09-regression-lineaire.md#régression-linéaire-bayésienne)
    - [Le maximum de vraisemblance comme projection orthogonale](chapitres/09-regression-lineaire.md#le-maximum-de-vraisemblance-comme-projection-orthogonale)
    - [Caractéristiques non linéaires et ouverture vers les noyaux](chapitres/09-regression-lineaire.md#caractéristiques-non-linéaires-et-ouverture-vers-les-noyaux)
-10. [Réduction de dimension par ACP](chapitres/10-reduction-de-dimension-acp.md)
+10. [Réduction de dimension par ACP (analyse en composantes principales)](chapitres/10-reduction-de-dimension-acp.md)
     - [Cadre de la réduction de dimension](chapitres/10-reduction-de-dimension-acp.md#cadre-de-la-réduction-de-dimension)
     - [Perspective de la variance maximale](chapitres/10-reduction-de-dimension-acp.md#perspective-de-la-variance-maximale)
     - [Perspective de la projection](chapitres/10-reduction-de-dimension-acp.md#perspective-de-la-projection)
@@ -149,4 +149,4 @@ Ce projet est distribué sous licence **MIT**. Vous êtes libre de l'utiliser, l
 
 **Tansoftware - Tanguy Chénier** · [LinkedIn](https://www.linkedin.com/in/tanguy-chenier) · [Tan-Software](https://github.com/Tan-Software) · [Compte personnel](https://github.com/tanguychenier) · [tansoftware.com](https://www.tansoftware.com)
 
-[^1]: Des modifications peuvent survenir., [Tanguy Chénier](https://www.linkedin.com/in/tanguy-chenier/).
+[^1]: Ce document est susceptible d'évoluer. Rédigé par [Tanguy Chénier](https://www.linkedin.com/in/tanguy-chenier/).

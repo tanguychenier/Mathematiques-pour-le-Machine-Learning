@@ -102,6 +102,8 @@ Plus profondément, un théorème central :
 
 > **Le symbole $`\forall`$ (quantificateur universel).** Ce « A » retourné se lit « **pour tout** » ou « quel que soit ». $`\forall x`$ veut dire « ceci est vrai pour absolument tous les $`x`$ », sans exception. C'est comme une affiche « *interdit à tous les véhicules* » : la règle s'applique à chacun.
 
+> **Pour les lecteurs avancés (la preuve ci-dessous peut être sautée).** L'esquisse qui suit s'appuie sur quelques mots de vocabulaire d'analyse qui ne sont pas indispensables pour la suite du cours ; si l'un d'eux vous est inconnu, vous pouvez passer directement à l'exemple chiffré sans rien perdre. En voici l'idée en langage courant. Un ensemble **fermé** est un ensemble qui contient déjà tout son « bord » (il n'y manque aucun point de contour) ; un ensemble **borné** est un ensemble que l'on peut enfermer dans une boîte de taille finie (il ne part pas à l'infini). Un ensemble à la fois fermé et borné est dit **compact** : pensez au segment fermé $`[0, 1]`$ (compact, ses deux extrémités sont incluses) par opposition au segment ouvert $`]0, 1[`$ (non compact, il lui manque ses bords). Le **théorème de Heine–Borel** est précisément le résultat qui affirme qu'en dimension finie, « fermé et borné » suffit à garantir « compact ». Enfin, dire qu'une fonction continue **atteint ses bornes** sur un compact signifie qu'il existe vraiment un point où elle prend sa plus petite valeur et un point où elle prend sa plus grande valeur (son minimum et son maximum sont réellement atteints, et non seulement approchés).
+
 *Démonstration (esquisse).* Il suffit de montrer que toute norme $`\|\cdot\|`$ est équivalente à $`\|\cdot\|_2`$. La fonction $`x \mapsto \|x\|`$ est continue pour $`\|\cdot\|_2`$ (par l'inégalité triangulaire et l'homogénéité). La sphère unité $`S = \{x: \|x\|_2 = 1\}`$ est **compacte** (fermée et bornée en dimension finie, théorème de Heine–Borel). Une fonction continue sur un compact atteint ses bornes : posons $`c = \min_{x \in S} \|x\|`$ et $`C = \max_{x \in S} \|x\|`$. Comme $`0 \notin S`$ et que $`\|x\| = 0 \iff x = 0`$, on a $`c > 0`$. Pour $`x \neq 0`$ quelconque, en appliquant à $`x/\|x\|_2 \in S`$ et en utilisant l'homogénéité, on obtient $`c \leq \|x\|/\|x\|_2 \leq C`$, d'où le résultat. $`\blacksquare`$
 
 > **Le symbole $`\mapsto`$ (« associe à »).** La flèche à barre $`\mapsto`$ décrit l'**action** d'une fonction sur un élément : $`x \mapsto \|x\|`$ se lit « à $`x`$, on associe $`\|x\|`$ ». À ne pas confondre avec $`\to`$ (qui relie des *ensembles*: $`f: V \to \mathbb{R}`$). Pensez à une machine : $`\to`$ décrit le type d'entrée et de sortie de la machine, $`\mapsto`$ décrit ce qu'elle fait à un objet précis.
@@ -145,6 +147,8 @@ print(np.linalg.norm(A, 'fro'))        # sqrt(1+4+9+16) = sqrt(30) ~ 5.477
 ```
 
 > **Mise à jour 2026.** Dans les bibliothèques d'autodifférenciation modernes (JAX, PyTorch), la fonction `norm` est entièrement **différentiable**, sauf en $`0`$ pour $`\ell_1`$ et $`\ell_\infty`$, où l'on utilise un **sous-gradient** (subgradient). C'est précisément ce qui permet d'optimiser des pénalités $`\ell_1`$ par descente de (sous-)gradient. Le *clipping* de gradient par la norme (`torch.nn.utils.clip_grad_norm_`), qui borne $`\|g\|_2`$ pour stabiliser l'entraînement des grands modèles, et la *normalisation spectrale* (qui contrôle la plus grande valeur singulière d'une matrice de poids) sont devenus des outils standard de l'entraînement à grande échelle.
+
+> **Le mot « valeur singulière ».** Une valeur singulière d'une matrice est un **facteur d'étirement** de cette matrice dans une de ses directions principales : la plus grande valeur singulière mesure l'étirement maximal qu'elle peut appliquer à un vecteur. Imaginez que la matrice transforme un cercle en une ellipse : les valeurs singulières sont les longueurs des demi-axes de cette ellipse. Contrôler la plus grande, c'est donc empêcher la matrice de trop dilater l'espace. Ces valeurs sont étudiées en détail au chapitre « Décompositions matricielles ».
 
 ---
 
@@ -199,7 +203,9 @@ La puissance du concept vient de son **axiomatisation**: on peut définir des pr
 
 > **Le symbole $`V \times V`$ (produit cartésien).** Le $`\times`$ entre deux ensembles forme l'ensemble des **couples**: $`V \times V`$ est l'ensemble de toutes les paires $`(x, y)`$ de vecteurs. C'est exactement comme un jeu de bataille navale : une case est repérée par un *couple* (lettre, chiffre). Ici, le produit scalaire prend en entrée un tel couple.
 
-Un espace vectoriel muni d'un produit scalaire s'appelle un **espace préhilbertien**; s'il est complet (toute suite de Cauchy y converge), c'est un **espace de Hilbert** (Hilbert space), la structure reine de l'analyse fonctionnelle et de la théorie de l'apprentissage (noyaux, RKHS).
+Un espace vectoriel muni d'un produit scalaire s'appelle un **espace préhilbertien** ; s'il est complet (toute suite de Cauchy y converge), c'est un **espace de Hilbert** (Hilbert space), la structure reine de l'analyse fonctionnelle et de la théorie de l'apprentissage (noyaux, RKHS, pour *Reproducing Kernel Hilbert Space*, c'est-à-dire espace de Hilbert à noyau reproduisant).
+
+> **Le mot « complet ».** Dire qu'un espace est *complet*, c'est dire qu'il n'a **aucun trou** : si une suite de points s'y resserre indéfiniment, elle finit toujours par atteindre un point de l'espace, et non un point qui « manquerait ». Pensez à la différence entre les nombres réels et les nombres rationnels (les fractions) : on peut fabriquer une suite de fractions qui se rapprochent de plus en plus de $`\sqrt 2`$, mais $`\sqrt 2`$ n'est pas une fraction, il « manque » chez les rationnels, qui sont donc troués. Les réels, eux, sont complets : la limite est toujours là. Une **suite de Cauchy** est justement une suite dont les termes finissent par être tous très proches les uns des autres (l'écart entre eux devient aussi petit que l'on veut quand on avance assez loin) ; « converger » signifie qu'elle se rapproche d'un point précis. Un espace est donc complet quand toute suite de Cauchy y converge bel et bien.
 
 #### Produits scalaires généraux : la matrice de Gram
 
@@ -211,7 +217,11 @@ Toute matrice **symétrique définie positive** $`A`$ engendre un produit scalai
 
 > **Le symbole « définie positive ».** Une matrice symétrique $`A`$ est dite *définie positive* (notée $`A \succ 0`$) si $`x^\top A x > 0`$ pour tout $`x \neq 0`$. Intuitivement, $`A`$ « ne renverse jamais » un vecteur au point de rendre son carré de longueur négatif. C'est la condition exacte pour que $`\langle \cdot,\cdot\rangle_A`$ respecte la positivité définie. La symétrie de $`A`$ garantit, elle, la symétrie du produit scalaire. Le cas $`A = I`$ (matrice identité) redonne le produit scalaire canonique.
 
-Ce produit scalaire « pondéré » est au cœur de la **distance de Mahalanobis** en statistique, où $`A = \Sigma^{-1}`$ est l'inverse de la matrice de covariance : il déforme l'espace pour tenir compte des corrélations entre variables.
+Ce produit scalaire « pondéré » est au cœur de la **distance de Mahalanobis** en statistique, où $`A = \Sigma^{-1}`$ est l'inverse de la matrice de covariance : il déforme l'espace pour tenir compte des corrélations entre variables. Concrètement, cette distance **rapproche** les points le long des directions où les données sont très dispersées et les **éloigne** le long des directions où elles le sont peu : au lieu de mesurer un écart « brut », elle le pondère par la façon dont les données varient réellement.
+
+> **Les mots « covariance » et « corrélation ».** La **covariance** mesure si deux variables montent et descendent **ensemble** : si, quand l'une augmente, l'autre augmente aussi, leur covariance est positive ; si l'une monte quand l'autre descend, elle est négative ; si elles n'ont aucun rapport, elle est proche de zéro. Pensez à la taille et au poids de personnes : grands et lourds vont souvent de pair, la covariance est positive. La **corrélation** est cette même covariance « remise à l'échelle » pour toujours tomber entre $`-1`$ et $`+1`$ : $`+1`$ veut dire « parfaitement liées dans le même sens », $`-1`$ « parfaitement liées en sens inverse », $`0`$ « aucun lien linéaire ». La **matrice de covariance** $`\Sigma`$ range toutes ces informations pour un jeu de variables : sur sa diagonale, combien chaque variable varie ; ailleurs, comment chaque paire de variables varie ensemble.
+
+> **Attention : ici $`\Sigma`$ n'est pas une somme.** Au début du chapitre, le symbole $`\sum`$ (sigma majuscule) désignait l'**opération de somme** ($`\sum_i`$). Ici, le même symbole grec $`\Sigma`$ désigne tout autre chose : la **matrice de covariance**, un tableau de nombres, pas une addition. C'est le contexte qui les distingue : un $`\sum`$ surmonté de bornes et suivi d'un indice ($`\sum_{i=1}^n`$) est une somme ; un $`\Sigma`$ employé comme une matrice (que l'on inverse, comme dans $`\Sigma^{-1}`$) est la covariance. Et $`\Sigma^{-1}`$ désigne l'**inverse** de cette matrice (la matrice qui « défait » l'effet de $`\Sigma`$, comme $`1/3`$ défait la multiplication par $`3`$).
 
 #### L'inégalité de Cauchy–Schwarz
 
@@ -230,6 +240,8 @@ P(t) = \langle x - t y,\; x - t y\rangle = \|x\|^2 - 2t\langle x, y\rangle + t^2
 ```
 
 Ce trinôme est positif ou nul pour **tout** $`t`$ réel (c'est un carré de norme). Un trinôme $`at^2 + bt + c`$ avec $`a = \|y\|^2 > 0`$ reste $`\geq 0`$ partout si et seulement si son **discriminant** $`\Delta = b^2 - 4ac`$ est $`\leq 0`$. Ici :
+
+> **Rappel sur le discriminant.** La courbe d'un trinôme $`at^2 + bt + c`$ est une **parabole**. Quand $`a > 0`$, cette parabole est tournée **vers le haut** (en forme de vallée). Elle reste donc au-dessus (ou au niveau) de l'axe horizontal, c'est-à-dire $`\geq 0`$ partout, exactement quand elle ne **coupe pas** l'axe en deux points distincts, mais le touche au plus une fois. Or le **discriminant** $`\Delta = b^2 - 4ac`$ dit justement combien de fois la parabole coupe l'axe : si $`\Delta > 0`$, elle le traverse en deux points (et descend donc sous l'axe entre les deux, ce que l'on ne veut pas) ; si $`\Delta = 0`$, elle le touche en un seul point sans le franchir ; si $`\Delta < 0`$, elle ne le rencontre jamais et reste entièrement au-dessus. La condition « rester $`\geq 0`$ partout » équivaut donc à $`\Delta \leq 0`$.
 
 ```math
 \Delta = 4\langle x, y\rangle^2 - 4\|y\|^2\|x\|^2 \leq 0 \;\Longrightarrow\; \langle x, y\rangle^2 \leq \|x\|^2 \|y\|^2.
@@ -444,7 +456,7 @@ La **similarité cosinus** (cosine similarity) est le cosinus de l'angle, vu com
 \text{sim}_{\cos}(x, y) = \frac{\langle x, y\rangle}{\|x\|\,\|y\|}.
 ```
 
-Elle ignore les **magnitudes** et ne compare que les **directions**, idéal lorsque l'amplitude n'est pas pertinente (un document long et un document court traitant du même sujet doivent être jugés proches).
+Elle ignore les **longueurs** (amplitudes) et ne compare que les **directions**, idéal lorsque l'amplitude n'est pas pertinente (un document long et un document court traitant du même sujet doivent être jugés proches).
 
 #### Exemple chiffré
 

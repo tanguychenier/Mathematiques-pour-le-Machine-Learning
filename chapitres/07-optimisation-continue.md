@@ -126,7 +126,7 @@ Sa hessienne est la matrice diagonale $`\mathrm{diag}(1, \gamma)`$. La direction
 > f(x_k) - f(x^\star) \le \left(1 - \frac{m}{L}\right)^{k}\big(f(x_0) - f(x^\star)\big).
 > ```
 
-La convergence est **linéaire** (géométrique), de raison $`1 - 1/\kappa`$ avec $`\kappa = L/m`$. Si $`\kappa = 1`$ (cuvette parfaitement ronde), un seul pas suffit ; si $`\kappa = 1000`$, il faut de l'ordre de $`\kappa = 1000`$ itérations pour seulement gagner un facteur $`e \approx 2{,}72`$ sur l'écart à l'optimum, et bien davantage pour gagner plusieurs ordres de grandeur. **Le conditionnement est l'ennemi numéro un de la descente de gradient.**
+La convergence est **linéaire** (géométrique), de raison $`1 - 1/\kappa`$ avec $`\kappa = L/m`$. Ici la **raison** désigne le facteur par lequel l'écart à l'optimum est multiplié à chaque pas (comme la raison d'une suite géométrique, le nombre par lequel on multiplie pour passer d'un terme au suivant) ; plus elle est proche de $`0`$, plus on converge vite, et plus elle est proche de $`1`$, plus on traîne. Si $`\kappa = 1`$ (cuvette parfaitement ronde), un seul pas suffit ; si $`\kappa = 1000`$, il faut environ $`\kappa \approx 1000`$ itérations pour seulement diviser l'écart à l'optimum par $`e \approx 2{,}72`$, et bien davantage pour gagner plusieurs ordres de grandeur. **Le conditionnement est l'ennemi numéro un de la descente de gradient.**
 
 > **Démonstration (esquisse rigoureuse).** La $`L`$-lissité donne l'inégalité de descente, valable au pas $`\eta = 1/L`$,
 > ```math
@@ -189,7 +189,7 @@ Un correctif peu coûteux mais spectaculaire consiste à donner de **l'inertie**
 v_{k+1} = \beta\, v_k - \eta\, \nabla f(x_k), \qquad x_{k+1} = x_k + v_{k+1},
 ```
 
-où $`v_k`$ est la « vitesse » accumulée et $`\beta \in [0,1)`$ le coefficient de moment (souvent $`0{,}9`$). La variante de **Nesterov** (évaluer le gradient *après* avoir avancé selon l'inertie) atteint la vitesse optimale de raison $`1 - 1/\sqrt{\kappa}`$: sur un problème de conditionnement $`10^4`$, on passe d'environ $`10^4`$ à environ $`10^2`$ itérations. C'est une amélioration quadratique du nombre d'itérations.
+où $`v_k`$ est la « vitesse » accumulée et $`\beta \in [0,1)`$ le coefficient de moment (souvent $`0{,}9`$), c'est-à-dire la part de la vitesse précédente que l'on conserve à chaque pas : proche de $`1`$, la bille garde beaucoup d'inertie et lisse fortement les zigzags ; proche de $`0`$, elle oublie presque tout son élan et l'on retrouve une descente de gradient ordinaire. La variante de **Nesterov** (évaluer le gradient *après* avoir avancé selon l'inertie) atteint la vitesse optimale de raison $`1 - 1/\sqrt{\kappa}`$: sur un problème de conditionnement $`10^4`$, on passe d'environ $`10^4`$ à environ $`10^2`$ itérations. C'est une amélioration quadratique du nombre d'itérations.
 
 #### Le grand passage à l'échelle : descente de gradient stochastique (SGD)
 
@@ -217,7 +217,7 @@ Le bruit impose un pas **décroissant** pour converger. Les conditions classique
 \sum_{k} \eta_k = \infty \quad (\text{aller assez loin}), \qquad \sum_{k} \eta_k^2 < \infty \quad (\text{calmer le bruit à la fin}).
 ```
 
-> **Le mot « époque » (epoch).** Dans le code ci-dessous, une **époque** désigne **un passage complet sur l'ensemble des données d'entraînement**: on a vu chaque exemple exactement une fois. Si vous avez $`1\,000`$ exemples traités par paquets de $`32`$, une époque enchaîne environ $`31`$ petits pas (un par paquet) ; faire $`10`$ époques (`n_epochs=10`) revient à repasser dix fois sur toute la base, en la remélangeant à chaque fois (`np.random.shuffle`) pour que l'ordre des paquets change. Image : réviser un paquet de fiches de révision ; une époque = avoir parcouru tout le paquet une fois, et l'on recommence plusieurs fois pour bien apprendre.
+> **Le mot « époque » (epoch).** Dans le code ci-dessous, une **époque** désigne **un passage complet sur l'ensemble des données d'entraînement**: on a vu chaque exemple exactement une fois. Si vous avez $`1\,000`$ exemples traités par paquets de $`32`$, une époque enchaîne environ $`32`$ petits pas (31 paquets pleins de 32, plus un dernier paquet de 8 exemples, car $`1\,000`$ ne se divise pas exactement par $`32`$) ; faire $`10`$ époques (`n_epochs=10`) revient à repasser dix fois sur toute la base, en la remélangeant à chaque fois (`np.random.shuffle`) pour que l'ordre des paquets change. Image : réviser un paquet de fiches de révision ; une époque = avoir parcouru tout le paquet une fois, et l'on recommence plusieurs fois pour bien apprendre.
 
 ```python
 def sgd(grad_li, theta0, data, lr0=0.1, n_epochs=10, batch_size=32):
@@ -240,7 +240,7 @@ def sgd(grad_li, theta0, data, lr0=0.1, n_epochs=10, batch_size=32):
 Choisir un seul pas $`\eta`$ pour des millions de paramètres aux courbures très différentes est illusoire. Les **optimiseurs adaptatifs** donnent à *chaque* coordonnée son propre pas, ajusté automatiquement.
 
 - **AdaGrad**: divise le pas de chaque coordonnée par la racine de la somme des carrés de ses gradients passés. Les directions souvent sollicitées ralentissent ; les rares accélèrent. Défaut : le pas finit par s'éteindre.
-- **RMSProp**: remplace la somme par une **moyenne mobile exponentielle** des carrés, ce qui évite l'extinction.
+- **RMSProp**: remplace la somme par une **moyenne mobile exponentielle** des carrés, ce qui évite l'extinction. Une moyenne mobile exponentielle est une moyenne qui privilégie les valeurs récentes et oublie progressivement les anciennes : chaque nouvelle valeur pèse $`(1-\beta)`$ et tout le passé accumulé pèse $`\beta`$, si bien que les vieux termes voient leur poids fondre pas après pas (image : une mémoire qui s'estompe, où le souvenir d'hier compte plus que celui d'il y a un mois).
 - **Adam**: combine moment (moyenne mobile du gradient, $`m_k`$) et RMSProp (moyenne mobile du carré, $`v_k`$) :
 
 ```math
@@ -391,13 +391,13 @@ Avec des inégalités, la situation se raffine : une contrainte $`h_j(x) \le 0`$
 
 #### Dualité et sens « prix » des multiplicateurs
 
-À partir du lagrangien, on définit la **fonction duale** $`\,q(\lambda, \mu) = \min_x \mathcal{L}(x, \lambda, \mu)`$. Pour tout point réalisable $`x`$ (donc $`g_i(x)=0`$ et $`h_j(x)\le 0`$) et tout $`\mu \ge 0`$, on a $`\mathcal{L}(x,\lambda,\mu) = f(x) + 0 + \sum_j \mu_j h_j(x) \le f(x)`$, car chaque terme $`\mu_j h_j(x)`$ est $`\le 0`$. En minimisant le membre de gauche sur *tout* $`x`$, on obtient une **borne inférieure** sur la valeur optimale $`p^\star`$ du problème de départ : c'est la **dualité faible** $`q(\lambda,\mu) \le p^\star`$. Le **problème dual** consiste à remonter cette borne le plus haut possible :
+À partir du lagrangien, on définit la **fonction duale** $`\,q(\lambda, \mu) = \min_x \mathcal{L}(x, \lambda, \mu)`$. Pour tout point réalisable $`x`$ (donc $`g_i(x)=0`$ et $`h_j(x)\le 0`$) et tout $`\mu \ge 0`$, on a $`\mathcal{L}(x,\lambda,\mu) = f(x) + 0 + \sum_j \mu_j h_j(x) \le f(x)`$, car chaque terme $`\mu_j h_j(x)`$ est $`\le 0`$. En minimisant le membre de gauche sur *tout* $`x`$, on obtient une **borne inférieure** sur la valeur optimale $`p^\star`$ du problème de départ. En effet, chercher le plus petit sur *tous* les $`x`$ (même ceux qui violent les contraintes) ne peut donner qu'un résultat encore plus petit que de chercher le plus petit sur les seuls $`x`$ autorisés : élargir le terrain de recherche ne peut que faire baisser le minimum. Donc $`q(\lambda,\mu) = \min_{\text{tous } x} \mathcal{L} \le \min_{x \text{ réalisable}} \mathcal{L} \le \min_{x \text{ réalisable}} f = p^\star`$ : c'est la **dualité faible** $`q(\lambda,\mu) \le p^\star`$. Le **problème dual** consiste à remonter cette borne le plus haut possible :
 
 ```math
 \max_{\lambda,\ \mu \ge 0}\ q(\lambda, \mu) \ \le\ p^\star .
 ```
 
-> **Théorème (dualité forte).** Si le problème est **convexe** (objectif et inégalités convexes, égalités affines) et qu'il existe un point strictement réalisable (**condition de Slater**), alors il n'y a **aucun écart**: $`\max q = p^\star`$. Le saut de dualité (duality gap) est nul, et résoudre le dual *équivaut* à résoudre le primal.
+> **Théorème (dualité forte).** Si le problème est **convexe** (objectif et inégalités convexes, égalités affines, c'est-à-dire linéaires plus une constante, du type $`a^\top x + b`$, une droite ou un plan, sans terme au carré ni courbure) et qu'il existe un point strictement réalisable (**condition de Slater**), alors il n'y a **aucun écart**: $`\max q = p^\star`$. Le saut de dualité (duality gap) est nul, et résoudre le dual *équivaut* à résoudre le primal.
 
 > **Interprétation économique (le multiplicateur est un prix).** Théorème de sensibilité : si l'on relâche légèrement la contrainte en $`h_j(x) \le b_j`$ (on déplace la borne de $`b_j`$ à partir de $`0`$), la valeur optimale varie selon $`\frac{\partial p^\star}{\partial b_j} = -\mu_j`$. Le multiplicateur est donc le **prix marginal** (shadow price) de la contrainte : « combien je gagnerais à m'autoriser une unité de plus ». Dans l'exemple précédent, $`\mu = 4`$: desserrer la limite de $`x\le1`$ vers $`x\le1{,}01`$ ($`b = 0{,}01`$) ferait baisser $`f`$ d'environ $`-\mu \cdot b = -4 \times 0{,}01 = -0{,}04`$, soit une baisse de $`0{,}04`$. C'est ce qui donne aux multiplicateurs leur immense portée en économie, en théorie des jeux et en apprentissage automatique.
 
@@ -533,7 +533,7 @@ Reconnaître la convexité sans calculer de hessienne, en composant des briques 
 | Opération | Préserve la convexité ? | Exemple |
 |---|---|---|
 | Somme pondérée positive $`\sum_k w_k f_k`$, $`w_k \ge 0`$ | oui | $`\|\theta\|^2 + \lambda \|\theta\|_1`$ (Ridge + Lasso) |
-| Maximum ponctuel $`\max_k f_k`$ | oui | fonction « hinge » des SVM |
+| Maximum ponctuel $`\max_k f_k`$ | oui | fonction charnière (hinge) des SVM |
 | Composition affine $`f(Ax + b)`$ | oui | perte sur $`\theta^\top x`$ |
 | Composition $`g\circ h`$ avec $`g`$ convexe **croissante**, $`h`$ convexe | oui | $`\exp(\|x\|)`$ |
 | Minimum, produit, composition quelconque | **non** en général | $`f\cdot g`$ peut ne pas l'être |
@@ -558,6 +558,8 @@ L'optimisation convexe se décline en familles standard, par ordre de générali
 #### Sous-gradient : quand ça n'est pas dérivable
 
 Beaucoup de fonctions convexes utiles ont des **coins** (valeur absolue, norme $`\ell_1`$, hinge). En un coin, pas de tangente unique, mais tout un éventail de droites support : c'est le **sous-différentiel**.
+
+> **La fonction charnière (hinge), expliquée simplement.** La fonction charnière (hinge), employée par les SVM, vaut $`\max(0,\ 1 - \text{marge})`$. Elle se lit comme un péage de bonne conduite : tant que la marge dépasse $`1`$ (le point est bien classé et loin de la frontière), elle vaut $`0`$, aucune pénalité ; dès que la marge tombe sous $`1`$ (le point est mal classé, ou bien classé mais trop près de la frontière), elle augmente proportionnellement au défaut. Elle ne pénalise donc que les points mal classés ou trop proches de la frontière, et son nom vient de sa forme de charnière de porte : une partie plate, puis une partie qui monte en pente droite, avec un coin pile au point de pliure. C'est ce coin qui empêche d'avoir une dérivée unique et oblige à passer par les sous-gradients ci-dessous. On la calcule explicitement à l'exercice 5(d).
 
 > **Définition (sous-gradient).** Un vecteur $`u`$ est un **sous-gradient** de $`f`$ convexe en $`x`$ si $`f(y) \ge f(x) + u^\top(y - x)`$ pour tout $`y`$. L'ensemble de ces $`u`$ est le **sous-différentiel** $`\partial f(x)`$. En un point dérivable, $`\partial f(x) = \{\nabla f(x)\}`$ (un seul élément). Condition d'optimalité généralisée : $`x^\star`$ minimise $`f`$ **si et seulement si** $`0 \in \partial f(x^\star)`$.
 
@@ -589,7 +591,7 @@ b = A @ x_true + 0.1 * rng.normal(size=50)
 print(np.round(lasso_ista(A, b, lam=0.3), 2))
 ```
 
-> **La frontière convexe/non convexe en pratique.** Elle reste le bon prisme de lecture du domaine. Les blocs convexes (couches linéaires + perte convexe, attention vue comme un barycentre convexe, projections) s'insèrent dans des architectures globalement non convexes ; comprendre la partie convexe éclaire la stabilité de l'entraînement. Côté théorie, l'**accélération de Nesterov** et les méthodes **proximales/ADMM** sous-tendent une large part de l'apprentissage structuré et fédéré ; les solveurs convexes différentiables (couches d'optimisation `cvxpylayers`, OptNet) permettent désormais d'**enchâsser un problème convexe comme une couche** d'un réseau et de rétropropager à travers sa solution. Enfin, la **relaxation convexe** (SDP) demeure un outil de référence pour certifier la robustesse de réseaux ou borner des quantités combinatoires.
+> **La frontière convexe/non convexe en pratique.** Elle reste le bon prisme de lecture du domaine. Les blocs convexes (couches linéaires + perte convexe, attention vue comme un barycentre convexe, c'est-à-dire une moyenne pondérée à poids positifs sommant à $`1`$, ici les poids d'attention, exactement la combinaison convexe vue plus haut, projections) s'insèrent dans des architectures globalement non convexes ; comprendre la partie convexe éclaire la stabilité de l'entraînement. Côté théorie, l'**accélération de Nesterov** et les méthodes **proximales/ADMM** sous-tendent une large part de l'apprentissage structuré et fédéré ; les solveurs convexes différentiables (couches d'optimisation `cvxpylayers`, OptNet) permettent désormais d'**enchâsser un problème convexe comme une couche** d'un réseau et de rétropropager à travers sa solution. Enfin, la **relaxation convexe** (SDP) demeure un outil de référence pour certifier la robustesse de réseaux ou borner des quantités combinatoires.
 
 ```mermaid
 flowchart TD
