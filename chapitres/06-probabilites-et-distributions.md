@@ -4,13 +4,13 @@
 
 ### Construction d'un espace probabilisé
 
-#### L'intuition : mesurer notre ignorance
+#### L'intuition: mesurer notre ignorance
 
 Avant toute formule, posons l'image fondatrice. Une probabilité, ce n'est pas une propriété mystérieuse cachée dans les objets: c'est une manière de **mesurer notre ignorance** ou la fréquence avec laquelle quelque chose se produit. Quand on dit « cette pièce a une chance sur deux de tomber sur pile », on résume en un nombre, $`\tfrac{1}{2}`$, toute notre incertitude sur le résultat d'un lancer que l'on n'a pas encore vu.
 
 L'analogie la plus utile pour tout le chapitre est celle du **gâteau découpé**. Imaginez un gâteau entier qui représente « tout ce qui peut arriver ». On le coupe en parts. Chaque part représente un événement possible. La taille d'une part, sa fraction du gâteau total, c'est sa probabilité. Le gâteau entier vaut $`1`$ (c'est-à-dire $`100\%`$). Une part ne peut pas être négative (on ne peut pas avoir « moins que rien » de gâteau) et la somme de toutes les parts redonne exactement le gâteau entier. Ces trois idées enfantines, total égal à un, jamais négatif, les parts s'additionnent, sont **exactement** les trois axiomes de Kolmogorov que nous allons formaliser.
 
-#### Les trois ingredients : $`\Omega`$, $`\mathcal{F}`$, $`P`$
+#### Les trois ingredients: $`\Omega`$, $`\mathcal{F}`$, $`P`$
 
 Un **espace probabilisé (probability space)** est un triplet $`(\Omega, \mathcal{F}, P)`$. Examinons chaque ingrédient.
 
@@ -70,7 +70,7 @@ P\!\left( \bigcup_{k=1}^{n} A_{k} \right) = \sum_{k=1}^{\infty} P(A_{k}) = \sum_
 
 > **Remarque (la formule du « ou »).** La règle 5 corrige un piège courant: on ne peut pas additionner bêtement $`P(A)`$ et $`P(B)`$ pour avoir « $`A`$ ou $`B`$ », car on compterait deux fois la zone commune $`A \cap B`$. On la retranche une fois. C'est exactement comme compter les élèves qui font du sport **ou** de la musique: on additionne les deux clubs, puis on enlève une fois ceux qui sont dans les deux.
 
-#### Un exemple chiffre deroule : le de equilibre
+#### Un exemple chiffre deroule: le de equilibre
 
 Prenons $`\Omega = \{1,2,3,4,5,6\}`$, $`\mathcal{F} = \mathcal{P}(\Omega)`$ (toutes les parties, ici $`2^{6} = 64`$ événements possibles, car chaque face est soit dedans soit dehors), et $`P`$ uniforme: $`P(\{\omega\}) = \tfrac{1}{6}`$ pour chaque face.
 
@@ -131,7 +131,7 @@ La dernière ligne illustre l'**interprétation fréquentiste**: la probabilité
 
 Une fois la loi $`P_X`$ d'une variable aléatoire posée, deux grands mondes s'ouvrent selon la nature des valeurs prises: un monde **discret** (valeurs isolées, qu'on peut compter) et un monde **continu** (valeurs formant un continuum, comme tous les réels d'un intervalle). Ils se décrivent par deux objets jumeaux: la fonction de masse pour l'un, la densité pour l'autre.
 
-#### Le cas discret : la fonction de masse
+#### Le cas discret: la fonction de masse
 
 > **Définition (variable discrète et PMF).** Une variable aléatoire $`X`$ est **discrète** si elle ne prend qu'un nombre fini ou dénombrable de valeurs $`x_{1}, x_{2}, \dots`$. Sa loi est entièrement décrite par sa **fonction de masse (probability mass function, PMF)**:
 > ```math
@@ -160,7 +160,7 @@ L'image est limpide: la masse de probabilité est posée en **paquets discrets**
 > ```
 > On le vérifie à la main: les séquences à $`2`$ piles sont PPF, PFP, FPP, soit $`3`$ cas sur $`2^3 = 8`$ également probables, bien $`\tfrac{3}{8}`$.
 
-#### Le cas continu : la densite
+#### Le cas continu: la densite
 
 Quand $`X`$ prend ses valeurs dans un continuum (un poids exact en kilogrammes, un temps d'attente), un phénomène contre-intuitif apparaît: la probabilité de tomber sur **une** valeur précise est **nulle**. La probabilité qu'une personne mesure exactement $`1{,}750000\dots`$ m est $`0`$, car il y a une infinité non dénombrable de tailles possibles. On ne peut plus poser des jetons sur des points: la masse est **étalée comme une couche de beurre** sur la droite, et ce qui compte est son **épaisseur locale**.
 
@@ -176,7 +176,7 @@ Quand $`X`$ prend ses valeurs dans un continuum (un poids exact en kilogrammes, 
 
 > **Piège classique.** En continu, $`P(X = a) = \int_a^a p_X(x)\,\mathrm{d}x = 0`$ pour tout point $`a`$. Conséquence pratique: les inégalités larges et strictes donnent la même probabilité, $`P(X \le a) = P(X < a)`$. C'est faux en discret, où un point porte une masse non nulle.
 
-#### Le pont unificateur : la fonction de repartition
+#### Le pont unificateur: la fonction de repartition
 
 La **fonction de répartition** $`F_X(x) = P(X \le x)`$ réconcilie les deux mondes: elle existe **toujours**, discret ou continu. Elle est croissante (au sens large), continue à droite, tend vers $`0`$ en $`-\infty`$ et vers $`1`$ en $`+\infty`$.
 
@@ -325,7 +325,7 @@ print(round(posterior, 4))    # 0.0194  -> ~1.9 %
 
 Une distribution complète (PMF ou PDF) contient toute l'information, mais elle est souvent trop riche à manipuler. On la **résume** par quelques nombres clés: où est-elle centrée (espérance), à quel point est-elle étalée (variance), comment deux variables bougent-elles ensemble (covariance) ?
 
-#### L'esperance : le centre de gravite
+#### L'esperance: le centre de gravite
 
 > **Le symbole $`\mathbb{E}`$ (espérance).** Ce symbole représente **la moyenne pondérée par les probabilités**, c'est-à-dire la valeur « typique » autour de laquelle la variable se balance. Image physique exacte: si on pose les masses de probabilité le long d'une règle, $`\mathbb{E}[X]`$ est le **point d'équilibre**, le centre de gravité où la règle tient en équilibre sur un doigt. On le note aussi $`\mu`$ (mu). Ce n'est pas la valeur la plus probable, c'est la moyenne « à la longue ».
 
@@ -350,7 +350,7 @@ Une distribution complète (PMF ou PDF) contient toute l'information, mais elle 
 ```
 On a juste utilisé la marginalisation $`\sum_y p(x,y) = p(x)`$. $`\blacksquare`$
 
-#### La variance : la dispersion
+#### La variance: la dispersion
 
 > **Le symbole $`\mathrm{Var}`$ (variance).** Ce symbole représente **à quel point les valeurs s'éloignent en moyenne du centre**. On mesure l'écart à la moyenne, on l'élève au carré (pour que les écarts positifs et négatifs ne s'annulent pas, et pour pénaliser fort les grands écarts), puis on en prend la moyenne. Image: si l'espérance est le centre d'une cible, la variance dit si les flèches sont **groupées** (petite variance) ou **dispersées** (grande variance). On la note aussi $`\sigma^{2}`$ (sigma au carré).
 
@@ -375,7 +375,7 @@ On a juste utilisé la marginalisation $`\sum_y p(x,y) = p(x)`$. $`\blacksquare`
 > Variance: $`\mathrm{Var}(X) = \tfrac{91}{6} - 3{,}5^2 = 15{,}1\overline 6 - 12{,}25 = \tfrac{105}{36} \approx 2{,}9167`$.
 > Écart-type: $`\sigma_X = \sqrt{2{,}9167} \approx 1{,}708`$.
 
-#### Covariance et correlation : bouger ensemble
+#### Covariance et correlation: bouger ensemble
 
 > **Le symbole $`\mathrm{Cov}`$ (covariance).** Ce symbole représente **la tendance de deux variables à varier dans le même sens**. Quand $`X`$ est au-dessus de sa moyenne, $`Y`$ l'est-il aussi ? Si oui (covariance positive), elles montent ensemble; si $`Y`$ est plutôt en dessous quand $`X`$ est au-dessus (covariance négative), elles vont en sens opposés. Image: deux danseurs; la covariance dit s'ils bougent en harmonie (positif), à contretemps (négatif) ou indépendamment (zéro).
 
@@ -466,9 +466,9 @@ print(np.round(data.sum(axis=1).var(), 3))                 # ~1+1+2*0.8 = 3.6
 
 La **loi normale**, ou **gaussienne (Gaussian)**, est la distribution la plus importante de toutes les sciences. Elle est la forme limite vers laquelle tend la somme de nombreux petits effets indépendants (théorème central limite), ce qui explique son omniprésence: tailles, erreurs de mesure, bruit, et, crucialement, les hypothèses par défaut d'innombrables modèles de machine learning.
 
-![La loi gaussienne (courbe en cloche) : μ fixe le centre, σ la largeur, environ 68 % de la masse dans l'intervalle μ ± σ](../assets/gaussienne.svg)
+![La loi gaussienne (courbe en cloche): μ fixe le centre, σ la largeur, environ 68 % de la masse dans l'intervalle μ ± σ](../assets/gaussienne.svg)
 
-#### La forme en cloche : intuition
+#### La forme en cloche: intuition
 
 Imaginez une planche de Galton: des billes tombent et rebondissent à gauche ou à droite sur des clous, au hasard. En bas, elles s'empilent: beaucoup au centre, de moins en moins sur les côtés, formant une **courbe en cloche** symétrique. Chaque bille subit une **somme** de petits chocs aléatoires indépendants; le résultat se concentre autour du centre avec une dispersion régulière. Cette cloche, c'est la gaussienne, et son apparition systématique dès qu'on additionne du hasard n'est pas un accident: c'est une loi mathématique profonde.
 
@@ -581,13 +581,13 @@ print(round(mvn.pdf(x), 6))   # 0.040843
 
 Le théorème de Bayes nous donne le posterior, mais son calcul bute sur l'évidence (l'intégrale de normalisation). Il existe une situation bénie où tout se calcule à la main, de façon fermée: la **conjugaison**. Et derrière elle se cache une structure algébrique unificatrice: la **famille exponentielle**.
 
-#### Priors conjugues : rester dans la meme famille
+#### Priors conjugues: rester dans la meme famille
 
 > **Définition (conjugaison).** Une famille de priors est **conjuguée (conjugate)** à une vraisemblance donnée si le posterior appartient à la **même famille** que le prior. Autrement dit, observer des données ne fait que **mettre à jour les paramètres** du prior, sans changer sa forme.
 
 L'image est celle d'une **forme stable par apprentissage**: on part d'une croyance en forme de Beta, on voit des données, et la croyance reste une Beta, seuls ses réglages bougent. C'est l'équivalent probabiliste d'un format de fichier qui reste identique après édition. L'énorme avantage: l'inférence devient une simple **arithmétique sur les paramètres**, sans aucune intégrale.
 
-#### L'exemple canonique : Beta–Binomiale
+#### L'exemple canonique: Beta–Binomiale
 
 Le couple le plus instructif modélise l'apprentissage d'une probabilité inconnue $`\theta`$ (ex. le taux de clic d'une publicité, le biais d'une pièce).
 
@@ -699,7 +699,7 @@ Le piège à éviter d'emblée: **une densité ne se transforme pas comme une si
 > ```
 > On **retrouve exactement** la densité de $`\mathcal N(\mu,\sigma^2)`$ ! Cela démontre au passage la règle de standardisation de la section gaussienne.
 
-#### Cas multivarie : le jacobien
+#### Cas multivarie: le jacobien
 
 > **Théorème (changement de variables, multivarié).** Pour $`\mathbf Y = g(\mathbf X)`$ avec $`g`$ inversible et différentiable (jacobien inversible):
 > ```math
@@ -709,7 +709,7 @@ Le piège à éviter d'emblée: **une densité ne se transforme pas comme une si
 
 > **Le symbole $`\det J`$ (déterminant du jacobien).** Le **jacobien** $`J`$ rassemble toutes les pentes locales de la transformation dans chaque direction (c'est le gradient généralisé à une fonction vectorielle, vu au chapitre précédent). Son **déterminant** mesure le **facteur de dilatation du volume** local: de combien un petit cube de volume se gonfle ou se ratatine en passant par $`g`$. C'est l'exact analogue multidimensionnel du $`|g'(x)|`$: il corrige le changement de volume pour préserver la probabilité totale. Image: une grille en caoutchouc déformée; $`|\det J|`$ dit de combien chaque petite maille a changé de surface.
 
-#### La transformation inverse : fabriquer du hasard sur mesure
+#### La transformation inverse: fabriquer du hasard sur mesure
 
 Voici l'application la plus spectaculaire: on peut générer une variable de **n'importe quelle** loi à partir d'un simple tirage uniforme sur $`[0,1]`$.
 
@@ -772,7 +772,7 @@ print(round(Yn.mean(), 3), round(Yn.std(), 3))   # ~1.0, ~2.0 -> N(mu, sigma^2)
 
 Les corrigés sont détaillés et entièrement déroulés. Tentez chaque exercice avant de regarder la solution.
 
-#### Exercice 1 — Axiomes et inclusion-exclusion
+#### Exercice 1: Axiomes et inclusion-exclusion
 
 Dans une population, $`60\%`$ des gens aiment le café ($`C`$), $`50\%`$ aiment le thé ($`T`$), et $`30\%`$ aiment les deux. (a) Quelle proportion aime le café **ou** le thé ? (b) Quelle proportion n'aime **ni** l'un **ni** l'autre ? (c) Quelle proportion aime le café **mais pas** le thé ?
 
@@ -781,7 +781,7 @@ Dans une population, $`60\%`$ des gens aiment le café ($`C`$), $`50\%`$ aiment 
 > (b) « Ni l'un ni l'autre » est le complémentaire de « au moins un »: $`P((C\cup T)^c) = 1 - 0{,}8 = 0{,}2`$, soit $`20\%`$.
 > (c) $`P(C\setminus T) = P(C) - P(C\cap T) = 0{,}6 - 0{,}3 = 0{,}3`$, soit $`30\%`$.
 
-#### Exercice 2 — Bayes et diagnostic
+#### Exercice 2: Bayes et diagnostic
 
 Un email est un spam avec probabilité $`P(S)=0{,}3`$. Le mot « gratuit » apparaît dans $`80\%`$ des spams et dans $`10\%`$ des emails légitimes. Un email contient « gratuit »: quelle est la probabilité qu'il soit un spam ?
 
@@ -789,7 +789,7 @@ Un email est un spam avec probabilité $`P(S)=0{,}3`$. Le mot « gratuit » appa
 > Évidence (règle de la somme): $`P(G) = P(G\mid S)P(S) + P(G\mid\overline S)P(\overline S) = 0{,}8\times0{,}3 + 0{,}1\times0{,}7 = 0{,}24 + 0{,}07 = 0{,}31`$.
 > Bayes: $`P(S\mid G) = \dfrac{P(G\mid S)P(S)}{P(G)} = \dfrac{0{,}24}{0{,}31} \approx 0{,}774`$, soit environ $`77{,}4\%`$. L'email est très probablement un spam.
 
-#### Exercice 3 — Esperance et variance d'une Bernoulli
+#### Exercice 3: Esperance et variance d'une Bernoulli
 
 Soit $`X\sim\mathcal B(p)`$ (vaut $`1`$ avec proba $`p`$, $`0`$ sinon). Calculez $`\mathbb E[X]`$ et $`\mathrm{Var}(X)`$ à partir des définitions.
 
@@ -799,7 +799,7 @@ Soit $`X\sim\mathcal B(p)`$ (vaut $`1`$ avec proba $`p`$, $`0`$ sinon). Calculez
 > Variance (Koenig): $`\mathrm{Var}(X) = \mathbb E[X^2] - \mathbb E[X]^2 = p - p^2 = p(1-p)`$.
 > Remarque: la variance est maximale en $`p=\tfrac12`$ (incertitude maximale) et nulle en $`p\in\{0,1\}`$ (certitude).
 
-#### Exercice 4 — Linearite et variance d'une somme
+#### Exercice 4: Linearite et variance d'une somme
 
 Soit $`X, Y`$ deux variables avec $`\mathbb E[X]=2`$, $`\mathbb E[Y]=3`$, $`\mathrm{Var}(X)=4`$, $`\mathrm{Var}(Y)=9`$, $`\mathrm{Cov}(X,Y)=2`$. Calculez $`\mathbb E[2X-Y+1]`$ et $`\mathrm{Var}(2X-Y)`$.
 
@@ -812,7 +812,7 @@ Soit $`X, Y`$ deux variables avec $`\mathbb E[X]=2`$, $`\mathbb E[Y]=3`$, $`\mat
 > Noter que la constante $`+1`$ ne change pas la variance.
 > (On rappelle que $`\mathrm{Var}(aX+bY)`$ contient un terme croisé $`2ab\,\mathrm{Cov}(X,Y)`$: ici, comme $`X`$ et $`Y`$ ne sont pas supposées indépendantes, ce terme ne disparaît pas.)
 
-#### Exercice 5 — Conjugaison Beta–Binomiale
+#### Exercice 5: Conjugaison Beta–Binomiale
 
 On part d'un prior $`\mathrm{Beta}(2,2)`$ sur le biais $`\theta`$ d'une pièce. On lance la pièce $`20`$ fois et on obtient $`14`$ piles. (a) Donnez le posterior. (b) Donnez l'estimation MAP et la moyenne a posteriori. (c) Comparez au maximum de vraisemblance.
 
@@ -821,7 +821,7 @@ On part d'un prior $`\mathrm{Beta}(2,2)`$ sur le biais $`\theta`$ d'une pièce. 
 > (b) Le **mode** d'une $`\mathrm{Beta}(\alpha,\beta)`$ (avec $`\alpha,\beta>1`$) est $`\frac{\alpha-1}{\alpha+\beta-2}`$, donc MAP $`= \frac{15}{22}\approx 0{,}682`$. La **moyenne** est $`\frac{\alpha}{\alpha+\beta} = \frac{16}{24} = \frac{2}{3}\approx 0{,}667`$.
 > (c) Le MLE est $`k/n = 14/20 = 0{,}7`$. Le posterior tire l'estimation légèrement vers $`0{,}5`$ (effet régularisant du prior $`\mathrm{Beta}(2,2)`$, centré sur $`0{,}5`$). Avec beaucoup de données, les trois valeurs convergeraient.
 
-#### Exercice 6 — Transformation inverse
+#### Exercice 6: Transformation inverse
 
 Soit la densité $`p_X(x) = 2x`$ pour $`x\in[0,1]`$ (et $`0`$ ailleurs). (a) Vérifiez que c'est bien une densité. (b) Calculez sa fonction de répartition $`F`$. (c) Donnez la formule de simulation par transformation inverse à partir de $`U\sim\mathcal U(0,1)`$.
 
@@ -830,7 +830,7 @@ Soit la densité $`p_X(x) = 2x`$ pour $`x\in[0,1]`$ (et $`0`$ ailleurs). (a) Vé
 > (b) Pour $`x\in[0,1]`$: $`F(x) = \int_0^x 2t\,\mathrm{d}t = x^2`$ (et $`F(x)=0`$ avant $`0`$, $`1`$ après $`1`$).
 > (c) On inverse $`u = x^2`$ sur $`[0,1]`$, soit $`x = \sqrt{u}`$. Donc $`X = \sqrt{U}`$ suit la loi voulue. Vérification rapide: $`P(\sqrt U\le x) = P(U\le x^2) = x^2 = F(x)`$. Correct.
 
-#### Exercice 7 — Changement de variables (loi log-normale)
+#### Exercice 7: Changement de variables (loi log-normale)
 
 Soit $`X\sim\mathcal N(\mu,\sigma^2)`$ et $`Y = e^{X}`$. Trouvez la densité de $`Y`$ (c'est la **loi log-normale**).
 
@@ -840,7 +840,7 @@ Soit $`X\sim\mathcal N(\mu,\sigma^2)`$ et $`Y = e^{X}`$. Trouvez la densité de 
 > ```
 > Le facteur $`1/y`$ est la correction jacobienne; sans lui, l'aire ne ferait pas $`1`$. Cette loi modélise des grandeurs positives multiplicatives (prix, revenus, tailles de fichiers).
 
-#### Exercice 8 — Moindres carres comme maximum de vraisemblance gaussien
+#### Exercice 8: Moindres carres comme maximum de vraisemblance gaussien
 
 Montrez que, sous l'hypothèse $`y_i = \mathbf w^\top\mathbf x_i + \varepsilon_i`$ avec $`\varepsilon_i\sim\mathcal N(0,\sigma^2)`$ i.i.d., maximiser la vraisemblance des données revient à minimiser la somme des carrés des résidus.
 

@@ -8,7 +8,7 @@ Imaginez que vous regardez la liste des tailles de tous les élèves d'une grand
 
 Ce chapitre répond à une question très concrète: *étant donné un nuage de points, comment apprendre la « forme » de la densité de probabilité qui les a engendrés, quand cette forme n'est pas une simple gaussienne ?* La réponse, superposer des gaussiennes et ajuster automatiquement leurs paramètres, est l'une des techniques les plus utilisées en apprentissage automatique (machine learning): segmentation de clientèle, compression d'images, reconnaissance vocale, détection d'anomalies, initialisation de réseaux de neurones génératifs.
 
-#### Rappel express : une seule gaussienne
+#### Rappel express: une seule gaussienne
 
 On suppose connue (chapitre 6) la **densité gaussienne multivariée** sur $`\mathbb{R}^d`$. Pour un vecteur $`\mathbf{x} \in \mathbb{R}^d`$, de moyenne $`\boldsymbol{\mu} \in \mathbb{R}^d`$ et de matrice de covariance $`\boldsymbol{\Sigma}`$ (symétrique définie positive de taille $`d \times d`$), elle vaut:
 
@@ -87,7 +87,7 @@ En pratique on contraint souvent la forme des $`\boldsymbol{\Sigma}_k`$ pour ré
 
 > **Piège (le nombre de paramètres explose).** Une covariance `full` coûte $`\frac{d(d+1)}{2}`$ nombres **par composante**. En dimension $`d=100`$ avec $`K=10`$, cela fait déjà $`10 \times \frac{100\times 101}{2} = 50\,500`$ paramètres rien que pour les covariances. Si on a peu de données, on préfère `diag` ou `spherical`, ou on régularise (voir plus loin).
 
-#### Generer un point : le mode d'emploi
+#### Generer un point: le mode d'emploi
 
 Un mélange n'est pas qu'une formule: c'est une **recette pour fabriquer des données**. Pour tirer un point au hasard selon $`p`$:
 
@@ -301,7 +301,7 @@ L'algorithme des **$`k`$-moyennes** (k-means) est un cas limite « dur » d'EM. 
 | Sortie | étiquettes | densité de probabilité complète |
 | Cas particulier de... |, | EM avec $`\boldsymbol{\Sigma}=\sigma^2\mathbf{I}, \sigma\to 0`$ |
 
-#### Garantie de convergence : la log-vraisemblance ne descend jamais
+#### Garantie de convergence: la log-vraisemblance ne descend jamais
 
 C'est la propriété fondamentale d'EM, démontrée en détail dans la section suivante via l'ELBO.
 
@@ -519,7 +519,7 @@ flowchart TD
 
 Les corrigés sont détaillés juste après chaque énoncé.
 
-#### Exercice 1 — Verifier qu'un melange est bien une densite
+#### Exercice 1: Verifier qu'un melange est bien une densite
 
 Soit le mélange $`1`$ D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\mathcal{N}(x\mid 3, 4)`$ (les seconds arguments sont des **variances**).
 **(a)** Vérifier que $`p`$ est une densité. **(b)** Calculer l'espérance $`\mathbb{E}[X]`$. **(c)** La variance $`\mathrm{Var}[X]`$.
@@ -530,7 +530,7 @@ Soit le mélange $`1`$ D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\math
 > **(c)** On utilise $`\mathrm{Var}[X] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2`$ avec $`\mathbb{E}[X^2] = \sum_k \pi_k(\sigma_k^2 + \mu_k^2)`$ (car pour chaque composante $`\mathbb{E}[X^2\mid k] = \sigma_k^2+\mu_k^2`$). Donc $`\mathbb{E}[X^2] = 0{,}4(1 + 4) + 0{,}6(4 + 9) = 0{,}4\times 5 + 0{,}6\times 13 = 2 + 7{,}8 = 9{,}8`$. D'où $`\mathrm{Var}[X] = 9{,}8 - 1{,}0^2 = 8{,}8`$.
 > **Leçon:** la variance d'un mélange ($`8{,}8`$) dépasse la moyenne pondérée des variances ($`0{,}4\times1+0{,}6\times4 = 2{,}8`$): l'écart entre les centres ajoute exactement la variance « inter-composantes » $`\sum_k \pi_k(\mu_k-\mathbb{E}[X])^2 = 0{,}4\times 9 + 0{,}6\times 4 = 6{,}0`$, et $`2{,}8 + 6{,}0 = 8{,}8`$.
 
-#### Exercice 2 — Calcul de responsabilites a la main
+#### Exercice 2: Calcul de responsabilites a la main
 
 Mélange $`1`$ D: $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2=2, \sigma_2^2=1`$. Calculer $`r_{1}`$ et $`r_{2}`$ pour le point $`x=1`$.
 
@@ -540,7 +540,7 @@ Mélange $`1`$ D: $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2
 > Les deux sont égales ! Donc $`r_1 = \frac{0{,}5\,e^{-0{,}5}}{0{,}5\,e^{-0{,}5}+0{,}5\,e^{-0{,}5}} = 0{,}5`$ et $`r_2 = 0{,}5`$.
 > **Leçon:** le point $`x=1`$ est pile au milieu des deux centres; il est partagé équitablement (responsabilités $`50/50`$). C'est la frontière de décision.
 
-#### Exercice 3 — Une iteration complete d'EM
+#### Exercice 3: Une iteration complete d'EM
 
 Données $`1`$ D: $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation: $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=0, \mu_2=5`$, $`\sigma_1^2=\sigma_2^2=1`$. Effectuer **une** étape E puis **une** étape M (on pourra arrondir les responsabilités à $`0`$ ou $`1`$ vu la séparation).
 
@@ -552,13 +552,13 @@ Données $`1`$ D: $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation: $`\pi_1=\pi
 > - $`\sigma_1^2 = \tfrac12[(-1+0{,}5)^2+(0+0{,}5)^2] = \tfrac12[0{,}25+0{,}25] = 0{,}25`$; idem $`\sigma_2^2 = 0{,}25`$.
 > **Leçon:** une seule passe place déjà les centres sur les vraies moyennes des paquets et resserre les variances. EM converge très vite quand les groupes sont bien séparés.
 
-#### Exercice 4 — Singularite du maximum de vraisemblance
+#### Exercice 4: Singularite du maximum de vraisemblance
 
 Montrer que pour un GMM $`1`$ D avec $`K\ge 2`$, on peut rendre la log-vraisemblance arbitrairement grande. En déduire un remède.
 
 > **Corrigé.** Plaçons le centre de la composante 1 exactement sur un point de donnée: $`\mu_1 = x_1`$. Sa contribution à la densité en $`x_1`$ est $`\frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}\exp(0) = \frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}`$ (avec $`\pi_1>0`$). Les autres composantes ne contribuent que positivement, donc $`p(x_1) \ge \frac{\pi_1}{\sqrt{2\pi}\,\sigma_1}`$. Quand $`\sigma_1 \to 0^+`$, ce minorant $`\to +\infty`$, donc $`p(x_1)\to +\infty`$; comme les autres points gardent une densité strictement positive bornée inférieurement, $`\ell = \sum_n \ln p(x_n) \to +\infty`$. La vraisemblance n'a **pas** de maximum global fini: c'est une singularité. **Remède:** régulariser en ajoutant $`\epsilon\mathbf{I}`$ aux covariances (covariance floor $`\sigma_k^2 \ge \epsilon`$), adopter une vue bayésienne avec un a priori sur $`\boldsymbol{\Sigma}_k`$, ou ré-initialiser toute composante qui s'effondre. C'est exactement le garde-fou `var = np.maximum(var, 1e-6)` du code EM.
 
-#### Exercice 5 — L'ELBO est bien un plancher
+#### Exercice 5: L'ELBO est bien un plancher
 
 Sans recopier la démonstration du cours, montrer directement que $`\ell(\boldsymbol{\theta}) \ge \mathcal{F}(q,\boldsymbol{\theta})`$ pour tout $`q`$, en utilisant l'inégalité de Jensen.
 
@@ -572,7 +572,7 @@ Sans recopier la démonstration du cours, montrer directement que $`\ell(\boldsy
 > ```
 > **Leçon:** l'ELBO surgit naturellement de Jensen. L'égalité a lieu quand le rapport $`p(\mathbf X,\mathbf Z\mid\boldsymbol\theta)/q(\mathbf Z)`$ est constant en $`\mathbf Z`$, c'est-à-dire quand $`q(\mathbf Z)\propto p(\mathbf X,\mathbf Z\mid\boldsymbol\theta)`$, soit (après normalisation) $`q(\mathbf Z) = p(\mathbf Z\mid\mathbf X,\boldsymbol\theta)`$: on retombe sur l'étape E.
 
-#### Exercice 6 — Choisir $`K`$ par critere d'information
+#### Exercice 6: Choisir $`K`$ par critere d'information
 
 On hésite entre $`K=2`$ et $`K=3`$. Expliquer pourquoi maximiser la log-vraisemblance ne suffit pas, et proposer un critère.
 
@@ -582,7 +582,7 @@ On hésite entre $`K=2`$ et $`K=3`$. Expliquer pourquoi maximiser la log-vraisem
 > ```
 > On choisit le $`K`$ qui **minimise** le critère (l'AIC pénalise moins; le BIC est plus parcimonieux car il pénalise davantage chaque paramètre, via $`\ln N`$). Pour un GMM `full` en dimension $`d`$: $`P = \underbrace{(K-1)}_{\pi} + \underbrace{Kd}_{\boldsymbol\mu} + \underbrace{K\frac{d(d+1)}{2}}_{\boldsymbol\Sigma}`$ (les poids ne comptent que pour $`K-1`$ à cause de la contrainte $`\sum_k\pi_k=1`$). Autres approches: validation croisée sur la log-vraisemblance de données de test, ou mélange bayésien à processus de Dirichlet (`BayesianGaussianMixture` de scikit-learn) qui **élague** automatiquement les composantes inutiles en mettant leur poids à zéro.
 
-#### Exercice 7 — Implementer EM en dimension quelconque
+#### Exercice 7: Implementer EM en dimension quelconque
 
 Écrire une fonction NumPy `em_gmm(X, K)` pour $`\mathbf{X}\in\mathbb{R}^{N\times d}`$ (covariances `full`), renvoyant $`\pi, \boldsymbol\mu, \boldsymbol\Sigma`$ et la courbe de log-vraisemblance, avec garde-fou anti-singularité.
 

@@ -6,7 +6,7 @@
 
 Avant de parler de gradients, de jacobiennes ou de retropropagation, il faut comprendre un objet d'une simplicite trompeuse: la **derivee** d'une fonction d'une seule variable. C'est la brique elementaire; tout le reste du chapitre n'est qu'une generalisation de cette idee a plusieurs dimensions.
 
-#### L'intuition : mesurer une pente
+#### L'intuition: mesurer une pente
 
 Imaginez que vous roulez en voiture. A chaque instant, le compteur de vitesse vous indique a quelle vitesse vous allez **maintenant**, pas votre vitesse moyenne depuis le depart. La derivee, c'est exactement ce compteur de vitesse: elle vous dit, en un point precis, **a quelle vitesse une quantite change**.
 
@@ -16,7 +16,7 @@ Geometriquement, si on trace la courbe d'une fonction $`f`$, la derivee en un po
 
 > **Le symbole $`x`$.** Ce symbole represente un **nombre qui peut varier**, une « case vide » qu'on remplit avec la valeur de notre choix. On l'appelle une variable. Pensez a une boite etiquetee « $`x`$ » dans laquelle on range tantot 2, tantot 3,7, tantot $`-10`$.
 
-#### La limite : s'approcher sans jamais toucher
+#### La limite: s'approcher sans jamais toucher
 
 Pour transformer l'idee de pente en une definition rigoureuse, il faut d'abord l'outil le plus fondamental de l'analyse: la **limite**.
 
@@ -119,7 +119,7 @@ On pose $`g(x) = 3x^2 + 1`$ (donc $`g'(x) = 6x`$) et $`f(u) = u^5`$ (donc $`f'(u
 h'(x) = f'(g(x))\cdot g'(x) = 5(3x^2+1)^4 \cdot 6x = 30x\,(3x^2+1)^4.
 ```
 
-#### Application machine learning : la descente de gradient en dimension 1
+#### Application machine learning: la descente de gradient en dimension 1
 
 Tout l'apprentissage automatique repose sur la **minimisation d'une fonction de cout** (loss function). En une dimension, supposons qu'on cherche le minimum d'une fonction $`J(w)`$ qui mesure « a quel point notre modele se trompe » en fonction d'un parametre $`w`$. L'idee de la **descente de gradient** (gradient descent) est limpide: la derivee $`J'(w)`$ indique la pente; pour descendre vers le minimum, on fait un pas dans le sens **oppose** a la pente.
 
@@ -157,7 +157,7 @@ A chaque tour, $`w`$ se rapproche de $`4`$ et la valeur de cout diminue. On vien
 
 Une fonction de cout reelle ne depend pas d'un seul parametre mais de milliers, de millions, voire de milliards. Il nous faut donc deriver des fonctions **a plusieurs entrees**. C'est exactement l'objet des derivees partielles et du gradient.
 
-#### L'intuition : la pente dans chaque direction
+#### L'intuition: la pente dans chaque direction
 
 Considerons une fonction de deux variables, $`f(x_1, x_2)`$. Sa courbe n'est plus une ligne dans le plan, mais une **surface** dans l'espace: un paysage de collines et de vallees, ou l'altitude au-dessus du point $`(x_1, x_2)`$ vaut $`f(x_1, x_2)`$.
 
@@ -177,7 +177,7 @@ Sur un paysage, la question « quelle est la pente ? » n'a pas une seule repons
 
 > **Le symbole $`\mapsto`$ (« applique sur »).** A ne pas confondre avec $`\to`$. La fleche $`\to`$ relie des **ensembles** ($`f: \mathbb{R}^n \to \mathbb{R}`$: « de tel ensemble vers tel ensemble »), tandis que $`\mapsto`$ relie un **element a son image** ($`t \mapsto t^2`$: « a $`t`$ on associe $`t^2`$ »). La premiere decrit la machine en gros, la seconde decrit la regle de calcul precise.
 
-#### Le gradient : empiler toutes les pentes
+#### Le gradient: empiler toutes les pentes
 
 Si l'on rassemble toutes les derivees partielles dans un vecteur, on obtient le **gradient**. C'est l'objet central de toute l'optimisation.
 
@@ -240,7 +240,7 @@ Donc le gradient general et son evaluation:
 ```
 Au point $`(2,1)`$, pour grimper le plus vite, il faut avancer dans la direction $`\begin{bmatrix}4\\7\end{bmatrix}`$; la pente y vaut $`\|\nabla f(2,1)\| = \sqrt{16+49} = \sqrt{65} \approx 8,06`$.
 
-#### Verification numerique : les differences finies
+#### Verification numerique: les differences finies
 
 On peut toujours verifier un gradient calcule a la main par une approximation numerique, la **difference finie centree** (central finite difference), qui revient a appliquer la definition avec un $`h`$ petit mais non nul:
 ```math
@@ -272,7 +272,7 @@ print("numerique  :", grad_numerique(f, x)) # ~[4. 7.]
 
 > **La verification par differences finies (`gradcheck`) en pratique.** C'est le reflexe pour valider une implementation de gradient faite a la main. Mais en production on ne calcule presque plus aucun gradient manuellement: les bibliotheques de differentiation automatique (JAX, PyTorch) le font exactement, a la precision machine, et infiniment plus vite que les differences finies, lesquelles souffrent du compromis entre erreur de troncature (si $`h`$ trop grand) et erreur d'arrondi (si $`h`$ trop petit). On garde `gradcheck` pour deboguer une couche personnalisee, pas pour la production.
 
-#### Application machine learning : la regression lineaire
+#### Application machine learning: la regression lineaire
 
 Soit le probleme des moindres carres: on veut ajuster $`\mathbf{w} \in \mathbb{R}^n`$ pour que $`X\mathbf{w}`$ approche au mieux $`\mathbf{y}`$, en minimisant
 ```math
@@ -292,7 +292,7 @@ La descente de gradient s'ecrit alors $`\mathbf{w} \leftarrow \mathbf{w} - \eta\
 
 Jusqu'ici la sortie etait un seul nombre (fonction scalaire). Mais une couche de reseau de neurones transforme un vecteur en un **autre vecteur**. Il faut donc deriver des fonctions $`\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m`$. L'objet qui generalise le gradient est alors la **matrice jacobienne**.
 
-#### L'intuition : un tableau de toutes les sensibilites
+#### L'intuition: un tableau de toutes les sensibilites
 
 Une fonction vectorielle $`\mathbf{f}`$ a $`m`$ sorties, chacune dependant des $`n`$ entrees. La question naturelle est: « si je bouge l'entree $`j`$, de combien bouge la sortie $`i`$ ? ». Il y a $`m \times n`$ telles questions, et leurs reponses se rangent naturellement dans un **tableau** (une matrice): c'est la jacobienne.
 
@@ -365,7 +365,7 @@ En substituant $`\mathbf{k}`$ et en regroupant, les termes en $`o`$ restent en $
 J_{\mathbf{f}}(0,0) = \begin{bmatrix}0 & 1\\ 0 & 0\end{bmatrix}, \qquad J_{\mathbf{h}}(0) = J_{\mathbf{f}}(0,0)\,J_{\mathbf{g}}(0) = \begin{bmatrix}0 & 1\\ 0 & 0\end{bmatrix}\begin{bmatrix}1\\0\end{bmatrix} = \begin{bmatrix}0\\0\end{bmatrix}.
 ```
 
-#### Application machine learning : la jacobienne de softmax
+#### Application machine learning: la jacobienne de softmax
 
 La fonction **softmax** transforme un vecteur de scores en une distribution de probabilites:
 ```math
@@ -405,7 +405,7 @@ print(jacobienne_softmax(z))
 
 Nous montons d'un cran. Les parametres d'un reseau ne sont pas seulement des vecteurs: ce sont des **matrices** de poids. Il faut donc savoir deriver par rapport a une matrice, et deriver des objets qui sont eux-memes des matrices. C'est le domaine du **calcul matriciel** (matrix calculus).
 
-#### L'intuition : ranger les derivees comme l'objet d'origine
+#### L'intuition: ranger les derivees comme l'objet d'origine
 
 La regle d'or est simple: **la derivee d'un objet par rapport a un autre se range en suivant la forme des deux objets**. La derivee d'un scalaire $`y`$ par rapport a une matrice $`W \in \mathbb{R}^{p\times q}`$ est une matrice **de meme forme** $`p \times q`$, ou la case $`(i,j)`$ contient $`\partial y / \partial W_{ij}`$.
 
@@ -485,7 +485,7 @@ g_num = np.array([(y(x+h*e)-y(x-h*e))/(2*h) for e in np.eye(2)])
 print(g_num)                      # ~[ 6. 13.]
 ```
 
-#### Application machine learning : gradient d'une couche lineaire
+#### Application machine learning: gradient d'une couche lineaire
 
 Une couche dense calcule $`Y = XW`$, et la perte scalaire $`L`$ remonte un gradient $`\dfrac{\partial L}{\partial Y} =: \bar{Y}`$ (de meme forme que $`Y`$). Les regles de la trace donnent les deux gradients essentiels a la retropropagation:
 ```math
@@ -530,7 +530,7 @@ Demontrons l'identite 5, fondamentale en regression, par la differentielle. Poso
 ```
 On lit directement $`\nabla_{\mathbf{x}} y = 2A^\top(A\mathbf{x}-\mathbf{b})`$. En annulant ce gradient on retrouve les **equations normales** $`A^\top A\,\mathbf{x} = A^\top\mathbf{b}`$, dont la solution est l'estimateur des moindres carres. $`\blacksquare`$
 
-#### Exemple chiffre : derivee de la log-vraisemblance gaussienne
+#### Exemple chiffre: derivee de la log-vraisemblance gaussienne
 
 En statistique, on maximise souvent la **log-vraisemblance** (log-likelihood). Pour une gaussienne de variance fixee, ajuster la moyenne $`\boldsymbol{\mu}`$ revient a minimiser $`\ell(\boldsymbol{\mu}) = \tfrac{1}{2}\sum_{k=1}^{N}\|\mathbf{x}_k - \boldsymbol{\mu}\|^2`$. Par linearite et l'identite 2:
 ```math
@@ -541,7 +541,7 @@ En statistique, on maximise souvent la **log-vraisemblance** (log-likelihood). P
 
 En annulant: $`\boldsymbol{\mu}^\star = \frac{1}{N}\sum_k \mathbf{x}_k`$, la moyenne empirique. Le calcul differentiel **redemontre** que la meilleure estimation de la moyenne est... la moyenne. Rassurant.
 
-#### Application machine learning : gradient de la regression logistique
+#### Application machine learning: gradient de la regression logistique
 
 Pour la classification binaire, le modele predit $`\hat{y} = \sigma(\mathbf{w}^\top\mathbf{x})`$ avec $`\sigma`$ la sigmoide, et la perte d'entropie croisee (cross-entropy) sur un exemple vaut $`L = -\big[y\ln\hat{y} + (1-y)\ln(1-\hat{y})\big]`$.
 
@@ -690,7 +690,7 @@ print("df/dy =", y.grad)    # 0.8415...
 
 On peut deriver une derivee. Ces derivees secondes mesurent la **courbure** et sont indispensables pour comprendre la nature des points critiques et concevoir des methodes d'optimisation rapides.
 
-#### L'intuition : la courbure, c'est la derivee de la pente
+#### L'intuition: la courbure, c'est la derivee de la pente
 
 La derivee premiere donne la pente. La **derivee seconde** donne la facon dont la pente **change**: c'est la courbure. Sur une route, la derivee premiere c'est votre vitesse, la derivee seconde votre acceleration. Une derivee seconde positive signifie « ca se creuse vers le haut » (convexe, en forme de bol), negative « ca bombe » (concave, en forme de dome).
 
@@ -748,7 +748,7 @@ Pour notre exemple en $`(1,1)`$, le gradient n'y est pas nul, donc $`(1,1)`$ n'e
 
 > **Mise a jour de perspective.** En grande dimension, les points critiques d'un reseau profond sont **massivement des points-selles** plutot que des minima locaux (resultat majeur de la theorie de l'optimisation non convexe). C'est rassurant: la descente de gradient stochastique s'echappe des selles, et la plupart des minima atteints ont des valeurs de perte comparables. La hessienne complete ($`n\times n`$ avec $`n`$ en milliards) n'est jamais formee; on accede a ses effets via des **produits hessienne-vecteur** $`H\mathbf{v}`$ calcules par autodiff (astuce de Pearlmutter: un VJP du gradient), au coeur des methodes de Newton tronquees, de Gauss-Newton et du calcul de courbure (K-FAC).
 
-#### Application machine learning : la methode de Newton
+#### Application machine learning: la methode de Newton
 
 La descente de gradient ignore la courbure. La **methode de Newton** l'exploite pour converger bien plus vite, en resolvant a chaque pas un modele quadratique local:
 ```math
@@ -774,7 +774,7 @@ print("minimum :", v)                        # [ 1. -2.]  (exact)
 
 Nous bouclons le chapitre avec l'outil qui relie tout: l'approximation d'une fonction compliquee par des polynomes simples. C'est le fondement de la linearisation, des methodes d'optimisation et de l'analyse de sensibilite.
 
-#### L'intuition : remplacer une courbe par sa tangente
+#### L'intuition: remplacer une courbe par sa tangente
 
 Pres d'un point, toute fonction reguliere « ressemble » a une droite (sa tangente), puis, si l'on veut plus de precision, a une parabole, puis a un polynome de degre croissant. La **serie de Taylor** est la recette systematique pour construire ces approximations polynomiales de mieux en mieux ajustees.
 
@@ -835,7 +835,7 @@ for (x, y) in [(0.1, 0.1), (0.2, -0.1), (0.05, 0.3)]:
     print(f"({x},{y}) exact={exact:.5f} taylor2={approx:.5f} err={abs(exact-approx):.2e}")
 ```
 
-#### Application machine learning : d'ou viennent les algorithmes
+#### Application machine learning: d'ou viennent les algorithmes
 
 La serie de Taylor **engendre** les algorithmes d'optimisation, selon l'ordre auquel on s'arrete.
 
@@ -855,7 +855,7 @@ Minimiser le modele de Taylor d'ordre 2 $`\;q(\mathbf{h}) = f + \nabla f^\top\ma
 
 ### Exercices
 
-#### Exercice 1 — Derivee par la definition
+#### Exercice 1: Derivee par la definition
 
 Calculer, **par la definition** (limite du taux d'accroissement), la derivee de $`f(x) = \frac{1}{x}`$ en un point $`x \neq 0`$.
 
@@ -865,7 +865,7 @@ Calculer, **par la definition** (limite du taux d'accroissement), la derivee de 
 > ```
 > En faisant $`h\to 0`$: $`f'(x) = \dfrac{-1}{x\cdot x} = -\dfrac{1}{x^2}`$. Conforme au formulaire ($`x^{-1} \to -x^{-2}`$). $`\blacksquare`$
 
-#### Exercice 2 — Regle de la chaine
+#### Exercice 2: Regle de la chaine
 
 Soit $`h(x) = \ln\big(1 + e^{2x}\big)`$ (la fonction « softplus » mise a l'echelle, omnipresente en deep learning). Calculer $`h'(x)`$ et montrer que $`h'(x) = 2\,\sigma(2x)`$ avec $`\sigma`$ la sigmoide.
 
@@ -875,7 +875,7 @@ Soit $`h(x) = \ln\big(1 + e^{2x}\big)`$ (la fonction « softplus » mise a l'ech
 > ```
 > Divisons haut et bas par $`e^{2x}`$: $`h'(x) = \dfrac{2}{e^{-2x}+1} = 2\,\sigma(2x)`$. La derivee de la softplus est bien un multiple de la sigmoide. $`\blacksquare`$
 
-#### Exercice 3 — Gradient et hessienne d'une forme quadratique
+#### Exercice 3: Gradient et hessienne d'une forme quadratique
 
 Soit $`f(\mathbf{x}) = \tfrac{1}{2}\mathbf{x}^\top A\mathbf{x} - \mathbf{b}^\top\mathbf{x}`$ avec $`A`$ symetrique definie positive. Calculer $`\nabla f`$ et $`H_f`$, puis le minimiseur.
 
@@ -885,7 +885,7 @@ Soit $`f(\mathbf{x}) = \tfrac{1}{2}\mathbf{x}^\top A\mathbf{x} - \mathbf{b}^\top
 > ```
 > Le point critique annule le gradient: $`A\mathbf{x}^\star = \mathbf{b}`$, soit $`\mathbf{x}^\star = A^{-1}\mathbf{b}`$. Comme $`H_f = A`$ est definie positive, c'est bien un **minimum global** (la fonction est strictement convexe). C'est le probleme resolu en une iteration par la methode de Newton. $`\blacksquare`$
 
-#### Exercice 4 — Jacobienne d'une composition
+#### Exercice 4: Jacobienne d'une composition
 
 Soit $`\mathbf{g}(x_1,x_2) = (x_1 x_2,\; x_1 + x_2)`$ et $`\mathbf{f}(u_1,u_2) = (u_1^2,\; u_1 u_2)`$. Calculer la jacobienne de $`\mathbf{h}=\mathbf{f}\circ\mathbf{g}`$ en $`(1,2)`$ par la regle de la chaine, puis verifier par calcul direct.
 
@@ -899,7 +899,7 @@ Soit $`\mathbf{g}(x_1,x_2) = (x_1 x_2,\; x_1 + x_2)`$ et $`\mathbf{f}(u_1,u_2) =
 > ```
 > **Verification directe**: $`\mathbf{h}(x_1,x_2) = \big((x_1x_2)^2,\; (x_1x_2)(x_1+x_2)\big)`$, soit $`h_2 = x_1^2 x_2 + x_1 x_2^2`$. On a $`\partial h_1/\partial x_1 = 2x_1 x_2^2 = 8`$, $`\partial h_1/\partial x_2 = 2x_1^2 x_2 = 4`$, $`\partial h_2/\partial x_1 = 2x_1x_2 + x_2^2 = 4+4 = 8`$, $`\partial h_2/\partial x_2 = x_1^2 + 2x_1x_2 = 1+4 = 5`$. On retrouve $`\begin{bmatrix}8&4\\8&5\end{bmatrix}`$. $`\blacksquare`$
 
-#### Exercice 5 — Retropropagation a la main
+#### Exercice 5: Retropropagation a la main
 
 Pour $`f(x,y,z) = (x+y)\cdot z`$ en $`(x,y,z) = (-2, 5, -4)`$, effectuer le passage avant puis le passage arriere, et donner $`\bar x, \bar y, \bar z`$.
 
@@ -914,7 +914,7 @@ Pour $`f(x,y,z) = (x+y)\cdot z`$ en $`(x,y,z) = (-2, 5, -4)`$, effectuer le pass
 > ```
 > Donc $`\nabla f = (\bar x,\bar y,\bar z) = (-4,-4,3)`$. Verification: $`\partial f/\partial x = z = -4`$, $`\partial f/\partial y = z = -4`$, $`\partial f/\partial z = x+y = 3`$. Concordance. $`\blacksquare`$
 
-#### Exercice 6 — Taylor et nature d'un point critique
+#### Exercice 6: Taylor et nature d'un point critique
 
 Soit $`f(x,y) = x^2 + xy + y^2 - 3x`$. Trouver le point critique, ecrire le developpement de Taylor a l'ordre 2 autour de ce point, et conclure sur sa nature.
 
@@ -928,7 +928,7 @@ Soit $`f(x,y) = x^2 + xy + y^2 - 3x`$. Trouver le point critique, ecrire le deve
 > ```
 > (Le terme d'ordre 1 est nul puisqu'on developpe en un point critique, et le reste est exactement nul car $`f`$ est un polynome de degre 2.) Comme la hessienne est definie positive, $`(2,-1)`$ est un **minimum global**, de valeur $`-3`$. $`\blacksquare`$
 
-#### Exercice 7 — Gradient matriciel
+#### Exercice 7: Gradient matriciel
 
 Demontrer que $`\nabla_W\,\mathrm{tr}(AWB) = A^\top B^\top`$, puis en deduire $`\nabla_W\,\|XW - Y\|_F^2`$.
 
@@ -940,7 +940,7 @@ Demontrer que $`\nabla_W\,\mathrm{tr}(AWB) = A^\top B^\top`$, puis en deduire $`
 > ```
 > Donc $`\nabla_W\,\|XW-Y\|_F^2 = 2X^\top(XW - Y)`$. C'est la version matricielle des equations normales, et **exactement** le gradient utilise pour entrainer une couche lineaire par descente de gradient. $`\blacksquare`$
 
-#### Exercice 8 — Implementation : verifier un gradient par autodiff
+#### Exercice 8: Implementation: verifier un gradient par autodiff
 
 Ecrire un test qui compare le gradient analytique de la regression logistique a une approximation par differences finies.
 

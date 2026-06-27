@@ -8,7 +8,7 @@ Imaginez un apprenti boulanger qui regarde son maître pendant des mois. Il voit
 
 Ce chapitre raconte cette rencontre: d'un côté des **données** (ce que le monde nous montre), de l'autre des **modèles** (les règles candidates), et au milieu un **principe d'apprentissage** qui choisit la meilleure règle. Tout le reste n'est que la mise en équations, de plus en plus précise, de cette idée simple.
 
-#### Le vocabulaire de base : observations, etiquettes, hypotheses
+#### Le vocabulaire de base: observations, etiquettes, hypotheses
 
 Commençons par poser les objets. On observe des **exemples** (samples). Chaque exemple est décrit par des **caractéristiques** (features): pour un appartement, ce serait sa surface, son nombre de pièces, son étage. On rassemble ces caractéristiques dans un vecteur.
 
@@ -32,7 +32,7 @@ Le boulanger ne se contente pas de mémoriser; il veut une **règle** qui, face 
 
 > **Le symbole chapeau $`\hat{\cdot}`$.** Le petit chapeau au-dessus d'une lettre signifie « ceci est une *estimation*, une *devinette éclairée*, pas la vérité ». Ainsi $`\hat{y}`$ se lit « y chapeau » et veut dire « le prix que *je prédis* », à distinguer de $`y`$, « le vrai prix ». C'est la différence entre la météo qui annonce 25 degrés ($`\hat{y}`$) et la température réelle de demain ($`y`$). On retrouvera ce chapeau partout: des qu'une quantité est *apprise à partir des données*, elle porte un chapeau.
 
-#### La classe d'hypotheses : on ne cherche pas n'importe quelle regle
+#### La classe d'hypotheses: on ne cherche pas n'importe quelle regle
 
 Le boulanger ne teste pas *toutes* les règles imaginables de l'univers: il reste dans le cadre « plus de farine / moins d'eau / temps de cuisson ». De même, en apprentissage, on se restreint à une **famille de règles candidates**, qu'on appelle la **classe d'hypothèses** (hypothesis class).
 
@@ -71,7 +71,7 @@ flowchart LR
 
 > **Remarque (le cœur du chapitre).** Les deux grandes façons de définir le critère d'apprentissage donneront les deux grandes sections suivantes: minimiser une **erreur** mesurée sur les données (vision *minimisation du risque empirique*), ou maximiser la **plausibilité** des données sous un modèle probabiliste (vision *maximum de vraisemblance*). On verra que ces deux visions, apparemment différentes, se rejoignent souvent, c'est l'un des plus beaux ponts du domaine.
 
-#### Generalisation : apprendre n'est pas memoriser
+#### Generalisation: apprendre n'est pas memoriser
 
 Un piège guette le boulanger: il pourrait apprendre par cœur « le mardi 3 j'ai mis 502 g de farine ». C'est inutile, car le mardi suivant la farine n'est pas la même. Ce qui compte, c'est de bien faire sur des situations *nouvelles*. En apprentissage, cette capacité porte un nom: la **généralisation** (generalization).
 
@@ -91,7 +91,7 @@ Voilà le décor planté: des données tirées d'une loi $`P`$, une famille de r
 
 Reprenons le boulanger. Pour savoir si sa règle est bonne, il lui faut une **note de douleur**: à quel point s'est-il trompé ? Un pain brûlé rapporte une grosse pénalité, un pain parfait rapporte zéro. Cette note, en apprentissage, s'appelle la **fonction de perte**.
 
-#### La fonction de perte : mesurer une erreur
+#### La fonction de perte: mesurer une erreur
 
 > **Le symbole $`\ell`$ (la fonction de perte, loss).** Ce symbole représente *le prix à payer quand on se trompe*. On lui donne deux choses: la prédiction $`\hat{y}`$ et la vraie réponse $`y`$, et il rend un nombre $`\ell(\hat{y}, y) \ge 0`$ qui dit « voilà à quel point cette prédiction est mauvaise ». C'est comme un arbitre sévère: si vous prédisez pile la vérité, il dit « 0, parfait »; plus vous vous éloignez, plus la note monte. La perte vaut toujours zéro ou plus (on ne peut pas être *récompensé* pour une erreur), et elle vaut zéro quand $`\hat{y} = y`$.
 
@@ -108,7 +108,7 @@ Quelques pertes classiques, selon le type de problème:
 
 > **Le symbole $`\hat{p}`$ (probabilité prédite).** Dans la log-loss, $`\hat{p}`$ représente *la probabilité que le modèle attribue à la classe 1* (par exemple « 0,8 de chance que ce soit un chat »). C'est un nombre entre 0 et 1, alors que la vraie étiquette $`y`$ vaut 0 ou 1. La log-loss récompense un modèle *confiant et correct* (prédire 0,99 quand $`y=1`$ coûte presque rien) et punit sévèrement un modèle *confiant et faux* (prédire 0,01 quand $`y=1`$ coûte très cher).
 
-#### Le risque : la perte moyenne sur tout le monde
+#### Le risque: la perte moyenne sur tout le monde
 
 La perte note *une* prédiction. Mais une bonne règle doit être bonne *en moyenne*, sur tous les exemples que le monde peut produire. On mesure donc la perte moyenne sous la loi $`P`$: c'est le **risque** (risk), ou **erreur de généralisation**.
 
@@ -125,7 +125,7 @@ h^\star = \arg\min_{h \in \mathcal{H}} R(h).
 
 > **Remarque (le mur infranchissable).** On ne peut **pas** calculer $`R(h)`$: il faudrait connaître la loi $`P`$ du monde entier, qui est précisément ce qu'on ignore ! On ne dispose que d'un échantillon fini, le cahier $`\mathcal{D}`$. Toute la suite consiste à *remplacer* cette moyenne ideale, inaccessible, par une moyenne *concrète* calculée sur nos données.
 
-#### Le risque empirique : la moyenne sur le cahier
+#### Le risque empirique: la moyenne sur le cahier
 
 Puisqu'on ne connaît pas $`P`$, on remplace l'espérance théorique par la **moyenne effective sur les exemples observés**. C'est le **risque empirique** (empirical risk), aussi appelé perte d'entraînement.
 
@@ -146,7 +146,7 @@ L'idée maîtresse, le **principe de minimisation du risque empirique** (empiric
 
 > **Le symbole $`\arg\min`$ (rappel d'usage).** Il ne rend pas la *valeur* minimale de la fonction, mais *l'endroit* (ici le $`\boldsymbol{\theta}`$) où ce minimum est atteint. « $`\arg`$ » = *argument*, c'est-à-dire l'entrée qui réalise le mieux. On écrit « $`\hat{h} \in \arg\min`$ » (appartenance) plutôt que « $`\hat{h} = \arg\min`$ » quand le minimum peut être atteint en plusieurs endroits: l'$`\arg\min`$ est alors un *ensemble* de minimiseurs, et on en choisit un.
 
-#### Pourquoi ca marche : la loi des grands nombres
+#### Pourquoi ca marche: la loi des grands nombres
 
 Pourquoi remplacer $`R`$ par $`\hat{R}_n`$ serait-il légitime ? Parce que, sous l'hypothèse i.i.d., la moyenne empirique converge vers l'espérance.
 
@@ -160,7 +160,7 @@ Pourquoi remplacer $`R`$ par $`\hat{R}_n`$ serait-il légitime ? Parce que, sous
 
 > **Piège subtil (uniformité).** La loi des grands nombres vaut pour une hypothèse $`h`$ *fixée à l'avance*. Or l'ERM *choisit* $`\hat{h}`$ *en regardant les données*: $`\hat{h}`$ dépend de $`\mathcal{D}`$. La garantie « $`\hat{R}_n(\hat{h}) \approx R(\hat{h})`$ » exige une convergence **uniforme** sur toute la classe $`\mathcal{H}`$; c'est le rôle de la théorie de Vapnik–Chervonenkis (dimension VC) et de la complexité de Rademacher. Retenir: *plus $`\mathcal{H}`$ est riche, plus l'écart entre risque empirique et risque vrai peut être grand*, c'est le germe du surapprentissage, et on y reviendra.
 
-#### Exemple chiffre deroule : la regression lineaire par moindres carres
+#### Exemple chiffre deroule: la regression lineaire par moindres carres
 
 Mettons l'ERM en action sur le cas le plus célèbre: une droite, avec la perte quadratique. C'est la **méthode des moindres carrés** (least squares).
 
@@ -238,7 +238,7 @@ print("risque empirique          =", empirical_risk(theta, X, y))  # 0.222
 
 > **Mise à jour 2026.** Pour les très grands jeux de données ($`n`$ ou $`d`$ énormes), on ne forme jamais $`X^\top X`$ (coût $`O(nd^2)`$ et mauvais conditionnement). On préfère: (i) la **SVD tronquée randomisée** pour une solution stable de rang réduit; (ii) surtout la **descente de gradient stochastique** (stochastic gradient descent, SGD) et ses variantes adaptatives **Adam / AdamW**, qui minimisent le risque empirique par petits lots sans jamais matérialiser la matrice normale. Le gradient $`\frac{2}{n} X^\top(X\boldsymbol{\theta} - \mathbf{y})`$ se calcule par produits matrice-vecteur, et en apprentissage profond il est obtenu par **différentiation automatique** (autodiff, via PyTorch ou JAX) plutôt qu'à la main.
 
-#### Regularisation : empecher le surapprentissage des l'ERM
+#### Regularisation: empecher le surapprentissage des l'ERM
 
 L'ERM brute peut surapprendre, surtout si $`\mathcal{H}`$ est riche. Le remède le plus courant est d'ajouter au risque empirique une **pénalité** qui décourage les réglages extrêmes: c'est la **régularisation** (regularization).
 
@@ -264,11 +264,11 @@ On verra dans la section suivante que cette pénalité n'est pas un bricolage: e
 
 ---
 
-### Estimation des paramètres : maximum de vraisemblance et MAP
+### Estimation des paramètres: maximum de vraisemblance et MAP
 
 Changeons de lunettes. Jusqu'ici, on *mesurait une erreur*. Adoptons maintenant un point de vue **probabiliste**: on suppose que les données ont été *engendrées* par un modèle de hasard dépendant de $`\boldsymbol{\theta}`$, et on demande: *quel réglage $`\boldsymbol{\theta}`$ rend ce que j'ai observé le plus plausible ?* C'est l'**estimation par maximum de vraisemblance**.
 
-#### La vraisemblance : « avec quelle probabilite ce modele aurait-il produit mes donnees ? »
+#### La vraisemblance: « avec quelle probabilite ce modele aurait-il produit mes donnees ? »
 
 Imaginez une machine à fabriquer des données, dont le comportement dépend de boutons $`\boldsymbol{\theta}`$. Pour un réglage donné, elle a une certaine probabilité de cracher exactement le cahier $`\mathcal{D}`$ que vous avez sous les yeux. La **vraisemblance** retourne le point de vue: les données sont *fixées* (c'est ce qu'on a vu), et on regarde cette probabilité *comme une fonction des boutons*.
 
@@ -281,7 +281,7 @@ Imaginez une machine à fabriquer des données, dont le comportement dépend de 
 
 > **Le symbole $`\prod`$ (produit, « pi » majuscule).** Ce symbole est le cousin multiplicatif du $`\Sigma`$: là où sigma *additionne*, pi *multiplie*. C'est une « boucle qui multiplie »: $`\prod_{i=1}^n a_i = a_1 \times a_2 \times \dots \times a_n`$. Il apparaît ici parce que la probabilité de plusieurs événements *indépendants* qui se produisent *tous* est le produit de leurs probabilités (comme « pile ET pile ET pile » à une chance sur deux puissance trois).
 
-#### La log-vraisemblance : transformer les produits en sommes
+#### La log-vraisemblance: transformer les produits en sommes
 
 Multiplier des centaines de petites probabilités donne un nombre minuscule, instable numériquement, et pénible à dériver. L'astuce universelle: prendre le **logarithme**, qui transforme les produits en sommes et ne déplace pas l'emplacement du maximum (le logarithme est strictement croissant).
 
@@ -301,7 +301,7 @@ L'**estimateur du maximum de vraisemblance** (maximum likelihood estimator, MLE)
 
 > **Définition (maximum de vraisemblance).** Soit un modèle statistique $`\{p(\cdot \mid \boldsymbol{\theta}): \boldsymbol{\theta} \in \Theta\}`$ et des observations i.i.d. $`\mathcal{D}`$. L'**estimateur du maximum de vraisemblance** est tout $`\hat{\boldsymbol{\theta}}_{\text{MV}} \in \arg\max_{\boldsymbol{\theta}\in\Theta} \mathcal{L}(\boldsymbol{\theta})`$. Intuitivement: *parmi toutes les machines candidates, on garde celle qui avait le plus de chances de produire exactement ce qu'on a observe.*
 
-#### Le pont fondamental : minimiser la perte = maximiser la vraisemblance
+#### Le pont fondamental: minimiser la perte = maximiser la vraisemblance
 
 Voici le résultat qui relie les deux premières sections. Maximiser une vraisemblance, c'est minimiser une perte bien choisie ($`\ell_{\text{perte}}(\hat y, y) = -\ln p`$), et inversement. Démontrons-le sur le cas roi.
 
@@ -324,7 +324,7 @@ Le premier terme ne dépend pas de $`\boldsymbol{\theta}`$; le second est, au fa
 
 > **Remarque (la log-vraisemblance négative comme perte).** En général, poser $`\ell_{\text{perte}}(\hat y, y) = -\ln p(y \mid \hat y)`$ transforme tout MLE en une ERM. Avec un bruit gaussien on retombe sur la perte quadratique; avec un bruit de Laplace, sur la perte absolue L1; en classification binaire avec un modèle de Bernoulli, sur la **log-loss**. La fonction de perte n'est donc pas arbitraire: elle encode une *hypothèse sur la nature du bruit*.
 
-#### Exemple chiffre : MLE d'une piece truquee (Bernoulli)
+#### Exemple chiffre: MLE d'une piece truquee (Bernoulli)
 
 Le cas le plus simple pour sentir le mécanisme. On lance $`n`$ fois une pièce qui tombe sur « face » avec une probabilité inconnue $`\theta \in [0,1]`$. On observe $`k`$ faces. Quel $`\hat\theta`$ ?
 
@@ -363,7 +363,7 @@ Le MLE n'est pas qu'une recette: c'est un estimateur aux propriétés remarquabl
 
 > **Le symbole $`\nabla^2`$ (hessienne, rappel d'usage).** C'est la matrice des dérivées secondes: elle mesure la *courbure* d'une fonction dans toutes les directions. Pour la log-vraisemblance, une hessienne très négative (forte courbure vers le bas au sommet) signifie un pic étroit, donc une information de Fisher élevée. La hessienne raconte la forme du relief autour du maximum, là où le gradient ne dit que la pente.
 
-#### De la vraisemblance a l'a posteriori : l'approche bayesienne
+#### De la vraisemblance a l'a posteriori: l'approche bayesienne
 
 Le MLE ne croît qu'aux données. Mais souvent on a une **opinion préalable**: avant de lancer la pièce, on pense raisonnablement qu'elle est à peu près équilibrée. L'approche **bayésienne** (Bayesian) formalise cela en traitant $`\boldsymbol{\theta}`$ lui-même comme une variable aléatoire, dotée d'une loi *avant* de voir les données.
 
@@ -378,7 +378,7 @@ Le théorème de Bayes met à jour cette croyance à la lumière des données:
 
 > **Le symbole $`p(\mathcal{D})`$ (évidence, ou vraisemblance marginale).** Ce symbole représente *la probabilité totale d'observer ces données, toutes machines confondues*: $`p(\mathcal{D}) = \int p(\mathcal{D}\mid\boldsymbol{\theta})\,p(\boldsymbol{\theta})\,d\boldsymbol{\theta}`$. C'est une simple constante de normalisation (elle ne dépend pas de $`\boldsymbol{\theta}`$) qui fait que l'a posteriori, intégré sur tous les $`\boldsymbol{\theta}`$, vaut bien 1. Pour *trouver* le $`\boldsymbol{\theta}`$ le plus probable, on peut souvent l'ignorer.
 
-#### L'estimation MAP : le sommet de l'a posteriori
+#### L'estimation MAP: le sommet de l'a posteriori
 
 Plutôt que de manipuler toute la distribution a posteriori, on peut se contenter de son point culminant: le réglage le plus probable après avoir vu les données. C'est l'estimation du **maximum a posteriori** (MAP).
 
@@ -390,7 +390,7 @@ Plutôt que de manipuler toute la distribution a posteriori, on peut se contente
 
 > **Le symbole « mode ».** Le **mode** d'une distribution est *l'endroit où elle culmine*: la valeur la plus probable. A distinguer de la moyenne (centre de gravité) et de la médiane (point qui coupe en deux). Le MAP retient le sommet de la cloche a posteriori; l'espérance a posteriori, elle, en retiendrait le centre de gravité, les deux coïncident pour une gaussienne, mais pas en général.
 
-#### Le second pont fondamental : regularisation = a priori
+#### Le second pont fondamental: regularisation = a priori
 
 On avait promis que la régularisation ridge n'était pas un bricolage. Voici la preuve.
 
@@ -468,7 +468,7 @@ Un modèle probabiliste spécifie la **loi jointe** de tout ce petit monde, $`p(
 > - **Inférence des paramètres**: calculer $`p(\boldsymbol{\theta}\mid\mathcal{D})`$ (vu à la section précédente).
 > Dans les deux cas, la machinerie est la même, le théorème de Bayes, et la difficulté est la même: la constante de normalisation (une somme ou une intégrale) est souvent monstrueuse.
 
-#### Marginalisation et conditionnement : les deux gestes de base
+#### Marginalisation et conditionnement: les deux gestes de base
 
 Toute inférence se ramène à deux opérations sur la loi jointe.
 
@@ -480,7 +480,7 @@ Toute inférence se ramène à deux opérations sur la loi jointe.
 
 Le **conditionnement**, lui, c'est l'application de la règle de Bayes: $`p(\mathbf{z}\mid\mathbf{x}) = p(\mathbf{x},\mathbf{z})/p(\mathbf{x})`$. On *fixe* ce qu'on sait et on renormalise.
 
-#### Exemple complet : le melange gaussien
+#### Exemple complet: le melange gaussien
 
 Illustrons sur un modèle star: le **mélange de gaussiennes** (Gaussian mixture model, GMM). Histoire générative: pour fabriquer un point, la nature (i) choisit secrètement un groupe $`z \in \{1,\dots,K\}`$ avec probabilités $`\pi_k`$, puis (ii) tire le point dans la gaussienne de ce groupe.
 
@@ -504,7 +504,7 @@ Par conditionnement (Bayes), la probabilité *a posteriori* qu'un point observé
 
 > **Le symbole $`\gamma_k(x)`$ (responsabilité).** Ce symbole représente à quel point le groupe $`k`$ « revendique » le point $`x`$: un nombre entre 0 et 1 qui dit la probabilité que $`x`$ soit ne du groupe $`k`$. Pour un point donné, les responsabilités de tous les groupes somment à 1 (le point appartient forcément à *un* groupe). C'est une appartenance *douce*: au lieu de trancher « ce point est au groupe 2 », on dit « 70 pour cent groupe 2, 30 pour cent groupe 1 ».
 
-#### L'algorithme EM : apprendre avec des variables cachees
+#### L'algorithme EM: apprendre avec des variables cachees
 
 Problème: pour estimer $`\boldsymbol{\theta} = \{\pi_k, \mu_k, \Sigma_k\}`$ par maximum de vraisemblance, la log-vraisemblance contient un *logarithme d'une somme* ($`\ln\sum_k \dots`$), qui ne se dérive pas joliment. La parade est l'algorithme **EM** (expectation–maximization, espérance–maximisation), qui alterne deux étapes intuitives: « deviner les groupes cachés », puis « re-estimer les paramètres comme si on les connaissait ».
 
@@ -595,7 +595,7 @@ La règle d'or relie le dessin à la formule: la loi jointe se **factorise** en 
 
 > **Pourquoi c'est puissant.** Sans hypothèse, décrire la loi jointe de $`m`$ variables binaires demande $`2^m - 1`$ nombres, explosif. Le graphe dit *quelles dépendances on s'autorise*; chaque variable ne « coûte » que ses parents. Si chaque nœud à au plus $`p`$ parents, le coût chute à environ $`m\cdot 2^p`$: on a troqué l'exponentiel en $`m`$ contre du linéaire en $`m`$. Le graphe est une *machine à économiser des paramètres*.
 
-#### Exemple deroule : un petit reseau de diagnostic
+#### Exemple deroule: un petit reseau de diagnostic
 
 Construisons le réseau classique « pluie / arroseur / pelouse mouillée ».
 
@@ -715,7 +715,7 @@ flowchart LR
     end
 ```
 
-#### Le compromis : la courbe en U de l'erreur de test
+#### Le compromis: la courbe en U de l'erreur de test
 
 Quand on augmente la complexité du modèle, le biais baisse (on épouse mieux la vraie forme) mais la variance monte (on devient sensible au bruit). La somme, l'erreur de généralisation, suit donc une **courbe en U**: elle décroît, atteint un minimum, puis remonte. Le bon modèle est *au creux du U*.
 
@@ -727,7 +727,7 @@ Quand on augmente la complexité du modèle, le biais baisse (on épouse mieux l
 
 > **Diagnostic pratique.** Un grand écart « erreur de test ≫ erreur d'entraînement » signe la **variance** (surapprentissage): remèdes = plus de données, plus de régularisation, modèle plus simple. Une erreur d'entraînement *déjà* élevée signe le **biais** (sous-apprentissage): remèdes = modèle plus riche, meilleures caractéristiques, moins de régularisation.
 
-#### Estimer l'erreur de generalisation : validation et validation croisee
+#### Estimer l'erreur de generalisation: validation et validation croisee
 
 On ne peut pas mesurer l'erreur de test sur les données d'entraînement (elle est trompeusement basse). On *réserve* donc des données jamais vues pendant l'apprentissage.
 
@@ -755,7 +755,7 @@ flowchart TD
     R1 & R2 & R3 & R4 & R5 --> M["Moyenne des 5 erreurs = CV"]
 ```
 
-#### Exemple chiffre et code : choisir le degre d'un polynome
+#### Exemple chiffre et code: choisir le degre d'un polynome
 
 Illustrons toute la démarche: on génère des données autour d'une vraie fonction, on ajuste des polynômes de degrés croissants, et on regarde la courbe en U émerger via la validation croisée.
 
@@ -795,7 +795,7 @@ for degree in [1, 3, 5, 9, 15]:
 
 L'exécution fait apparaître une erreur élevée aux petits degrés (biais: la droite ne peut pas suivre un sinus), un minimum vers un degré intermédiaire (ici autour du degré 5), puis une remontée aux grands degrés (variance: le polynôme se met à osciller violemment pour passer au plus près de chaque point bruité). Le creux du U désigne le degré à retenir.
 
-#### Au-dela du U classique : regularisation, parcimonie et double descente
+#### Au-dela du U classique: regularisation, parcimonie et double descente
 
 Le compromis biais-variance ne se pilote pas qu'en changeant le *nombre* de paramètres: la régularisation déplace le curseur **en continu**. Augmenter $`\lambda`$ (ridge) *augmente le biais* et *réduit la variance*, c'est le même U, parcouru le long de $`\lambda`$ plutôt que du degré. Choisir $`\lambda`$ par validation croisée est la pratique standard.
 
@@ -814,7 +814,7 @@ flowchart LR
 
 ### Exercices
 
-#### Exercice 1 — Risque empirique a la main (echauffement)
+#### Exercice 1: Risque empirique a la main (echauffement)
 
 On dispose des prédictions $`\hat{\mathbf{y}} = (3, 1, 4)`$ et des vraies valeurs $`\mathbf{y} = (2, 1, 2)`$.
 (à) Calculer le risque empirique pour la perte quadratique.
@@ -826,7 +826,7 @@ On dispose des prédictions $`\hat{\mathbf{y}} = (3, 1, 4)`$ et des vraies valeu
 > (b) Valeurs absolues: $`1, 0, 2`$. Moyenne: $`(1+0+2)/3 = 1`$.
 > (c) Indicatrices d'erreur: $`3\neq2 \Rightarrow 1`$; $`1=1 \Rightarrow 0`$; $`4\neq2 \Rightarrow 1`$. Moyenne: $`2/3 \approx 0{,}67`$. On voit que la perte quadratique punit beaucoup plus la grosse erreur (le 2) que la L1, et que la 0–1 ignore l'amplitude.
 
-#### Exercice 2 — Moindres carres sans intercept
+#### Exercice 2: Moindres carres sans intercept
 
 On observe $`(x,y) \in \{(1,1),(2,3),(3,4)\}`$ et on ajuste $`\hat y = \theta x`$ (droite passant par l'origine, un seul paramètre).
 (à) Écrire le risque empirique $`\hat R(\theta)`$.
@@ -836,7 +836,7 @@ On observe $`(x,y) \in \{(1,1),(2,3),(3,4)\}`$ et on ajuste $`\hat y = \theta x`
 > (à) $`\hat R(\theta) = \frac{1}{3}\big[(\theta-1)^2 + (2\theta-3)^2 + (3\theta-4)^2\big]`$.
 > (b) Dérivée: $`\hat R'(\theta) = \frac{2}{3}\big[(\theta-1) + 2(2\theta-3) + 3(3\theta-4)\big] = \frac{2}{3}(14\theta - 19)`$. Annulation: $`\hat\theta = 19/14 \approx 1{,}357`$. On retrouve la formule générale $`\hat\theta = \frac{\sum x_i y_i}{\sum x_i^2} = \frac{1+6+12}{1+4+9} = \frac{19}{14}`$.
 
-#### Exercice 3 — MLE d'une loi exponentielle
+#### Exercice 3: MLE d'une loi exponentielle
 
 Des durées de vie $`t_1, \dots, t_n`$ sont supposées i.i.d. de loi exponentielle de densité $`p(t\mid\lambda) = \lambda e^{-\lambda t}`$ (pour $`t \ge 0`$, $`\lambda > 0`$).
 (à) Écrire la log-vraisemblance.
@@ -848,7 +848,7 @@ Des durées de vie $`t_1, \dots, t_n`$ sont supposées i.i.d. de loi exponentiel
 > (b) $`\ell'(\lambda) = \frac{n}{\lambda} - \sum_i t_i = 0 \Rightarrow \hat\lambda = \frac{n}{\sum_i t_i} = \frac{1}{\bar t}`$ (l'inverse de la durée moyenne). La dérivée seconde $`-n/\lambda^2 < 0`$ confirme un maximum.
 > (c) $`\sum t_i = 10`$, $`n=3`$, donc $`\hat\lambda = 3/10 = 0{,}3\ \text{h}^{-1}`$ (durée de vie moyenne estimée $`\bar t = 10/3 \approx 3{,}33`$ h).
 
-#### Exercice 4 — MAP avec a priori beta (le lien regularisation/a priori)
+#### Exercice 4: MAP avec a priori beta (le lien regularisation/a priori)
 
 On reprend la pièce truquée ($`k`$ faces sur $`n`$ lancers, paramètre $`\theta`$), avec cette fois un a priori **bêta** $`p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}`$.
 (à) Écrire la log-densité a posteriori (à une constante près).
@@ -863,7 +863,7 @@ On reprend la pièce truquée ($`k`$ faces sur $`n`$ lancers, paramètre $`\thet
 > ```
 > (c) Avec $`\alpha=\beta=2`$: $`\hat\theta_{\text{MAP}} = \frac{k+1}{n+2} = \frac{0+1}{3+2} = \frac{1}{5} = 0{,}2`$. La, le MLE donnait l'absurde $`0`$; l'a priori à *régularisé* l'estimation vers une valeur raisonnable. C'est exactement le mécanisme de « lissage de Laplace » (add-one smoothing), et l'illustration concrète que l'a priori joue le rôle de la régularisation.
 
-#### Exercice 5 — Inference dans un reseau bayesien
+#### Exercice 5: Inference dans un reseau bayesien
 
 Reprenons le réseau pluie/arroseur/pelouse de la section, avec les memes chiffres.
 (à) Calculer $`p(A{=}1)`$ (probabilité marginale que l'arroseur soit allumé).
@@ -877,7 +877,7 @@ Reprenons le réseau pluie/arroseur/pelouse de la section, avec les memes chiffr
 > ```
 > Voir la pelouse mouillée fait passer l'arroseur de 34 pour cent à 63 pour cent: l'observation de l'effet renforce la croyance en cette cause.
 
-#### Exercice 6 — Decomposition biais-variance d'un estimateur retreci
+#### Exercice 6: Decomposition biais-variance d'un estimateur retreci
 
 Soit $`\hat\mu = \frac{1}{n}\sum_{i=1}^n X_i`$ la moyenne empirique de $`n`$ tirages i.i.d. d'espérance $`\mu`$ et variance $`\sigma^2`$. On considère l'estimateur *rétréci* (shrinkage) $`\hat\mu_c = c\,\hat\mu`$ avec $`c \in [0,1]`$.
 (à) Calculer le biais et la variance de $`\hat\mu_c`$.

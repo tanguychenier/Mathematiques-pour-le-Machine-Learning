@@ -27,7 +27,7 @@ Avant de construire l'ACP, prenons le temps de comprendre **pourquoi** on veut r
 
 > **Intuition centrale.** Les données réelles, même décrites par mille colonnes, sont souvent « aplaties »: elles vivent au voisinage d'un sous-espace de petite dimension, comme une feuille de papier froissée flotte dans une pièce. Le papier est en relief (dimension 3) mais reste fondamentalement une surface (dimension 2). La réduction de dimension cherche a **déplier** ou au moins a **retrouver** cette feuille.
 
-#### Le sous-espace linéaire : le cadre de l'ACP
+#### Le sous-espace linéaire: le cadre de l'ACP
 
 L'ACP fait une hypothèse simple et puissante: le sous-espace caché est **linéaire**, c'est-a-dire un *sous-espace affine* (une droite, un plan, un hyperplan passant par un point central). Ce n'est pas toujours vrai, une donnée enroulée en spirale ne sera pas bien capturée par un plan, mais cette hypothèse rend les calculs exacts, rapides et interprétables. Les méthodes non linéaires (t-SNE, UMAP, autoencodeurs) viendront plus tard; l'ACP est la fondation.
 
@@ -298,7 +298,7 @@ Comme la variance projetée est maximale pour $`U_k = (\mathbf{u}_1,\dots,\mathb
 
 Cela donne une lecture très concrète des valeurs propres: $`\lambda_{k+1},\dots,\lambda_d`$ sont **exactement ce qu'on perd** en se limitant a $`k`$ composantes. Si ces valeurs propres « de queue » sont minuscules, on peut couper sans remords.
 
-#### Exemple chiffré : projeter sur la meilleure droite
+#### Exemple chiffré: projeter sur la meilleure droite
 
 Reprenons un nuage légèrement bruité autour de la droite $`y=x`$. Soit les points **déjà centrés** (leur moyenne est bien $`(0,0)`$)
 $`(-2,-1.8),\ (-1,-1.2),\ (0,0.1),\ (1,0.9),\ (2,2.0).`$
@@ -350,7 +350,7 @@ print("erreur projection naive (x) :", round(err_naif, 4))
 
 On sait *quoi* calculer (les vecteurs propres de $`S`$). Reste *comment* le faire, efficacement, de manière stable, et a grande échelle. Cette section relie l'ACP a la **décomposition en valeurs singulières** (SVD), donne les algorithmes pratiques, et établit le lien fondamental avec l'**approximation de rang faible** (low-rank approximation) via le théorème d'Eckart–Young.
 
-#### ACP via la SVD : la voie royale
+#### ACP via la SVD: la voie royale
 
 Calculer $`S = \tfrac{1}{n}\tilde{X}^{\top}\tilde{X}`$ puis la diagonaliser fonctionne, mais ce n'est **ni la méthode la plus stable ni la plus efficace**. Former $`\tilde{X}^{\top}\tilde{X}`$ élève au carré le *conditionnement* du problème (les petites valeurs singulières deviennent minuscules et se noient dans les erreurs d'arrondi) et coûte $`O(nd^2)`$. Le *conditionnement*, c'est une note de fragilité du calcul: il mesure de combien les résultats peuvent se dérégler quand les nombres de départ sont à peine perturbés (par exemple par les arrondis de l'ordinateur); plus il est grand, plus le calcul est délicat. L'élever au carré, c'est donc rendre le calcul nettement plus fragile. La SVD de $`\tilde{X}`$ contourne ces deux écueils.
 
@@ -398,7 +398,7 @@ print("ratio cumule       :", np.round(np.cumsum(ratio), 3))
 print("forme des scores   :", Z.shape)
 ```
 
-#### Le théorème d'Eckart–Young : l'ACP est la meilleure approximation de rang faible
+#### Le théorème d'Eckart–Young: l'ACP est la meilleure approximation de rang faible
 
 L'ACP peut se voir comme la réponse a une question d'**algèbre matricielle pure**, indépendante de toute statistique: *quelle matrice de rang au plus $`k`$ approche le mieux $`\tilde{X}`$ ?* La réponse est l'un des théorèmes les plus importants de l'algèbre linéaire numérique.
 
@@ -436,7 +436,7 @@ B = U[:, :k] @ np.diag(s[:k]) @ Vt[:k] + 1e-3*rng.normal(size=A.shape)  # rang <
 print("erreur d'un B concurrent (>=) :", round(np.linalg.norm(A - B, 'fro')**2, 4))
 ```
 
-#### Méthodes de calcul : exact, itératif, randomisé
+#### Méthodes de calcul: exact, itératif, randomisé
 
 Selon la taille du problème, on choisit l'une de ces stratégies.
 
@@ -494,7 +494,7 @@ Quand $`d > n`$, le rang est plafonné par $`n-1`$. Cela signifie qu'il y a **au
 
 > **Image.** Trois personnes dans une pièce tiennent chacune un ballon. Même si la pièce est immense (grande dimension $`d`$), trois points ne peuvent définir qu'un plan (dimension 2). Vouloir une « quatrième direction de variation » entre trois points n'a aucun sens. En grande dimension, le nombre de points est le vrai facteur limitant de la richesse du nuage.
 
-#### L'astuce du noyau (Gram) : calculer dans le petit espace
+#### L'astuce du noyau (Gram): calculer dans le petit espace
 
 Diagonaliser $`S`$ ($`d\times d`$) est hors de portée si $`d = 10^6`$. Mais on peut travailler avec la **matrice de Gram** $`G = \tilde{X}\tilde{X}^{\top} \in \mathbb{R}^{n\times n}`$, qui est petite (taille $`n`$, le nombre de points). L'idée: les vecteurs propres de $`S`$ et ceux de $`G`$ sont reliés par $`\tilde{X}`$.
 
@@ -648,7 +648,7 @@ print("erreur de reconstruction (k=2)   :", round(modele.erreur_reconstruction(X
 
 Jusqu'ici, l'ACP était un objet **géométrique et déterministe**: des directions, des projections, des erreurs au carré. On peut lui donner une troisième vie, **probabiliste**, en la voyant comme un *modèle génératif*, une histoire racontant **comment les données auraient pu être fabriquées** par le hasard. C'est l'**ACP probabiliste** (Probabilistic PCA, PPCA) de Tipping et Bishop. Elle éclaire l'ACP sous un jour nouveau, la relie au maximum de vraisemblance, gère proprement les données manquantes, et ouvre la porte aux modèles a variables latentes modernes (analyse factorielle, autoencodeurs variationnels).
 
-#### L'idée : une cause cachée de petite dimension
+#### L'idée: une cause cachée de petite dimension
 
 > **Le symbole $`\mathbf{z}`$, la variable latente.** Ce symbole représente **une cause cachée, invisible, de petite dimension, qui explique ce qu'on observe**. Imaginez que la « vraie » description d'un visage tienne en $`k`$ réglages secrets (rondeur, âge apparent, sourire...); on ne les voit jamais directement, on ne voit que les milliers de pixels qu'ils engendrent. Le $`\mathbf{z}`$ est ce jeu de réglages cachés. Le mot *latent* veut dire « présent mais non observé », comme une cause qu'on devine sans la voir.
 
@@ -686,7 +686,7 @@ En intégrant la cause cachée (somme de deux gaussiennes, donc gaussienne), on 
 
 > **Le symbole « vraisemblance ».** La *vraisemblance* (likelihood) représente **la probabilité que le modèle attribue aux données qu'on a réellement observées**. On cherche les réglages ($`W,\boldsymbol\mu,\sigma^2`$) qui rendent les données observées **les plus plausibles possibles**: c'est le principe du *maximum de vraisemblance*. Intuitivement: « quel réglage de la machine a hasard explique le mieux ce que j'ai vu ? »
 
-#### Théorème : le maximum de vraisemblance redonne l'ACP
+#### Théorème: le maximum de vraisemblance redonne l'ACP
 
 > **Théorème (Tipping–Bishop, 1999).** La log-vraisemblance des données sous le modèle PPCA est maximisée par
 > ```math
@@ -754,7 +754,7 @@ print("erreur ||C - S_emp||_F          :", round(np.linalg.norm(C - (X-mu).T@(X-
 
 Les corrigés sont détaillés. Essayez sincèrement avant de les lire.
 
-#### Exercice 1 — Covariance et variance projetée (échauffement)
+#### Exercice 1: Covariance et variance projetée (échauffement)
 
 On considère les trois points de $`\mathbb{R}^2`$: $`(0,0)`$, $`(2,0)`$, $`(4,2)`$.
 **(a)** Calculer la moyenne et centrer les points.
@@ -770,7 +770,7 @@ On considère les trois points de $`\mathbb{R}^2`$: $`(0,0)`$, $`(2,0)`$, $`(4,2
 > **(c)** Projections: $`\tilde{\mathbf{x}}^{\top}\mathbf{u}=\tfrac{1}{\sqrt2}(\tilde x_1+\tilde x_2)`$. Valeurs: $`\tfrac{1}{\sqrt2}(-\tfrac83),\,\tfrac{1}{\sqrt2}(-\tfrac23),\,\tfrac{1}{\sqrt2}(\tfrac{10}{3})`$. Variance $`=\tfrac13\cdot\tfrac12\big(\tfrac{64}{9}+\tfrac49+\tfrac{100}{9}\big)=\tfrac16\cdot\tfrac{168}{9}=\tfrac{168}{54}=\tfrac{28}{9}`$.
 > Vérification: $`\mathbf{u}^{\top}S\mathbf{u}=\tfrac12(S_{11}+2S_{12}+S_{22})=\tfrac12\big(\tfrac83+\tfrac83+\tfrac89\big)=\tfrac12\cdot\tfrac{56}{9}=\tfrac{28}{9}`$. Les deux coïncident. $`\checkmark`$
 
-#### Exercice 2 — Diagonalisation a la main
+#### Exercice 2: Diagonalisation a la main
 
 Soit $`S=\begin{pmatrix} 3 & 1 \\ 1 & 3\end{pmatrix}`$.
 **(a)** Trouver les valeurs propres et les vecteurs propres orthonormés.
@@ -782,7 +782,7 @@ Soit $`S=\begin{pmatrix} 3 & 1 \\ 1 & 3\end{pmatrix}`$.
 > **(b)** Première composante $`\mathbf{u}_1=\tfrac{1}{\sqrt2}(1,1)`$. Part expliquée: $`\tfrac{\lambda_1}{\lambda_1+\lambda_2}=\tfrac{4}{6}=\tfrac23\approx 66{,}7\%`$.
 > **(c)** Erreur $`=\lambda_2=2`$ (la valeur propre abandonnée). $`\checkmark`$
 
-#### Exercice 3 — Pourquoi standardiser change tout
+#### Exercice 3: Pourquoi standardiser change tout
 
 Deux variables: $`X_1`$ avec écart-type $`100`$ et $`X_2`$ avec écart-type $`1`$, faiblement corrélées (corr $`=0{,}3`$).
 **(a)** Sans standardisation, vers quelle variable pointera la première composante ? Pourquoi ?
@@ -794,7 +794,7 @@ Deux variables: $`X_1`$ avec écart-type $`100`$ et $`X_2`$ avec écart-type $`1
 > **(b)** Sur la **matrice de corrélation** (covariance des données standardisées: chaque variable est ramenée a variance 1, les termes hors-diagonale deviennent les corrélations).
 > **(c)** Quand toutes les variables ont **la même nature et la même unité** (ex. pixels), pour ne pas amplifier le bruit des variables peu informatives. $`\checkmark`$
 
-#### Exercice 4 — L'équivalence variance / reconstruction
+#### Exercice 4: L'équivalence variance / reconstruction
 
 Démontrer, pour une **seule** direction unitaire $`\mathbf{u}`$ (cas $`k=1`$), que maximiser la variance projetée équivaut a minimiser l'erreur de reconstruction. On notera la variance totale $`T=\tfrac1n\sum_i\|\tilde{\mathbf{x}}_i\|^2`$.
 
@@ -804,7 +804,7 @@ Démontrer, pour une **seule** direction unitaire $`\mathbf{u}`$ (cas $`k=1`$), 
 > ```
 > En moyennant: $`J(\mathbf{u})=T-\mathbf{u}^{\top}S\mathbf{u}`$. Comme $`T`$ est constant (indépendant de $`\mathbf{u}`$), minimiser $`J`$ revient **exactement** a maximiser $`\mathbf{u}^{\top}S\mathbf{u}`$, la variance projetée. $`\blacksquare`$
 
-#### Exercice 5 — Eckart–Young en norme de Frobenius
+#### Exercice 5: Eckart–Young en norme de Frobenius
 
 Soit $`A=U\Sigma V^{\top}`$ une SVD, $`\sigma_1\ge\dots\ge\sigma_r>0`$, avec $`A \in \mathbb{R}^{m\times d}`$. On admet l'invariance de $`\|\cdot\|_F`$ par multiplication orthogonale ($`\|QAZ\|_F=\|A\|_F`$ pour $`Q,Z`$ orthogonales).
 **(a)** Montrer que $`\|A-A_k\|_F^2=\sum_{j>k}\sigma_j^2`$ pour la SVD tronquée $`A_k`$.
@@ -814,7 +814,7 @@ Soit $`A=U\Sigma V^{\top}`$ une SVD, $`\sigma_1\ge\dots\ge\sigma_r>0`$, avec $`A
 > **(a)** $`A-A_k=U(\Sigma-\Sigma_k)V^{\top}`$ ou $`\Sigma-\Sigma_k`$ ne garde que $`\sigma_{k+1},\dots,\sigma_r`$ sur la diagonale. Par invariance orthogonale, $`\|A-A_k\|_F^2=\|\Sigma-\Sigma_k\|_F^2=\sum_{j>k}\sigma_j^2`$.
 > **(b)** Soit $`B`$ de rang $`\le k`$. Son noyau $`\ker(B)\subseteq\mathbb{R}^d`$ a dimension $`\ge d-k`$ (théorème du rang). L'espace engendré par les $`k+1`$ premiers vecteurs singuliers a droite $`\{\mathbf{v}_1,\dots,\mathbf{v}_{k+1}\}\subseteq\mathbb{R}^d`$ a dimension $`k+1`$. Deux sous-espaces de $`\mathbb{R}^d`$ dont les dimensions somment a $`\ge (d-k)+(k+1)=d+1`$ s'intersectent non trivialement: il existe $`\mathbf{w}`$ unitaire dans $`\ker(B)\cap\mathrm{vect}(\mathbf{v}_1,\dots,\mathbf{v}_{k+1})`$. Alors $`B\mathbf{w}=\mathbf{0}`$, et en écrivant $`\mathbf{w}=\sum_{j\le k+1}w_j\mathbf{v}_j`$ avec $`\sum w_j^2=1`$, on a $`\|A\mathbf{w}\|^2=\sum_{j\le k+1}\sigma_j^2 w_j^2\ge\sigma_{k+1}^2`$. Donc $`\|A-B\|_F^2\ge\|(A-B)\mathbf{w}\|^2=\|A\mathbf{w}\|^2\ge\sigma_{k+1}^2`$. Un argument plus fin (inégalités de Weyl, appliquées direction par direction) étend cette borne a $`\sum_{j>k}\sigma_j^2`$, atteinte par $`A_k`$. $`\blacksquare`$
 
-#### Exercice 6 — Astuce de Gram quand $`d \gg n`$
+#### Exercice 6: Astuce de Gram quand $`d \gg n`$
 
 On a $`n=3`$ points dans $`\mathbb{R}^{1000}`$. Après centrage, on forme $`G=\tilde{X}\tilde{X}^{\top}\in\mathbb{R}^{3\times3}`$.
 **(a)** Combien de valeurs propres non nulles $`S`$ peut-elle avoir au maximum ? Pourquoi ?
@@ -826,7 +826,7 @@ On a $`n=3`$ points dans $`\mathbb{R}^{1000}`$. Après centrage, on forme $`G=\t
 > **(b)** $`S`$ et $`G`$ partagent les valeurs propres non nulles. Avec $`\lambda_j=\mu_j/n`$: $`\lambda_1=12/3=4`$, $`\lambda_2=6/3=2`$, $`\lambda_3=0`$. (La troisième est nulle, cohérent avec (a).)
 > **(c)** $`\mathbf{u}=\tilde{X}^{\top}\mathbf{w}`$, puis normalisation: $`\mathbf{u}\leftarrow \tilde{X}^{\top}\mathbf{w}/\sqrt{\mu}`$ (en supposant $`\|\mathbf{w}\|=1`$, ou $`\mu`$ est la valeur propre de $`G`$ associée a $`\mathbf{w}`$). $`\checkmark`$
 
-#### Exercice 7 — Variance expliquée et choix de $`k`$
+#### Exercice 7: Variance expliquée et choix de $`k`$
 
 Une ACP sur $`d=6`$ variables donne les valeurs propres: $`\lambda=(6{,}0,\ 3{,}0,\ 0{,}6,\ 0{,}3,\ 0{,}1,\ 0{,}0)`$.
 **(a)** Calculer le ratio de variance expliqué par chaque composante.
@@ -839,7 +839,7 @@ Une ACP sur $`d=6`$ variables donne les valeurs propres: $`\lambda=(6{,}0,\ 3{,}
 > **(b)** Cumul: $`0{,}60\,;\,0{,}90\,;\,0{,}96\,\dots`$ Des $`k=2`$, on atteint **exactement 90 %**. Donc $`k=2`$ suffit (et $`k=3`$ donne 96 %).
 > **(c)** Pour $`k=2`$: erreur $`=\lambda_3+\lambda_4+\lambda_5+\lambda_6=0{,}6+0{,}3+0{,}1+0=1{,}0`$ (soit bien $`10\%`$ de la variance totale). $`\checkmark`$
 
-#### Exercice 8 — ACP probabiliste (PPCA)
+#### Exercice 8: ACP probabiliste (PPCA)
 
 Dans le modèle PPCA, $`\mathbf{x}\sim\mathcal{N}(\boldsymbol\mu,\,WW^{\top}+\sigma^2 I_d)`$.
 **(a)** Pour $`d=5`$ variables, $`k=2`$, avec valeurs propres de $`S`$ égales a $`(5,3,0{,}4,0{,}3,0{,}3)`$, calculer l'estimation du bruit $`\sigma^2_{\star}`$.
@@ -851,7 +851,7 @@ Dans le modèle PPCA, $`\mathbf{x}\sim\mathcal{N}(\boldsymbol\mu,\,WW^{\top}+\si
 > **(b)** Les points tombent exactement sur le sous-espace engendré par $`W`$ (les $`k`$ premières composantes principales); la reconstruction $`W\,\mathbb{E}[\mathbf{z}\mid\mathbf{x}]`$ tend vers la projection orthogonale ACP $`U_kU_k^{\top}(\mathbf{x}-\bar{\mathbf{x}})`$. La PPCA dégénère en ACP déterministe.
 > **(c)** Plusieurs réponses acceptables: gestion native des données manquantes (via EM), vraisemblance permettant de choisir $`k`$ par BIC/AIC, capacité générative (échantillonner de nouvelles données), quantification de l'incertitude via la loi a posteriori. $`\checkmark`$
 
-#### Exercice 9 — Implémentation et vérification (au clavier)
+#### Exercice 9: Implémentation et vérification (au clavier)
 
 Écrire une fonction qui (i) génère $`n=500`$ points dans $`\mathbb{R}^{10}`$ de vrai rang $`3`$ plus un faible bruit, (ii) calcule l'ACP par SVD, (iii) vérifie numériquement que la somme des $`7`$ plus petites valeurs propres égale l'erreur de reconstruction pour $`k=3`$.
 

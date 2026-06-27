@@ -68,7 +68,7 @@ La norme euclidienne $`\ell_2`$ est la « longueur » usuelle, celle de notre in
 
 > **Piège fréquent.** Pour $`0 < p < 1`$, la formule ci-dessus **n'est plus une norme**: l'inégalité triangulaire (N3) est violée. On parle alors de « quasi-norme ». De même, le « comptage de coefficients non nuls » noté abusivement $`\|x\|_0`$ (la pseudo-norme $`\ell_0`$, omniprésente en parcimonie) **n'est pas une norme**: elle n'est pas homogène ($`\|2x\|_0 = \|x\|_0 \neq 2\|x\|_0`$).
 
-#### Boules unité : visualiser une norme
+#### Boules unité: visualiser une norme
 
 La **boule unité** d'une norme est l'ensemble des vecteurs de norme $`\leq 1`$: $`B = \{x: \|x\| \leq 1\}`$. Sa forme caractérise entièrement la norme.
 
@@ -201,7 +201,7 @@ La puissance du concept vient de son **axiomatisation**: on peut définir des pr
 
 Un espace vectoriel muni d'un produit scalaire s'appelle un **espace préhilbertien**; s'il est complet (toute suite de Cauchy y converge), c'est un **espace de Hilbert** (Hilbert space), la structure reine de l'analyse fonctionnelle et de la théorie de l'apprentissage (noyaux, RKHS).
 
-#### Produits scalaires généraux : la matrice de Gram
+#### Produits scalaires généraux: la matrice de Gram
 
 Toute matrice **symétrique définie positive** $`A`$ engendre un produit scalaire valide:
 
@@ -512,7 +512,7 @@ Parmi toutes les bases possibles d'un espace vectoriel, certaines sont **infinim
 
 L'exemple canonique sur $`\mathbb{R}^n`$ est la **base standard** $`e_1 = (1,0,\dots,0)`$, $`e_2 = (0,1,0,\dots,0)`$, etc. Mais il en existe une infinité d'autres (toute rotation de la base standard en fournit une).
 
-#### Pourquoi c'est si pratique : les coordonnées deviennent des produits scalaires
+#### Pourquoi c'est si pratique: les coordonnées deviennent des produits scalaires
 
 > **Théorème (décomposition dans une base orthonormale).** Si $`\{e_1, \dots, e_n\}`$ est une base orthonormale, alors tout vecteur $`x`$ s'écrit
 > ```math
@@ -757,7 +757,7 @@ Toutes les notions précédentes se transposent **mot pour mot**:
 - **Angle:** $`\cos\theta = \dfrac{\langle f,g\rangle}{\|f\|\,\|g\|}`$, et Cauchy–Schwarz $`\big|\int fg\big| \leq \|f\|\,\|g\|`$ tient toujours.
 - **Distance:** $`d(f,g) = \|f - g\|_{L^2} = \sqrt{\int_a^b (f(t)-g(t))^2\,dt}`$.
 
-#### L'exemple roi : la base de Fourier
+#### L'exemple roi: la base de Fourier
 
 Le résultat le plus spectaculaire: sur $`[-\pi, \pi]`$, les fonctions trigonométriques
 
@@ -846,7 +846,7 @@ Commençons par le cas le plus simple: projeter $`v`$ sur la droite dirigée par
 \langle v - cu, u\rangle = 0 \;\Longrightarrow\; \langle v, u\rangle = c\langle u, u\rangle \;\Longrightarrow\; c = \frac{\langle v, u\rangle}{\langle u, u\rangle}.
 ```
 
-#### Projection sur un sous-espace : les équations normales
+#### Projection sur un sous-espace: les équations normales
 
 Cas général: projeter $`b \in \mathbb{R}^m`$ sur le sous-espace $`\mathrm{Im} A`$ engendré par les colonnes d'une matrice $`A \in \mathbb{R}^{m\times n}`$ (colonnes supposées indépendantes).
 
@@ -1063,7 +1063,7 @@ print(round(np.arctan2(R_est[1, 0], R_est[0, 0]), 4))  # ~ 0.7
 
 Les corrigés détaillés suivent chaque énoncé. Tentez chaque exercice avant de lire la solution.
 
-#### Exercice 1 — Calculs de normes
+#### Exercice 1: Calculs de normes
 
 Soit $`x = (2, -3, 6) \in \mathbb{R}^3`$. Calculer $`\|x\|_1`$, $`\|x\|_2`$, $`\|x\|_\infty`$ et vérifier l'encadrement $`\|x\|_\infty \leq \|x\|_2 \leq \|x\|_1`$.
 
@@ -1073,7 +1073,7 @@ Soit $`x = (2, -3, 6) \in \mathbb{R}^3`$. Calculer $`\|x\|_1`$, $`\|x\|_2`$, $`\
 > - $`\|x\|_\infty = \max(2, 3, 6) = 6`$.
 > - Encadrement: $`6 \leq 7 \leq 11`$. ✓
 
-#### Exercice 2 — Produit scalaire et Cauchy–Schwarz
+#### Exercice 2: Produit scalaire et Cauchy–Schwarz
 
 Soit $`x = (1, 2, 2)`$ et $`y = (2, 0, -1)`$. Calculer $`\langle x, y\rangle`$, puis vérifier l'inégalité de Cauchy–Schwarz.
 
@@ -1082,7 +1082,7 @@ Soit $`x = (1, 2, 2)`$ et $`y = (2, 0, -1)`$. Calculer $`\langle x, y\rangle`$, 
 > Les vecteurs sont **orthogonaux** ! $`\|x\|_2 = \sqrt{1+4+4} = 3`$, $`\|y\|_2 = \sqrt{4+0+1} = \sqrt 5 \approx 2{,}236`$.
 > Cauchy–Schwarz: $`|0| = 0 \leq 3\sqrt 5 \approx 6{,}7`$. ✓ (Inégalité largement vérifiée; l'orthogonalité réalise le cas le plus éloigné possible de l'égalité.)
 
-#### Exercice 3 — Angle entre deux vecteurs
+#### Exercice 3: Angle entre deux vecteurs
 
 Calculer l'angle (en degrés) entre $`x = (1, 1, 0)`$ et $`y = (1, 0, 1)`$.
 
@@ -1090,14 +1090,14 @@ Calculer l'angle (en degrés) entre $`x = (1, 1, 0)`$ et $`y = (1, 0, 1)`$.
 > $`\langle x, y\rangle = 1 + 0 + 0 = 1`$. $`\|x\| = \|y\| = \sqrt 2`$.
 > $`\cos\theta = \dfrac{1}{\sqrt 2 \cdot \sqrt 2} = \dfrac{1}{2}`$, donc $`\theta = \arccos(1/2) = 60°`$.
 
-#### Exercice 4 — Orthogonalité et complément orthogonal
+#### Exercice 4: Orthogonalité et complément orthogonal
 
 Dans $`\mathbb{R}^3`$, soit $`U = \text{Vect}\{(1, 1, 1)\}`$. Déterminer $`U^\perp`$ et sa dimension.
 
 > **Corrigé.**
 > $`(a,b,c) \in U^\perp \iff \langle (a,b,c),(1,1,1)\rangle = a + b + c = 0`$. C'est l'équation d'un **plan** passant par l'origine. Une base: par exemple $`(1,-1,0)`$ et $`(1,0,-1)`$ (tous deux de somme nulle, et indépendants). Donc $`\dim U^\perp = 2`$, et $`\dim U + \dim U^\perp = 1 + 2 = 3 = \dim\mathbb{R}^3`$. ✓
 
-#### Exercice 5 — Gram–Schmidt
+#### Exercice 5: Gram–Schmidt
 
 Orthonormaliser la famille $`a_1 = (1, 1, 0)`$, $`a_2 = (1, 0, 1)`$ dans $`\mathbb{R}^3`$.
 
@@ -1110,7 +1110,7 @@ Orthonormaliser la famille $`a_1 = (1, 1, 0)`$, $`a_2 = (1, 0, 1)`$ dans $`\math
 > 3. $`\|u_2\| = \sqrt{\tfrac14 + \tfrac14 + 1} = \sqrt{\tfrac32} = \tfrac{\sqrt 6}{2}`$, donc $`e_2 = \frac{2}{\sqrt 6}\big(\tfrac12,-\tfrac12,1\big) = \frac{1}{\sqrt 6}(1, -1, 2)`$.
 > Vérification: $`\langle e_1, e_2\rangle = \frac{1}{\sqrt{12}}(1 - 1 + 0) = 0`$. ✓
 
-#### Exercice 6 — Projection sur une droite
+#### Exercice 6: Projection sur une droite
 
 Projeter $`v = (4, 2)`$ sur la droite dirigée par $`u = (3, 1)`$.
 
@@ -1121,7 +1121,7 @@ Projeter $`v = (4, 2)`$ sur la droite dirigée par $`u = (3, 1)`$.
 > ```
 > Vérification d'orthogonalité du résidu: $`v - p = (-0{,}2,\ 0{,}6)`$, et $`\langle (-0{,}2, 0{,}6), (3,1)\rangle = -0{,}6 + 0{,}6 = 0`$. ✓
 
-#### Exercice 7 — Moindres carrés (équations normales)
+#### Exercice 7: Moindres carrés (équations normales)
 
 Ajuster une droite $`y = c_0 + c_1 t`$ aux points $`(1, 1), (2, 2), (3, 2)`$ via les équations normales.
 
@@ -1135,7 +1135,7 @@ Ajuster une droite $`y = c_0 + c_1 t`$ aux points $`(1, 1), (2, 2), (3, 2)`$ via
 > ```
 > Droite ajustée: $`y = \tfrac{2}{3} + \tfrac{1}{2}t`$.
 
-#### Exercice 8 — Produit scalaire de fonctions
+#### Exercice 8: Produit scalaire de fonctions
 
 Montrer que $`f(t) = 1`$ et $`g(t) = t`$ sont orthogonales sur $`[-1, 1]`$ pour le produit scalaire $`L^2`$, et calculer $`\|g\|_{L^2}`$.
 
@@ -1145,7 +1145,7 @@ Montrer que $`f(t) = 1`$ et $`g(t) = t`$ sont orthogonales sur $`[-1, 1]`$ pour 
 > ```
 > Orthogonales. ✓ Et $`\|g\|^2 = \int_{-1}^1 t^2\,dt = \left[\frac{t^3}{3}\right]_{-1}^1 = \frac13 - (-\frac13) = \frac23`$, donc $`\|g\|_{L^2} = \sqrt{2/3} \approx 0{,}816`$.
 
-#### Exercice 9 — Rotation
+#### Exercice 9: Rotation
 
 Appliquer une rotation de $`60°`$ au point $`(2, 0)`$, puis vérifier que la norme est conservée.
 
@@ -1156,7 +1156,7 @@ Appliquer une rotation de $`60°`$ au point $`(2, 0)`$, puis vérifier que la no
 > ```
 > Norme du résultat: $`\sqrt{1 + 3} = 2 = \|(2,0)\|`$. ✓ La rotation préserve bien la longueur.
 
-#### Exercice 10 — Matrice de projection (synthèse)
+#### Exercice 10: Matrice de projection (synthèse)
 
 Soit $`u = (1, 2)`$. Construire la matrice $`P`$ qui projette tout vecteur de $`\mathbb{R}^2`$ sur la droite $`\text{Vect}\{u\}`$, vérifier $`P^2 = P`$ et $`P^\top = P`$, puis identifier sur quoi projette $`I - P`$.
 

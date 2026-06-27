@@ -6,9 +6,9 @@
 
 Imaginez une randonneuse perdue dans le brouillard sur une montagne. Elle ne voit rien autour d'elle, mais sous ses pieds elle sent la pente. Pour descendre dans la vallée le plus vite possible, elle fait un pas dans la direction où le sol descend le plus fort, puis recommence. Voilà, en une phrase, toute l'idée de la descente de gradient (gradient descent). C'est l'algorithme qui fait tourner aujourd'hui la quasi-totalité de l'apprentissage automatique (machine learning), du plus petit modèle de régression au plus gros réseau de neurones.
 
-![La descente de gradient : on suit la pente vers le bas, par pas de plus en plus petits près du minimum](../assets/descente-gradient.svg)
+![La descente de gradient: on suit la pente vers le bas, par pas de plus en plus petits près du minimum](../assets/descente-gradient.svg)
 
-#### Le problème : minimiser une fonction
+#### Le problème: minimiser une fonction
 
 On se donne une fonction $`f: \mathbb{R}^n \to \mathbb{R}`$ que l'on appelle **fonction objectif** (objective function), ou **fonction de coût** (cost / loss function). Elle prend en entrée un vecteur de paramètres et renvoie un seul nombre: « à quel point c'est mauvais ». Notre but est de trouver le vecteur qui rend ce nombre le plus petit possible.
 
@@ -106,7 +106,7 @@ On voit la convergence géométrique: $`x_k = (0{,}8)^k \cdot 10 \to 0`$. Chaque
 > - $`\eta = 0{,}9 \Rightarrow`$ facteur $`-0{,}8`$: on **oscille** autour de $`0`$ en se rapprochant lentement (le signe alterne).
 > - $`\eta = 1{,}1 \Rightarrow`$ facteur $`-1{,}2`$: $`|{-1{,}2}| > 1`$, on **diverge**, $`x_k`$ explose. La randonneuse enjambe la vallée toujours plus loin.
 
-#### Le rôle de la courbure : conditionnement et hessienne
+#### Le rôle de la courbure: conditionnement et hessienne
 
 Pourquoi certaines fonctions sont-elles si pénibles à minimiser ? À cause de leur **courbure**, encodée par la **hessienne** $`\nabla^2 f`$ (la matrice des dérivées secondes, vue au chapitre précédent). Considérons une « cuvette » très allongée, du genre:
 
@@ -138,7 +138,7 @@ La convergence est **linéaire** (géométrique), de raison $`1 - 1/\kappa`$ ave
 > ```
 > (en minimisant sur $`y`$ la borne inférieure $`f(y) \ge f(x_k) + \nabla f(x_k)^\top(y-x_k) + \tfrac{m}{2}\|y-x_k\|^2`$, on obtient $`f(x^\star) \ge f(x_k) - \tfrac{1}{2m}\|\nabla f(x_k)\|^2`$). En combinant, $`f(x_{k+1}) - f(x^\star) \le \big(1 - m/L\big)\big(f(x_k)-f(x^\star)\big)`$, puis on itère. $`\blacksquare`$
 
-#### Choisir le pas : recherche linéaire et conditions de Wolfe
+#### Choisir le pas: recherche linéaire et conditions de Wolfe
 
 À pas constant, il faut connaître $`L`$. En pratique on l'ignore, alors on cherche $`\eta`$ « à la volée » à chaque itération: c'est la **recherche linéaire** (line search). L'idée: le long de la demi-droite $`\eta \mapsto x_k - \eta\,\nabla f(x_k)`$, trouver un $`\eta`$ qui fait suffisamment baisser $`f`$.
 
@@ -160,7 +160,7 @@ def backtracking_line_search(f, grad_f, x, alpha0=1.0, c1=1e-4, rho=0.5):
 
 > **Remarque (conditions de Wolfe).** Armijo empêche les pas trop grands. Pour éviter aussi des pas trop *petits*, on ajoute la **condition de courbure** $`\nabla f(x_{k+1})^\top d \ge c_2\, \nabla f(x_k)^\top d`$ avec $`0 < c_1 < c_2 < 1`$ (ici $`d = -\nabla f(x_k)`$). Ensemble elles forment les **conditions de Wolfe**, garantes de la convergence des méthodes de quasi-Newton (BFGS, L-BFGS) que l'on retrouve dans `scipy.optimize.minimize`.
 
-#### Au-delà de la première dérivée : Newton et quasi-Newton
+#### Au-delà de la première dérivée: Newton et quasi-Newton
 
 La descente de gradient n'utilise que la pente. La **méthode de Newton** utilise aussi la courbure pour faire un pas « intelligent » qui corrige le conditionnement:
 
@@ -181,7 +181,7 @@ Sur une quadratique, elle atteint le minimum en **un seul pas**, quel que soit l
 | L-BFGS | gradient (+ mémoire) | $`O(mn)`$ | superlinéaire |
 | Newton | gradient + hessienne | $`O(n^3)`$ | quadratique |
 
-#### Accélération : moment (momentum) et Nesterov
+#### Accélération: moment (momentum) et Nesterov
 
 Un correctif peu coûteux mais spectaculaire consiste à donner de **l'inertie** à la descente, comme une bille lourde qui dévale et lisse les zigzags. La méthode de la **boule lourde** (heavy ball) de Polyak:
 
@@ -191,7 +191,7 @@ v_{k+1} = \beta\, v_k - \eta\, \nabla f(x_k), \qquad x_{k+1} = x_k + v_{k+1},
 
 où $`v_k`$ est la « vitesse » accumulée et $`\beta \in [0,1)`$ le coefficient de moment (souvent $`0{,}9`$). La variante de **Nesterov** (évaluer le gradient *après* avoir avancé selon l'inertie) atteint la vitesse optimale de raison $`1 - 1/\sqrt{\kappa}`$: sur un problème de conditionnement $`10^4`$, on passe d'environ $`10^4`$ à environ $`10^2`$ itérations. C'est une amélioration quadratique du nombre d'itérations.
 
-#### Le grand passage à l'échelle : descente de gradient stochastique (SGD)
+#### Le grand passage à l'échelle: descente de gradient stochastique (SGD)
 
 En apprentissage automatique, la fonction de coût est presque toujours une **moyenne sur les données**:
 
@@ -256,7 +256,7 @@ Les valeurs par défaut $`\beta_1 = 0{,}9`$, $`\beta_2 = 0{,}999`$, $`\epsilon =
 
 > **Différentiation automatique.** Vous n'écrivez plus jamais les gradients à la main. La **différentiation automatique** (automatic differentiation, autodiff) de **PyTorch** (mode inverse, `loss.backward()`) et de **JAX** (`jax.grad`, composable avec `jit`, `vmap`) calcule $`\nabla f`$ exactement (aux erreurs d'arrondi près), au coût d'environ deux évaluations de $`f`$, quelle que soit la dimension. C'est ce qui rend la descente de gradient praticable sur des modèles à des milliards de paramètres.
 
-#### Application complète : régression logistique par descente de gradient
+#### Application complète: régression logistique par descente de gradient
 
 Mettons tout bout à bout sur un classique de l'apprentissage automatique. En **régression logistique** (logistic regression), on prédit une probabilité $`\hat y = \sigma(\theta^\top x)`$ avec la sigmoïde $`\sigma(z) = 1/(1+e^{-z})`$, et on minimise l'**entropie croisée** (cross-entropy). Le gradient a une forme remarquablement simple:
 
@@ -328,7 +328,7 @@ L'ensemble des points qui respectent toutes les contraintes s'appelle le **domai
 
 > **Le symbole « sous » (s.c., « sous contrainte que »).** Tout ce qui suit le mot « sous » (en anglais *subject to*, abrégé *s.t.*) liste les **règles à respecter**. C'est comme un jeu: « marquez le plus de points possible (l'objectif) *sous* la règle que vous ne sortez pas du terrain (les contraintes) ». Les $`g_i`$ et $`h_j`$ sont juste d'autres fonctions de $`x`$, comme $`f`$.
 
-#### Cas d'une seule égalité : l'intuition géométrique
+#### Cas d'une seule égalité: l'intuition géométrique
 
 Commençons par $`\min f(x)`$ sous une seule contrainte $`g(x) = 0`$. Imaginez les **courbes de niveau** de $`f`$ (comme sur une carte topographique: chaque courbe relie les points de même altitude) et, par-dessus, le sentier $`g(x)=0`$. En marchant le long du sentier, tant que celui-ci **traverse** les courbes de niveau, on monte ou on descend: on peut faire mieux. On ne peut plus s'améliorer qu'à l'endroit où le sentier est **tangent** à une courbe de niveau.
 
@@ -345,7 +345,7 @@ Ce nombre $`\lambda`$ est le **multiplicateur de Lagrange**. (On écrit la colin
 > **Exemple chiffré déroulé.** Minimisons $`f(x_1, x_2) = x_1^2 + x_2^2`$ (distance² à l'origine) sous $`g(x) = x_1 + x_2 - 1 = 0`$ (rester sur une droite). On cherche le point de la droite le plus proche de l'origine.
 > Les gradients: $`\nabla f = (2x_1, 2x_2)`$, $`\nabla g = (1, 1)`$. La condition $`\nabla f + \lambda \nabla g = 0`$ donne $`2x_1 + \lambda = 0`$ et $`2x_2 + \lambda = 0`$, donc $`x_1 = x_2 = -\lambda/2`$. La contrainte $`x_1 + x_2 = 1`$ impose alors $`-\lambda = 1`$, soit $`\lambda = -1`$ et $`x_1 = x_2 = \tfrac12`$. Solution: $`x^\star = (\tfrac12, \tfrac12)`$, valeur optimale $`f(x^\star) = \tfrac14`$. C'est bien le pied de la perpendiculaire abaissée de l'origine sur la droite; l'intensité $`|\lambda| = 1`$ mesure la « poussée » de la contrainte.
 
-#### Le lagrangien : transformer un problème contraint en problème libre
+#### Le lagrangien: transformer un problème contraint en problème libre
 
 L'astuce géniale de Lagrange: encoder contraintes *et* objectif dans **une seule fonction**, le **lagrangien**, en payant un « péage » pour chaque écart aux contraintes.
 
@@ -401,7 +401,7 @@ Avec des inégalités, la situation se raffine: une contrainte $`h_j(x) \le 0`$ 
 
 > **Interprétation économique (le multiplicateur est un prix).** Théorème de sensibilité: si l'on relâche légèrement la contrainte en $`h_j(x) \le b_j`$ (on déplace la borne de $`b_j`$ à partir de $`0`$), la valeur optimale varie selon $`\frac{\partial p^\star}{\partial b_j} = -\mu_j`$. Le multiplicateur est donc le **prix marginal** (shadow price) de la contrainte: « combien je gagnerais à m'autoriser une unité de plus ». Dans l'exemple précédent, $`\mu = 4`$: desserrer la limite de $`x\le1`$ vers $`x\le1{,}01`$ ($`b = 0{,}01`$) ferait baisser $`f`$ d'environ $`-\mu \cdot b = -4 \times 0{,}01 = -0{,}04`$, soit une baisse de $`0{,}04`$. C'est ce qui donne aux multiplicateurs leur immense portée en économie, en théorie des jeux et en apprentissage automatique.
 
-#### Application phare : la machine à vecteurs de support (SVM)
+#### Application phare: la machine à vecteurs de support (SVM)
 
 L'exemple le plus emblématique en apprentissage automatique est le **séparateur à vaste marge** (support vector machine, SVM). On cherche l'hyperplan $`\theta^\top x + b = 0`$ qui sépare deux classes en **maximisant la marge**, ce qui revient au problème convexe:
 
@@ -413,7 +413,7 @@ En réécrivant chaque contrainte sous la forme standard $`h_i(\theta,b) = 1 - y
 
 > **Contraintes en apprentissage profond.** Les contraintes structurent aussi l'apprentissage profond moderne: projection sur des boules de norme pour la robustesse adversariale, **clipping** de norme de gradient (une contrainte implicite sur le pas), pénalités de Lagrange pour l'**équité** (fairness) ou le respect d'un budget de calcul, et entraînements *sous contraintes* (par exemple borner une métrique secondaire) résolus par des méthodes primal-dual. Les solveurs convexes disciplinés (CVXPY) et les méthodes de point intérieur restent une référence pour les sous-problèmes convexes de taille moyenne.
 
-#### Méthodes numériques : pénalité, barrière, projection
+#### Méthodes numériques: pénalité, barrière, projection
 
 Comment résout-on concrètement ? Trois grandes familles, illustrées sur un même cas.
 
@@ -555,7 +555,7 @@ L'optimisation convexe se décline en familles standard, par ordre de générali
 \text{LP} \subset \text{QP} \subset \text{SOCP} \subset \text{SDP}.
 ```
 
-#### Sous-gradient : quand ça n'est pas dérivable
+#### Sous-gradient: quand ça n'est pas dérivable
 
 Beaucoup de fonctions convexes utiles ont des **coins** (valeur absolue, norme $`\ell_1`$, hinge). En un coin, pas de tangente unique, mais tout un éventail de droites support: c'est le **sous-différentiel**.
 
@@ -608,7 +608,7 @@ flowchart TD
 
 Les corrigés suivent immédiatement chaque énoncé.
 
-#### Exercice 1 — Descente de gradient sur une quadratique 1D
+#### Exercice 1: Descente de gradient sur une quadratique 1D
 
 On minimise $`f(x) = 3x^2 - 12x + 7`$.
 **(a)** Calculer le minimiseur exact $`x^\star`$ et la valeur $`f(x^\star)`$.
@@ -620,7 +620,7 @@ On minimise $`f(x) = 3x^2 - 12x + 7`$.
 > **(b)** $`x_{k+1} = x_k - \eta(6x_k - 12) = (1 - 6\eta)x_k + 12\eta`$. En posant $`e_k = x_k - 2`$ (l'erreur), on obtient $`e_{k+1} = (1-6\eta)e_k`$: le facteur de contraction est $`1 - 6\eta`$.
 > **(c)** Convergence $`\Leftrightarrow |1 - 6\eta| < 1 \Leftrightarrow 0 < \eta < \tfrac13`$. Un seul pas $`\Leftrightarrow 1 - 6\eta = 0 \Leftrightarrow \eta = \tfrac16`$. (Cohérent avec $`\eta = 1/L`$ où $`L = f'' = 6`$.)
 
-#### Exercice 2 — Effet du conditionnement
+#### Exercice 2: Effet du conditionnement
 
 Soit $`f(x_1, x_2) = \tfrac12(x_1^2 + 100\, x_2^2)`$.
 **(a)** Donner la hessienne et le conditionnement $`\kappa`$.
@@ -632,7 +632,7 @@ Soit $`f(x_1, x_2) = \tfrac12(x_1^2 + 100\, x_2^2)`$.
 > **(b)** La stabilité sur chaque coordonnée impose $`|1 - \eta \lambda| < 1`$ pour $`\lambda \in \{1, 100\}`$; la plus contraignante est $`\lambda = 100`$, d'où $`\eta < 2/100 = 0{,}02`$. À pas optimal $`\eta = 1/L = 0{,}01`$, le facteur sur la coordonnée lente ($`\lambda=1`$) est $`1 - 0{,}01 = 0{,}99`$: la convergence est dictée par ce facteur, égal à $`1 - m/L = 1 - 1/100 = 0{,}99`$.
 > **(c)** On veut $`0{,}99^k \le 0{,}1`$, soit $`k \ge \ln(0{,}1)/\ln(0{,}99) \approx -2{,}30 / (-0{,}01005) \approx 229`$ itérations. Avec moment de Nesterov, le facteur passe à $`1 - 1/\sqrt{\kappa} = 0{,}9`$, soit $`k \approx \ln(0{,}1)/\ln(0{,}9) \approx 22`$: **dix fois moins**.
 
-#### Exercice 3 — Lagrange avec une égalité
+#### Exercice 3: Lagrange avec une égalité
 
 Maximiser $`f(x_1, x_2) = x_1 x_2`$ (une aire) sous $`x_1 + x_2 = 10`$ (un périmètre fixé).
 **(a)** Poser le lagrangien et les conditions.
@@ -642,7 +642,7 @@ Maximiser $`f(x_1, x_2) = x_1 x_2`$ (une aire) sous $`x_1 + x_2 = 10`$ (un péri
 > **(a)** Maximiser $`f`$ revient à minimiser $`-f`$. Avec la contrainte $`g(x) = x_1 + x_2 - 10 = 0`$, le lagrangien est $`\mathcal{L} = -x_1 x_2 + \lambda(x_1 + x_2 - 10)`$. Stationnarité $`\nabla_x \mathcal{L} = 0`$: $`-x_2 + \lambda = 0`$ et $`-x_1 + \lambda = 0`$, donc $`x_1 = x_2 = \lambda`$.
 > **(b)** La contrainte donne alors $`2\lambda = 10`$, soit $`\lambda = 5`$ et $`x_1 = x_2 = 5`$. L'aire maximale est $`25`$ (le carré bat tous les rectangles de même périmètre). Sens du multiplicateur: l'aire optimale, en fonction de la borne $`b`$ de $`x_1 + x_2 = b`$, vaut $`(b/2)^2`$; sa dérivée en $`b = 10`$ vaut $`b/2 = 5`$. Augmenter le périmètre disponible de $`1`$ augmente donc l'aire optimale d'environ $`5`$, ce que retrouve exactement $`|\lambda| = 5`$. $`\checkmark`$
 
-#### Exercice 4 — KKT avec une inégalité
+#### Exercice 4: KKT avec une inégalité
 
 Minimiser $`f(x_1, x_2) = (x_1 - 2)^2 + (x_2 - 2)^2`$ sous $`x_1 + x_2 \le 2`$.
 **(a)** L'optimum sans contrainte est-il réalisable ?
@@ -654,7 +654,7 @@ Minimiser $`f(x_1, x_2) = (x_1 - 2)^2 + (x_2 - 2)^2`$ sous $`x_1 + x_2 \le 2`$.
 > **(b)** Lagrangien $`\mathcal{L} = (x_1-2)^2 + (x_2-2)^2 + \mu(x_1 + x_2 - 2)`$. Stationnarité: $`2(x_1-2) + \mu = 0`$ et $`2(x_2 - 2) + \mu = 0`$, d'où $`x_1 = x_2 = 2 - \mu/2`$. Contrainte active: $`x_1 + x_2 = 2 \Rightarrow 2(2 - \mu/2) = 2 \Rightarrow 4 - \mu = 2 \Rightarrow \mu = 2`$. Donc $`x_1 = x_2 = 1`$.
 > **(c)** $`\mu = 2 \ge 0`$ (réalisabilité duale $`\checkmark`$) et $`h(x^\star) = 0`$ (complémentarité $`\checkmark`$). Solution $`x^\star = (1,1)`$, $`f(x^\star) = 2`$. Interprétation: relâcher la contrainte vers $`x_1 + x_2 \le 2 + \delta`$ ferait baisser $`f`$ d'environ $`\mu\,\delta = 2\delta`$, le « prix » de la contrainte vaut $`2`$.
 
-#### Exercice 5 — Vérifier une convexité
+#### Exercice 5: Vérifier une convexité
 
 Pour chaque fonction, dire si elle est convexe sur son domaine, en justifiant par la hessienne ou par les règles de composition.
 **(a)** $`f(x) = e^{ax}`$, $`a \in \mathbb{R}`$. **(b)** $`f(x_1,x_2) = x_1^2 - x_2^2`$. **(c)** $`f(x) = \|Ax - b\|^2`$. **(d)** $`f(x) = \max(0,\ 1 - x)`$ (hinge).
@@ -665,7 +665,7 @@ Pour chaque fonction, dire si elle est convexe sur son domaine, en justifiant pa
 > **(c)** $`f(x) = (Ax-b)^\top(Ax-b)`$, hessienne $`2 A^\top A`$. Or $`v^\top A^\top A\, v = \|Av\|^2 \ge 0`$ pour tout $`v`$, donc $`A^\top A \succeq 0`$: **convexe** (on le retrouve sans calcul comme composition affine de la norme au carré, qui est convexe).
 > **(d)** Maximum de deux fonctions affines ($`0`$ et $`1-x`$); or le max ponctuel de fonctions convexes est convexe: **convexe** (avec un coin en $`x=1`$, d'où l'usage des sous-gradients).
 
-#### Exercice 6 — Sous-gradient de la valeur absolue et seuillage
+#### Exercice 6: Sous-gradient de la valeur absolue et seuillage
 
 **(a)** Donner $`\partial f(x)`$ pour $`f(x) = |x|`$ en tout $`x`$.
 **(b)** Résoudre $`\min_x \tfrac12 (x - z)^2 + \lambda |x|`$ via la condition $`0 \in \partial`$ et retrouver le seuillage doux.
@@ -679,7 +679,7 @@ Pour chaque fonction, dire si elle est convexe sur son domaine, en justifiant pa
 >
 > En rassemblant: $`x^\star = \mathrm{sign}(z)\max(|z| - \lambda, 0)`$, le **seuillage doux**, qui annule toute entrée d'amplitude $`\le \lambda`$ et rétrécit les autres de $`\lambda`$ vers zéro.
 
-#### Exercice 7 — Implémentation et observation (au choix, avec ordinateur)
+#### Exercice 7: Implémentation et observation (au choix, avec ordinateur)
 
 À partir du code `gradient_descent` de la première section, minimiser la fonction de Rosenbrock $`f(x,y) = (1-x)^2 + 100(y - x^2)^2`$ (minimum en $`(1,1)`$). Observer la lenteur due à la « banane » (vallée courbe, mal conditionnée), puis comparer avec un optimiseur de `scipy.optimize.minimize` en méthode `'BFGS'`.
 

@@ -1,19 +1,19 @@
-# [Tansoftware](https://www.tansoftware.com) — Mathématiques pour le Machine Learning
+# [Tansoftware](https://www.tansoftware.com): Mathématiques pour le Machine Learning
 
-[![Langue : FR](https://img.shields.io/badge/langue-français-ED2939?logo=googletranslate&logoColor=white)](#) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Topic: Machine Learning](https://img.shields.io/badge/topic-Machine_Learning-008080?logo=scikitlearn&logoColor=white)](#) [![Made with Markdown](https://img.shields.io/badge/Made_with-Markdown-1f425f?logo=markdown&logoColor=white)](https://www.markdownguide.org) [^1]
+[![Langue: FR](https://img.shields.io/badge/langue-français-ED2939?logo=googletranslate&logoColor=white)](#) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Topic: Machine Learning](https://img.shields.io/badge/topic-Machine_Learning-008080?logo=scikitlearn&logoColor=white)](#) [![Made with Markdown](https://img.shields.io/badge/Made_with-Markdown-1f425f?logo=markdown&logoColor=white)](https://www.markdownguide.org) [^1]
 
 ---
 
 ## Table des matières
 
 
-### Partie I — Fondations mathématiques
+### Partie I: Fondations mathématiques
 
 1. [Introduction et motivation](chapitres/01-introduction-et-motivation.md)
-   - [Apprendre à partir de données : l'intuition](chapitres/01-introduction-et-motivation.md#apprendre-à-partir-de-données--lintuition)
+   - [Apprendre à partir de données: l'intuition](chapitres/01-introduction-et-motivation.md#apprendre-à-partir-de-données--lintuition)
    - [Données, modèles et paramètres](chapitres/01-introduction-et-motivation.md#données-modèles-et-paramètres)
    - [Les quatre piliers mathématiques](chapitres/01-introduction-et-motivation.md#les-quatre-piliers-mathématiques)
-   - [Fil rouge : ajuster une droite, de bout en bout](chapitres/01-introduction-et-motivation.md#fil-rouge--ajuster-une-droite-de-bout-en-bout)
+   - [Fil rouge: ajuster une droite, de bout en bout](chapitres/01-introduction-et-motivation.md#fil-rouge--ajuster-une-droite-de-bout-en-bout)
    - [Les notations de base, introduites au fil de l'eau](chapitres/01-introduction-et-motivation.md#les-notations-de-base-introduites-au-fil-de-leau)
 2. [Algèbre linéaire](chapitres/02-algebre-lineaire.md)
    - [Systèmes d'équations linéaires](chapitres/02-algebre-lineaire.md#systèmes-déquations-linéaires)
@@ -65,19 +65,19 @@
    - [Optimisation sous contraintes et multiplicateurs de Lagrange](chapitres/07-optimisation-continue.md#optimisation-sous-contraintes-et-multiplicateurs-de-lagrange)
    - [Optimisation convexe](chapitres/07-optimisation-continue.md#optimisation-convexe)
 
-### Partie II — Problèmes centraux de l'apprentissage automatique
+### Partie II: Problèmes centraux de l'apprentissage automatique
 
 8. [Quand les modèles rencontrent les données](chapitres/08-modeles-et-donnees.md)
    - [Données, modèles et apprentissage](chapitres/08-modeles-et-donnees.md#données-modèles-et-apprentissage)
    - [Minimisation du risque empirique](chapitres/08-modeles-et-donnees.md#minimisation-du-risque-empirique)
-   - [Estimation des paramètres : maximum de vraisemblance et MAP](chapitres/08-modeles-et-donnees.md#estimation-des-paramètres--maximum-de-vraisemblance-et-map)
+   - [Estimation des paramètres: maximum de vraisemblance et MAP](chapitres/08-modeles-et-donnees.md#estimation-des-paramètres--maximum-de-vraisemblance-et-map)
    - [Modélisation probabiliste et inférence](chapitres/08-modeles-et-donnees.md#modélisation-probabiliste-et-inférence)
    - [Modèles graphiques dirigés](chapitres/08-modeles-et-donnees.md#modèles-graphiques-dirigés)
    - [Sélection de modèle et compromis biais-variance](chapitres/08-modeles-et-donnees.md#sélection-de-modèle-et-compromis-biais-variance)
 9. [Régression linéaire](chapitres/09-regression-lineaire.md)
    - [Formulation de la régression linéaire](chapitres/09-regression-lineaire.md#formulation-de-la-régression-linéaire)
    - [Estimation des paramètres et moindres carrés](chapitres/09-regression-lineaire.md#estimation-des-paramètres-et-moindres-carrés)
-   - [Régularisation : ridge, lasso et estimation MAP](chapitres/09-regression-lineaire.md#régularisation--ridge-lasso-et-estimation-map)
+   - [Régularisation: ridge, lasso et estimation MAP](chapitres/09-regression-lineaire.md#régularisation--ridge-lasso-et-estimation-map)
    - [Régression linéaire bayésienne](chapitres/09-regression-lineaire.md#régression-linéaire-bayésienne)
    - [Le maximum de vraisemblance comme projection orthogonale](chapitres/09-regression-lineaire.md#le-maximum-de-vraisemblance-comme-projection-orthogonale)
    - [Caractéristiques non linéaires et ouverture vers les noyaux](chapitres/09-regression-lineaire.md#caractéristiques-non-linéaires-et-ouverture-vers-les-noyaux)
@@ -96,7 +96,7 @@
     - [Perspective par variable latente](chapitres/11-melanges-gaussiens.md#perspective-par-variable-latente)
 12. [Classification par machines à vecteurs de support](chapitres/12-classification-svm.md)
     - [Hyperplans séparateurs et marge](chapitres/12-classification-svm.md#hyperplans-séparateurs-et-marge)
-    - [SVM primal : marge dure et marge souple](chapitres/12-classification-svm.md#svm-primal--marge-dure-et-marge-souple)
+    - [SVM primal: marge dure et marge souple](chapitres/12-classification-svm.md#svm-primal--marge-dure-et-marge-souple)
     - [SVM dual et vecteurs de support](chapitres/12-classification-svm.md#svm-dual-et-vecteurs-de-support)
     - [Noyaux (kernel trick)](chapitres/12-classification-svm.md#noyaux-kernel-trick)
     - [Résolution numérique](chapitres/12-classification-svm.md#résolution-numérique)
@@ -107,30 +107,30 @@
 
 ### Livres
 
-- **Ian Goodfellow, Yoshua Bengio, Aaron Courville** — *Deep Learning*, MIT Press, 2016. La bible de l'apprentissage profond ; disponible en ligne sur [deeplearningbook.org](https://www.deeplearningbook.org).
-- **Christopher M. Bishop** — *Pattern Recognition and Machine Learning*, Springer, 2006. Un classique très complet sur l'approche probabiliste.
-- **Trevor Hastie, Robert Tibshirani, Jerome Friedman** — *The Elements of Statistical Learning*, Springer, 2009. Référence statistique incontournable ; disponible en ligne sur [hastie.su.domains/ElemStatLearn](https://hastie.su.domains/ElemStatLearn/).
+- **Ian Goodfellow, Yoshua Bengio, Aaron Courville**, *Deep Learning*, MIT Press, 2016. La bible de l'apprentissage profond; disponible en ligne sur [deeplearningbook.org](https://www.deeplearningbook.org).
+- **Christopher M. Bishop**, *Pattern Recognition and Machine Learning*, Springer, 2006. Un classique très complet sur l'approche probabiliste.
+- **Trevor Hastie, Robert Tibshirani, Jerome Friedman**, *The Elements of Statistical Learning*, Springer, 2009. Référence statistique incontournable; disponible en ligne sur [hastie.su.domains/ElemStatLearn](https://hastie.su.domains/ElemStatLearn/).
 
 ### Ressources en ligne
 
-- **[3Blue1Brown](https://www.youtube.com/c/3blue1brown)** — séries *Essence of linear algebra* et *Essence of calculus* : l'intuition visuelle, en vidéo.
-- **[Khan Academy](https://fr.khanacademy.org/)** — cours gratuits d'algèbre linéaire, de calcul différentiel et de probabilités, du niveau collège au supérieur.
-- **[Distill.pub](https://distill.pub/)** — articles interactifs sur les concepts du machine learning.
-- **[Immersive Math](https://immersivemath.com/ila/)** — manuel d'algèbre linéaire interactif et gratuit.
+- **[3Blue1Brown](https://www.youtube.com/c/3blue1brown)**, séries *Essence of linear algebra* et *Essence of calculus*: l'intuition visuelle, en vidéo.
+- **[Khan Academy](https://fr.khanacademy.org/)**, cours gratuits d'algèbre linéaire, de calcul différentiel et de probabilités, du niveau collège au supérieur.
+- **[Distill.pub](https://distill.pub/)**, articles interactifs sur les concepts du machine learning.
+- **[Immersive Math](https://immersivemath.com/ila/)**, manuel d'algèbre linéaire interactif et gratuit.
 
 ### Outils
 
-- **[NumPy](https://numpy.org/)** — calcul numérique vectoriel et matriciel en Python (la base de tout).
-- **[SciPy](https://scipy.org/)** — algèbre linéaire avancée, optimisation, statistiques.
-- **[scikit-learn](https://scikit-learn.org/)** — algorithmes de machine learning classiques, clés en main.
-- **[JAX](https://jax.readthedocs.io/)** — calcul différentiable et accélération GPU/TPU pour la recherche.
-- **[PyTorch](https://pytorch.org/)** — framework d'apprentissage profond avec différentiation automatique.
+- **[NumPy](https://numpy.org/)**, calcul numérique vectoriel et matriciel en Python (la base de tout).
+- **[SciPy](https://scipy.org/)**, algèbre linéaire avancée, optimisation, statistiques.
+- **[scikit-learn](https://scikit-learn.org/)**, algorithmes de machine learning classiques, clés en main.
+- **[JAX](https://jax.readthedocs.io/)**, calcul différentiable et accélération GPU/TPU pour la recherche.
+- **[PyTorch](https://pytorch.org/)**, framework d'apprentissage profond avec différentiation automatique.
 
 ---
 
 ## Contribuer
 
-Les contributions sont les bienvenues : corrections de coquilles, clarifications, exemples supplémentaires ou nouvelles démonstrations. Le processus suit le même esprit que les autres dépôts de l'auteur :
+Les contributions sont les bienvenues: corrections de coquilles, clarifications, exemples supplémentaires ou nouvelles démonstrations. Le processus suit le même esprit que les autres dépôts de l'auteur:
 
 1. **Forkez** le dépôt.
 2. Créez une **branche** dédiée (`git checkout -b amelioration-chapitre-x`).
@@ -149,4 +149,4 @@ Ce projet est distribué sous licence **MIT**. Vous êtes libre de l'utiliser, l
 
 **Tansoftware - Tanguy Chénier** · [LinkedIn](https://www.linkedin.com/in/tanguy-chenier) · [Tan-Software](https://github.com/Tan-Software) · [Compte personnel](https://github.com/tanguychenier) · [tansoftware.com](https://www.tansoftware.com)
 
-[^1]: Des modifications peuvent survenir. — [Tanguy Chénier](https://www.linkedin.com/in/tanguy-chenier/).
+[^1]: Des modifications peuvent survenir., [Tanguy Chénier](https://www.linkedin.com/in/tanguy-chenier/).

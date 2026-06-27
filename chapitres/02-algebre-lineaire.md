@@ -4,7 +4,7 @@
 
 ### Systèmes d'équations linéaires
 
-#### L'intuition : croiser des contraintes
+#### L'intuition: croiser des contraintes
 
 Imaginez que vous cherchez deux nombres. On vous dit deux choses à leur sujet: « leur somme vaut 10 » et « leur différence vaut 2 ». Chacune de ces phrases est une **contrainte**. Prise seule, chacune laisse une infinité de possibilités. Mais ensemble, elles se croisent en un point unique: 6 et 4. Résoudre un système d'équations linéaires, c'est exactement cela: trouver les valeurs qui satisfont **toutes** les contraintes **en même temps**.
 
@@ -87,7 +87,7 @@ $`(x_1 + x_2) + (x_1 - x_2) = 10 + 2`$, soit $`2x_1 = 12`$, donc $`x_1 = 6`$.
 
 **Étape 3, vérifier** dans la seconde (jamais celle qu'on a utilisée pour conclure): $`6 - 4 = 2`$. C'est juste. L'ensemble solution est le singleton $`\{(6, 4)\}`$: le système est **compatible déterminé**.
 
-#### Forme matricielle : le grand raccourci
+#### Forme matricielle: le grand raccourci
 
 Écrire toutes ces sommes est fastidieux. On range les coefficients dans un tableau $`A`$, les inconnues dans une colonne $`\mathbf{x}`$, les seconds membres dans une colonne $`\mathbf{b}`$, et le système entier se résume à une seule égalité:
 
@@ -118,7 +118,7 @@ print(np.allclose(A @ x, b))  # True : on verifie A x = b
 
 ### Matrices et leurs opérations
 
-#### Intuition : un tableau qui agit
+#### Intuition: un tableau qui agit
 
 Une matrice, avant d'être un objet abstrait, est d'abord un **tableau rectangulaire de nombres**, comme une feuille de calcul: des lignes, des colonnes, un nombre dans chaque case. Mais sa vraie puissance, c'est qu'une matrice **fait quelque chose**: elle transforme des vecteurs (elle les étire, les tourne, les projette). On peut la voir à la fois comme un **rangement** (un paquet de données) et comme une **machine** (une fonction). Cette double nature est le cœur du sujet.
 
@@ -157,7 +157,7 @@ Vocabulaire essentiel, rassemblé:
 | Matrice **triangulaire inférieure** | $`a_{ij} = 0`$ dès que $`i < j`$ |
 | Matrice **symétrique** | $`A = A^\top`$ (définie ci-dessous) |
 
-#### Operations elementaires : addition et multiplication par un scalaire
+#### Operations elementaires: addition et multiplication par un scalaire
 
 L'addition se fait **case par case**, et seulement entre matrices de **même taille**:
 
@@ -192,7 +192,7 @@ A^\top = \begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{pmatrix} \in \mathbb{R}^{3
 
 Propriétés (toutes vérifiables coefficient par coefficient): $`(A^\top)^\top = A`$, $`(A+B)^\top = A^\top + B^\top`$, $`(\lambda A)^\top = \lambda A^\top`$, et la règle qui surprend les débutants, $`(AB)^\top = B^\top A^\top`$ (l'ordre s'**inverse**), démontrée après le produit.
 
-#### Le produit matriciel : le coeur du reacteur
+#### Le produit matriciel: le coeur du reacteur
 
 C'est l'opération la plus importante, et la moins intuitive au premier abord. On ne multiplie **pas** case par case. La règle: pour multiplier $`A`$ par $`B`$, le **nombre de colonnes de $`A`$** doit égaler le **nombre de lignes de $`B`$**.
 
@@ -306,7 +306,7 @@ print(A @ np.linalg.inv(A))       # ~ identite (aux erreurs d'arrondi pres)
 
 ### Résolution des systèmes linéaires
 
-#### L'idee maitresse : simplifier sans changer les solutions
+#### L'idee maitresse: simplifier sans changer les solutions
 
 Pour résoudre, on transforme le système en un autre **plus simple mais équivalent** (même ensemble solution), jusqu'à pouvoir lire la réponse. Trois manipulations préservent l'ensemble des solutions, ce sont les **opérations élémentaires sur les lignes**:
 
@@ -388,7 +388,7 @@ La matrice est **échelonnée**. **Remontée**:
 
 En poussant plus loin (pivots ramenés à 1, zéros aussi **au-dessus** des pivots), on obtient la forme **échelonnée réduite par lignes** (RREF), qui est **unique** pour une matrice donnée. La solution s'y lit directement, et c'est l'outil pour calculer un inverse: on réduit $`[A \mid I_n]`$; si l'on aboutit à $`[I_n \mid B]`$, alors $`B = A^{-1}`$.
 
-#### Cas non determines : les inconnues libres
+#### Cas non determines: les inconnues libres
 
 Quand une colonne d'inconnue ne porte **pas** de pivot, l'inconnue correspondante est **libre**: on lui donne un paramètre, et les autres s'expriment en fonction de lui. Exemple:
 ```math
@@ -444,7 +444,7 @@ print(np.linalg.matrix_rank(A))    # 3
 
 ### Espaces vectoriels
 
-#### Intuition : un monde ou l'on peut additionner et redimensionner
+#### Intuition: un monde ou l'on peut additionner et redimensionner
 
 Jusqu'ici, nos vecteurs étaient des listes de nombres. Mais l'idée profonde de l'algèbre linéaire est d'**oublier** la nature des objets et de ne retenir que **ce qu'on peut leur faire**: les **additionner** entre eux, et les **multiplier par un scalaire**. Tout ensemble muni de ces deux opérations, se comportant « bien », est un **espace vectoriel**. La magie: des polynômes, des fonctions, des signaux, des images, des matrices, tout cela forme des espaces vectoriels, et **les mêmes théorèmes s'appliquent à tous**. On apprend une fois, on applique partout.
 
@@ -541,7 +541,7 @@ print(in_span([v1, v2], np.array([1.0, 1.0, 0.0])))  # False (hors du plan)
 
 ### Indépendance linéaire
 
-#### Intuition : de l'information non redondante
+#### Intuition: de l'information non redondante
 
 Trois personnes donnent leur avis. Si la troisième ne fait que répéter une combinaison des deux premières, elle n'apporte **rien de neuf**: elle est « redondante ». Des vecteurs sont **linéairement indépendants** quand **aucun** n'est combinaison des autres: chacun apporte une direction vraiment nouvelle. C'est la notion qui permet de distinguer « beaucoup de vecteurs » de « beaucoup de **vraie** information ».
 
@@ -605,7 +605,7 @@ print(np.round(ns / ns[np.argmax(np.abs(ns))], 3).ravel())  # ~ (-2,-1,1) a un f
 
 ### Base et rang
 
-#### Intuition : le jeu de coordonnees minimal et complet
+#### Intuition: le jeu de coordonnees minimal et complet
 
 Pour repérer n'importe quel point d'une ville, deux directions suffisent et sont nécessaires: « combien de rues vers l'est, combien vers le nord ». Ces deux directions forment une **base**: un jeu de repères à la fois **suffisant** (on atteint tout: c'est générateur) et **non redondant** (aucun superflu: c'est libre). Le nombre d'éléments d'une base, c'est la **dimension**: le nombre de « boutons de réglage » indépendants de l'espace.
 
@@ -683,7 +683,7 @@ print(np.round(A @ null_space, 6).ravel())              # ~ (0, 0, 0)
 
 ### Applications linéaires
 
-#### Intuition : les transformations qui respectent la structure
+#### Intuition: les transformations qui respectent la structure
 
 Une **application linéaire** est une fonction entre espaces vectoriels qui **respecte les deux opérations**: elle envoie une somme sur la somme des images, et un vecteur agrandi sur l'image agrandie d'autant. Image mentale: une transformation qui **ne courbe pas** l'espace et **fixe l'origine**, rotations, dilatations, projections, cisaillements en font partie; pas les translations (elles bougent l'origine), ni quoi que ce soit qui plie ou tord.
 
@@ -701,7 +701,7 @@ Conséquence immédiate: $`f(\mathbf{0}_E) = \mathbf{0}_F`$ (poser $`\lambda=0`$
 
 > **Attention, deux flèches différentes: $`\to`$ et $`\mapsto`$.** La flèche simple $`\to`$ relie deux **ensembles** (« $`f`$ va de l'ensemble $`E`$ vers l'ensemble $`F`$ »). La flèche barrée $`\mapsto`$ (« est envoyé sur »), elle, relie un **élément** à son image: $`\mathbf{x}\mapsto W\mathbf{x}`$ se lit « le vecteur $`\mathbf{x}`$ est envoyé sur $`W\mathbf{x}`$ ». Autrement dit, $`\to`$ décrit le trajet au niveau des « boîtes » (ensembles de départ et d'arrivée), et $`\mapsto`$ décrit ce qui arrive à **un** objet précis qu'on y fait entrer.
 
-#### Le pont fondamental : matrices = applications lineaires (en dimension finie)
+#### Le pont fondamental: matrices = applications lineaires (en dimension finie)
 
 > **Théorème (représentation matricielle).** Soit $`f:\mathbb{R}^n\to\mathbb{R}^m`$ linéaire. Il existe une **unique** matrice $`A\in\mathbb{R}^{m\times n}`$ telle que $`f(\mathbf{x}) = A\mathbf{x}`$ pour tout $`\mathbf{x}`$. Les **colonnes** de $`A`$ sont les images des vecteurs de la base canonique: la $`j`$-ème colonne est $`f(\mathbf{e}_j)`$.
 
@@ -718,7 +718,7 @@ graph LR
     Rn -. "f o g (matrice A B)" .-> Rm
 ```
 
-##### Exemple chiffre : la rotation du plan
+##### Exemple chiffre: la rotation du plan
 
 La rotation d'angle $`\theta`$ dans $`\mathbb{R}^2`$ envoie $`\mathbf{e}_1=(1,0)`$ sur $`(\cos\theta,\sin\theta)`$ et $`\mathbf{e}_2=(0,1)`$ sur $`(-\sin\theta,\cos\theta)`$. Ces images **sont** les colonnes de la matrice:
 ```math
@@ -753,7 +753,7 @@ Ainsi $`\mathrm{rg}(f)=q`$ et $`\dim\ker f = p`$, d'où $`\dim E = p+q`$. $`\bla
 
 **Preuve du critère d'injectivité.** Si $`f`$ est injective et $`f(\mathbf{x})=\mathbf{0}=f(\mathbf{0})`$, alors $`\mathbf{x}=\mathbf{0}`$: le noyau est trivial. Réciproquement, si $`\ker f=\{\mathbf{0}\}`$ et $`f(\mathbf{x})=f(\mathbf{y})`$, alors $`f(\mathbf{x}-\mathbf{y})=\mathbf{0}`$, donc $`\mathbf{x}-\mathbf{y}\in\ker f=\{\mathbf{0}\}`$, donc $`\mathbf{x}=\mathbf{y}`$. $`\blacksquare`$
 
-#### Retour sur les systemes : structure de l'ensemble solution
+#### Retour sur les systemes: structure de l'ensemble solution
 
 On peut enfin justifier la phrase « solution générale = particulière + noyau ». Le système $`A\mathbf{x}=\mathbf{b}`$ a une solution $`\iff \mathbf{b}\in\mathrm{Im} A`$. S'il est compatible, soit $`\mathbf{x}_p`$ une solution particulière; alors $`\mathbf{x}`$ est solution $`\iff A(\mathbf{x}-\mathbf{x}_p)=\mathbf{0} \iff \mathbf{x}-\mathbf{x}_p \in \ker A`$. Donc l'ensemble solution est
 ```math
@@ -788,7 +788,7 @@ print(np.allclose(f(g(x)), (A @ R) @ x))       # True : f o g <-> A R
 
 ### Espaces affines
 
-#### Intuition : un espace vectoriel qui a oublie ou est son origine
+#### Intuition: un espace vectoriel qui a oublie ou est son origine
 
 Sur une feuille quadrillée, les **points** sont des emplacements; les **vecteurs** sont des **déplacements** (« avancez de 3 à droite, 2 en haut »). Un **espace affine** est le monde des points: on peut soustraire deux points pour obtenir le vecteur qui mène de l'un à l'autre, et translater un point par un vecteur, **mais il n'y a pas de point « zéro » privilégié**. C'est exactement la géométrie du quotidien: aucune ville n'est « l'origine du monde », pourtant on sait calculer le déplacement entre deux villes.
 
@@ -804,7 +804,7 @@ Sur une feuille quadrillée, les **points** sont des emplacements; les **vecteur
 
 > **Le symbole $`A + \mathbf{u}`$ (translation d'un point).** Additionner un **point** $`A`$ et un **vecteur** $`\mathbf{u}`$ donne un **nouveau point**: celui qu'on atteint en partant de $`A`$ et en suivant le déplacement $`\mathbf{u}`$. Attention, on n'additionne **pas** deux points entre eux (cela n'aurait pas de sens: où serait l'origine ?), mais on peut les **soustraire** pour obtenir un vecteur.
 
-#### Sous-espaces affines : la bonne description des solutions
+#### Sous-espaces affines: la bonne description des solutions
 
 > **Définition (sous-espace affine).** Un **sous-espace affine** de direction $`F`$ (sous-espace vectoriel de $`E`$) est un ensemble de la forme
 > ```math
@@ -943,7 +943,7 @@ Entraîner un modèle, c'est minimiser une fonction de perte $`\mathcal{L}(\bold
 
 > **Mise à jour 2026.** L'**autodifférentiation** (autodiff) de JAX et PyTorch calcule ces gradients automatiquement et exactement, en composant les jacobiennes des opérations, c'est-à-dire en **chaînant des produits matriciels**. Les optimiseurs modernes **Adam / AdamW** adaptent le pas coordonnée par coordonnée à partir des moments du gradient; ils restent, sous le capot, des mises à jour vectorielles et matricielles. L'algèbre linéaire n'est pas un prérequis lointain du deep learning: elle en est **la substance calculatoire**, du plus petit produit scalaire au plus grand modèle.
 
-#### Tableau de synthese : un concept, une application
+#### Tableau de synthese: un concept, une application
 
 | Concept d'algèbre linéaire | Rôle en machine learning |
 |---|---|
@@ -963,7 +963,7 @@ Entraîner un modèle, c'est minimiser une fonction de perte $`\mathcal{L}(\bold
 
 Les corrigés suivent immédiatement chaque énoncé. Essayez d'abord seul, crayon en main.
 
-#### Exercice 1 — Resolution par Gauss
+#### Exercice 1: Resolution par Gauss
 
 Résoudre le système:
 ```math
@@ -981,7 +981,7 @@ x + 2y - z = 2
 > Remontée: $`y - 2(3) = -4 \Rightarrow y = 2`$; puis $`x + 2 + 3 = 6 \Rightarrow x = 1`$.
 > **Solution unique** $`(x,y,z) = (1,2,3)`$. Vérification (éq. 2): $`2(1)-2+3=3`$. Correct.
 
-#### Exercice 2 — Produit et transposee
+#### Exercice 2: Produit et transposee
 
 Avec $`A=\begin{pmatrix}1&2\\0&1\\3&1\end{pmatrix}`$ et $`B=\begin{pmatrix}2&0&1\\1&1&0\end{pmatrix}`$, calculer $`AB`$, sa taille, et vérifier $`(AB)^\top = B^\top A^\top`$.
 
@@ -991,7 +991,7 @@ Avec $`A=\begin{pmatrix}1&2\\0&1\\3&1\end{pmatrix}`$ et $`B=\begin{pmatrix}2&0&1
 > ```
 > $`(AB)^\top = \begin{pmatrix}4&1&7\\2&1&1\\1&0&3\end{pmatrix}`$. Par ailleurs $`B^\top A^\top`$ avec $`B^\top=\begin{pmatrix}2&1\\0&1\\1&0\end{pmatrix}`$, $`A^\top=\begin{pmatrix}1&0&3\\2&1&1\end{pmatrix}`$ donne la **même** matrice. Vérifié.
 
-#### Exercice 3 — Sous-espace ou non ?
+#### Exercice 3: Sous-espace ou non ?
 
 Les ensembles suivants sont-ils des sous-espaces de $`\mathbb{R}^3`$ ? (a) $`F=\{(x,y,z):x=y\}`$; (b) $`G=\{(x,y,z):xyz=0\}`$; (c) $`H=\{(x,y,z):x+y+z=1\}`$.
 
@@ -1000,20 +1000,20 @@ Les ensembles suivants sont-ils des sous-espaces de $`\mathbb{R}^3`$ ? (a) $`F=\
 > (b) **Non**: $`(1,0,0)`$ et $`(0,1,1)`$ sont dans $`G`$ (un facteur nul), mais leur somme $`(1,1,1)`$ a $`xyz=1\ne0`$: pas stable par addition.
 > (c) **Non**: $`\mathbf{0}=(0,0,0)`$ donne $`0\ne1`$, donc $`\mathbf{0}\notin H`$ (c'est un plan **affine**, pas vectoriel).
 
-#### Exercice 4 — Independance lineaire
+#### Exercice 4: Independance lineaire
 
 Les vecteurs $`(1,1,0)`$, $`(0,1,1)`$, $`(1,0,1)`$ de $`\mathbb{R}^3`$ sont-ils libres ? Forment-ils une base ?
 
 > **Corrigé.** On résout $`\lambda_1(1,1,0)+\lambda_2(0,1,1)+\lambda_3(1,0,1)=\mathbf{0}`$:
 > $`\lambda_1+\lambda_3=0`$, $`\lambda_1+\lambda_2=0`$, $`\lambda_2+\lambda_3=0`$. De la 1re, $`\lambda_3=-\lambda_1`$; de la 2e, $`\lambda_2=-\lambda_1`$; la 3e: $`-\lambda_1-\lambda_1=-2\lambda_1=0\Rightarrow\lambda_1=0`$, puis tout est nul. **Famille libre.** Comme on a 3 vecteurs libres dans un espace de dimension 3, c'est une **base** (théorème de la base incomplète). Le déterminant vaut d'ailleurs $`2 \ne 0`$, confirmation.
 
-#### Exercice 5 — Rang et noyau
+#### Exercice 5: Rang et noyau
 
 Pour $`A=\begin{pmatrix}1&2&1\\2&4&2\\3&6&4\end{pmatrix}`$, donner $`\mathrm{rg}(A)`$, $`\dim\ker A`$, et une base du noyau.
 
 > **Corrigé.** $`L_2\leftarrow L_2-2L_1 \Rightarrow (0,0,0)`$; $`L_3\leftarrow L_3-3L_1 \Rightarrow (0,0,1)`$. Restent **2 pivots** (colonnes 1 et 3): $`\mathrm{rg}(A)=2`$. Par le théorème du rang, $`\dim\ker A = 3-2 = 1`$. Pour le noyau, la colonne 2 n'a pas de pivot: posons $`y=t`$. La ligne $`(0,0,1)`$ donne $`z=0`$, et la ligne 1 donne $`x+2t+z=0\Rightarrow x=-2t`$. Base du noyau: $`(-2,1,0)`$. Vérification: $`A(-2,1,0)^\top = (-2+2+0,\,-4+4+0,\,-6+6+0)=(0,0,0)`$. Correct.
 
-#### Exercice 6 — Application lineaire et matrice
+#### Exercice 6: Application lineaire et matrice
 
 Soit $`f:\mathbb{R}^2\to\mathbb{R}^2`$ la projection orthogonale sur la droite $`y=x`$. Donner sa matrice dans la base canonique, puis $`\ker f`$ et $`\mathrm{Im} f`$.
 
@@ -1021,7 +1021,7 @@ Soit $`f:\mathbb{R}^2\to\mathbb{R}^2`$ la projection orthogonale sur la droite $
 > Vérification: $`f(\mathbf{e}_1)=\tfrac12(1,1)`$, $`f(\mathbf{e}_2)=\tfrac12(1,1)`$, ce sont bien les colonnes de $`P`$.
 > $`\mathrm{Im} f`$ = la droite $`y=x`$ (dimension 1). $`\ker f`$ = la droite **orthogonale** $`y=-x`$ (les vecteurs envoyés sur $`\mathbf{0}`$), dimension 1. On vérifie le théorème du rang: $`1+1=2`$. Idempotence: $`P^2=P`$ (projeter deux fois = projeter une fois).
 
-#### Exercice 7 — Espace affine et systeme
+#### Exercice 7: Espace affine et systeme
 
 Décrire géométriquement l'ensemble solution de $`\begin{cases} x+y+z=3 \\ x - y + 2z = 4 \end{cases}`$.
 
@@ -1031,7 +1031,7 @@ Décrire géométriquement l'ensemble solution de $`\begin{cases} x+y+z=3 \\ x -
 > ```
 > C'est une **droite affine**: le point particulier $`(2,0,1)`$ translaté de la droite vectorielle $`\ker A = \mathrm{Vect}(-3,1,2)`$. Dimension 1, conforme à $`n-\mathrm{rg}(A)=3-2=1`$.
 
-#### Exercice 8 — Moindres carres a la main
+#### Exercice 8: Moindres carres a la main
 
 Ajuster une droite $`y = a x + b`$ aux points $`(0,1), (1,2), (2,2)`$ par les équations normales.
 
@@ -1040,7 +1040,7 @@ Ajuster une droite $`y = a x + b`$ aux points $`(0,1), (1,2), (2,2)`$ par les é
 > Résolvons $`\begin{pmatrix}5&3\\3&3\end{pmatrix}\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}6\\5\end{pmatrix}`$. Déterminant $`=15-9=6`$. Par la formule d'inversion $`2\times2`$, $`a=\tfrac{1}{6}(3\cdot6 - 3\cdot5)=\tfrac{1}{6}(18-15)=\tfrac12`$, $`b=\tfrac{1}{6}(5\cdot5 - 3\cdot6)=\tfrac{1}{6}(25-18)=\tfrac{7}{6}`$.
 > **Droite ajustée**: $`y = \tfrac12 x + \tfrac76`$. Prédictions: $`\tfrac76\approx1.17,\ \tfrac{10}{6}\approx1.67,\ \tfrac{13}{6}\approx2.17`$, au plus près des données au sens des moindres carrés.
 
-#### Exercice 9 — Vrai ou faux (avec justification)
+#### Exercice 9: Vrai ou faux (avec justification)
 
 1. Si $`AB = 0`$ alors $`A=0`$ ou $`B=0`$.
 2. Toute matrice carree est inversible.
@@ -1053,7 +1053,7 @@ Ajuster une droite $`y = a x + b`$ aux points $`(0,1), (1,2), (2,2)`$ par les é
 > 3. **Vrai.** C'est le théorème « rang lignes = rang colonnes ».
 > 4. **Vrai.** Dans $`\mathbb{R}^n`$, toute famille de plus de $`n`$ vecteurs est liée; ici $`3 > 2`$.
 
-#### Exercice 10 — Vers la SVD et l'ACP (avec Python)
+#### Exercice 10: Vers la SVD et l'ACP (avec Python)
 
 Générer un nuage de points corrélé en 2D, calculer sa SVD, et vérifier que la première direction principale suit l'allongement du nuage.
 

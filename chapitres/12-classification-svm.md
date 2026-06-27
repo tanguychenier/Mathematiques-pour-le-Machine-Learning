@@ -6,7 +6,7 @@
 
 Imaginez une feuille de papier sur laquelle vous avez dessiné deux groupes de points: des ronds bleus en bas à gauche, des croix rouges en haut à droite. Votre tâche: tracer une ligne droite qui sépare parfaitement les bleus des rouges. Vous voyez tout de suite qu'il existe une *infinité* de droites possibles. La question centrale des machines à vecteurs de support (support vector machines, abrégées SVM) est: **parmi toutes ces droites, laquelle est la meilleure ?** La réponse, géniale par sa simplicité, est: celle qui laisse le plus de place vide de part et d'autre, comme une route la plus large possible entre les deux camps.
 
-#### Le cadre : données étiquetées et séparation linéaire
+#### Le cadre: données étiquetées et séparation linéaire
 
 On dispose de $`n`$ exemples d'apprentissage. Chaque exemple $`i`$ est un couple $`(\mathbf{x}_i, y_i)`$ où:
 
@@ -117,7 +117,7 @@ print("largeur 2/||w|| :", 2 / np.linalg.norm(w))
 
 > **Application ML.** Les SVM linéaires restent une brique vivante: on les retrouve comme *tête de classification* (probing) posée sur les représentations figées d'un grand modèle (embeddings de transformeurs, de modèles vision-langage). On entraîne alors une SVM linéaire sur des vecteurs de très haute dimension produits par un réseau pré-entraîné; la maximisation de marge fournit un classifieur robuste et interprétable là où un réglage fin complet serait coûteux. La géométrie de la marge, elle, n'a pas pris une ride.
 
-### SVM primal : marge dure et marge souple
+### SVM primal: marge dure et marge souple
 
 Nous avons traduit "tracer la route la plus large" en "minimiser $`\tfrac12\lVert\mathbf{w}\rVert^2`$". Il reste à écrire les contraintes qui garantissent que chaque point est du bon côté et hors de la route. C'est le **problème primal** (primal problem).
 
@@ -138,7 +138,7 @@ Chaque contrainte $`y_i(\mathbf{w}^\top\mathbf{x}_i + b)\ge 1`$ dit: "le point $
 
 > **Piège.** La marge dure exige une séparation *parfaite*. Un seul point aberrant (outlier) du mauvais côté rend le problème **infaisable** (aucun $`\mathbf{w}, b`$ ne satisfait toutes les contraintes), ou alors déforme dramatiquement la frontière pour englober l'intrus. En pratique, les données réelles sont bruitées: on a presque toujours besoin de la version souple ci-dessous.
 
-#### Marge souple (soft margin) : variables d'écart
+#### Marge souple (soft margin): variables d'écart
 
 Pour tolérer quelques violations, on introduit pour chaque exemple une **variable d'écart** (slack variable) $`\xi_i \ge 0`$ qui mesure de combien le point $`i`$ enfreint sa contrainte:
 
@@ -174,7 +174,7 @@ graph TD
     P --> P3["meilleure généralisation possible"]
 ```
 
-#### Formulation équivalente sans contraintes : la perte charnière
+#### Formulation équivalente sans contraintes: la perte charnière
 
 À l'optimum, chaque $`\xi_i`$ prend la plus petite valeur compatible avec ses deux contraintes $`\xi_i \ge 1 - y_i(\mathbf{w}^\top\mathbf{x}_i+b)`$ et $`\xi_i \ge 0`$. Donc
 
@@ -317,7 +317,7 @@ En posant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, ces équations classent cha
 b = \frac{1}{|S|}\sum_{i\in S}\Bigl(y_i - \sum_j \alpha_j y_j\,\mathbf{x}_j^\top\mathbf{x}_i\Bigr), \quad S = \{i : 0<\alpha_i<C\}.
 ```
 
-#### Dualité forte : pourquoi primal et dual coïncident
+#### Dualité forte: pourquoi primal et dual coïncident
 
 > **Théorème (dualité forte pour la SVM).** Le primal de la SVM à marge souple est convexe et ses contraintes sont affines; la condition de Slater est trivialement satisfaite (des contraintes d'inégalité affines suffisent). Par conséquent la dualité est **forte**: la valeur optimale du primal égale celle du dual, $`p^\star = d^\star`$, et toute solution duale $`\boldsymbol\alpha^\star`$ fournit via $`\mathbf{w}^\star=\sum_i\alpha_i^\star y_i\mathbf{x}_i`$ et les conditions KKT une solution primale optimale. Résoudre l'un *est* résoudre l'autre.
 
@@ -355,7 +355,7 @@ print("predictions :", pred, " scores :", np.round(sc,3))
 
 Jusqu'ici, la frontière est une droite. Mais que faire si les classes s'enroulent l'une autour de l'autre, comme deux cercles concentriques, impossibles à séparer par une droite ? L'idée, l'une des plus belles de l'apprentissage statistique, est le **truc du noyau** (kernel trick): *projeter* les données dans un espace de plus grande dimension où elles redeviennent linéairement séparables, sans jamais calculer cette projection explicitement.
 
-#### L'intuition : relever la dimension
+#### L'intuition: relever la dimension
 
 Prenons les deux cercles concentriques en 2D: classe $`-1`$ au centre, classe $`+1`$ en couronne. Aucune droite ne marche. Mais ajoutons une troisième coordonnée $`z = x_1^2 + x_2^2`$ (le carré du rayon). Les points du centre ont un petit $`z`$, ceux de la couronne un grand $`z`$: un simple *plan horizontal* $`z = \text{seuil}`$ les sépare ! On a "soulevé" les données dans la 3e dimension pour les rendre séparables.
 
@@ -367,7 +367,7 @@ graph LR
 
 Formellement, on choisit une application $`\varphi: \mathbb{R}^d \to \mathcal{H}`$ vers un espace $`\mathcal{H}`$ (dit **espace de caractéristiques**, feature space) de dimension possiblement énorme, et on applique la SVM linéaire aux $`\varphi(\mathbf{x}_i)`$. Le dual ne fait alors intervenir que des produits scalaires $`\varphi(\mathbf{x}_i)^\top\varphi(\mathbf{x}_j)`$.
 
-#### Le truc : ne jamais calculer $`\varphi`$
+#### Le truc: ne jamais calculer $`\varphi`$
 
 L'observation géniale: on n'a **jamais besoin de $`\varphi`$ lui-même**, seulement de ses produits scalaires. On définit donc directement une **fonction noyau** (kernel function)
 
@@ -475,7 +475,7 @@ Posons la matrice $`Q\in\mathbb{R}^{n\times n}`$ de terme général $`Q_{ij}=y_i
 
 (On a changé le signe pour passer du $`\max`$ au $`\min`$.) $`Q`$ étant semi-définie positive par Mercer, c'est un QP **convexe**: tout solveur QP générique (par points intérieurs) le résout en $`O(n^3)`$ environ. Acceptable pour quelques milliers d'exemples, prohibitif au-delà: $`Q`$ a $`n^2`$ entrées.
 
-#### SMO : optimisation minimale séquentielle
+#### SMO: optimisation minimale séquentielle
 
 L'algorithme **SMO** (sequential minimal optimization) contourne le stockage de $`Q`$ en optimisant *deux* multiplicateurs à la fois, le minimum imposé par la contrainte $`\sum_i\alpha_iy_i=0`$ (on ne peut pas bouger un seul $`\alpha`$ sans violer l'égalité). C'est l'algorithme historique de la librairie LIBSVM, encore au cœur de scikit-learn.
 
@@ -564,7 +564,7 @@ print("nb vecteurs de support :", np.sum(alpha > 1e-5))
 print("w =", np.round(w,3), " b =", round(b,3))
 ```
 
-#### Résolution du primal : descente de (sous-)gradient
+#### Résolution du primal: descente de (sous-)gradient
 
 Pour la SVM *linéaire* en grande dimension (texte, $`d \gg n`$), on résout souvent directement le primal sans contraintes via la perte charnière. En notant $`s_i = \mathbf{w}^\top\mathbf{x}_i + b`$, le (sous-)gradient de l'objectif $`J(\mathbf{w},b)=\tfrac12\lVert\mathbf{w}\rVert^2 + C\sum_i\max(0,1-y_is_i)`$ est
 
@@ -631,7 +631,7 @@ print("nb vecteurs de support :", rech.best_estimator_.named_steps["svc"].n_supp
 
 ### Exercices
 
-#### Exercice 1 — Géométrie de la marge (échauffement)
+#### Exercice 1: Géométrie de la marge (échauffement)
 
 On considère en 2D l'hyperplan $`\mathbf{w}=(3,4)`$, $`b=-10`$.
 1. Quelle est la distance du point $`\mathbf{x}_0=(1,1)`$ à l'hyperplan ?
@@ -643,7 +643,7 @@ On considère en 2D l'hyperplan $`\mathbf{w}=(3,4)`$, $`b=-10`$.
 > 2. Le score est négatif: $`\mathbf{x}_0`$ est du côté $`-1`$.
 > 3. La frontière est *identique* (on a multiplié par $`c=2>0`$, le plan $`\mathbf{w}^\top\mathbf{x}+b=0`$ est inchangé). Le *score* double ($`-6`$) et la *norme* double ($`10`$), donc la distance $`-6/10=-0.6`$ est **inchangée**: la distance géométrique est invariante d'échelle, contrairement au score brut. C'est exactement pourquoi on normalise.
 
-#### Exercice 2 — SVM à marge dure résolue à la main
+#### Exercice 2: SVM à marge dure résolue à la main
 
 Trois points en 2D: $`\mathbf{x}_1=(0,0)\,(y_1=-1)`$, $`\mathbf{x}_2=(2,2)\,(y_2=+1)`$, $`\mathbf{x}_3=(2,0)\,(y_3=+1)`$.
 1. Par symétrie/intuition, proposez la direction $`\mathbf{w}`$ de marge maximale.
@@ -655,7 +655,7 @@ Trois points en 2D: $`\mathbf{x}_1=(0,0)\,(y_1=-1)`$, $`\mathbf{x}_2=(2,2)\,(y_2
 > 2. Posons $`\mathbf{w}=(w_1,0)`$, frontière $`w_1x+b=0`$. Vecteurs de support attendus: $`\mathbf{x}_1`$ (classe $`-1`$) et $`\mathbf{x}_3`$ (classe $`+1`$). Normalisation: $`y_1(w_1\cdot0+b)=1\Rightarrow -b=1\Rightarrow b=-1`$. $`y_3(w_1\cdot2+b)=1\Rightarrow 2w_1-1=1\Rightarrow w_1=1`$. Vérifions $`\mathbf{x}_2`$: $`y_2(1\cdot2-1)=+1\cdot1=1\ge1`$, satisfait avec égalité (il est donc lui aussi sur le bord). Donc $`\mathbf{w}=(1,0),\ b=-1`$.
 > 3. Vecteurs de support: $`\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3`$ (les trois sont sur un bord ici). Largeur de marge $`=2/\lVert\mathbf{w}\rVert=2/1=2`$. La frontière est la droite verticale $`x=1`$.
 
-#### Exercice 3 — Du primal au dual
+#### Exercice 3: Du primal au dual
 
 Écrivez le dual du problème à marge dure (sans variables d'écart) pour deux points $`\mathbf{x}_1\,(y_1=+1)`$ et $`\mathbf{x}_2\,(y_2=-1)`$. Montrez qu'il se réduit à une optimisation à *une seule* variable et résolvez.
 
@@ -665,7 +665,7 @@ Trois points en 2D: $`\mathbf{x}_1=(0,0)\,(y_1=-1)`$, $`\mathbf{x}_2=(2,2)\,(y_2
 > ```
 > Dérivée nulle: $`2-\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2=0\Rightarrow \alpha=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert^2}`$. On retrouve $`\mathbf{w}=\alpha(\mathbf{x}_1-\mathbf{x}_2)`$, donc $`\lVert\mathbf{w}\rVert=\alpha\lVert\mathbf{x}_1-\mathbf{x}_2\rVert=\dfrac{2}{\lVert\mathbf{x}_1-\mathbf{x}_2\rVert}`$, et une **largeur totale de marge** $`\dfrac{2}{\lVert\mathbf{w}\rVert}=\lVert\mathbf{x}_1-\mathbf{x}_2\rVert`$: la marge occupe toute la distance entre les deux points, et la frontière passe en leur **milieu** (chaque point se trouve à la distance $`\lVert\mathbf{x}_1-\mathbf{x}_2\rVert/2`$ du séparateur). Intuition géométrique parfaitement cohérente.
 
-#### Exercice 4 — Le truc du noyau à la main
+#### Exercice 4: Le truc du noyau à la main
 
 Soit le noyau polynomial $`k(\mathbf{x},\mathbf{x}')=(\mathbf{x}^\top\mathbf{x}')^2`$ en dimension 2.
 1. Donnez une application $`\varphi`$ explicite telle que $`k(\mathbf{x},\mathbf{x}')=\varphi(\mathbf{x})^\top\varphi(\mathbf{x}')`$.
@@ -677,7 +677,7 @@ Soit le noyau polynomial $`k(\mathbf{x},\mathbf{x}')=(\mathbf{x}^\top\mathbf{x}'
 > 2. Côté noyau: $`\mathbf{x}^\top\mathbf{x}'=1\cdot3+2\cdot1=5`$, donc $`k=5^2=25`$. Côté $`\varphi`$: $`\varphi(\mathbf{x})=(1,\ 2\sqrt2,\ 4)`$, $`\varphi(\mathbf{x}')=(9,\ 3\sqrt2,\ 1)`$. Produit scalaire $`=1\cdot9+2\sqrt2\cdot3\sqrt2+4\cdot1=9+12+4=25`$. Les deux coïncident.
 > 3. Via $`\varphi`$, on construit un vecteur de $`\binom{d+p-1}{p}`$ composantes pour le noyau homogène (croissance combinatoire) puis on fait le produit scalaire: irréalisable dès que $`d`$ et $`p`$ grandissent. Via $`k`$, on calcule un produit scalaire en dimension $`d`$ ($`O(d)`$) puis une puissance: coût $`O(d)`$, indépendant de $`p`$ (à part dans l'exposant). Le gain est astronomique: c'est tout l'intérêt du truc du noyau.
 
-#### Exercice 5 — Effet de $`C`$ (raisonnement + code)
+#### Exercice 5: Effet de $`C`$ (raisonnement + code)
 
 Sur un jeu légèrement non séparable, prédisez qualitativement l'évolution du nombre de vecteurs de support et de l'erreur d'apprentissage quand $`C`$ passe de $`0.01`$ à $`100`$, puis vérifiez par simulation.
 
@@ -698,7 +698,7 @@ Sur un jeu légèrement non séparable, prédisez qualitativement l'évolution d
 > ```
 > On observe la décroissance du nombre de vecteurs de support et de l'erreur d'apprentissage quand $`C`$ croît, conformément à la prédiction. (Les valeurs exactes dépendent du tirage, mais la *tendance* est robuste.)
 
-#### Exercice 6 — Sparsité de la solution duale
+#### Exercice 6: Sparsité de la solution duale
 
 Montrez, à partir des conditions KKT, que si un point $`\mathbf{x}_i`$ est strictement au-delà de la marge ($`y_i(\mathbf{w}^\top\mathbf{x}_i+b)>1`$), alors nécessairement $`\alpha_i=0`$. En quoi cela explique-t-il que la prédiction ne dépende que des vecteurs de support ?
 

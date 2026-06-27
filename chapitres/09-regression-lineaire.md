@@ -36,7 +36,7 @@ y_i \approx \mathbf{w}^\top \mathbf{x}_i + b .
 
 > **Astuce de l'absorption du biais.** Plutot que de trainer $`b`$ separement, on ajoute a chaque $`\mathbf{x}_i`$ une coordonnee constante egale a $`1`$. Alors le poids associe a cette coordonnee *est* le biais: $`\mathbf{w}^\top \mathbf{x}_i + b = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}_i`$ avec $`\tilde{\mathbf{x}}_i = (1, x_{i1}, \dots, x_{id})`$ et $`\tilde{\mathbf{w}} = (b, w_1, \dots, w_d)`$. Dans toute la suite on supposera, sauf mention contraire, que cette coordonnee constante est deja incluse; on ecrira simplement $`\mathbf{w} \in \mathbb{R}^d`$ en gardant a l'esprit qu'une de ses composantes joue le role de biais.
 
-#### Empilement : la matrice de design
+#### Empilement: la matrice de design
 
 Travailler observation par observation est lourd. On empile les $`n`$ vecteurs d'entree en lignes d'une grande matrice, et les $`n`$ cibles en un vecteur.
 
@@ -74,7 +74,7 @@ Le vecteur des $`n`$ predictions du modele s'ecrit alors d'un seul coup, par un 
 
 > **Verification des dimensions.** $`\mathbf{X}`$ est $`n \times d`$, $`\mathbf{w}`$ est $`d \times 1`$: le produit $`\mathbf{X}\mathbf{w}`$ est donc $`n \times 1`$, soit bien un vecteur de $`n`$ predictions, une par observation. Verifier que les tailles « s'emboitent » (la dimension de droite de la premiere matrice egale celle de gauche de la seconde) est le reflexe le plus rentable pour ne jamais se tromper d'ecriture.
 
-#### Le bruit : pourquoi un signe « approximativement »
+#### Le bruit: pourquoi un signe « approximativement »
 
 Aucune relation reelle n'est parfaitement lineaire ni parfaitement mesuree. On modelise explicitement l'ecart entre la vraie cible et la partie lineaire par un terme aleatoire.
 
@@ -282,7 +282,7 @@ Sous le modele gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\var
 
 > **Estimation de $`\sigma^2`$.** On l'estime sans biais par $`\hat\sigma^2=\dfrac{\lVert\mathbf y-\mathbf X\hat{\mathbf w}\rVert_2^2}{n-d}`$ (les $`d`$ parametres ajustes consomment $`d`$ degres de liberte; diviser par $`n-d`$ et non $`n`$ corrige le biais).
 
-#### Descente de gradient : quand la formule fermee ne passe pas
+#### Descente de gradient: quand la formule fermee ne passe pas
 
 Pour $`d`$ tres grand (millions de caracteristiques) ou $`n`$ enorme, inverser ou factoriser devient impraticable. On minimise alors $`J`$ iterativement.
 
@@ -316,7 +316,7 @@ def descente_gradient(X, y, eta=1e-2, n_iter=2000):
 
 ---
 
-### Régularisation : ridge, lasso et estimation MAP
+### Régularisation: ridge, lasso et estimation MAP
 
 L'estimateur OLS souffre de deux maux lies: il **explose** quand $`\mathbf X^\top\mathbf X`$ est presque singuliere (caracteristiques correlees, *colinearite*) et il **surapprend** (en anglais *overfitting*) quand $`d`$ est grand devant $`n`$. Le remede: penaliser les poids trop gros. C'est la regularisation.
 
@@ -405,7 +405,7 @@ S_\lambda(z)=\mathrm{sign}(z)\,\max(|z|-\lambda,\ 0)=
 
 > **Mise a jour 2026.** Entre les deux extremes, l'**elastic net** $`\lambda\bigl(\alpha\lVert\mathbf w\rVert_1+\tfrac{1-\alpha}2\lVert\mathbf w\rVert_2^2\bigr)`$ combine parcimonie et stabilite, et gere mieux les groupes de variables correlees (la lasso seule en choisit une au hasard). C'est le choix par defaut robuste sur donnees reelles a beaucoup de caracteristiques.
 
-#### Le pont decisif : regularisation = estimation MAP
+#### Le pont decisif: regularisation = estimation MAP
 
 Voici l'un des resultats les plus eclairants du chapitre. On reprend le modele bayesien: on met une *loi a priori* (en anglais *prior*) sur les poids et on cherche le mode de la loi a posteriori (estimation *maximum a posteriori*, MAP, vue au chapitre 8).
 
@@ -546,7 +546,7 @@ Le seul terme dependant de $`\mathbf w`$ est la somme des carres d'erreur, *avec
 
 > **Reciproque eclairante.** Si on changeait la loi du bruit, on changerait la perte: un bruit de Laplace mene a la regression en valeur absolue ($`\ell_1`$ sur les residus, robuste aux valeurs aberrantes), un bruit de Student a la regression robuste. La perte quadratique *est* l'hypothese gaussienne deguisee.
 
-#### L'interpretation geometrique : projection orthogonale
+#### L'interpretation geometrique: projection orthogonale
 
 Placons-nous dans $`\mathbb R^n`$ (un axe par *observation*, pas par caracteristique). Le vecteur cible $`\mathbf y`$ est un point de cet espace. Les predictions accessibles $`\mathbf X\mathbf w`$, quand $`\mathbf w`$ parcourt $`\mathbb R^d`$, decrivent exactement le **sous-espace engendre par les colonnes** de $`\mathbf X`$, note $`\mathrm{Col}(\mathbf X)`$, un sous-espace de dimension $`\le d`$.
 
@@ -645,7 +645,7 @@ print(w)                                          # ~ [0.03 -0.03 1.01]
 
 > **Piege, l'explosion combinatoire.** En degre $`M`$ et dimension $`d`$, le nombre de monomes croit comme $`\binom{M+d}{d}`$: pour $`d=1000`$ et $`M=3`$, des centaines de millions de termes. Construire et stocker $`\boldsymbol\Phi`$ devient impossible. Ce mur motive *exactement* l'astuce du noyau.
 
-#### Le passage au dual : tout via les produits scalaires
+#### Le passage au dual: tout via les produits scalaires
 
 Observons la solution ridge sous un autre angle. Une identite matricielle (le lemme de Woodbury / *push-through*) donne:
 
@@ -727,7 +727,7 @@ flowchart LR
 
 > **Conseil.** Cherchez d'abord seul, papier-crayon ou NumPy, avant de lire le corrige. Les corriges sont entierement deroules.
 
-#### Exercice 1 — Equations normales a la main
+#### Exercice 1: Equations normales a la main
 
 Soit $`\mathbf X=\begin{pmatrix}1&0\\1&1\\1&2\\1&3\end{pmatrix}`$ et $`\mathbf y=(1,3,4,6)^\top`$. Calculez $`\hat{\mathbf w}`$ par les equations normales, puis le vecteur des residus et verifiez l'orthogonalite $`\mathbf X^\top(\mathbf y-\hat{\mathbf y})=\mathbf 0`$.
 
@@ -737,37 +737,37 @@ Soit $`\mathbf X=\begin{pmatrix}1&0\\1&1\\1&2\\1&3\end{pmatrix}`$ et $`\mathbf y
 > $`\hat{\mathbf w}=\tfrac1{20}\begin{pmatrix}14&-6\\-6&4\end{pmatrix}\begin{pmatrix}14\\29\end{pmatrix}=\tfrac1{20}\begin{pmatrix}196-174\\-84+116\end{pmatrix}=\tfrac1{20}\begin{pmatrix}22\\32\end{pmatrix}=\begin{pmatrix}1{,}1\\1{,}6\end{pmatrix}`$.
 > Predictions $`\hat y=1{,}1+1{,}6x`$: $`1{,}1;\,2{,}7;\,4{,}3;\,5{,}9`$. Residus: $`-0{,}1;\,0{,}3;\,-0{,}3;\,0{,}1`$. Somme $`=0`$ (orthogonal a la colonne de 1); $`\sum x_i r_i=0\cdot(-0{,}1)+1\cdot0{,}3+2\cdot(-0{,}3)+3\cdot0{,}1=0{,}3-0{,}6+0{,}3=0`$ (orthogonal a la colonne $`x`$). $`\checkmark`$
 
-#### Exercice 2 — Effet de la ridge sur une direction
+#### Exercice 2: Effet de la ridge sur une direction
 
 On a une seule caracteristique centree, $`\mathbf X^\top\mathbf X=s`$ (un scalaire $`>0`$) et $`\mathbf X^\top\mathbf y=c`$. Donnez $`\hat w_{\text{OLS}}`$ et $`\hat w_{\text{ridge}}(\lambda)`$, puis le ratio de retrecissement. Que vaut la limite $`\lambda\to\infty`$ ?
 
 > **Corrige.** $`\hat w_{\text{OLS}}=c/s`$. $`\hat w_{\text{ridge}}=c/(s+\lambda)`$. Ratio $`=\dfrac{\hat w_{\text{ridge}}}{\hat w_{\text{OLS}}}=\dfrac{s}{s+\lambda}\in(0,1)`$: la ridge multiplie le coefficient OLS par un facteur $`<1`$ (retrecissement). Quand $`\lambda\to\infty`$, le facteur tend vers $`0`$: $`\hat w_{\text{ridge}}\to0`$. Ceci illustre la formule SVD $`\sigma_k/(\sigma_k^2+\lambda)`$ en dimension 1: avec une seule colonne, $`s=\sigma_1^2`$ et $`c=\sigma_1\,(\mathbf u_1^\top\mathbf y)`$, de sorte que $`\hat w_{\text{ridge}}=c/(s+\lambda)=\sigma_1(\mathbf u_1^\top\mathbf y)/(\sigma_1^2+\lambda)`$.
 
-#### Exercice 3 — Lasso scalaire et seuillage doux
+#### Exercice 3: Lasso scalaire et seuillage doux
 
 Minimisez $`g(w)=\tfrac12(w-3)^2+\lambda|w|`$ pour $`\lambda=1`$, puis $`\lambda=4`$. Generalisez.
 
 > **Corrige.** Pour $`w>0`$: $`g'(w)=(w-3)+\lambda=0\Rightarrow w=3-\lambda`$, valable si $`3-\lambda>0`$. Pour $`\lambda=1`$: $`w^\star=2>0`$ $`\checkmark`$. Pour $`\lambda=4`$: $`3-\lambda=-1<0`$ donc pas de solution positive; par symetrie pas de solution negative (le terme $`-3`$ tire vers le positif); le minimum est en $`w^\star=0`$. C'est exactement $`S_\lambda(3)=\mathrm{sign}(3)\max(|3|-\lambda,0)`$: vaut $`2`$ pour $`\lambda=1`$, vaut $`0`$ pour $`\lambda=4`$. La lasso met le coefficient *a zero* des que la « preuve » $`|z|`$ ne depasse pas le seuil $`\lambda`$.
 
-#### Exercice 4 — Ridge = MAP gaussien (redemonstration)
+#### Exercice 4: Ridge = MAP gaussien (redemonstration)
 
 Montrez directement que maximiser $`p(\mathbf w\mid\mathbf y)`$ avec vraisemblance $`\mathcal N(\mathbf X\mathbf w,\sigma^2\mathbf I)`$ et prior $`\mathcal N(\mathbf 0,\tau^2\mathbf I)`$ revient a la ridge, et identifiez $`\lambda`$.
 
 > **Corrige.** $`-\log p(\mathbf w\mid\mathbf y)=\tfrac{1}{2\sigma^2}\lVert\mathbf y-\mathbf X\mathbf w\rVert^2+\tfrac{1}{2\tau^2}\lVert\mathbf w\rVert^2+\text{const}`$. Le gradient: $`-\tfrac1{\sigma^2}\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\tfrac1{\tau^2}\mathbf w`$. Annulation: $`\mathbf X^\top\mathbf X\mathbf w+\tfrac{\sigma^2}{\tau^2}\mathbf w=\mathbf X^\top\mathbf y`$, soit $`(\mathbf X^\top\mathbf X+\lambda\mathbf I)\mathbf w=\mathbf X^\top\mathbf y`$ avec $`\boxed{\lambda=\sigma^2/\tau^2}`$. C'est la ridge. Un prior plus serre (petit $`\tau^2`$) donne un $`\lambda`$ plus grand. $`\checkmark`$
 
-#### Exercice 5 — Idempotence de la matrice chapeau
+#### Exercice 5: Idempotence de la matrice chapeau
 
 Montrez que $`\mathbf H=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top`$ verifie $`\mathbf H^2=\mathbf H`$ et $`\mathbf H^\top=\mathbf H`$, et que $`\mathrm{trace}(\mathbf H)=d`$.
 
 > **Corrige.** Symetrie: $`\mathbf H^\top=\mathbf X\bigl((\mathbf X^\top\mathbf X)^{-1}\bigr)^\top\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$ (l'inverse d'une symetrique est symetrique). Idempotence: $`\mathbf H^2=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\underbrace{\mathbf X^\top\mathbf X(\mathbf X^\top\mathbf X)^{-1}}_{=\mathbf I}\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$. Trace: $`\mathrm{trace}(\mathbf H)=\mathrm{trace}\bigl(\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\bigr)=\mathrm{trace}\bigl((\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf X\bigr)=\mathrm{trace}(\mathbf I_d)=d`$ (invariance cyclique de la trace). $`\checkmark`$
 
-#### Exercice 6 — Variance predictive bayesienne qui enfle en extrapolation
+#### Exercice 6: Variance predictive bayesienne qui enfle en extrapolation
 
 Modele 1D sans biais, $`\boldsymbol\phi(x)=x`$, donnees aux abscisses proches de $`0`$. Expliquez pourquoi $`\sigma_\star^2(x_\star)=\sigma^2+x_\star^2 S_N`$ grandit avec $`|x_\star|`$, et ce que cela signifie.
 
 > **Corrige.** Ici $`\mathbf S_N`$ se reduit a un scalaire positif $`S_N>0`$. La variance epistemique $`x_\star^2 S_N`$ est une parabole en $`x_\star`$: nulle a l'origine (la ou les donnees sont concentrees, l'incertitude sur la pente importe peu) et croissant comme le carre de la distance. Interpretation: plus on extrapole loin des donnees, plus une petite incertitude sur la pente se traduit par une grande incertitude sur la prediction. Le modele bayesien *signale* honnetement qu'il extrapole, contrairement a OLS qui afficherait la meme confiance partout. C'est un argument cle pour preferer le bayesien en zones a risque.
 
-#### Exercice 7 — Le noyau polynomial comme produit scalaire
+#### Exercice 7: Le noyau polynomial comme produit scalaire
 
 Pour $`\mathbf x,\mathbf x'\in\mathbb R^2`$, montrez que $`k(\mathbf x,\mathbf x')=(\mathbf x^\top\mathbf x'+1)^2`$ correspond a une carte $`\boldsymbol\phi`$ explicite. Donnez $`\boldsymbol\phi`$.
 
@@ -777,19 +777,19 @@ Pour $`\mathbf x,\mathbf x'\in\mathbb R^2`$, montrez que $`k(\mathbf x,\mathbf x
 > ```
 > Le noyau evalue donc un produit scalaire dans un espace a 6 dimensions (tous les monomes de degre $`\le 2`$, biais inclus grace au $`+1`$) au prix d'un seul produit scalaire 2D eleve au carre. $`\checkmark`$
 
-#### Exercice 8 — Identite primale-duale (Woodbury)
+#### Exercice 8: Identite primale-duale (Woodbury)
 
 Verifiez l'identite $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top=\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$ et commentez l'interet calculatoire.
 
 > **Corrige.** Partons de l'identite evidente $`\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)=(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)\boldsymbol\Phi^\top`$ (les deux membres valent $`\boldsymbol\Phi^\top\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\boldsymbol\Phi^\top`$). Multiplions a gauche par $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}`$ et a droite par $`(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$ (toutes deux inversibles pour $`\lambda>0`$): $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top=\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$. $`\checkmark`$ Interet: a gauche on inverse une matrice $`p\times p`$ (taille de l'espace des features, possiblement infinie), a droite une matrice $`n\times n`$ (taille des donnees). Quand $`p\gg n`$, voire $`p=\infty`$ via un noyau, on travaille a droite: c'est tout le passage au dual qui rend l'astuce du noyau possible.
 
-#### Exercice 9 — MV avec bruit de Laplace donne la perte $`\ell_1`$
+#### Exercice 9: MV avec bruit de Laplace donne la perte $`\ell_1`$
 
 Supposez $`y_i=\mathbf x_i^\top\mathbf w+\varepsilon_i`$ avec $`\varepsilon_i`$ i.i.d. de loi de Laplace $`p(\varepsilon)=\tfrac1{2b}e^{-|\varepsilon|/b}`$. Quelle perte le maximum de vraisemblance minimise-t-il ?
 
 > **Corrige.** $`\log p(\mathbf y\mid\mathbf w)=\sum_i\bigl(-\log(2b)-\tfrac1b|y_i-\mathbf x_i^\top\mathbf w|\bigr)`$. Le seul terme dependant de $`\mathbf w`$ est $`-\tfrac1b\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$. Maximiser la log-vraisemblance revient donc a **minimiser $`\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$**, c'est-a-dire la perte $`\ell_1`$ sur les residus (regression de la mediane, dite *least absolute deviations*). Lecon: la perte quadratique n'a rien d'universel, elle decoule du choix gaussien; un bruit a queues plus lourdes (Laplace) mene a une perte robuste aux valeurs aberrantes.
 
-#### Exercice 10 — Degres de liberte de la ridge
+#### Exercice 10: Degres de liberte de la ridge
 
 Pour la ridge, les valeurs ajustees sont $`\hat{\mathbf y}=\mathbf H_\lambda\mathbf y`$ avec $`\mathbf H_\lambda=\mathbf X(\mathbf X^\top\mathbf X+\lambda\mathbf I)^{-1}\mathbf X^\top`$. Exprimez $`\mathrm{trace}(\mathbf H_\lambda)`$ via les valeurs singulieres $`\sigma_k`$ de $`\mathbf X`$ et interpretez.
 

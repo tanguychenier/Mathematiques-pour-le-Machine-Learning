@@ -6,7 +6,7 @@
 
 Avant de parler de « décomposition » d'une matrice, il faut deux nombres qui résument, à eux seuls, des informations cruciales sur ce que fait une matrice. Ces deux nombres sont le **déterminant** et la **trace**. Tout le chapitre s'appuiera dessus.
 
-#### Le déterminant : combien une matrice étire l'espace
+#### Le déterminant: combien une matrice étire l'espace
 
 Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine qui transforme l'espace**. On lui donne un vecteur, elle renvoie un autre vecteur. Si on donne tout un cube unité (un petit carré en dimension 2, un cube en dimension 3), la machine le déforme: elle l'étire, l'écrase, le tourne, le retourne. Le déterminant mesure **de combien le volume de ce cube change**, et **s'il se retourne**.
 
@@ -30,7 +30,7 @@ Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine
 
 La formule de Leibniz est théoriquement parfaite mais inutilisable en pratique: elle contient $`n!`$ termes. Pour $`n = 20`$, cela fait plus de $`2 \times 10^{18}`$ termes. On l'utilise pour **prouver des propriétés**, jamais pour **calculer**.
 
-##### Petites tailles : les formules à connaître
+##### Petites tailles: les formules à connaître
 
 En dimension 2:
 ```math
@@ -44,7 +44,7 @@ En dimension 3 (règle de Sarrus):
 
 > **Exemple chiffré (2×2).** Prenons $`A = \begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}`$. Alors $`\det(A) = 2 \times 3 - 1 \times 0 = 6`$. Géométriquement: le carré unité devient un parallélogramme d'aire $`6`$. Comme $`6 > 0`$, l'orientation est préservée.
 
-##### Calcul réel : par les facteurs triangulaires
+##### Calcul réel: par les facteurs triangulaires
 
 Pour calculer un déterminant en pratique, on **triangularise** la matrice par élimination de Gauss (opérations sur les lignes), puis on multiplie les coefficients diagonaux. Chaque échange de deux lignes change le signe du déterminant, et l'ajout d'un multiple d'une ligne à une autre le laisse inchangé; on suit donc ces opérations pour retrouver $`\det(A)`$. C'est le coût $`O(n^3)`$, pas $`O(n!)`$.
 
@@ -69,7 +69,7 @@ Pour calculer un déterminant en pratique, on **triangularise** la matrice par �
 
 > **Piège fréquent.** Le déterminant **n'est pas additif**: en général $`\det(A + B) \neq \det(A) + \det(B)`$. Par exemple avec $`A = B = I_2`$: $`\det(I_2 + I_2) = \det(2I_2) = 4 \neq \det(I_2) + \det(I_2) = 2`$.
 
-#### La trace : la somme de la diagonale
+#### La trace: la somme de la diagonale
 
 > **Le symbole $`\mathrm{tr}`$.** Ce symbole représente la **trace** d'une matrice carrée. C'est très simple: on additionne tous les nombres posés sur la **diagonale** (du coin haut-gauche au coin bas-droit). Imaginez une matrice comme un damier de nombres; la trace, c'est la somme de la « ligne en diagonale » seulement. On note $`\mathrm{tr}(A)`$.
 
@@ -150,7 +150,7 @@ print("tr(M) exact =", np.trace(M), " estime =", round(est, 3))
 
 Voici le cœur battant de l'algèbre linéaire appliquée. L'idée est d'une simplicité désarmante: pour comprendre une transformation compliquée, on cherche les directions qu'elle **ne fait pas tourner**.
 
-#### L'intuition : les directions privilégiées
+#### L'intuition: les directions privilégiées
 
 Une matrice fait généralement deux choses à un vecteur: elle le **tourne** et elle l'**étire**. Mais pour certaines directions très spéciales, la matrice **ne tourne pas du tout**: elle se contente d'allonger ou de raccourcir le vecteur le long de sa propre ligne. Ces directions sont les **vecteurs propres** (eigenvectors), et le facteur d'étirement associé est la **valeur propre** (eigenvalue).
 
@@ -393,7 +393,7 @@ print("logdet(Sigma) =", round(logdet, 4),
 
 Nous savons trouver valeurs et vecteurs propres; assemblons-les. **Diagonaliser**, c'est réécrire une matrice dans la base de ses vecteurs propres, où elle devient d'une simplicité absolue: une simple liste d'étirements.
 
-#### L'idée : changer de lunettes
+#### L'idée: changer de lunettes
 
 Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **à travers les vecteurs propres** (on change de base), la transformation se réduit à: « étirer l'axe 1 par $`\lambda_1`$, l'axe 2 par $`\lambda_2`$, etc. ». Plus aucune rotation, plus aucun mélange: juste des étirements indépendants. C'est exactement ce que fait une matrice **diagonale**.
 
@@ -413,7 +413,7 @@ Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **
 
 > **Condition pratique.** $`A`$ est diagonalisable $`\iff`$ pour **chaque** valeur propre, multiplicité géométrique = multiplicité algébrique. Cas suffisant commode: si $`A`$ a $`n`$ valeurs propres **distinctes**, elle est automatiquement diagonalisable.
 
-#### Pourquoi c'est si utile : les puissances
+#### Pourquoi c'est si utile: les puissances
 
 > **Calcul de puissances.** Si $`A = PDP^{-1}`$, alors
 > ```math
@@ -438,7 +438,7 @@ P = \begin{pmatrix} 1 & 1 \\ 1 & -2 \end{pmatrix}, \quad D = \begin{pmatrix} 5 &
 PDP^{-1} = \begin{pmatrix} 1 & 1 \\ 1 & -2 \end{pmatrix}\begin{pmatrix} 5 & 0 \\ 0 & 2 \end{pmatrix}\frac13\begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix} = \frac13\begin{pmatrix} 5 & 2 \\ 5 & -4 \end{pmatrix}\begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix} = \frac13\begin{pmatrix} 12 & 3 \\ 6 & 9 \end{pmatrix} = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}.\checkmark
 ```
 
-#### Le cas roi : le théorème spectral (matrices symétriques)
+#### Le cas roi: le théorème spectral (matrices symétriques)
 
 Pour les matrices symétriques réelles, la diagonalisation est encore plus belle: la base de vecteurs propres peut être choisie **orthonormée**.
 
@@ -462,7 +462,7 @@ Pour les matrices symétriques réelles, la diagonalisation est encore plus bell
 
 > **Intuition du théorème spectral.** Toute transformation symétrique est, dans les bonnes lunettes orthonormées, une simple combinaison d'étirements le long d'axes perpendiculaires. Une matrice de covariance, par exemple, décrit toujours un ellipsoïde dont les axes principaux sont orthogonaux: ce sont ses vecteurs propres.
 
-#### Application reine en machine learning : l'ACP
+#### Application reine en machine learning: l'ACP
 
 > **Analyse en composantes principales (Principal Component Analysis, PCA).** On centre les données, on forme la matrice de covariance $`C = \frac1n X^\top X`$ (symétrique, semi-définie positive), on la diagonalise $`C = Q\Lambda Q^\top`$. Les vecteurs propres (colonnes de $`Q`$) sont les **axes principaux**; les valeurs propres $`\lambda_i`$ sont les **variances** le long de ces axes. Projeter sur les $`k`$ plus grandes valeurs propres = compresser en gardant le maximum de variance.
 
@@ -497,7 +497,7 @@ print("Q Lambda Q^T == C ?", np.allclose(C_rec, C))
 
 Voici la décomposition la plus puissante et la plus universelle de toute l'algèbre linéaire. Là où la diagonalisation échoue (matrices non carrées, non diagonalisables), la **SVD** réussit **toujours**. C'est le couteau suisse du machine learning.
 
-#### L'intuition : toute matrice est rotation–étirement–rotation
+#### L'intuition: toute matrice est rotation–étirement–rotation
 
 Une affirmation extraordinaire et pourtant exacte: **n'importe quelle** matrice, même rectangulaire, agit géométriquement comme la succession de trois opérations simples:
 1. une **rotation** (ou réflexion) dans l'espace de départ;
@@ -637,7 +637,7 @@ print("solution moindres carres :", x.round(4))
 
 La SVD ne sert pas qu'à décomposer: elle fournit la **meilleure compression possible** d'une matrice. C'est le principe derrière la compression d'images, le débruitage, les recommandations et les adaptateurs LoRA des grands modèles.
 
-#### L'idée : garder l'essentiel, jeter le détail
+#### L'idée: garder l'essentiel, jeter le détail
 
 Une matrice $`A = U\Sigma V^\top`$ est une **somme** de couches, classées de la plus importante à la plus négligeable:
 ```math
@@ -647,7 +647,7 @@ Chaque terme $`\sigma_i u_i v_i^\top`$ est une matrice de **rang 1** (une couche
 
 > **Le symbole $`u_i v_i^\top`$ (produit extérieur, outer product).** Un vecteur colonne ($`u_i`$, de taille $`m`$) multiplié par un vecteur ligne ($`v_i^\top`$, de taille $`n`$) donne une **matrice entière** $`m\times n`$ de rang 1. Imaginez une table de multiplication: à partir de deux listes de nombres, vous remplissez tout un tableau dont la case $`(j,l)`$ vaut $`(u_i)_j (v_i)_l`$. C'est la « brique élémentaire » de rang 1.
 
-#### Le théorème d'Eckart–Young : l'optimalité
+#### Le théorème d'Eckart–Young: l'optimalité
 
 > **Théorème (Eckart–Young–Mirsky).** Soit $`A = U\Sigma V^\top`$ et $`A_k = \sum_{i=1}^{k} \sigma_i u_i v_i^\top`$ (la SVD **tronquée** au rang $`k`$). Alors $`A_k`$ est la **meilleure approximation de rang $`\le k`$** de $`A`$, à la fois pour la norme spectrale et pour la norme de Frobenius:
 > ```math
@@ -786,7 +786,7 @@ flowchart LR
 > - **Cholesky** est l'« arme rapide » réservée aux SPD: ce que la spectrale fait en $`O(n^3)`$ avec calcul de vecteurs propres, Cholesky le fait pour la résolution de systèmes en $`\sim n^3/3`$ sans toucher au spectre.
 > - Les valeurs singulières de $`A`$ sont les **racines carrées** des valeurs propres de $`A^\top A`$.
 
-#### Tableau de décision : quel outil dégainer ?
+#### Tableau de décision: quel outil dégainer ?
 
 | Situation rencontrée | Outil recommandé | Pourquoi |
 |---|---|---|
@@ -808,7 +808,7 @@ flowchart LR
 
 ### Exercices
 
-#### Exercice 1 — Déterminant et trace (échauffement)
+#### Exercice 1: Déterminant et trace (échauffement)
 
 Soit $`A = \begin{pmatrix} 3 & 2 \\ 1 & 4 \end{pmatrix}`$.
 **(a)** Calculer $`\det(A)`$ et $`\mathrm{tr}(A)`$.
@@ -820,7 +820,7 @@ Soit $`A = \begin{pmatrix} 3 & 2 \\ 1 & 4 \end{pmatrix}`$.
 > **(b)** $`\lambda_1 + \lambda_2 = \mathrm{tr}(A) = 7`$ et $`\lambda_1\lambda_2 = \det(A) = 10`$. (Ce sont $`\lambda=5`$ et $`\lambda=2`$, racines de $`\lambda^2-7\lambda+10`$.)
 > **(c)** $`2A = \begin{pmatrix} 6 & 4 \\ 2 & 8 \end{pmatrix}`$, $`\det(2A) = 48 - 8 = 40 = 4\cdot 10 = 2^2\det(A)`$. $`\checkmark`$
 
-#### Exercice 2 — Valeurs et vecteurs propres
+#### Exercice 2: Valeurs et vecteurs propres
 
 Soit $`A = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}`$.
 **(a)** Trouver les valeurs propres. **(b)** Trouver un vecteur propre pour chacune. **(c)** $`A`$ est-elle diagonalisable ?
@@ -830,7 +830,7 @@ Soit $`A = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}`$.
 > **(b)** Pour $`\lambda=3`$: $`(A-3I)v = \begin{pmatrix} -1 & 0 \\ 1 & 0\end{pmatrix}v = 0 \Rightarrow v_1 = 0`$, donc $`v^{(3)} = \binom{0}{1}`$. Pour $`\lambda=2`$: $`(A-2I)v = \begin{pmatrix} 0 & 0 \\ 1 & 1\end{pmatrix}v=0 \Rightarrow v_1 = -v_2`$, donc $`v^{(2)} = \binom{1}{-1}`$.
 > **(c)** Deux valeurs propres distinctes $`\Rightarrow`$ deux vecteurs propres indépendants $`\Rightarrow`$ **diagonalisable**.
 
-#### Exercice 3 — Cholesky à la main
+#### Exercice 3: Cholesky à la main
 
 Soit $`A = \begin{pmatrix} 9 & 3 \\ 3 & 5 \end{pmatrix}`$.
 **(a)** Vérifier qu'elle est SPD. **(b)** Calculer sa décomposition de Cholesky $`L`$. **(c)** En déduire $`\det(A)`$.
@@ -840,7 +840,7 @@ Soit $`A = \begin{pmatrix} 9 & 3 \\ 3 & 5 \end{pmatrix}`$.
 > **(b)** $`\ell_{11} = \sqrt 9 = 3`$; $`\ell_{21} = 3/3 = 1`$; $`\ell_{22} = \sqrt{5 - 1^2} = 2`$. Donc $`L = \begin{pmatrix} 3 & 0 \\ 1 & 2 \end{pmatrix}`$. (Vérif: $`LL^\top = \begin{pmatrix} 9 & 3 \\ 3 & 5\end{pmatrix}`$. $`\checkmark`$)
 > **(c)** $`\det(A) = \det(L)\det(L^\top) = (\ell_{11}\ell_{22})^2 = (3\cdot2)^2 = 36`$. $`\checkmark`$
 
-#### Exercice 4 — Diagonalisation et puissances
+#### Exercice 4: Diagonalisation et puissances
 
 Soit $`A = \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}`$.
 **(a)** Diagonaliser $`A`$ (elle est symétrique: utiliser une base orthonormée). **(b)** Calculer $`A^{10}`$.
@@ -849,7 +849,7 @@ Soit $`A = \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}`$.
 > **(a)** $`\chi_A(\lambda) = \lambda^2 - 4 \Rightarrow \lambda = \pm 2`$. Pour $`\lambda=2`$: $`v_1 = \frac1{\sqrt2}\binom{1}{1}`$; pour $`\lambda=-2`$: $`v_2 = \frac1{\sqrt2}\binom{1}{-1}`$. Ils sont orthonormés, donc $`Q = \frac1{\sqrt2}\begin{pmatrix} 1 & 1 \\ 1 & -1\end{pmatrix}`$, $`\Lambda = \begin{pmatrix} 2 & 0 \\ 0 & -2\end{pmatrix}`$, et $`A = Q\Lambda Q^\top`$.
 > **(b)** $`A^{10} = Q\Lambda^{10}Q^\top`$ avec $`\Lambda^{10} = \begin{pmatrix} 2^{10} & 0 \\ 0 & (-2)^{10}\end{pmatrix} = 1024\, I`$. Donc $`A^{10} = Q(1024\,I)Q^\top = 1024\,QQ^\top = 1024\, I = \begin{pmatrix} 1024 & 0 \\ 0 & 1024\end{pmatrix}`$. (Cohérent: $`A^2 = 4I`$, donc $`A^{10} = (A^2)^5 = 4^5 I = 1024\,I`$.)
 
-#### Exercice 5 — SVD à la main
+#### Exercice 5: SVD à la main
 
 Soit $`A = \begin{pmatrix} 2 & 0 \\ 0 & -3 \end{pmatrix}`$.
 **(a)** Donner les valeurs singulières. **(b)** Donner une SVD $`A = U\Sigma V^\top`$. **(c)** Comparer valeurs propres et valeurs singulières.
@@ -859,7 +859,7 @@ Soit $`A = \begin{pmatrix} 2 & 0 \\ 0 & -3 \end{pmatrix}`$.
 > **(b)** On ordonne pour avoir $`\sigma_1 = 3`$ en premier. $`\Sigma = \begin{pmatrix} 3 & 0 \\ 0 & 2\end{pmatrix}`$. Le vecteur singulier à droite dominant est $`e_2 = \binom{0}{1}`$ (associé à la valeur propre $`9`$ de $`A^\top A`$). On prend $`V = \begin{pmatrix} 0 & 1 \\ 1 & 0\end{pmatrix}`$ (colonnes $`v_1 = e_2`$, $`v_2 = e_1`$). Puis $`u_i = \frac1{\sigma_i}Av_i`$: $`u_1 = \frac13 A\binom{0}{1} = \frac13\binom{0}{-3} = \binom{0}{-1}`$; $`u_2 = \frac12 A\binom{1}{0} = \binom{1}{0}`$. Donc $`U = \begin{pmatrix} 0 & 1 \\ -1 & 0\end{pmatrix}`$. On vérifie $`U\Sigma V^\top = \begin{pmatrix} 0 & 1 \\ -1 & 0\end{pmatrix}\begin{pmatrix} 3 & 0 \\ 0 & 2\end{pmatrix}\begin{pmatrix} 0 & 1 \\ 1 & 0\end{pmatrix} = \begin{pmatrix} 2 & 0 \\ 0 & -3\end{pmatrix} = A`$. $`\checkmark`$
 > **(c)** Valeurs propres: $`2`$ et $`-3`$ (signe quelconque). Valeurs singulières: $`3`$ et $`2`$ (positives, $`= |{-3}|`$ et $`|2|`$). Pour une matrice diagonale, $`\sigma_i = |\lambda_i|`$.
 
-#### Exercice 6 — Eckart–Young et compression
+#### Exercice 6: Eckart–Young et compression
 
 Une matrice $`A`$ de taille $`4\times 4`$ a pour valeurs singulières $`\sigma = (10, 6, 0{,}5, 0{,}1)`$.
 **(a)** Quelle est l'erreur de la meilleure approximation de rang $`2`$ en norme spectrale ? En norme de Frobenius ? **(b)** Quelle part de variance capture le rang $`2`$ ? **(c)** Le rang $`2`$ est-il un bon choix ?
@@ -869,7 +869,7 @@ Une matrice $`A`$ de taille $`4\times 4`$ a pour valeurs singulières $`\sigma =
 > **(b)** Variance totale $`\propto \sum\sigma_i^2 = 100 + 36 + 0{,}25 + 0{,}01 = 136{,}26`$. Capturée par rang 2: $`136/136{,}26 \approx 0{,}9981`$, soit **99,8 %**.
 > **(c)** Oui, excellent: il y a un **coude** net après $`\sigma_2`$ (chute de $`6`$ à $`0{,}5`$). Les deux dernières composantes sont quasi du bruit; le rang $`2`$ est le choix naturel.
 
-#### Exercice 7 — Synthèse (raisonnement)
+#### Exercice 7: Synthèse (raisonnement)
 
 On donne une matrice $`A`$ réelle $`5\times 3`$ de rang $`3`$. Pour chacune des tâches, dire quelle décomposition utiliser et pourquoi.
 **(a)** Résoudre au sens des moindres carrés $`A w \approx b`$.

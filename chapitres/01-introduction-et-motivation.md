@@ -2,7 +2,7 @@
 
 # 1. Introduction et motivation
 
-### Apprendre à partir de données : l'intuition
+### Apprendre à partir de données: l'intuition
 
 Imaginez un marchand de glaces. Chaque matin, il note la température prévue et, le soir, le nombre de glaces vendues. Au bout d'un été, il possède un carnet rempli de couples (température, ventes). Une question naturelle surgit: **demain, il fera 28 °C; combien de glaces vais-je vendre ?** Le marchand n'a pas de formule physique reliant la chaleur à l'appétit des passants. Pourtant, en regardant son carnet, il « sent » qu'au-delà d'une certaine température les ventes grimpent. Cette capacité à **extraire une régularité d'un ensemble d'observations, puis à l'utiliser pour prédire une situation nouvelle**, est exactement ce qu'on appelle *apprendre à partir de données* (learning from data).
 
@@ -59,7 +59,7 @@ Ce sont les **quatre piliers**. Le reste du chapitre les présente, puis les fai
 
 Reprenons le carnet du marchand et donnons un nom mathématique à chaque ingrédient. C'est ici qu'apparaissent nos premiers symboles: nous allons les introduire **un par un**, en expliquant chacun comme on l'expliquerait à un enfant.
 
-#### Les données : observations chiffrées
+#### Les données: observations chiffrées
 
 Une **donnée** (data point), ou *exemple*, est une situation observée. Le marchand a observé $`n`$ jours. Pour le jour numéro $`i`$, il a noté la température, qu'on appelle $`x_i`$, et les ventes, qu'on appelle $`y_i`$.
 
@@ -89,7 +89,7 @@ En pratique, une donnée a rarement un seul nombre. Pour prédire le prix d'un l
 
 Chaque case $`x_{i,j}`$ s'appelle une **caractéristique** (feature): le numéro $`j`$ dit *quelle* caractéristique (surface, nombre de pièces…), le numéro $`i`$ dit *quel* exemple. Dans notre fil rouge du marchand, $`d = 1`$: une seule caractéristique, la température, et le vecteur se réduit à un simple nombre.
 
-#### Le modèle : une famille de règles candidates
+#### Le modèle: une famille de règles candidates
 
 Un **modèle** (model) est une **fonction** qui transforme une entrée en une prédiction. Voici le symbole le plus important du cours.
 
@@ -103,7 +103,7 @@ f(x) = a \, x + b .
 
 Ici $`a`$ est la **pente** (de combien de glaces les ventes montent quand la température monte de un degré) et $`b`$ l'**ordonnée à l'origine** (les ventes prédites à $`0`$ °C). Le point essentiel: **$`a`$ et $`b`$ ne sont pas fixés**. En les faisant varier, on obtient une *infinité de droites différentes*, toute une famille de règles candidates. Apprendre, ce sera choisir le couple $`(a, b)`$ qui colle le mieux au carnet.
 
-![Famille de droites candidates : faire varier (a, b) donne une infinité de droites, on choisit la meilleure](../assets/famille-droites.svg)
+![Famille de droites candidates: faire varier (a, b) donne une infinité de droites, on choisit la meilleure](../assets/famille-droites.svg)
 
 ```mermaid
 flowchart LR
@@ -112,7 +112,7 @@ flowchart LR
     A[Parametres a, b] -.reglent.-> F
 ```
 
-#### Les paramètres : les boutons réglables du modèle
+#### Les paramètres: les boutons réglables du modèle
 
 Les nombres qu'on ajuste, ici $`a`$ et $`b`$, sont les **paramètres** (parameters) du modèle. On les regroupe souvent dans un vecteur $`\boldsymbol{\theta}`$ (la lettre grecque « thêta »). Pour la droite, $`\boldsymbol{\theta} = (a, b)`$, et l'on écrit parfois $`f_{\boldsymbol\theta}(x)`$ pour rappeler que la prédiction dépend du réglage choisi.
 
@@ -124,7 +124,7 @@ Il faut distinguer deux espèces de réglages, souvent confondues par les début
 > Un **paramètre** est appris **par** l'algorithme à partir des données ($`a`$ et $`b`$ de la droite, les millions de poids d'un réseau de neurones).
 > Un **hyperparamètre** (hyperparameter) est choisi **par l'humain avant** l'apprentissage et n'est pas ajusté par la descente sur les données (le degré d'un polynôme, le taux d'apprentissage, la force d'une régularisation). On le règle typiquement par validation. Confondre les deux est une source classique d'erreurs méthodologiques.
 
-#### La fonction de coût : mesurer « le mieux »
+#### La fonction de coût: mesurer « le mieux »
 
 Pour choisir entre deux droites, il faut un **juge** chiffré: un nombre qui dit à quel point une prédiction se trompe. C'est la **fonction de coût** (cost function), aussi appelée fonction de perte (loss function). L'idée: comparer, sur chaque jour, la prédiction $`f_{\boldsymbol\theta}(x_i)`$ à la vraie valeur $`y_i`$, et cumuler les écarts.
 
@@ -138,23 +138,23 @@ Pour cumuler, on a besoin du symbole de sommation.
 
 La fonction de coût la plus courante en régression est l'**erreur quadratique moyenne** (mean squared error, MSE). Pour chaque jour, on mesure l'**écart** entre la prédiction du modèle et la vraie valeur, puis on résume tous ces écarts en un seul nombre qui dit «&nbsp;à quel point on se trompe&nbsp;». On élève chaque écart au carré, pour deux raisons précises.
 
-> **Raison 1 : empêcher les erreurs de s'annuler.** Un écart peut être **négatif** (on a sous-estimé la vente) ou **positif** (on a surestimé). Si on additionnait les écarts bruts, un écart de $`+10`$ et un écart de $`-10`$ se compenseraient et donneraient $`0`$, ce qui laisserait croire à tort que le modèle ne se trompe pas. Le carré fait disparaître le signe : $`(+10)^2`$ et $`(-10)^2`$ valent tous les deux $`100`$. Chaque erreur devient donc positive et **s'ajoute** aux autres au lieu de s'annuler.
+> **Raison 1: empêcher les erreurs de s'annuler.** Un écart peut être **négatif** (on a sous-estimé la vente) ou **positif** (on a surestimé). Si on additionnait les écarts bruts, un écart de $`+10`$ et un écart de $`-10`$ se compenseraient et donneraient $`0`$, ce qui laisserait croire à tort que le modèle ne se trompe pas. Le carré fait disparaître le signe: $`(+10)^2`$ et $`(-10)^2`$ valent tous les deux $`100`$. Chaque erreur devient donc positive et **s'ajoute** aux autres au lieu de s'annuler.
 >
-> **Raison 2 : pénaliser fortement les grosses erreurs.** Parce qu'on met au carré, une erreur deux fois plus grande coûte quatre fois plus cher, et une erreur dix fois plus grande, cent fois plus cher. Le modèle est ainsi fortement incité à éviter un gros raté, quitte à accepter plusieurs petits.
+> **Raison 2: pénaliser fortement les grosses erreurs.** Parce qu'on met au carré, une erreur deux fois plus grande coûte quatre fois plus cher, et une erreur dix fois plus grande, cent fois plus cher. Le modèle est ainsi fortement incité à éviter un gros raté, quitte à accepter plusieurs petits.
 
-On fait enfin la **moyenne** de ces carrés sur les $`n`$ jours :
+On fait enfin la **moyenne** de ces carrés sur les $`n`$ jours:
 
 ```math
 J(\boldsymbol{\theta}) = \frac{1}{n} \sum_{i=1}^{n} \big( f_{\boldsymbol{\theta}}(x_i) - y_i \big)^2 = \frac{1}{n} \sum_{i=1}^{n} \big( a\, x_i + b - y_i \big)^2 .
 ```
 
-![Schéma des moindres carrés : chaque erreur devient un carré, une aire toujours positive, qu'on soit au-dessus ou en dessous de la droite](../assets/moindres-carres.svg)
+![Schéma des moindres carrés: chaque erreur devient un carré, une aire toujours positive, qu'on soit au-dessus ou en dessous de la droite](../assets/moindres-carres.svg)
 
 > **Lecture de $`J(\boldsymbol{\theta})`$.** La lettre $`J`$ est le nom du juge: on lui donne un réglage $`\boldsymbol{\theta}`$ et il renvoie un nombre, d'autant plus **petit** que le modèle est bon. Le « $`\frac{1}{n}`$ » devant transforme la somme en **moyenne** (on partage le total entre les $`n`$ jours, comme on partage une addition de restaurant entre les convives). L'exposant $`2`$ sur la parenthèse veut dire « **au carré** », c'est-à-dire le nombre multiplié par lui-même: un écart de $`3`$ compte pour $`9`$, un écart de $`5`$ pour $`25`$, les grosses erreurs pèsent donc beaucoup plus lourd.
 
 Apprendre se reformule alors en un problème net: **trouver le réglage $`\boldsymbol{\theta}`$ qui rend $`J(\boldsymbol{\theta})`$ le plus petit possible.** C'est un problème d'optimisation, deuxième pilier. Mais avant de le résoudre, prenons de la hauteur et regardons les quatre piliers ensemble.
 
-![Le coût J(θ) : à gauche on change la droite (le réglage θ), à droite le juge J donne sa note (le coût). Le fond du bol est le meilleur réglage](../assets/cout-juge.svg)
+![Le coût J(θ): à gauche on change la droite (le réglage θ), à droite le juge J donne sa note (le coût). Le fond du bol est le meilleur réglage](../assets/cout-juge.svg)
 
 > **Mise à jour 2026.** Le triptyque *données → modèle → paramètres* est resté identique des moindres carrés de Gauss et Legendre (vers 1805–1809) aux modèles de fondation (foundation models) actuels. Ce qui a explosé, c'est l'**échelle**: un grand modèle de langage compte aujourd'hui des dizaines à des centaines de milliards de paramètres, et les « données » sont des corpus de plusieurs milliers de milliards de tokens (un *token* est un petit morceau de texte, en gros un mot ou un bout de mot, l'unité élémentaire que le modèle lit et produit). La nouveauté conceptuelle n'est pas dans la définition, mais dans les *lois d'échelle* (scaling laws) qui relient empiriquement la performance à la taille du modèle, à la quantité de données et au budget de calcul.
 
@@ -184,7 +184,7 @@ flowchart TB
 | Probabilités | **Modéliser le hasard** | Comment décrire le bruit et l'incertitude ? | Variable aléatoire, loi, espérance, variance |
 | Statistique | **Estimer & valider** | Comment inférer des grandeurs et juger la fiabilité ? | Estimateur, biais, variance, vraisemblance, test |
 
-#### Pilier 1 — L'algèbre linéaire : le langage des données
+#### Pilier 1: L'algèbre linéaire: le langage des données
 
 Dès qu'une donnée a plusieurs caractéristiques, c'est un vecteur; dès qu'on empile plusieurs exemples, c'est une **matrice** (matrix). Empilons les $`n`$ exemples (un par ligne), chacun ayant $`d`$ caractéristiques (une par colonne): on obtient la **matrice de conception** (design matrix) $`X \in \mathbb{R}^{n \times d}`$.
 
@@ -206,7 +206,7 @@ Ce simple produit $`X\boldsymbol{\theta}`$ encapsule des milliers d'additions et
 
 > **Mise à jour 2026.** Sur de très grandes matrices, on n'utilise plus les SVD/ACP exactes mais des **méthodes randomisées** (randomized SVD): on projette d'abord la matrice sur un petit sous-espace aléatoire, ce qui donne une approximation excellente pour un coût bien moindre. C'est devenu un standard dès que $`n`$ ou $`d`$ dépasse quelques dizaines de milliers.
 
-#### Pilier 2 — L'optimisation et le calcul : la mécanique de l'amélioration
+#### Pilier 2: L'optimisation et le calcul: la mécanique de l'amélioration
 
 Une fois le coût $`J(\boldsymbol{\theta})`$ défini, comment trouver son minimum ? L'outil fondamental est la **dérivée**, qui mesure une pente. En plusieurs dimensions, la pente devient le **gradient**.
 
@@ -224,7 +224,7 @@ La **convexité** (convexity) joue un rôle décisif: si la surface du coût a l
 
 > **Mise à jour 2026.** Deux révolutions ont transformé ce pilier. (1) La **différentiation automatique** (automatic differentiation, *autodiff*) des bibliothèques comme PyTorch et JAX calcule le gradient $`\nabla J`$ exactement et automatiquement, même pour des modèles à des milliards de paramètres: on n'écrit plus jamais les dérivées à la main. (2) Les optimiseurs **Adam** et **AdamW** (vers 2015–2019) adaptent un taux d'apprentissage par paramètre et sont devenus le réglage par défaut du deep learning (l'*apprentissage profond*: l'apprentissage automatique fondé sur des réseaux de neurones comportant de nombreuses couches empilées), là où la descente de gradient « brute » suffisait pour les modèles linéaires.
 
-#### Pilier 3 — Les probabilités : le langage de l'incertitude
+#### Pilier 3: Les probabilités: le langage de l'incertitude
 
 Les données réelles sont bruitées. Deux jours à $`25`$ °C ne donnent pas exactement les mêmes ventes: la pluie, un événement local, le hasard interviennent. Les **probabilités** offrent le vocabulaire pour modéliser ce bruit.
 
@@ -244,7 +244,7 @@ y_i = a\, x_i + b + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal{N}(0, \sig
 
 Ce point de vue probabiliste est fécond: il transforme « ajuster une droite » en « estimer les paramètres d'un modèle de génération de données ». Et, magie que nous démontrerons, **minimiser l'erreur quadratique revient exactement à maximiser la vraisemblance** sous l'hypothèse d'un bruit gaussien. Les deux premiers piliers (coût, optimisation) et le troisième (probabilités) se rejoignent.
 
-#### Pilier 4 — La statistique : estimer et valider
+#### Pilier 4: La statistique: estimer et valider
 
 La statistique se demande: *à partir d'un échantillon fini, que peut-on conclure, et avec quelle confiance ?* Un **estimateur** (estimator) est une recette qui, à partir des données, produit une estimation d'une quantité inconnue (par exemple $`\hat{a}`$ et $`\hat{b}`$ estiment les vrais $`a, b`$). On juge un estimateur par son **biais** (bias, l'erreur systématique) et sa **variance** (variance, l'instabilité d'un échantillon à l'autre).
 
@@ -272,13 +272,13 @@ Ces quatre piliers ne vivent pas séparément: ils collaborent sur le moindre pr
 
 ---
 
-### Fil rouge : ajuster une droite, de bout en bout
+### Fil rouge: ajuster une droite, de bout en bout
 
 Reprenons le marchand de glaces et résolvons son problème **complètement**, en mobilisant les quatre piliers. C'est l'exemple canonique de la **régression linéaire** (linear regression): il est assez simple pour être traité à la main, assez riche pour contenir, en germe, presque toute la discipline.
 
 ![Animation, une droite s'ajuste à un nuage de points: c'est l'apprentissage en action](../assets/ch1-ajuster-droite.svg)
 
-#### Étape 0 — Les données chiffrées
+#### Étape 0: Les données chiffrées
 
 Prenons un petit jeu de $`n = 5`$ jours (volontairement minuscule pour tout calculer à la main).
 
@@ -292,7 +292,7 @@ Prenons un petit jeu de $`n = 5`$ jours (volontairement minuscule pour tout calc
 
 L'œil devine une tendance croissante presque rectiligne. Cherchons la **meilleure droite** $`f(x) = a\,x + b`$ au sens des moindres carrés.
 
-#### Étape 1 — Poser le problème (pilier optimisation)
+#### Étape 1: Poser le problème (pilier optimisation)
 
 On cherche $`(a, b)`$ minimisant l'erreur quadratique moyenne. Pour la régression linéaire simple, il existe une **solution exacte en forme close** (closed form): on n'a même pas besoin de descente de gradient. Annulons les dérivées partielles du coût.
 
@@ -321,7 +321,7 @@ a \displaystyle\sum_i x_i + b\, n = \sum_i y_i .
 \end{cases}
 ```
 
-#### Étape 2 — Calculer les sommes (le sigma au travail)
+#### Étape 2: Calculer les sommes (le sigma au travail)
 
 Calculons chaque somme nécessaire. C'est littéralement la « tournée d'addition » du sigma.
 
@@ -340,7 +340,7 @@ Les moyennes valent $`\bar{x} = 100/5 = 20`$ et $`\bar{y} = 285/5 = 57`$.
 
 > **Le symbole $`\bar{x}`$ (barre, la moyenne).** La petite barre horizontale au-dessus, $`\bar{x}`$ (lu « x barre »), désigne la **moyenne** des valeurs: on additionne tout et on partage équitablement, $`\bar{x} = \frac1n \sum_i x_i`$. C'est le point d'équilibre, comme le centre d'une balançoire où les enfants assis de part et d'autre se font contrepoids.
 
-#### Étape 3 — Résoudre les équations normales
+#### Étape 3: Résoudre les équations normales
 
 Il existe une formule fermée très utile. En soustrayant les moyennes (centrage), la pente et l'ordonnée s'écrivent:
 
@@ -373,7 +373,7 @@ La droite ajustée est donc $`\boxed{\,\hat{y} = 3{,}2407\,x - 7{,}8148\,}`$. In
 
 > **Attention aux arrondis.** Tout au long de cette étape, on garde la valeur exacte $`\hat a = 175/54`$ dans les calculs et l'on n'arrondit qu'à l'affichage. Reporter une pente déjà arrondie (par exemple $`3{,}24`$) dans le calcul de $`\hat b`$ ou de la prévision propagerait l'erreur et fausserait les chiffres suivants. C'est un réflexe à prendre dès maintenant.
 
-#### Étape 4 — Mesurer la qualité (pilier statistique)
+#### Étape 4: Mesurer la qualité (pilier statistique)
 
 Calculons les prédictions sur les données d'entraînement et les **résidus** (residuals) $`r_i = y_i - \hat{y}_i`$, en utilisant le modèle exact $`\hat y = \frac{175}{54}x - \frac{422}{54}`$ (les colonnes sont affichées arrondies à trois décimales).
 
@@ -403,7 +403,7 @@ R^2 = 1 - \frac{\sum_i r_i^2}{\sum_i (y_i - \bar y)^2} = 1 - \frac{12{,}87}{580}
 
 Un $`R^2 \approx 0{,}978`$: la droite explique près de 98 % de la variabilité des ventes. Excellent ajustement, mais attention, **mesuré sur les données d'entraînement**; pour une vraie estimation de généralisation, il faudrait un jeu de test (voir le piège plus haut).
 
-#### Étape 5 — Le point de vue probabiliste : moindres carrés = maximum de vraisemblance
+#### Étape 5: Le point de vue probabiliste: moindres carrés = maximum de vraisemblance
 
 Voici le pont entre piliers, et un résultat central qu'on démontre entièrement.
 
@@ -443,7 +443,7 @@ Ce résultat soude les piliers optimisation, probabilités et statistique autour
 
 > **Les symboles $`X^\top`$ et l'inverse $`(\cdot)^{-1}`$.** Le petit « T » en exposant, $`X^\top`$, est la **transposée**: on bascule le tableau en échangeant lignes et colonnes (comme coucher sur le côté une feuille de tableur). Si $`X`$ est $`n\times d`$, alors $`X^\top`$ est $`d\times n`$, donc $`X^\top X`$ est $`d\times d`$ (carrée). L'exposant $`-1`$, lui, désigne l'**inverse** d'une matrice carrée: la matrice qui « annule » l'effet de $`X^\top X`$, analogue matriciel du $`\frac1z`$ qui annule la multiplication par $`z\neq 0`$. Ensemble, ils résolvent le système d'un seul geste, c'est l'algèbre linéaire qui referme la boucle des quatre piliers.
 
-#### Étape 6 — Tout vérifier en code
+#### Étape 6: Tout vérifier en code
 
 Vérifions nos calculs à la main avec NumPy, puis comparons à la solution matricielle et à la descente de gradient.
 
@@ -542,7 +542,7 @@ Le symbole $`\in`$ (« appartient à ») relie un objet à son ensemble; sa nég
 
 > **Le symbole $`\subseteq`$ (inclusion).** $`A \subseteq B`$ se lit « $`A`$ est inclus dans $`B`$ » et signifie tout élément de $`A`$ est aussi dans $`B`$: la petite boîte $`A`$ tient entièrement dans la grande boîte $`B`$. Par exemple $`\mathbb{N} \subseteq \mathbb{Z} \subseteq \mathbb{R}`$: chaque ensemble de nombres est contenu dans le suivant, comme des poupées russes.
 
-#### Scalaires, vecteurs, matrices : la convention typographique
+#### Scalaires, vecteurs, matrices: la convention typographique
 
 Une convention de notation, tenue dans tout le cours, évite bien des confusions:
 
@@ -593,7 +593,7 @@ Avec ce socle de notations et l'intuition des quatre piliers, vous disposez de t
 
 Les exercices vont du déchiffrage de notation (échauffement) à la démonstration et au code. Les corrigés sont entièrement détaillés.
 
-#### Exercice 1 — Lire les symboles (échauffement)
+#### Exercice 1: Lire les symboles (échauffement)
 
 Traduisez en français courant, puis dites si chaque énoncé est vrai ou faux.
 (a) $`3 \in \mathbb{N}`$. (b) $`-2 \in \mathbb{N}`$. (c) $`-2 \in \mathbb{Z}`$. (d) $`2{,}5 \in \mathbb{R}`$. (e) $`\mathbb{N} \subseteq \mathbb{R}`$. (f) $`\pi \in \mathbb{Z}`$.
@@ -606,7 +606,7 @@ Traduisez en français courant, puis dites si chaque énoncé est vrai ou faux.
 > (e) « les naturels sont inclus dans les réels », **vrai** (tout entier est un point de la règle).
 > (f) « $`\pi`$ est un entier relatif », **faux** ($`\pi \approx 3{,}14`$ n'est pas entier).
 
-#### Exercice 2 — Dérouler un sigma à la main
+#### Exercice 2: Dérouler un sigma à la main
 
 Soit $`u_1=2,\ u_2=5,\ u_3=-1,\ u_4=4`$. Calculez (a) $`\sum_{i=1}^{4} u_i`$, (b) $`\sum_{i=1}^{4} u_i^2`$, (c) $`\frac{1}{4}\sum_{i=1}^{4} u_i`$ (la moyenne $`\bar u`$), (d) $`\sum_{i=1}^{4} (u_i - \bar u)`$.
 
@@ -617,7 +617,7 @@ Soit $`u_1=2,\ u_2=5,\ u_3=-1,\ u_4=4`$. Calculez (a) $`\sum_{i=1}^{4} u_i`$, (b
 > (d) $`(2-2{,}5)+(5-2{,}5)+(-1-2{,}5)+(4-2{,}5) = -0{,}5+2{,}5-3{,}5+1{,}5 = 0`$.
 > **Remarque clé**: la somme des écarts à la moyenne est *toujours* nulle. C'est l'une des raisons pour lesquelles on élève au carré dans le MSE, sinon les écarts positifs et négatifs s'annuleraient et ne mesureraient rien.
 
-#### Exercice 3 — Évaluer une fonction et une prédiction
+#### Exercice 3: Évaluer une fonction et une prédiction
 
 On donne le modèle $`f(x) = 2{,}5\,x + 3`$. (a) Calculez $`f(0)`$, $`f(4)`$, $`f(10)`$. (b) Si la vraie valeur en $`x=4`$ est $`y=15`$, quel est le résidu $`r = y - f(4)`$ ? (c) Quelle est la contribution de ce point au MSE (c'est-à-dire $`r^2`$) ?
 
@@ -626,7 +626,7 @@ On donne le modèle $`f(x) = 2{,}5\,x + 3`$. (a) Calculez $`f(0)`$, $`f(4)`$, $`
 > (b) $`r = y - f(4) = 15 - 13 = 2`$ (le modèle sous-estime de $`2`$).
 > (c) $`r^2 = 2^2 = 4`$.
 
-#### Exercice 4 — Régression linéaire complète à la main
+#### Exercice 4: Régression linéaire complète à la main
 
 On observe $`(x,y)`$: $`(1,2),\ (2,2),\ (3,4),\ (4,5)`$. Trouvez la droite des moindres carrés $`\hat y = \hat a x + \hat b`$, puis prédisez $`y`$ en $`x=5`$.
 
@@ -653,7 +653,7 @@ On observe $`(x,y)`$: $`(1,2),\ (2,2),\ (3,4),\ (4,5)`$. Trouvez la droite des m
 > print(round(a,3), round(b,3), round(a*5+b,3))  # 1.1 0.5 6.0
 > ```
 
-#### Exercice 5 — Le compromis biais-variance par l'exemple
+#### Exercice 5: Le compromis biais-variance par l'exemple
 
 On veut ajuster $`11`$ points issus d'une parabole bruitée. On hésite entre trois modèles: une constante ($`\hat y = c`$), une droite, et un polynôme de degré $`10`$. (a) Lequel sous-apprend ? (b) Lequel sur-apprend ? (c) Lequel a le plus fort biais ? la plus forte variance ? (d) Sur lequel l'erreur d'**entraînement** sera-t-elle la plus faible, et pourquoi est-ce trompeur ?
 
@@ -663,7 +663,7 @@ On veut ajuster $`11`$ points issus d'une parabole bruitée. On hésite entre tr
 > (c) Plus fort **biais**: la constante (modèle le plus rigide, erreur systématique maximale). Plus forte **variance**: le polynôme de degré $`10`$ (changer un seul point bouge énormément la courbe).
 > (d) L'erreur d'entraînement est **minimale (nulle)** pour le degré $`10`$, qui interpole tous les points. C'est trompeur car cette erreur ne mesure que la **mémorisation**: sur des points nouveaux, ce polynôme oscillera énormément et prédira très mal. *Seule l'erreur sur un jeu de test reflète la généralisation*, c'est le piège n°1 du débutant.
 
-#### Exercice 6 — Pourquoi le carré ? (mini-démonstration)
+#### Exercice 6: Pourquoi le carré ? (mini-démonstration)
 
 Montrez que, pour des nombres $`y_1,\ldots,y_n`$ fixés, la constante $`c`$ qui minimise $`\sum_{i=1}^n (y_i - c)^2`$ est la moyenne $`\bar y`$. (Indice: dérivez par rapport à $`c`$ et annulez.)
 
@@ -676,7 +676,7 @@ Montrez que, pour des nombres $`y_1,\ldots,y_n`$ fixés, la constante $`c`$ qui 
 > C'est bien un **minimum** car $`g''(c) = 2n > 0`$ (fonction convexe, en forme de bol).
 > **Interprétation**: minimiser une somme de carrés conduit naturellement à la moyenne. C'est la raison profonde pour laquelle le coût quadratique est si naturel en régression, et, via le théorème de l'étape 5, pourquoi il correspond à un bruit gaussien.
 
-#### Exercice 7 — Du produit à la somme par le logarithme
+#### Exercice 7: Du produit à la somme par le logarithme
 
 Soit la vraisemblance jouet $`L(\theta) = \prod_{i=1}^{3} p_i`$ avec $`p_1 = 0{,}2,\ p_2 = 0{,}5,\ p_3 = 0{,}1`$. (a) Calculez $`L`$. (b) Calculez $`\log L`$ (logarithme népérien). (c) Vérifiez que $`\log L = \sum_i \log p_i`$. (d) Expliquez en une phrase pourquoi on préfère manipuler $`\log L`$ en pratique.
 
@@ -686,7 +686,7 @@ Soit la vraisemblance jouet $`L(\theta) = \prod_{i=1}^{3} p_i`$ avec $`p_1 = 0{,
 > (c) $`\log p_1 + \log p_2 + \log p_3 \approx (-1{,}609) + (-0{,}693) + (-2{,}303) = -4{,}605`$. Identique. ✓
 > (d) Parce que le logarithme transforme un **produit** de nombres minuscules (qui provoque des dépassements numériques vers zéro, *underflow*, dès qu'il y a beaucoup de facteurs) en une **somme** stable et calculable, sans déplacer le maximum.
 
-#### Exercice 8 — Un pas de descente de gradient
+#### Exercice 8: Un pas de descente de gradient
 
 Coût à une variable $`J(\theta) = (\theta - 3)^2`$. On part de $`\theta_0 = 0`$ avec un taux $`\eta = 0{,}1`$. (a) Donnez $`\nabla J(\theta)`$ (ici une simple dérivée). (b) Calculez $`\theta_1`$ et $`\theta_2`$. (c) Vers quelle valeur la suite converge-t-elle, et est-ce le minimum attendu ?
 
