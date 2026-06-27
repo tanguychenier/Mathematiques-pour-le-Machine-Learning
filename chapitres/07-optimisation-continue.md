@@ -6,6 +6,8 @@
 
 Imaginez une randonneuse perdue dans le brouillard sur une montagne. Elle ne voit rien autour d'elle, mais sous ses pieds elle sent la pente. Pour descendre dans la vallée le plus vite possible, elle fait un pas dans la direction où le sol descend le plus fort, puis recommence. Voilà, en une phrase, toute l'idée de la descente de gradient (gradient descent). C'est l'algorithme qui fait tourner aujourd'hui la quasi-totalité de l'apprentissage automatique (machine learning), du plus petit modèle de régression au plus gros réseau de neurones.
 
+![La descente de gradient : on suit la pente vers le bas, par pas de plus en plus petits près du minimum](../assets/descente-gradient.svg)
+
 #### Le problème : minimiser une fonction
 
 On se donne une fonction $`f: \mathbb{R}^n \to \mathbb{R}`$ que l'on appelle **fonction objectif** (objective function), ou **fonction de coût** (cost / loss function). Elle prend en entrée un vecteur de paramètres et renvoie un seul nombre: « à quel point c'est mauvais ». Notre but est de trouver le vecteur qui rend ce nombre le plus petit possible.

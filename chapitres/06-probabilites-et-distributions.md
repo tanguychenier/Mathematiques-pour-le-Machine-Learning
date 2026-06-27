@@ -466,6 +466,8 @@ print(np.round(data.sum(axis=1).var(), 3))                 # ~1+1+2*0.8 = 3.6
 
 La **loi normale**, ou **gaussienne (Gaussian)**, est la distribution la plus importante de toutes les sciences. Elle est la forme limite vers laquelle tend la somme de nombreux petits effets indépendants (théorème central limite), ce qui explique son omniprésence: tailles, erreurs de mesure, bruit, et, crucialement, les hypothèses par défaut d'innombrables modèles de machine learning.
 
+![La loi gaussienne (courbe en cloche) : μ fixe le centre, σ la largeur, environ 68 % de la masse dans l'intervalle μ ± σ](../assets/gaussienne.svg)
+
 #### La forme en cloche : intuition
 
 Imaginez une planche de Galton: des billes tombent et rebondissent à gauche ou à droite sur des clous, au hasard. En bas, elles s'empilent: beaucoup au centre, de moins en moins sur les côtés, formant une **courbe en cloche** symétrique. Chaque bille subit une **somme** de petits chocs aléatoires indépendants; le résultat se concentre autour du centre avec une dispersion régulière. Cette cloche, c'est la gaussienne, et son apparition systématique dès qu'on additionne du hasard n'est pas un accident: c'est une loi mathématique profonde.

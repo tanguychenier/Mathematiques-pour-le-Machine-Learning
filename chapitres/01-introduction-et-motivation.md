@@ -103,6 +103,8 @@ f(x) = a \, x + b .
 
 Ici $`a`$ est la **pente** (de combien de glaces les ventes montent quand la température monte de un degré) et $`b`$ l'**ordonnée à l'origine** (les ventes prédites à $`0`$ °C). Le point essentiel: **$`a`$ et $`b`$ ne sont pas fixés**. En les faisant varier, on obtient une *infinité de droites différentes*, toute une famille de règles candidates. Apprendre, ce sera choisir le couple $`(a, b)`$ qui colle le mieux au carnet.
 
+![Famille de droites candidates : faire varier (a, b) donne une infinité de droites, on choisit la meilleure](../assets/famille-droites.svg)
+
 ```mermaid
 flowchart LR
     X[Entree x = temperature] --> F["Modele f(x) = a*x + b"]
@@ -134,11 +136,19 @@ Pour cumuler, on a besoin du symbole de sommation.
 > ```
 > se lit « somme, pour $`i`$ allant de $`1`$ jusqu'à $`n`$, des $`u_i`$ », et veut simplement dire $`u_1 + u_2 + \cdots + u_n`$. Décortiquons les étiquettes: le « $`i=1`$ » sous le sigma dit *où commence le compteur*; le « $`n`$ » au-dessus dit *où il s'arrête*; le $`u_i`$ à droite dit *ce qu'on additionne à chaque tour*. Imaginez que vous faites le tour d'une classe et que vous additionnez les billes de chaque élève: vous commencez à l'élève 1, vous vous arrêtez au dernier (le $`n`$-ième), et à chaque élève vous ajoutez son nombre de billes. Le sigma, c'est exactement cette tournée d'addition.
 
-La fonction de coût la plus courante en régression est l'**erreur quadratique moyenne** (mean squared error, MSE): on prend l'écart entre prédiction et réalité, on l'élève au carré (pour que les écarts négatifs et positifs comptent tous deux positivement, et pour pénaliser fort les grosses erreurs), puis on fait la moyenne:
+La fonction de coût la plus courante en régression est l'**erreur quadratique moyenne** (mean squared error, MSE). Pour chaque jour, on mesure l'**écart** entre la prédiction du modèle et la vraie valeur, puis on résume tous ces écarts en un seul nombre qui dit «&nbsp;à quel point on se trompe&nbsp;». On élève chaque écart au carré, pour deux raisons précises.
+
+> **Raison 1 : empêcher les erreurs de s'annuler.** Un écart peut être **négatif** (on a sous-estimé la vente) ou **positif** (on a surestimé). Si on additionnait les écarts bruts, un écart de $`+10`$ et un écart de $`-10`$ se compenseraient et donneraient $`0`$, ce qui laisserait croire à tort que le modèle ne se trompe pas. Le carré fait disparaître le signe : $`(+10)^2`$ et $`(-10)^2`$ valent tous les deux $`100`$. Chaque erreur devient donc positive et **s'ajoute** aux autres au lieu de s'annuler.
+>
+> **Raison 2 : pénaliser fortement les grosses erreurs.** Parce qu'on met au carré, une erreur deux fois plus grande coûte quatre fois plus cher, et une erreur dix fois plus grande, cent fois plus cher. Le modèle est ainsi fortement incité à éviter un gros raté, quitte à accepter plusieurs petits.
+
+On fait enfin la **moyenne** de ces carrés sur les $`n`$ jours :
 
 ```math
 J(\boldsymbol{\theta}) = \frac{1}{n} \sum_{i=1}^{n} \big( f_{\boldsymbol{\theta}}(x_i) - y_i \big)^2 = \frac{1}{n} \sum_{i=1}^{n} \big( a\, x_i + b - y_i \big)^2 .
 ```
+
+![Schéma des moindres carrés : chaque erreur devient un carré, une aire toujours positive, qu'on soit au-dessus ou en dessous de la droite](../assets/moindres-carres.svg)
 
 > **Lecture de $`J(\boldsymbol{\theta})`$.** La lettre $`J`$ est le nom du juge: on lui donne un réglage $`\boldsymbol{\theta}`$ et il renvoie un nombre, d'autant plus **petit** que le modèle est bon. Le « $`\frac{1}{n}`$ » devant transforme la somme en **moyenne** (on partage le total entre les $`n`$ jours, comme on partage une addition de restaurant entre les convives). L'exposant $`2`$ sur la parenthèse veut dire « **au carré** », c'est-à-dire le nombre multiplié par lui-même: un écart de $`3`$ compte pour $`9`$, un écart de $`5`$ pour $`25`$, les grosses erreurs pèsent donc beaucoup plus lourd.
 
