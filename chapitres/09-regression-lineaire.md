@@ -8,7 +8,7 @@ La régression linéaire est le point de départ de presque tout l'apprentissage
 
 > **Que veut dire « linéaire » ?** Le mot vient de « ligne ». Une relation est **linéaire** quand elle est *proportionnelle et additive* : si vous doublez l'entrée, la sortie double ; et l'effet de deux causes est la somme de leurs effets séparés. Pas de courbe, pas de seuil : tout se fait « en ligne droite ». Exemple : si 1 kg de pommes coûte 2 euros, alors 2 kg coûtent 4 euros, 3 kg coûtent 6 euros (proportionnel) ; et le total pommes + poires est la somme du prix des pommes et du prix des poires (additif).
 
-#### Le probleme et son vocabulaire
+#### Le problème et son vocabulaire
 
 On dispose de $`n`$ observations. Pour chaque observation $`i`$, on connaît un vecteur d'entrée (un *vecteur* est simplement une liste ordonnée de nombres, comme les coordonnées d'un point ou les cases d'une ligne de tableur) $`\mathbf{x}_i \in \mathbb{R}^d`$ (les *caractéristiques*, en anglais *features* : les renseignements mesurés sur l'objet) et une sortie scalaire (un *scalaire* est un nombre tout seul, par opposition à une liste de nombres) $`y_i \in \mathbb{R}`$ (la *cible*, en anglais *target* ou *label* : la valeur qu'on veut prédire). On postule l'existence d'un vecteur de poids $`\mathbf{w}`$ tel que
 
@@ -114,17 +114,17 @@ En notation vectorielle :
 
 > **Remarque, « linéaire » en quoi ?** Le modèle est linéaire *en les paramètres* $`\mathbf{w}`$, pas nécessairement en les variables physiques. On verra dans la dernière section qu'en remplaçant $`\mathbf{x}`$ par des transformations $`\boldsymbol{\phi}(\mathbf{x})`$ (carrés, produits, sinus…), on capture des relations très courbes tout en restant dans le cadre « linéaire en $`\mathbf{w}`$ », donc soluble par les mêmes formules. C'est la grande force, et la raison pour laquelle ce chapitre infuse tout le reste de l'apprentissage.
 
-#### Schema d'ensemble
+#### Schéma d'ensemble
 
 ```mermaid
 flowchart LR
-    A["Donnees brutes<br/>(x_i, y_i)"] --> B["Matrice de design X<br/>+ vecteur cible y"]
-    B --> C["Modele : y = X w + bruit"]
-    C --> D["Estimation de w<br/>(moindres carres / MAP / bayes)"]
-    D --> E["Prediction sur du neuf<br/>y_hat = x* . w"]
+    A["Données brutes<br/>(x_i, y_i)"] --> B["Matrice de design X<br/>+ vecteur cible y"]
+    B --> C["Modèle : y = X w + bruit"]
+    C --> D["Estimation de w<br/>(moindres carrés / MAP / bayes)"]
+    D --> E["Prédiction sur du neuf<br/>y_hat = x* . w"]
 ```
 
-> **Exemple chiffre minimal.** Trois maisons, une seule caractéristique (surface en dizaines de m²) plus le biais. Données : $`(x, y) = (5, 12), (8, 18), (10, 21)`$ (prix en dizaines de milliers d'euros). Avec biais absorbé, $`\mathbf{x}_1 = (1,5)`$, $`\mathbf{x}_2 = (1,8)`$, $`\mathbf{x}_3 = (1,10)`$. Si on devine $`\mathbf{w} = (b, a) = (2,\ 1{,}9)`$, alors $`\hat y_1 = 2 + 1{,}9 \times 5 = 11{,}5`$, $`\hat y_2 = 2 + 1{,}9 \times 8 = 17{,}2`$, $`\hat y_3 = 2 + 1{,}9 \times 10 = 21`$. Les résidus $`y_i - \hat y_i`$ sont $`0{,}5,\ 0{,}8,\ 0`$. La section suivante explique comment trouver *le meilleur* $`\mathbf{w}`$ automatiquement plutôt qu'à la main.
+> **Exemple chiffré minimal.** Trois maisons, une seule caractéristique (surface en dizaines de m²) plus le biais. Données : $`(x, y) = (5, 12), (8, 18), (10, 21)`$ (prix en dizaines de milliers d'euros). Avec biais absorbé, $`\mathbf{x}_1 = (1,5)`$, $`\mathbf{x}_2 = (1,8)`$, $`\mathbf{x}_3 = (1,10)`$. Si on devine $`\mathbf{w} = (b, a) = (2,\ 1{,}9)`$, alors $`\hat y_1 = 2 + 1{,}9 \times 5 = 11{,}5`$, $`\hat y_2 = 2 + 1{,}9 \times 8 = 17{,}2`$, $`\hat y_3 = 2 + 1{,}9 \times 10 = 21`$. Les résidus $`y_i - \hat y_i`$ sont $`0{,}5,\ 0{,}8,\ 0`$. La section suivante explique comment trouver *le meilleur* $`\mathbf{w}`$ automatiquement plutôt qu'à la main.
 
 ```python
 import numpy as np
@@ -147,7 +147,7 @@ print("residus     :", residus)      # [ 0.5  0.8  0. ]
 
 On cherche le $`\mathbf{w}`$ qui rend les prédictions $`\mathbf{X}\mathbf{w}`$ aussi proches que possible des cibles $`\mathbf{y}`$. Reste à définir « proche ». Le choix historique, géométriquement et statistiquement justifié, est la somme des carrés des erreurs (d'où le nom *moindres carrés* : on cherche les réglages qui rendent cette somme de carrés la plus petite, « moindre » voulant dire « le plus petit possible »).
 
-#### La fonction de cout des moindres carres
+#### La fonction de coût des moindres carrés
 
 > **Intuition.** Pour chaque exemple, on regarde de combien on se trompe : $`r_i = y_i - \mathbf{x}_i^\top \mathbf{w}`$ (l'*erreur* sur l'exemple $`i`$, aussi appelée *résidu*). On pourrait additionner les valeurs absolues $`|r_i|`$ (la *valeur absolue*, notée avec deux barres droites $`|\cdot|`$, c'est le nombre rendu positif, sans son signe : $`|{-3}| = 3`$ et $`|3| = 3`$ ; ici cela transforme chaque erreur en distance toujours positive), mais elles ont un coin (la courbe de $`|r|`$ forme un V pointu en $`0`$, *non dérivable* à la pointe : la *dérivée* est la pente de la courbe, et à la pointe d'un V il n'y a pas de pente unique, ce qui gêne les calculs) et tolèrent mal les grosses erreurs. On préfère additionner les *carrés* $`r_i^2`$: une erreur deux fois plus grande coûte quatre fois plus cher, ce qui pousse fort à corriger les gros écarts, et le carré est une jolie parabole lisse, dérivable partout (la pente y est définie en chaque point).
 
@@ -171,7 +171,7 @@ Le facteur $`\tfrac12`$ ne change pas l'argument du minimum ; il sert juste à s
 
 > **Le symbole $`\arg\min`$, rappel d'usage.** $`\min_{\mathbf{w}} J(\mathbf{w})`$ est la *plus petite valeur* atteinte par le coût ; $`\arg\min_{\mathbf{w}} J(\mathbf{w})`$ est *l'endroit* (le $`\mathbf{w}`$) où ce minimum est atteint. On veut le point, pas la valeur : d'où $`\arg\min`$. Le symbole $`\in`$ (et non $`=`$) rappelle que ce point pourrait ne pas être unique.
 
-#### Les equations normales
+#### Les équations normales
 
 Le coût $`J`$ est une fonction quadratique convexe de $`\mathbf{w}`$; son minimum s'obtient en annulant le gradient.
 
@@ -218,7 +218,7 @@ Annuler ce gradient donne les **équations normales**:
 
 > **Le symbole $`\mathbf{X}^\top \mathbf{X}`$ (matrice de Gram ; proportionnelle à la matrice de covariance uniquement si les colonnes sont d'abord centrées).** Ce produit, de taille $`d \times d`$, contient *tous les produits scalaires entre colonnes*: sa case $`(j,k)`$ vaut $`\sum_i x_{ij}x_{ik}`$, c'est-à-dire la somme des produits, exemple par exemple, des valeurs des colonnes $`j`$ et $`k`$. Attention : on lit souvent cette case comme « à quel point les caractéristiques $`j`$ et $`k`$ varient ensemble » (une covariance), mais ce n'est exact que si l'on a au préalable retranché la moyenne de chaque colonne (colonnes *centrées*). Sans ce centrage, et en particulier pour la colonne constante de 1 du biais, c'est un simple produit scalaire brut, pas une covariance. C'est le cœur de calcul de la régression : tout se joue dans cette petite matrice carrée, même si on a des millions de lignes.
 
-#### Exemple chiffre deroule pas a pas
+#### Exemple chiffré déroulé pas à pas
 
 Reprenons les trois maisons : $`\mathbf{X}=\begin{pmatrix}1&5\\1&8\\1&10\end{pmatrix}`$, $`\mathbf{y}=(12,18,21)`$.
 
@@ -261,7 +261,7 @@ print("residus :", y - X @ w_hat)     # somme ~ 0
 
 > **Piège numérique (important).** N'écrivez **jamais** `np.linalg.inv(XtX) @ Xty`. Former $`\mathbf{X}^\top\mathbf{X}`$ *carré* le conditionnement (en anglais *condition number* ; le *conditionnement* mesure à quel point une petite erreur sur les nombres d'entrée se transforme en grosse erreur sur le résultat : un calcul « mal conditionné » est comme une balance ultra-sensible qui s'affole au moindre souffle, et l'élever au carré rend la balance encore mille fois plus capricieuse) : si $`\mathbf{X}`$ est déjà un peu mal conditionnée, $`\mathbf{X}^\top\mathbf{X}`$ l'est catastrophiquement, et l'inversion explicite amplifie les erreurs d'arrondi (les minuscules imprécisions que l'ordinateur commet en ne gardant qu'un nombre fini de décimales). Utilisez un solveur (`np.linalg.solve`), une factorisation de Cholesky de $`\mathbf{X}^\top\mathbf{X}`$ (une façon économique de découper une matrice symétrique en deux morceaux triangulaires faciles à résoudre), ou mieux une décomposition QR / SVD de $`\mathbf{X}`$ directement (voir plus bas).
 
-#### La solution par QR (numeriquement stable)
+#### La solution par QR (numériquement stable)
 
 > **Le symbole de la décomposition QR, rappel d'usage.** *Factoriser*, c'est décomposer en facteurs, comme on écrit $`12 = 3\times 4`$ ; ici on décompose la matrice $`\mathbf{X}`$ en deux matrices $`\mathbf{Q}`$ et $`\mathbf{R}`$ plus pratiques. Factoriser $`\mathbf{X} = \mathbf{Q}\mathbf{R}`$, c'est réécrire les colonnes de $`\mathbf{X}`$ dans une base *orthonormée* (une *base* est un jeu de directions de référence qui permet de repérer tous les points, comme les axes « gauche-droite » et « haut-bas » d'une carte ; *orthonormée* veut dire que ces directions sont perpendiculaires entre elles et de longueur 1, rangées dans $`\mathbf{Q}`$) tout en gardant trace du changement de base (dans la matrice $`\mathbf{R}`$, dite *triangulaire* car tous ses nombres sous la diagonale sont des zéros, ce qui la rend très rapide à résoudre). « Orthonormé » garantit $`\mathbf{Q}^\top\mathbf{Q} = \mathbf{I}`$, ce qui simplifie radicalement les calculs et évite l'amplification des erreurs d'arrondi.
 
@@ -273,7 +273,7 @@ Si $`\mathbf{X}=\mathbf{Q}\mathbf{R}`$ avec $`\mathbf{Q}\in\mathbb{R}^{n\times d
 
 système triangulaire résolu par simple remontée, sans jamais former $`\mathbf{X}^\top\mathbf{X}`$. C'est ce que fait `np.linalg.lstsq` (via LAPACK).
 
-#### Le cas sous-determine et la pseudo-inverse
+#### Le cas sous-déterminé et la pseudo-inverse
 
 Si $`\mathrm{rang}\mathbf{X}<d`$ (colonnes redondantes, ou plus de caractéristiques que d'exemples, $`d>n`$), les équations normales ont une *infinité* de solutions : on peut ajouter à $`\hat{\mathbf{w}}`$ n'importe quel vecteur du noyau de $`\mathbf{X}`$ sans changer $`\mathbf{X}\hat{\mathbf{w}}`$. On sélectionne alors classiquement la solution de **norme minimale**, donnée par la pseudo-inverse de Moore-Penrose $`\mathbf{X}^+`$:
 
@@ -287,7 +287,7 @@ Via la SVD $`\mathbf{X}=\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top`$, on a $`\
 
 > **Le symbole de la SVD, rappel d'usage.** La décomposition en valeurs singulières $`\mathbf{X} = \mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top`$ écrit n'importe quelle matrice comme : une rotation ($`\mathbf{V}^\top`$), un étirement le long des axes (la diagonale $`\boldsymbol{\Sigma}`$ des *valeurs singulières* $`\sigma_k \ge 0`$, qui mesurent « combien la matrice étire » dans chaque direction), puis une autre rotation ($`\mathbf{U}`$). Les directions de faible $`\sigma_k`$ sont celles que les données explorent peu, exactement celles que le bruit fait déraper.
 
-#### Proprietes statistiques de l'estimateur OLS
+#### Propriétés statistiques de l'estimateur OLS
 
 Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}`$, $`\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)`$, et $`\mathbf{X}`$ de rang plein déterministe (*déterministe* veut dire « fixé d'avance, pas tiré au hasard » : on considère le tableau $`\mathbf{X}`$ comme connu et figé, seul le bruit $`\boldsymbol{\varepsilon}`$ étant aléatoire) :
 
@@ -300,7 +300,7 @@ Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\va
 
 > **Estimation de $`\sigma^2`$.** On l'estime sans biais par $`\hat\sigma^2=\dfrac{\lVert\mathbf y-\mathbf X\hat{\mathbf w}\rVert_2^2}{n-d}`$ (les $`d`$ paramètres ajustés consomment $`d`$ degrés de liberté ; un *degré de liberté*, c'est une quantité que l'on a été libre de régler pour coller aux données, et chaque réglage utilisé « épuise » un peu l'information disponible, d'où le fait de diviser par $`n-d`$ et non $`n`$, ce qui corrige le biais).
 
-#### Descente de gradient : quand la formule fermee ne passe pas
+#### Descente de gradient : quand la formule fermée ne passe pas
 
 Pour $`d`$ très grand (millions de caractéristiques) ou $`n`$ énorme, inverser ou factoriser devient impraticable. On minimise alors $`J`$ itérativement.
 
@@ -340,7 +340,7 @@ L'estimateur OLS souffre de deux maux liés : il **explose** quand $`\mathbf X^\
 
 > **Intuition générale.** Un modèle aux poids énormes est un funambule : il colle parfaitement aux points d'entraînement mais vacille au moindre point nouveau. La régularisation, c'est un filet de sécurité qui dit « reste raisonnable » : on accepte un peu plus d'erreur sur l'entraînement en échange de poids plus petits, donc d'un modèle plus stable et qui généralise mieux.
 
-#### Le parametre de regularisation
+#### Le paramètre de régularisation
 
 > **Le symbole $`\lambda`$ (paramètre de régularisation, en anglais *regularization strength*).** Cette lettre grecque (lambda) représente le *bouton de sévérité* du filet de sécurité. À $`\lambda=0`$, aucun filet : on retombe sur OLS, libre d'utiliser des poids gigantesques. Quand $`\lambda`$ augmente, on serre la vis : le modèle est de plus en plus contraint à garder des poids petits, quitte à moins bien coller aux données. À $`\lambda\to\infty`$, tous les poids sont écrasés vers zéro. Choisir $`\lambda`$, c'est doser le compromis entre « bien coller » et « rester sage », un compromis biais-variance qu'on règle par validation croisée.
 
@@ -348,7 +348,7 @@ L'estimateur OLS souffre de deux maux liés : il **explose** quand $`\mathbf X^\
 
 > **La « validation croisée », rappel d'usage.** Comment savoir quelle valeur de $`\lambda`$ choisir sans tricher ? On cache une partie des données (on fait *comme si* on ne les avait jamais vues), on entraîne le modèle sur le reste, puis on mesure son erreur sur la partie cachée, qui joue le rôle de « nouvelles » données. On répète l'opération en cachant tour à tour différentes parts, pour chaque valeur de $`\lambda`$ envisagée, et l'on garde le $`\lambda`$ qui donne la plus petite erreur moyenne sur les parts cachées. C'est une façon honnête de simuler la performance sur des données futures.
 
-#### Regression ridge ($`\ell_2`$)
+#### Régression ridge ($`\ell_2`$)
 
 On ajoute au coût une pénalité proportionnelle au carré de la norme des poids.
 
@@ -372,7 +372,7 @@ Le gradient s'annule en $`-\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\lambda\
 \hat{\mathbf w}_{\text{ridge}}=\sum_{k=1}^{d}\frac{\sigma_k}{\sigma_k^2+\lambda}\,(\mathbf u_k^\top\mathbf y)\,\mathbf v_k .
 ```
 
-> **Exemple chiffre (la colinéarité domptée).** Soit deux caractéristiques presque identiques : $`\mathbf X=\begin{pmatrix}1&1\\1&1{,}001\\1&0{,}999\end{pmatrix}`$, $`\mathbf y=(2,2,2)`$. Ici $`\mathbf X^\top\mathbf X`$ est quasi singulière (déterminant $`\approx 4\times10^{-6}`$) : OLS produit des poids énormes et opposés (par exemple $`w_1\approx 10^3, w_2\approx-10^3`$) très sensibles au bruit. Avec $`\lambda=0{,}1`$, $`(\mathbf X^\top\mathbf X+0{,}1\,\mathbf I)`$ est bien conditionnée et $`\hat{\mathbf w}_{\text{ridge}}\approx(0{,}98,\ 0{,}98)`$: des poids petits, stables, qui se partagent équitablement l'effet des deux colonnes jumelles.
+> **Exemple chiffré (la colinéarité domptée).** Soit deux caractéristiques presque identiques : $`\mathbf X=\begin{pmatrix}1&1\\1&1{,}001\\1&0{,}999\end{pmatrix}`$, $`\mathbf y=(2,2,2)`$. Ici $`\mathbf X^\top\mathbf X`$ est quasi singulière (déterminant $`\approx 4\times10^{-6}`$) : OLS produit des poids énormes et opposés (par exemple $`w_1\approx 10^3, w_2\approx-10^3`$) très sensibles au bruit. Avec $`\lambda=0{,}1`$, $`(\mathbf X^\top\mathbf X+0{,}1\,\mathbf I)`$ est bien conditionnée et $`\hat{\mathbf w}_{\text{ridge}}\approx(0{,}98,\ 0{,}98)`$: des poids petits, stables, qui se partagent équitablement l'effet des deux colonnes jumelles.
 
 ```python
 import numpy as np
@@ -383,7 +383,7 @@ def ridge(X, y, lam):
 
 > **Note pratique, ne pas pénaliser le biais, standardiser les colonnes.** Le terme constant ne devrait pas être rétréci (sinon les prédictions sont décentrées) : on l'exclut de la pénalité (matrice $`\mathbf I`$ avec un $`0`$ sur la composante du biais). De plus, la pénalité $`\ell_2`$ dépend de l'échelle des caractéristiques ; on **standardise** (moyenne 0, variance 1) chaque colonne avant d'appliquer la ridge, pour que $`\lambda`$ agisse équitablement.
 
-#### Regression lasso ($`\ell_1`$)
+#### Régression lasso ($`\ell_1`$)
 
 On remplace le carré de la norme par la norme $`\ell_1`$ (somme des valeurs absolues).
 
@@ -427,7 +427,7 @@ S_\lambda(z)=\mathrm{sign}(z)\,\max(|z|-\lambda,\ 0)=
 
 > **Mise à jour 2026.** Entre les deux extrêmes, l'**elastic net** $`\lambda\bigl(\alpha\lVert\mathbf w\rVert_1+\tfrac{1-\alpha}2\lVert\mathbf w\rVert_2^2\bigr)`$ combine parcimonie et stabilité, et gère mieux les groupes de variables corrélées (la lasso seule en choisit une au hasard). C'est le choix par défaut robuste sur données réelles à beaucoup de caractéristiques.
 
-#### Le pont decisif : regularisation = estimation MAP
+#### Le pont décisif : régularisation = estimation MAP
 
 Voici l'un des résultats les plus éclairants du chapitre. On reprend le modèle bayésien : on met une *loi a priori* (en anglais *prior*) sur les poids et on cherche le mode de la loi a posteriori (estimation *maximum a posteriori*, MAP, vue au chapitre 8).
 
@@ -493,7 +493,7 @@ Le terme quadratique en $`\mathbf w`$ est $`-\tfrac12\mathbf w^\top(\alpha\mathb
 
 > **Cohérence avec ce qu'on sait.** La moyenne du posterior $`\mathbf m_N`$ *est* l'estimateur MAP ; et c'est exactement la ridge avec $`\lambda=\alpha/\beta=\alpha\sigma^2`$. Quand $`\alpha\to0`$ (prior plat), $`\mathbf m_N\to(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y`$: on retrouve OLS. La nouveauté, c'est $`\mathbf S_N`$: la *forme de notre ignorance*.
 
-#### La loi predictive a posteriori
+#### La loi prédictive a posteriori
 
 Pour un nouveau point $`\mathbf x_\star`$, on ne veut pas une seule prédiction mais une **distribution** de la cible $`y_\star`$, intégrant l'incertitude sur $`\mathbf w`$:
 
@@ -509,7 +509,7 @@ p(y_\star\mid\mathbf x_\star,\mathbf y)=\int p(y_\star\mid\mathbf x_\star,\mathb
 
 > **Le symbole $`\int`$ (intégrale), rappel d'usage.** L'intégrale ici additionne sur toutes les valeurs possibles de $`\mathbf w`$, chacune pondérée par sa crédibilité $`p(\mathbf w\mid\mathbf y)`$. C'est une « moyenne pondérée continue » : au lieu de parier sur un seul $`\mathbf w`$, on consulte *tous* les modèles plausibles et on mélange leurs avis. On appelle cela la *marginalisation*.
 
-#### Mise a jour sequentielle (en ligne)
+#### Mise à jour séquentielle (en ligne)
 
 Le posterior d'aujourd'hui devient le prior de demain. En recevant les données par paquets, on met à jour $`\mathbf S_N^{-1}\leftarrow\mathbf S_N^{-1}+\beta\,\mathbf x_{\text{new}}\mathbf x_{\text{new}}^\top`$ et le terme $`\mathbf S_N^{-1}\mathbf m_N\leftarrow\mathbf S_N^{-1}\mathbf m_N+\beta\,\mathbf x_{\text{new}}y_{\text{new}}`$. Cette récursion (parente du filtre de Kalman) est idéale pour l'hébergement contraint : pas de stockage de tout l'historique, mise à jour par requête.
 
@@ -529,7 +529,7 @@ def bayes_lin_predict(Xstar, mN, SN, beta):
     return mean, np.sqrt(var)             # moyenne et ecart-type predictifs
 ```
 
-#### La vraisemblance marginale (selection de modele)
+#### La vraisemblance marginale (sélection de modèle)
 
 Comment choisir $`\alpha,\beta`$ (donc $`\lambda`$), ou le degré d'un polynôme, *sans validation croisée* ? On maximise la **vraisemblance marginale** (en anglais *marginal likelihood* ou *évidence*), obtenue en intégrant les poids :
 
@@ -547,7 +547,7 @@ p(\mathbf y\mid\alpha,\beta)=\int p(\mathbf y\mid\mathbf w,\beta)\,p(\mathbf w\m
 
 Cette section relie trois points de vue qui, étonnamment, coïncident : la statistique (maximum de vraisemblance), l'optimisation (moindres carrés) et la géométrie (projection orthogonale). Comprendre ce triangle, c'est *comprendre* la régression linéaire.
 
-#### Maximum de vraisemblance = moindres carres
+#### Maximum de vraisemblance = moindres carrés
 
 > **Rappel (vu au chapitre 8).** Le *maximum de vraisemblance* (en anglais *maximum likelihood*) choisit les paramètres qui rendent les données observées les plus probables.
 
@@ -572,7 +572,7 @@ Le seul terme dépendant de $`\mathbf w`$ est la somme des carrés d'erreur, *av
 
 > **Réciproque éclairante.** Si on changeait la loi du bruit, on changerait la perte : un bruit de Laplace mène à la régression en valeur absolue ($`\ell_1`$ sur les résidus, robuste aux valeurs aberrantes), un bruit de Student à la régression robuste. La perte quadratique *est* l'hypothèse gaussienne déguisée.
 
-#### L'interpretation geometrique : projection orthogonale
+#### L'interprétation géométrique : projection orthogonale
 
 Plaçons-nous dans $`\mathbb R^n`$ (un axe par *observation*, pas par caractéristique). Le vecteur cible $`\mathbf y`$ est un point de cet espace. Les prédictions accessibles $`\mathbf X\mathbf w`$, quand $`\mathbf w`$ parcourt $`\mathbb R^d`$, décrivent exactement le **sous-espace engendré par les colonnes** de $`\mathbf X`$, noté $`\mathrm{Col}(\mathbf X)`$, un sous-espace de dimension $`\le d`$.
 
@@ -638,7 +638,7 @@ print("leviers H_ii :", np.diag(H))
 
 La régression « linéaire » semble condamnée aux droites et aux plans. Pas du tout : il suffit de nourrir le modèle avec des *transformations* bien choisies des entrées. La linéarité se cache dans les paramètres, jamais imposée aux données.
 
-#### La carte de caracteristiques (feature map)
+#### La carte de caractéristiques (feature map)
 
 > **Le symbole $`\boldsymbol\phi`$ (carte de caractéristiques, en anglais *feature map*).** Cette lettre grecque (phi) représente une *recette de transformation*: elle prend une entrée brute $`\mathbf x`$ et fabrique de nouvelles caractéristiques. Image : vous avez un fruit, et $`\boldsymbol\phi`$ vous rend sa fiche enrichie, non seulement son poids, mais aussi son poids au carré, sa couleur, le produit poids x couleur… Le modèle reste une simple combinaison pondérée, mais *de ces ingrédients enrichis*, ce qui lui permet de dessiner des courbes. On note $`\phi_j(\mathbf x)`$ la $`j`$-ième caractéristique fabriquée, et $`p`$ leur nombre total.
 
@@ -658,7 +658,7 @@ Exemples de cartes usuelles :
 | $`\cos(k\omega x),\sin(k\omega x)`$ | base de Fourier | signaux périodiques |
 | $`\max(0, x-t_k)`$ | splines linéaires | régressions par morceaux |
 
-> **Exemple chiffre, la parabole capturée par une « droite ».** Données $`(x,y)=(-1,1{,}1),(0,0{,}05),(1,0{,}9),(2,4{,}1)`$, manifestement en $`y\approx x^2`$. Une droite échoue. Avec $`\boldsymbol\phi(x)=(1,x,x^2)`$, on résout les moindres carrés sur $`\boldsymbol\Phi`$ et l'on retrouve $`\hat{\mathbf w}\approx(0{,}03,\ -0{,}03,\ 1{,}01)`$, soit $`f(x)\approx x^2`$. Le modèle est linéaire en $`\mathbf w`$ et pourtant décrit une parabole parfaite.
+> **Exemple chiffré, la parabole capturée par une « droite ».** Données $`(x,y)=(-1,1{,}1),(0,0{,}05),(1,0{,}9),(2,4{,}1)`$, manifestement en $`y\approx x^2`$. Une droite échoue. Avec $`\boldsymbol\phi(x)=(1,x,x^2)`$, on résout les moindres carrés sur $`\boldsymbol\Phi`$ et l'on retrouve $`\hat{\mathbf w}\approx(0{,}03,\ -0{,}03,\ 1{,}01)`$, soit $`f(x)\approx x^2`$. Le modèle est linéaire en $`\mathbf w`$ et pourtant décrit une parabole parfaite.
 
 ```python
 import numpy as np
@@ -740,11 +740,11 @@ def kernel_ridge_predict(Xstar, X, alpha, s=1.0):
 
 ```mermaid
 flowchart LR
-    A["Regression lineaire<br/>w sur x"] --> B["+ features phi(x)<br/>(polynomes, RBF...)"]
+    A["Régression linéaire<br/>w sur x"] --> B["+ features phi(x)<br/>(polynômes, RBF...)"]
     B --> C["Passage au dual<br/>solution = somme alpha_i phi(x_i)"]
     C --> D["Astuce du noyau<br/>k(x,x') au lieu de phi"]
     D --> E["Kernel ridge regression"]
-    D --> F["Processus gaussien<br/>(version bayesienne)"]
+    D --> F["Processus gaussien<br/>(version bayésienne)"]
 ```
 
 > **Mise à jour 2026.** Le coût du noyau est sa matrice $`n\times n`$: l'inversion en $`O(n^3)`$ et le stockage en $`O(n^2)`$ bloquent au-delà de quelques dizaines de milliers de points. Les parades modernes : **caractéristiques aléatoires de Fourier** (en anglais *random Fourier features*) qui approchent le noyau RBF par un $`\boldsymbol\phi`$ explicite de dimension modérée (on revient alors au primal, rapide) ; **méthodes de Nystrom** (approximation de rang faible de $`\mathbf K`$) ; **processus gaussiens parcimonieux** à points inducteurs. Théoriquement, le lien *noyau tangent neuronal* (en anglais *neural tangent kernel*, NTK) montre qu'un réseau de neurones très large, entraîné par descente de gradient, se comporte comme une régression ridge à noyau avec un noyau fixe, bouclant la boucle entre ce chapitre fondateur et l'apprentissage profond contemporain.
@@ -755,11 +755,11 @@ flowchart LR
 
 > **Conseil.** Cherchez d'abord seul, papier-crayon ou NumPy, avant de lire le corrigé. Les corrigés sont entièrement déroulés.
 
-#### Exercice 1 : Equations normales a la main
+#### Exercice 1 : Équations normales à la main
 
 Soit $`\mathbf X=\begin{pmatrix}1&0\\1&1\\1&2\\1&3\end{pmatrix}`$ et $`\mathbf y=(1,3,4,6)^\top`$. Calculez $`\hat{\mathbf w}`$ par les équations normales, puis le vecteur des résidus et vérifiez l'orthogonalité $`\mathbf X^\top(\mathbf y-\hat{\mathbf y})=\mathbf 0`$.
 
-> **Corrige.**
+> **Corrigé.**
 > $`\mathbf X^\top\mathbf X=\begin{pmatrix}4&6\\6&14\end{pmatrix}`$ (la colonne 1 : $`4`$ uns ; produits croisés $`0+1+2+3=6`$; carrés $`0+1+4+9=14`$). $`\mathbf X^\top\mathbf y=\begin{pmatrix}1+3+4+6\\0+3+8+18\end{pmatrix}=\begin{pmatrix}14\\29\end{pmatrix}`$.
 > Déterminant $`=4\cdot14-36=20`$. Inverse $`=\tfrac1{20}\begin{pmatrix}14&-6\\-6&4\end{pmatrix}`$.
 > $`\hat{\mathbf w}=\tfrac1{20}\begin{pmatrix}14&-6\\-6&4\end{pmatrix}\begin{pmatrix}14\\29\end{pmatrix}=\tfrac1{20}\begin{pmatrix}196-174\\-84+116\end{pmatrix}=\tfrac1{20}\begin{pmatrix}22\\32\end{pmatrix}=\begin{pmatrix}1{,}1\\1{,}6\end{pmatrix}`$.
@@ -769,59 +769,59 @@ Soit $`\mathbf X=\begin{pmatrix}1&0\\1&1\\1&2\\1&3\end{pmatrix}`$ et $`\mathbf y
 
 On a une seule caractéristique centrée, $`\mathbf X^\top\mathbf X=s`$ (un scalaire $`>0`$) et $`\mathbf X^\top\mathbf y=c`$. Donnez $`\hat w_{\text{OLS}}`$ et $`\hat w_{\text{ridge}}(\lambda)`$, puis le ratio de rétrécissement. Que vaut la limite $`\lambda\to\infty`$ ?
 
-> **Corrige.** $`\hat w_{\text{OLS}}=c/s`$. $`\hat w_{\text{ridge}}=c/(s+\lambda)`$. Ratio $`=\dfrac{\hat w_{\text{ridge}}}{\hat w_{\text{OLS}}}=\dfrac{s}{s+\lambda}\in(0,1)`$: la ridge multiplie le coefficient OLS par un facteur $`<1`$ (rétrécissement). Quand $`\lambda\to\infty`$, le facteur tend vers $`0`$: $`\hat w_{\text{ridge}}\to0`$. Ceci illustre la formule SVD $`\sigma_k/(\sigma_k^2+\lambda)`$ en dimension 1 : avec une seule colonne, $`s=\sigma_1^2`$ et $`c=\sigma_1\,(\mathbf u_1^\top\mathbf y)`$, de sorte que $`\hat w_{\text{ridge}}=c/(s+\lambda)=\sigma_1(\mathbf u_1^\top\mathbf y)/(\sigma_1^2+\lambda)`$.
+> **Corrigé.** $`\hat w_{\text{OLS}}=c/s`$. $`\hat w_{\text{ridge}}=c/(s+\lambda)`$. Ratio $`=\dfrac{\hat w_{\text{ridge}}}{\hat w_{\text{OLS}}}=\dfrac{s}{s+\lambda}\in(0,1)`$: la ridge multiplie le coefficient OLS par un facteur $`<1`$ (rétrécissement). Quand $`\lambda\to\infty`$, le facteur tend vers $`0`$: $`\hat w_{\text{ridge}}\to0`$. Ceci illustre la formule SVD $`\sigma_k/(\sigma_k^2+\lambda)`$ en dimension 1 : avec une seule colonne, $`s=\sigma_1^2`$ et $`c=\sigma_1\,(\mathbf u_1^\top\mathbf y)`$, de sorte que $`\hat w_{\text{ridge}}=c/(s+\lambda)=\sigma_1(\mathbf u_1^\top\mathbf y)/(\sigma_1^2+\lambda)`$.
 
 #### Exercice 3 : Lasso scalaire et seuillage doux
 
 Minimisez $`g(w)=\tfrac12(w-3)^2+\lambda|w|`$ pour $`\lambda=1`$, puis $`\lambda=4`$. Généralisez.
 
-> **Corrige.** Pour $`w>0`$: $`g'(w)=(w-3)+\lambda=0\Rightarrow w=3-\lambda`$, valable si $`3-\lambda>0`$. Pour $`\lambda=1`$: $`w^\star=2>0`$ $`\checkmark`$. Pour $`\lambda=4`$: $`3-\lambda=-1<0`$ donc pas de solution positive ; par symétrie pas de solution négative (le terme $`-3`$ tire vers le positif) ; le minimum est en $`w^\star=0`$. C'est exactement $`S_\lambda(3)=\mathrm{sign}(3)\max(|3|-\lambda,0)`$: vaut $`2`$ pour $`\lambda=1`$, vaut $`0`$ pour $`\lambda=4`$. La lasso met le coefficient *à zéro* dès que la « preuve » $`|z|`$ ne dépasse pas le seuil $`\lambda`$.
+> **Corrigé.** Pour $`w>0`$: $`g'(w)=(w-3)+\lambda=0\Rightarrow w=3-\lambda`$, valable si $`3-\lambda>0`$. Pour $`\lambda=1`$: $`w^\star=2>0`$ $`\checkmark`$. Pour $`\lambda=4`$: $`3-\lambda=-1<0`$ donc pas de solution positive ; par symétrie pas de solution négative (le terme $`-3`$ tire vers le positif) ; le minimum est en $`w^\star=0`$. C'est exactement $`S_\lambda(3)=\mathrm{sign}(3)\max(|3|-\lambda,0)`$: vaut $`2`$ pour $`\lambda=1`$, vaut $`0`$ pour $`\lambda=4`$. La lasso met le coefficient *à zéro* dès que la « preuve » $`|z|`$ ne dépasse pas le seuil $`\lambda`$.
 
-#### Exercice 4 : Ridge = MAP gaussien (redemonstration)
+#### Exercice 4 : Ridge = MAP gaussien (redémonstration)
 
 Montrez directement que maximiser $`p(\mathbf w\mid\mathbf y)`$ avec vraisemblance $`\mathcal N(\mathbf X\mathbf w,\sigma^2\mathbf I)`$ et prior $`\mathcal N(\mathbf 0,\tau^2\mathbf I)`$ revient à la ridge, et identifiez $`\lambda`$.
 
-> **Corrige.** $`-\log p(\mathbf w\mid\mathbf y)=\tfrac{1}{2\sigma^2}\lVert\mathbf y-\mathbf X\mathbf w\rVert^2+\tfrac{1}{2\tau^2}\lVert\mathbf w\rVert^2+\text{const}`$. Le gradient : $`-\tfrac1{\sigma^2}\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\tfrac1{\tau^2}\mathbf w`$. Annulation : $`\mathbf X^\top\mathbf X\mathbf w+\tfrac{\sigma^2}{\tau^2}\mathbf w=\mathbf X^\top\mathbf y`$, soit $`(\mathbf X^\top\mathbf X+\lambda\mathbf I)\mathbf w=\mathbf X^\top\mathbf y`$ avec $`\boxed{\lambda=\sigma^2/\tau^2}`$. C'est la ridge. Un prior plus serré (petit $`\tau^2`$) donne un $`\lambda`$ plus grand. $`\checkmark`$
+> **Corrigé.** $`-\log p(\mathbf w\mid\mathbf y)=\tfrac{1}{2\sigma^2}\lVert\mathbf y-\mathbf X\mathbf w\rVert^2+\tfrac{1}{2\tau^2}\lVert\mathbf w\rVert^2+\text{const}`$. Le gradient : $`-\tfrac1{\sigma^2}\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\tfrac1{\tau^2}\mathbf w`$. Annulation : $`\mathbf X^\top\mathbf X\mathbf w+\tfrac{\sigma^2}{\tau^2}\mathbf w=\mathbf X^\top\mathbf y`$, soit $`(\mathbf X^\top\mathbf X+\lambda\mathbf I)\mathbf w=\mathbf X^\top\mathbf y`$ avec $`\boxed{\lambda=\sigma^2/\tau^2}`$. C'est la ridge. Un prior plus serré (petit $`\tau^2`$) donne un $`\lambda`$ plus grand. $`\checkmark`$
 
 #### Exercice 5 : Idempotence de la matrice chapeau
 
 Montrez que $`\mathbf H=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top`$ vérifie $`\mathbf H^2=\mathbf H`$ et $`\mathbf H^\top=\mathbf H`$, et que $`\mathrm{trace}(\mathbf H)=d`$.
 
-> **Corrige.** Symétrie : $`\mathbf H^\top=\mathbf X\bigl((\mathbf X^\top\mathbf X)^{-1}\bigr)^\top\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$ (l'inverse d'une symétrique est symétrique). Idempotence : $`\mathbf H^2=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\underbrace{\mathbf X^\top\mathbf X(\mathbf X^\top\mathbf X)^{-1}}_{=\mathbf I}\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$. Trace : $`\mathrm{trace}(\mathbf H)=\mathrm{trace}\bigl(\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\bigr)=\mathrm{trace}\bigl((\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf X\bigr)=\mathrm{trace}(\mathbf I_d)=d`$ (invariance cyclique de la trace). $`\checkmark`$
+> **Corrigé.** Symétrie : $`\mathbf H^\top=\mathbf X\bigl((\mathbf X^\top\mathbf X)^{-1}\bigr)^\top\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$ (l'inverse d'une symétrique est symétrique). Idempotence : $`\mathbf H^2=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\underbrace{\mathbf X^\top\mathbf X(\mathbf X^\top\mathbf X)^{-1}}_{=\mathbf I}\mathbf X^\top=\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top=\mathbf H`$. Trace : $`\mathrm{trace}(\mathbf H)=\mathrm{trace}\bigl(\mathbf X(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\bigr)=\mathrm{trace}\bigl((\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf X\bigr)=\mathrm{trace}(\mathbf I_d)=d`$ (invariance cyclique de la trace). $`\checkmark`$
 
-#### Exercice 6 : Variance predictive bayesienne qui enfle en extrapolation
+#### Exercice 6 : Variance prédictive bayésienne qui enfle en extrapolation
 
 Modèle 1D sans biais, $`\boldsymbol\phi(x)=x`$, données aux abscisses proches de $`0`$. Expliquez pourquoi $`\sigma_\star^2(x_\star)=\sigma^2+x_\star^2 S_N`$ grandit avec $`|x_\star|`$, et ce que cela signifie.
 
-> **Corrige.** Ici $`\mathbf S_N`$ se réduit à un scalaire positif $`S_N>0`$. La variance épistémique $`x_\star^2 S_N`$ est une parabole en $`x_\star`$: nulle à l'origine (là où les données sont concentrées, l'incertitude sur la pente importe peu) et croissant comme le carré de la distance. Interprétation : plus on extrapole loin des données, plus une petite incertitude sur la pente se traduit par une grande incertitude sur la prédiction. Le modèle bayésien *signale* honnêtement qu'il extrapole, contrairement à OLS qui afficherait la même confiance partout. C'est un argument clé pour préférer le bayésien en zones à risque.
+> **Corrigé.** Ici $`\mathbf S_N`$ se réduit à un scalaire positif $`S_N>0`$. La variance épistémique $`x_\star^2 S_N`$ est une parabole en $`x_\star`$: nulle à l'origine (là où les données sont concentrées, l'incertitude sur la pente importe peu) et croissant comme le carré de la distance. Interprétation : plus on extrapole loin des données, plus une petite incertitude sur la pente se traduit par une grande incertitude sur la prédiction. Le modèle bayésien *signale* honnêtement qu'il extrapole, contrairement à OLS qui afficherait la même confiance partout. C'est un argument clé pour préférer le bayésien en zones à risque.
 
 #### Exercice 7 : Le noyau polynomial comme produit scalaire
 
 Pour $`\mathbf x,\mathbf x'\in\mathbb R^2`$, montrez que $`k(\mathbf x,\mathbf x')=(\mathbf x^\top\mathbf x'+1)^2`$ correspond à une carte $`\boldsymbol\phi`$ explicite. Donnez $`\boldsymbol\phi`$.
 
-> **Corrige.** Développons avec $`u=\mathbf x^\top\mathbf x'=x_1x_1'+x_2x_2'`$: $`(u+1)^2=u^2+2u+1=(x_1x_1'+x_2x_2')^2+2(x_1x_1'+x_2x_2')+1`$. En développant le carré : $`x_1^2x_1'^2+2x_1x_2x_1'x_2'+x_2^2x_2'^2+2x_1x_1'+2x_2x_2'+1`$. On identifie $`k=\boldsymbol\phi(\mathbf x)^\top\boldsymbol\phi(\mathbf x')`$ avec
+> **Corrigé.** Développons avec $`u=\mathbf x^\top\mathbf x'=x_1x_1'+x_2x_2'`$: $`(u+1)^2=u^2+2u+1=(x_1x_1'+x_2x_2')^2+2(x_1x_1'+x_2x_2')+1`$. En développant le carré : $`x_1^2x_1'^2+2x_1x_2x_1'x_2'+x_2^2x_2'^2+2x_1x_1'+2x_2x_2'+1`$. On identifie $`k=\boldsymbol\phi(\mathbf x)^\top\boldsymbol\phi(\mathbf x')`$ avec
 > ```math
 > \boldsymbol\phi(\mathbf x)=\bigl(x_1^2,\ \sqrt2\,x_1x_2,\ x_2^2,\ \sqrt2\,x_1,\ \sqrt2\,x_2,\ 1\bigr).
 > ```
 > Le noyau évalue donc un produit scalaire dans un espace à 6 dimensions (tous les monômes de degré $`\le 2`$, biais inclus grâce au $`+1`$) au prix d'un seul produit scalaire 2D élevé au carré. $`\checkmark`$
 
-#### Exercice 8 : Identite primale-duale (Woodbury)
+#### Exercice 8 : Identité primale-duale (Woodbury)
 
 Vérifiez l'identité $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top=\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$ et commentez l'intérêt calculatoire.
 
-> **Corrige.** Partons de l'identité évidente $`\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)=(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)\boldsymbol\Phi^\top`$ (les deux membres valent $`\boldsymbol\Phi^\top\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\boldsymbol\Phi^\top`$). Multiplions à gauche par $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}`$ et à droite par $`(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$ (toutes deux inversibles pour $`\lambda>0`$) : $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top=\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$. $`\checkmark`$ Intérêt : à gauche on inverse une matrice $`p\times p`$ (taille de l'espace des features, possiblement infinie), à droite une matrice $`n\times n`$ (taille des données). Quand $`p\gg n`$, voire $`p=\infty`$ via un noyau, on travaille à droite : c'est tout le passage au dual qui rend l'astuce du noyau possible.
+> **Corrigé.** Partons de l'identité évidente $`\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)=(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)\boldsymbol\Phi^\top`$ (les deux membres valent $`\boldsymbol\Phi^\top\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\boldsymbol\Phi^\top`$). Multiplions à gauche par $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}`$ et à droite par $`(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$ (toutes deux inversibles pour $`\lambda>0`$) : $`(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top=\boldsymbol\Phi^\top(\boldsymbol\Phi\boldsymbol\Phi^\top+\lambda\mathbf I_n)^{-1}`$. $`\checkmark`$ Intérêt : à gauche on inverse une matrice $`p\times p`$ (taille de l'espace des features, possiblement infinie), à droite une matrice $`n\times n`$ (taille des données). Quand $`p\gg n`$, voire $`p=\infty`$ via un noyau, on travaille à droite : c'est tout le passage au dual qui rend l'astuce du noyau possible.
 
 #### Exercice 9 : MV avec bruit de Laplace donne la perte $`\ell_1`$
 
 Supposez $`y_i=\mathbf x_i^\top\mathbf w+\varepsilon_i`$ avec $`\varepsilon_i`$ i.i.d. de loi de Laplace $`p(\varepsilon)=\tfrac1{2b}e^{-|\varepsilon|/b}`$. Quelle perte le maximum de vraisemblance minimise-t-il ?
 
-> **Corrige.** $`\log p(\mathbf y\mid\mathbf w)=\sum_i\bigl(-\log(2b)-\tfrac1b|y_i-\mathbf x_i^\top\mathbf w|\bigr)`$. Le seul terme dépendant de $`\mathbf w`$ est $`-\tfrac1b\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$. Maximiser la log-vraisemblance revient donc à **minimiser $`\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$**, c'est-à-dire la perte $`\ell_1`$ sur les résidus (régression de la médiane, dite *least absolute deviations*). Leçon : la perte quadratique n'a rien d'universel, elle découle du choix gaussien ; un bruit à queues plus lourdes (Laplace) mène à une perte robuste aux valeurs aberrantes.
+> **Corrigé.** $`\log p(\mathbf y\mid\mathbf w)=\sum_i\bigl(-\log(2b)-\tfrac1b|y_i-\mathbf x_i^\top\mathbf w|\bigr)`$. Le seul terme dépendant de $`\mathbf w`$ est $`-\tfrac1b\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$. Maximiser la log-vraisemblance revient donc à **minimiser $`\sum_i|y_i-\mathbf x_i^\top\mathbf w|`$**, c'est-à-dire la perte $`\ell_1`$ sur les résidus (régression de la médiane, dite *least absolute deviations*). Leçon : la perte quadratique n'a rien d'universel, elle découle du choix gaussien ; un bruit à queues plus lourdes (Laplace) mène à une perte robuste aux valeurs aberrantes.
 
-#### Exercice 10 : Degres de liberte de la ridge
+#### Exercice 10 : Degrés de liberté de la ridge
 
 Pour la ridge, les valeurs ajustées sont $`\hat{\mathbf y}=\mathbf H_\lambda\mathbf y`$ avec $`\mathbf H_\lambda=\mathbf X(\mathbf X^\top\mathbf X+\lambda\mathbf I)^{-1}\mathbf X^\top`$. Exprimez $`\mathrm{trace}(\mathbf H_\lambda)`$ via les valeurs singulières $`\sigma_k`$ de $`\mathbf X`$ et interprétez.
 
-> **Corrige.** Avec $`\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top`$, on calcule $`\mathbf H_\lambda=\mathbf U\,\mathrm{diag}\!\bigl(\tfrac{\sigma_k^2}{\sigma_k^2+\lambda}\bigr)\,\mathbf U^\top`$, donc
+> **Corrigé.** Avec $`\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top`$, on calcule $`\mathbf H_\lambda=\mathbf U\,\mathrm{diag}\!\bigl(\tfrac{\sigma_k^2}{\sigma_k^2+\lambda}\bigr)\,\mathbf U^\top`$, donc
 > ```math
 > \mathrm{df}(\lambda)=\mathrm{trace}(\mathbf H_\lambda)=\sum_{k}\frac{\sigma_k^2}{\sigma_k^2+\lambda}.
 > ```

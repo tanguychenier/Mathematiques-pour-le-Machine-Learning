@@ -15,7 +15,7 @@ Le mot « linéaire » signifie que les inconnues n'apparaissent qu'à la puissa
 > **Le symbole $`x`$ (et ses amis $`x_1, x_2, \dots`$).**
 > Ce symbole représente une **inconnue**: un nombre qu'on ne connaît pas encore et qu'on cherche. C'est comme une boîte fermée dont on veut deviner le contenu. Quand il y a plusieurs boîtes, on les numérote : $`x_1`$ (« x indice 1 ») est la première boîte, $`x_2`$ la deuxième, etc. Le petit chiffre en bas (l'**indice**) est juste une étiquette, comme un numéro de casier ; ce n'est pas une multiplication ni une puissance.
 
-#### Definition rigoureuse
+#### Définition rigoureuse
 
 > **Définition (système linéaire).** Un **système de $`m`$ équations linéaires à $`n`$ inconnues** sur le corps des réels $`\mathbb{R}`$ (un corps est un ensemble de nombres où l'on peut additionner, soustraire, multiplier et diviser ; on le détaille plus loin, retenez ici simplement « les nombres réels $`\mathbb{R}`$ ») est une famille de $`m`$ égalités de la forme
 > ```math
@@ -42,7 +42,7 @@ Avec le symbole somme $`\sum`$ (vu au chapitre 1), qui additionne une liste de t
 
 Ici $`\sum_{j=1}^{n} a_{ij} x_j`$ veut dire « additionne les produits $`a_{ij}x_j`$ pour $`j`$ allant de 1 à $`n`$ », c'est-à-dire $`a_{i1}x_1 + a_{i2}x_2 + \cdots + a_{in}x_n`$.
 
-#### Les trois cas possibles (theoreme d'alternative)
+#### Les trois cas possibles (théorème d'alternative)
 
 Un fait remarquable, qu'on démontrera plus loin, structure toute la théorie : un système linéaire ne peut se trouver que dans **exactement trois** situations.
 
@@ -60,18 +60,18 @@ Géométriquement, en dimension 2 :
 
 ```mermaid
 graph LR
-    subgraph "Compatible determine"
-    A1["droites secantes<br/>1 point"]
+    subgraph "Compatible déterminé"
+    A1["droites sécantes<br/>1 point"]
     end
-    subgraph "Compatible indetermine"
-    A2["droites confondues<br/>infinite de points"]
+    subgraph "Compatible indéterminé"
+    A2["droites confondues<br/>infinité de points"]
     end
     subgraph "Incompatible"
-    A3["droites paralleles<br/>aucun point"]
+    A3["droites parallèles<br/>aucun point"]
     end
 ```
 
-#### Exemple chiffre deroule pas a pas
+#### Exemple chiffré déroulé pas à pas
 
 Reprenons l'énigme de l'introduction, formalisée :
 
@@ -135,7 +135,7 @@ Une matrice, avant d'être un objet abstrait, est d'abord un **tableau rectangul
 > **Le symbole $`\mathbb{R}^{m \times n}`$.**
 > Ce symbole représente l'ensemble de **toutes les matrices** ayant $`m`$ lignes et $`n`$ colonnes à coefficients réels. Lisez « R, m croix n ». Le « croix » ($`\times`$) n'est pas une multiplication à calculer : c'est la **taille** du tableau, exactement comme on dit « un cadre 13 par 18 ». Ainsi $`A \in \mathbb{R}^{3 \times 2}`$ est un tableau de 3 lignes et 2 colonnes. Convention immuable : **lignes d'abord, colonnes ensuite**.
 
-#### Definition et vocabulaire
+#### Définition et vocabulaire
 
 > **Définition (matrice).** Une **matrice** $`A`$ de taille $`m \times n`$ sur $`\mathbb{R}`$ est une application $`A: \{1,\dots,m\}\times\{1,\dots,n\} \to \mathbb{R}`$, notée par ses coefficients $`A = (a_{ij})_{1 \le i \le m,\ 1 \le j \le n}`$ et représentée par le tableau
 > ```math
@@ -161,7 +161,7 @@ Vocabulaire essentiel, rassemblé :
 | Matrice **triangulaire inférieure** | $`a_{ij} = 0`$ dès que $`i < j`$ |
 | Matrice **symétrique** | $`A = A^\top`$ (définie ci-dessous) |
 
-#### Operations elementaires : addition et multiplication par un scalaire
+#### Opérations élémentaires : addition et multiplication par un scalaire
 
 L'addition se fait **case par case**, et seulement entre matrices de **même taille**:
 
@@ -179,7 +179,7 @@ La multiplication par un nombre $`\lambda \in \mathbb{R}`$ (un **scalaire**) mul
 
 Muni de ces deux opérations, $`\mathbb{R}^{m\times n}`$ est un **espace vectoriel** (notion centrale, définie plus loin) : addition commutative et associative, élément neutre la matrice nulle, distributivité $`\lambda(A+B)=\lambda A+\lambda B`$, etc.
 
-#### La transposee
+#### La transposée
 
 > **Le symbole transposée $`A^\top`$.**
 > Ce symbole (un petit T en exposant) représente l'opération de **basculer** la matrice : on échange le rôle des lignes et des colonnes, comme si on faisait pivoter le tableau autour de sa diagonale, ou comme un reflet dans un miroir posé sur la diagonale. La ligne $`i`$ devient la colonne $`i`$. Si $`A`$ est $`m\times n`$, alors $`A^\top`$ est $`n \times m`$.
@@ -196,7 +196,7 @@ A^\top = \begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{pmatrix} \in \mathbb{R}^{3
 
 Propriétés (toutes vérifiables coefficient par coefficient) : $`(A^\top)^\top = A`$, $`(A+B)^\top = A^\top + B^\top`$, $`(\lambda A)^\top = \lambda A^\top`$, et la règle qui surprend les débutants, $`(AB)^\top = B^\top A^\top`$ (l'ordre s'**inverse**), démontrée après le produit.
 
-#### Le produit matriciel : le coeur du reacteur
+#### Le produit matriciel : le cœur du réacteur
 
 C'est l'opération la plus importante, et la moins intuitive au premier abord. On ne multiplie **pas** case par case. La règle : pour multiplier $`A`$ par $`B`$, le **nombre de colonnes de $`A`$** doit égaler le **nombre de lignes de $`B`$**.
 
@@ -216,7 +216,7 @@ Schéma des dimensions (les « $`p`$ » du milieu doivent coïncider, et dispara
 
 > **Le symbole $`\cdot`$ (produit scalaire de deux vecteurs).** Pour deux vecteurs $`\mathbf{u}, \mathbf{v} \in \mathbb{R}^n`$, le **produit scalaire** $`\mathbf{u}\cdot\mathbf{v} = \sum_{k=1}^{n} u_k v_k`$ est un **nombre** (pas un vecteur). Intuitivement, il mesure « à quel point deux flèches pointent dans la même direction ». En notation matricielle, $`\mathbf{u}\cdot\mathbf{v} = \mathbf{u}^\top \mathbf{v}`$. Chaque case du produit $`AB`$ est donc le produit scalaire ligne-colonne.
 
-##### Exemple chiffre deroule case par case
+##### Exemple chiffré déroulé case par case
 
 Soient
 ```math
@@ -230,7 +230,7 @@ Calculons $`C = AB`$, case par case :
 - $`c_{21} = (3)(5) + (4)(7) = 15 + 28 = 43`$
 - $`c_{22} = (3)(6) + (4)(8) = 18 + 32 = 50`$
 
-D'ou
+D'où
 ```math
 AB = \begin{pmatrix} 19 & 22 \\ 43 & 50 \end{pmatrix}.
 ```
@@ -245,7 +245,7 @@ BA = \begin{pmatrix} 5\cdot1+6\cdot3 & 5\cdot2+6\cdot4 \\ 7\cdot1+8\cdot3 & 7\cd
 
 > **Piège majeur.** En général $`AB \ne BA`$. L'ordre des facteurs **compte**. Mieux : $`AB`$ peut exister sans que $`BA`$ ait un sens (dimensions incompatibles). Ne « simplifiez » jamais un produit matriciel comme un produit de nombres.
 
-#### Proprietes algebriques du produit
+#### Propriétés algébriques du produit
 
 > **Théorème (propriétés du produit).** Quand les tailles sont compatibles :
 > 1. **Associativité**: $`(AB)C = A(BC)`$.
@@ -271,7 +271,7 @@ Les deux doubles sommes portent sur les mêmes termes $`a_{ik}b_{kj}c_{j\ell}`$;
 \big((AB)^\top\big)_{ij} = (AB)_{ji} = \sum_{k=1}^{p} a_{jk} b_{ki} = \sum_{k=1}^{p} (B^\top)_{ik}(A^\top)_{kj} = (B^\top A^\top)_{ij}. \qquad \blacksquare
 ```
 
-#### Inverse d'une matrice carree
+#### Inverse d'une matrice carrée
 
 > **Le symbole $`A^{-1}`$.** Ce symbole représente la matrice **inverse**: la matrice qui « défait » ce que $`A`$ fait, comme une touche annuler. Si $`A`$ étire et tourne l'espace, $`A^{-1}`$ rétrécit et tourne en sens inverse pour tout remettre en place.
 
@@ -310,7 +310,7 @@ print(A @ np.linalg.inv(A))       # ~ identite (aux erreurs d'arrondi pres)
 
 ### Résolution des systèmes linéaires
 
-#### L'idee maitresse : simplifier sans changer les solutions
+#### L'idée maîtresse : simplifier sans changer les solutions
 
 Pour résoudre, on transforme le système en un autre **plus simple mais équivalent** (même ensemble solution), jusqu'à pouvoir lire la réponse. Trois manipulations préservent l'ensemble des solutions, ce sont les **opérations élémentaires sur les lignes**:
 
@@ -324,7 +324,7 @@ Aucune ne crée ni ne détruit de solution : la troisième, par exemple, remplac
 
 > **La matrice augmentée $`[A \mid \mathbf{b}]`$.** Pour calculer efficacement, on accole la colonne des seconds membres à droite de $`A`$, séparée par une barre : $`[A \mid \mathbf{b}]`$. On travaille alors sur ce seul tableau, sans recopier les $`x_j`$ à chaque étape, la barre marque juste « ici commence le second membre ».
 
-#### Le pivot de Gauss (elimination de Gauss)
+#### Le pivot de Gauss (élimination de Gauss)
 
 > **Le mot « pivot ».** Le **pivot** est le premier coefficient non nul d'une ligne, celui autour duquel on « fait tourner » les éliminations : on s'en sert pour annuler tous les coefficients situés en dessous (et, en Gauss-Jordan, au-dessus) dans la même colonne. Comme un point d'appui qui permet de soulever le reste.
 
@@ -332,16 +332,16 @@ L'**élimination de Gauss** amène la matrice augmentée sous forme **échelonn�
 
 ```mermaid
 flowchart TD
-    S["Systeme A x = b"] --> M["Matrice augmentee [A | b]"]
-    M --> E["Elimination : zeros sous les pivots<br/>(forme echelonnee)"]
+    S["Système A x = b"] --> M["Matrice augmentée [A | b]"]
+    M --> E["Élimination : zéros sous les pivots<br/>(forme échelonnée)"]
     E --> C{"Ligne 0...0 | c<br/>avec c != 0 ?"}
     C -- oui --> I["INCOMPATIBLE : aucune solution"]
     C -- non --> R{"Pivot dans chaque colonne<br/>d'inconnue ?"}
-    R -- oui --> U["UNIQUE solution<br/>(remontee)"]
-    R -- non --> P["INFINITE de solutions<br/>(inconnues libres)"]
+    R -- oui --> U["UNIQUE solution<br/>(remontée)"]
+    R -- non --> P["INFINITÉ de solutions<br/>(inconnues libres)"]
 ```
 
-##### Exemple chiffre deroule pas a pas
+##### Exemple chiffré déroulé pas à pas
 
 Résolvons
 ```math
@@ -388,11 +388,11 @@ La matrice est **échelonnée**. **Remontée**:
 
 **Solution unique**: $`(x_1,x_2,x_3) = (2, 3, -1)`$. Vérification dans l'équation 2 : $`-3(2)-1(3)+2(-1) = -6-3-2 = -11`$. Correct.
 
-#### Forme echelonnee reduite (Gauss-Jordan)
+#### Forme échelonnée réduite (Gauss-Jordan)
 
 En poussant plus loin (pivots ramenés à 1, zéros aussi **au-dessus** des pivots), on obtient la forme **échelonnée réduite par lignes** (RREF), qui est **unique** pour une matrice donnée. La solution s'y lit directement, et c'est l'outil pour calculer un inverse : on réduit $`[A \mid I_n]`$; si l'on aboutit à $`[I_n \mid B]`$, alors $`B = A^{-1}`$.
 
-#### Cas non determines : les inconnues libres
+#### Cas non déterminés : les inconnues libres
 
 Quand une colonne d'inconnue ne porte **pas** de pivot, l'inconnue correspondante est **libre**: on lui donne un paramètre, et les autres s'expriment en fonction de lui. Exemple :
 ```math
@@ -408,7 +408,7 @@ La colonne de $`x_3`$ n'a pas de pivot : posons $`x_3 = t`$, $`t\in\mathbb{R}`$.
 
 > **Idée structurante (à retenir).** Toute solution d'un système se décompose en **une solution particulière** plus **une solution du système homogène** associé ($`A\mathbf{x}=\mathbf{0}`$). (Un système est dit **homogène** quand tous ses seconds membres valent zéro, c'est-à-dire quand le côté droit est entièrement nul, comme ici $`A\mathbf{x}=\mathbf{0}`$ ; le mot signifie « du même genre, tout en zéros à droite ».) C'est le squelette de la théorie : « solution générale = solution particulière + noyau ». Nous y revenons avec les applications linéaires.
 
-#### Theoreme de Rouche-Capelli
+#### Théorème de Rouché-Capelli
 
 > **Le symbole rang, $`\mathrm{rg}(A)`$.** Le **rang** d'une matrice est le **nombre de pivots** obtenus après élimination, autrement dit le nombre d'équations vraiment « indépendantes » (qui apportent une information nouvelle). On le définira rigoureusement plus loin ; ici, comptez les pivots.
 
@@ -418,7 +418,7 @@ La colonne de $`x_3`$ n'a pas de pivot : posons $`x_3 = t`$, $`t\in\mathbb{R}`$.
 
 **Idée de preuve.** Après élimination, une incompatibilité se manifeste par une ligne $`[0\ \cdots\ 0 \mid c]`$ avec $`c\ne 0`$ (l'équation $`0 = c`$ est absurde) : cela arrive exactement quand ajouter la colonne $`\mathbf{b}`$ crée un pivot supplémentaire, c'est-à-dire $`\mathrm{rg}([A\mid\mathbf{b}]) > \mathrm{rg}(A)`$. S'il n'y a pas une telle ligne, le nombre d'inconnues libres est $`n - \mathrm{rg}(A)`$: nul (solution unique) ou strictement positif (infinité). $`\blacksquare`$
 
-#### Complexite et stabilite numerique
+#### Complexité et stabilité numérique
 
 L'élimination de Gauss sur un système $`n\times n`$ coûte de l'ordre de $`\tfrac{2}{3}n^3`$ opérations. Sur ordinateur, on n'utilise **pas** la matrice inverse pour résoudre (plus coûteux et moins stable) : on préfère une **factorisation** (découper un objet en un produit de morceaux plus simples, comme on écrit $`12 = 3\times 4`$) $`A = LU`$ (produit d'une triangulaire inférieure $`L`$ et supérieure $`U`$), avec **pivotage partiel** pour la stabilité (choisir comme pivot le plus grand coefficient en valeur absolue de la colonne, afin d'éviter de diviser par un nombre minuscule).
 
@@ -448,7 +448,7 @@ print(np.linalg.matrix_rank(A))    # 3
 
 ### Espaces vectoriels
 
-#### Intuition : un monde ou l'on peut additionner et redimensionner
+#### Intuition : un monde où l'on peut additionner et redimensionner
 
 Jusqu'ici, nos vecteurs étaient des listes de nombres. Mais l'idée profonde de l'algèbre linéaire est d'**oublier** la nature des objets et de ne retenir que **ce qu'on peut leur faire**: les **additionner** entre eux, et les **multiplier par un scalaire**. Tout ensemble muni de ces deux opérations, se comportant « bien », est un **espace vectoriel**. La magie : des polynômes, des fonctions, des signaux, des images, des matrices, tout cela forme des espaces vectoriels, et **les mêmes théorèmes s'appliquent à tous**. On apprend une fois, on applique partout.
 
@@ -457,7 +457,7 @@ Jusqu'ici, nos vecteurs étaient des listes de nombres. Mais l'idée profonde de
 
 > **Le symbole $`\mathbf{0}`$ (vecteur nul).** Le $`\mathbf{0}`$ en gras est le **vecteur nul**: l'élément neutre de l'addition, celui qui ne change rien quand on l'ajoute (« la flèche de longueur zéro », ou l'origine). À ne pas confondre avec le scalaire $`0`$.
 
-#### Definition axiomatique
+#### Définition axiomatique
 
 > **Définition (espace vectoriel réel).** Un **espace vectoriel** sur $`\mathbb{R}`$ est un ensemble $`E`$ non vide muni de deux opérations : une **addition** $`+: E\times E \to E`$ et une **multiplication externe** par un scalaire $`\cdot: \mathbb{R}\times E \to E`$, telles que, $`\forall\, \mathbf{u},\mathbf{v},\mathbf{w}\in E`$ et $`\forall\, \lambda,\mu\in\mathbb{R}`$:
 > 1. $`\mathbf{u}+\mathbf{v} = \mathbf{v}+\mathbf{u}`$ (commutativité) ;
@@ -501,7 +501,7 @@ Les conditions 2 et 3 se résument : $`F`$ est stable par **combinaison linéair
 
 > **Piège géométrique.** En dimension 3, les sous-espaces sont : $`\{\mathbf{0}\}`$, les **droites passant par l'origine**, les **plans passant par l'origine**, et $`\mathbb{R}^3`$ tout entier. Une droite qui **ne passe pas** par l'origine n'est **pas** un sous-espace (elle ne contient pas $`\mathbf{0}`$), c'est un espace **affine**, vu plus loin.
 
-##### Exemple chiffre
+##### Exemple chiffré
 
 Est-ce que $`F = \{(x,y,z)\in\mathbb{R}^3: x + 2y - z = 0\}`$ est un sous-espace ?
 - $`\mathbf{0}=(0,0,0)`$: $`0+0-0=0`$, oui $`\mathbf{0}\in F`$.
@@ -510,7 +510,7 @@ Est-ce que $`F = \{(x,y,z)\in\mathbb{R}^3: x + 2y - z = 0\}`$ est un sous-espace
 
 En revanche $`G=\{(x,y,z):x+2y-z = 5\}`$ n'en est pas un : $`\mathbf{0}\notin G`$.
 
-#### Combinaisons lineaires et sous-espace engendre
+#### Combinaisons linéaires et sous-espace engendré
 
 > **Définition (combinaison linéaire).** Une **combinaison linéaire** des vecteurs $`\mathbf{v}_1,\dots,\mathbf{v}_k`$ est tout vecteur de la forme $`\lambda_1\mathbf{v}_1 + \cdots + \lambda_k\mathbf{v}_k = \sum_{i=1}^{k}\lambda_i\mathbf{v}_i`$ avec $`\lambda_i\in\mathbb{R}`$.
 
@@ -549,7 +549,7 @@ print(in_span([v1, v2], np.array([1.0, 1.0, 0.0])))  # False (hors du plan)
 
 Trois personnes donnent leur avis. Si la troisième ne fait que répéter une combinaison des deux premières, elle n'apporte **rien de neuf**: elle est « redondante ». Des vecteurs sont **linéairement indépendants** quand **aucun** n'est combinaison des autres : chacun apporte une direction vraiment nouvelle. C'est la notion qui permet de distinguer « beaucoup de vecteurs » de « beaucoup de **vraie** information ».
 
-#### Definition rigoureuse
+#### Définition rigoureuse
 
 > **Définition (indépendance linéaire).** Une famille $`(\mathbf{v}_1,\dots,\mathbf{v}_k)`$ de vecteurs de $`E`$ est **linéairement indépendante** (ou **libre**) si la seule combinaison linéaire nulle est la triviale :
 > ```math
@@ -561,7 +561,7 @@ Trois personnes donnent leur avis. Si la troisième ne fait que répéter une co
 
 > **Pourquoi cette définition ?** « Aucun vecteur n'est combinaison des autres » équivaut à « la seule façon d'obtenir $`\mathbf{0}`$ est de prendre tous les coefficients nuls ». En effet, si $`\mathbf{v}_k = \sum_{i<k}\mu_i\mathbf{v}_i`$, alors $`\sum_{i<k}\mu_i\mathbf{v}_i + (-1)\mathbf{v}_k = \mathbf{0}`$ est une relation **non triviale** (le coefficient $`-1`$ n'est pas nul). La définition « par le zéro » est juste plus maniable.
 
-#### Exemple chiffre deroule
+#### Exemple chiffré déroulé
 
 Les vecteurs $`\mathbf{v}_1=(1,2,3)`$, $`\mathbf{v}_2=(0,1,4)`$, $`\mathbf{v}_3=(2,5,10)`$ sont-ils libres ? On résout $`\lambda_1\mathbf{v}_1+\lambda_2\mathbf{v}_2+\lambda_3\mathbf{v}_3 = \mathbf{0}`$:
 ```math
@@ -573,7 +573,7 @@ Les vecteurs $`\mathbf{v}_1=(1,2,3)`$, $`\mathbf{v}_2=(0,1,4)`$, $`\mathbf{v}_3=
 ```
 De la 1re : $`\lambda_1 = -2\lambda_3`$. Dans la 2e : $`-4\lambda_3 + \lambda_2 + 5\lambda_3 = 0 \Rightarrow \lambda_2 = -\lambda_3`$. Dans la 3e : $`3(-2\lambda_3) + 4(-\lambda_3) + 10\lambda_3 = -6\lambda_3 -4\lambda_3 + 10\lambda_3 = 0`$, **toujours vraie**. Il existe donc des solutions non nulles : pour $`\lambda_3 = 1`$, $`(\lambda_1,\lambda_2,\lambda_3) = (-2,-1,1)`$. Vérification : $`-2(1,2,3) -1(0,1,4) + 1(2,5,10) = (-2+0+2,\,-4-1+5,\,-6-4+10) = (0,0,0)`$. La famille est **liée**: en effet $`\mathbf{v}_3 = 2\mathbf{v}_1 + \mathbf{v}_2`$.
 
-#### Proprietes utiles
+#### Propriétés utiles
 
 > **Proposition.**
 > 1. Toute famille contenant $`\mathbf{0}`$ est **liée** (prendre coefficient 1 devant $`\mathbf{0}`$).
@@ -584,7 +584,7 @@ De la 1re : $`\lambda_1 = -2\lambda_3`$. Dans la 2e : $`-4\lambda_3 + \lambda_2 
 
 > **Le symbole $`\iff`$ (équivalence).** Il se lit « **si et seulement si** » : « $`P \iff Q`$ » veut dire que $`P`$ et $`Q`$ sont vrais en même temps ou faux en même temps, ils vont toujours de pair, comme « avoir la moyenne » et « ne pas avoir en dessous de 10 ».
 
-#### Lien avec le rang et les systemes
+#### Lien avec le rang et les systèmes
 
 Tester l'indépendance de $`k`$ vecteurs de $`\mathbb{R}^n`$, c'est résoudre un système homogène $`A\boldsymbol{\lambda} = \mathbf{0}`$ où $`A`$ a ces vecteurs **en colonnes**. La famille est libre $`\iff`$ ce système n'a **que** la solution nulle $`\iff \mathrm{rg}(A) = k`$ (un pivot par colonne). C'est le pont direct entre indépendance et élimination de Gauss.
 
@@ -609,11 +609,11 @@ print(np.round(ns / ns[np.argmax(np.abs(ns))], 3).ravel())  # ~ (-2,-1,1) a un f
 
 ### Base et rang
 
-#### Intuition : le jeu de coordonnees minimal et complet
+#### Intuition : le jeu de coordonnées minimal et complet
 
 Pour repérer n'importe quel point d'une ville, deux directions suffisent et sont nécessaires : « combien de rues vers l'est, combien vers le nord ». Ces deux directions forment une **base**: un jeu de repères à la fois **suffisant** (on atteint tout : c'est générateur) et **non redondant** (aucun superflu : c'est libre). Le nombre d'éléments d'une base, c'est la **dimension**: le nombre de « boutons de réglage » indépendants de l'espace.
 
-#### Definitions
+#### Définitions
 
 > **Définition (famille génératrice).** Une famille $`(\mathbf{v}_1,\dots,\mathbf{v}_k)`$ **engendre** $`E`$ (est **génératrice**) si $`\mathrm{Vect}(\mathbf{v}_1,\dots,\mathbf{v}_k) = E`$: tout vecteur de $`E`$ est combinaison linéaire des $`\mathbf{v}_i`$.
 
@@ -657,7 +657,7 @@ C'est un théorème profond : l'« information » portée par les lignes et par 
 
 > **Le symbole $`\ker`$ (noyau) et $`\dim`$.** $`\ker A`$ représente l'ensemble des vecteurs que $`A`$ **envoie sur zéro**, ce que la transformation « efface ». $`\dim`$ compte les degrés de liberté (le nombre de directions indépendantes). Le théorème du rang dit, en image : ce que vous gardez (rang) plus ce que vous écrasez (noyau) égale ce avec quoi vous êtes parti.
 
-#### Exemple chiffre
+#### Exemple chiffré
 
 Pour $`A=\begin{pmatrix}1&2&3\\2&4&6\\1&1&1\end{pmatrix}`$: la 2e ligne est le double de la 1re, donc après élimination il reste 2 pivots, $`\mathrm{rg}(A)=2`$. Par le théorème du rang, $`\dim\ker A = 3 - 2 = 1`$: le noyau est une droite. Déterminons-la : $`A\mathbf{x}=\mathbf{0}`$ se réduit à $`\{\,x+2y+3z=0,\ x+y+z=0\,\}`$ (la 2e équation est redondante). En soustrayant, $`y + 2z = 0`$, soit $`y=-2z`$; puis $`x = -y - z = 2z - z = z`$. Avec $`z=1`$, on obtient la direction $`(1,-2,1)`$. Vérification : $`A\,(1,-2,1)^\top = (1-4+3,\,2-8+6,\,1-2+1) = (0,0,0)`$. Donc $`\ker A = \mathrm{Vect}(1,-2,1)`$.
 
@@ -691,7 +691,7 @@ print(np.round(A @ null_space, 6).ravel())              # ~ (0, 0, 0)
 
 Une **application linéaire** est une fonction entre espaces vectoriels qui **respecte les deux opérations**: elle envoie une somme sur la somme des images, et un vecteur agrandi sur l'image agrandie d'autant. Image mentale : une transformation qui **ne courbe pas** l'espace et **fixe l'origine**, rotations, dilatations, projections, cisaillements en font partie ; pas les translations (elles bougent l'origine), ni quoi que ce soit qui plie ou tord.
 
-#### Definition
+#### Définition
 
 > **Définition (application linéaire).** Soient $`E,F`$ deux $`\mathbb{R}`$-espaces vectoriels. Une application $`f:E\to F`$ est **linéaire** si :
 > ```math
@@ -705,7 +705,7 @@ Conséquence immédiate : $`f(\mathbf{0}_E) = \mathbf{0}_F`$ (poser $`\lambda=0`
 
 > **Attention, deux flèches différentes : $`\to`$ et $`\mapsto`$.** La flèche simple $`\to`$ relie deux **ensembles** (« $`f`$ va de l'ensemble $`E`$ vers l'ensemble $`F`$ »). La flèche barrée $`\mapsto`$ (« est envoyé sur »), elle, relie un **élément** à son image : $`\mathbf{x}\mapsto W\mathbf{x}`$ se lit « le vecteur $`\mathbf{x}`$ est envoyé sur $`W\mathbf{x}`$ ». Autrement dit, $`\to`$ décrit le trajet au niveau des « boîtes » (ensembles de départ et d'arrivée), et $`\mapsto`$ décrit ce qui arrive à **un** objet précis qu'on y fait entrer.
 
-#### Le pont fondamental : matrices = applications lineaires (en dimension finie)
+#### Le pont fondamental : matrices = applications linéaires (en dimension finie)
 
 > **Théorème (représentation matricielle).** Soit $`f:\mathbb{R}^n\to\mathbb{R}^m`$ linéaire. Il existe une **unique** matrice $`A\in\mathbb{R}^{m\times n}`$ telle que $`f(\mathbf{x}) = A\mathbf{x}`$ pour tout $`\mathbf{x}`$. Les **colonnes** de $`A`$ sont les images des vecteurs de la base canonique : la $`j`$-ème colonne est $`f(\mathbf{e}_j)`$.
 
@@ -722,7 +722,7 @@ graph LR
     Rn -. "f o g (matrice A B)" .-> Rm
 ```
 
-##### Exemple chiffre : la rotation du plan
+##### Exemple chiffré : la rotation du plan
 
 La rotation d'angle $`\theta`$ dans $`\mathbb{R}^2`$ envoie $`\mathbf{e}_1=(1,0)`$ sur $`(\cos\theta,\sin\theta)`$ et $`\mathbf{e}_2=(0,1)`$ sur $`(-\sin\theta,\cos\theta)`$. Ces images **sont** les colonnes de la matrice :
 ```math
@@ -730,7 +730,7 @@ R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\en
 ```
 Pour $`\theta=90^\circ`$: $`R = \begin{pmatrix}0&-1\\1&0\end{pmatrix}`$, et $`R\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}`$, le vecteur pointant à droite se retrouve bien pointant vers le haut.
 
-#### Noyau, image, et le theoreme du rang
+#### Noyau, image, et le théorème du rang
 
 > **Définition (noyau et image).** Pour $`f:E\to F`$ linéaire :
 > - le **noyau** $`\ker f = \{\mathbf{x}\in E: f(\mathbf{x})=\mathbf{0}_F\}`$ (ce que $`f`$ écrase sur zéro) ;
@@ -748,7 +748,7 @@ Pour $`\theta=90^\circ`$: $`R = \begin{pmatrix}0&-1\\1&0\end{pmatrix}`$, et $`R\
 *Libre*: si $`\sum b_j f(\mathbf{w}_j)=\mathbf{0}`$, alors $`f(\sum b_j\mathbf{w}_j)=\mathbf{0}`$, donc $`\sum b_j\mathbf{w}_j\in\ker f`$, donc $`\sum b_j\mathbf{w}_j = \sum a_i\mathbf{u}_i`$ pour certains $`a_i`$; mais la base totale est libre, donc tous les $`b_j=0`$.
 Ainsi $`\mathrm{rg}(f)=q`$ et $`\dim\ker f = p`$, d'où $`\dim E = p+q`$. $`\blacksquare`$
 
-#### Injectivite, surjectivite, bijectivite
+#### Injectivité, surjectivité, bijectivité
 
 > **Proposition (critères).** Pour $`f:E\to F`$ linéaire :
 > - $`f`$ **injective** $`\iff \ker f = \{\mathbf{0}\}`$ (rien d'autre que zéro ne s'écrase) ;
@@ -759,7 +759,7 @@ Ainsi $`\mathrm{rg}(f)=q`$ et $`\dim\ker f = p`$, d'où $`\dim E = p+q`$. $`\bla
 
 **Preuve du critère d'injectivité.** Si $`f`$ est injective et $`f(\mathbf{x})=\mathbf{0}=f(\mathbf{0})`$, alors $`\mathbf{x}=\mathbf{0}`$: le noyau est trivial. Réciproquement, si $`\ker f=\{\mathbf{0}\}`$ et $`f(\mathbf{x})=f(\mathbf{y})`$, alors $`f(\mathbf{x}-\mathbf{y})=\mathbf{0}`$, donc $`\mathbf{x}-\mathbf{y}\in\ker f=\{\mathbf{0}\}`$, donc $`\mathbf{x}=\mathbf{y}`$. $`\blacksquare`$
 
-#### Retour sur les systemes : structure de l'ensemble solution
+#### Retour sur les systèmes : structure de l'ensemble solution
 
 On peut enfin justifier la phrase « solution générale = particulière + noyau ». Le système $`A\mathbf{x}=\mathbf{b}`$ a une solution $`\iff \mathbf{b}\in\mathrm{Im} A`$. S'il est compatible, soit $`\mathbf{x}_p`$ une solution particulière ; alors $`\mathbf{x}`$ est solution $`\iff A(\mathbf{x}-\mathbf{x}_p)=\mathbf{0} \iff \mathbf{x}-\mathbf{x}_p \in \ker A`$. Donc l'ensemble solution est
 ```math
@@ -794,13 +794,13 @@ print(np.allclose(f(g(x)), (A @ R) @ x))       # True : f o g <-> A R
 
 ### Espaces affines
 
-#### Intuition : un espace vectoriel qui a oublie ou est son origine
+#### Intuition : un espace vectoriel qui a oublié où est son origine
 
 Sur une feuille quadrillée, les **points** sont des emplacements ; les **vecteurs** sont des **déplacements** (« avancez de 3 à droite, 2 en haut »). Un **espace affine** est le monde des points : on peut soustraire deux points pour obtenir le vecteur qui mène de l'un à l'autre, et translater un point par un vecteur, **mais il n'y a pas de point « zéro » privilégié**. C'est exactement la géométrie du quotidien : aucune ville n'est « l'origine du monde », pourtant on sait calculer le déplacement entre deux villes.
 
 > **La flèche entre deux points, $`\overrightarrow{AB}`$.** Ce symbole représente le **vecteur** qui va du point $`A`$ au point $`B`$: la consigne de déplacement « pour aller de A à B, faites ceci ». On a la relation de Chasles $`\overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}`$ (enchaîner deux trajets) et $`\overrightarrow{AB} = -\overrightarrow{BA}`$ (faire demi-tour).
 
-#### Definition
+#### Définition
 
 > **Définition (espace affine).** Un **espace affine** $`\mathcal{A}`$ dirigé par un espace vectoriel $`E`$ (sa **direction**) est un ensemble de **points** muni d'une application $`\mathcal{A}\times\mathcal{A}\to E,\ (A,B)\mapsto \overrightarrow{AB}`$ telle que :
 > 1. **Chasles**: $`\forall A,B,C,\ \overrightarrow{AB}+\overrightarrow{BC}=\overrightarrow{AC}`$;
@@ -822,7 +822,7 @@ Géométriquement : un **point** (dimension 0), une **droite affine** (dimension
 
 > **Lien direct avec les systèmes.** L'ensemble solution d'un système **compatible** $`A\mathbf{x}=\mathbf{b}`$ est le sous-espace affine $`\mathbf{x}_p + \ker A`$: un point translaté du noyau. C'est la **vraie nature géométrique** d'un ensemble solution non homogène : il est parallèle au noyau (même direction) mais décalé. On comprend alors la rigidité 0/1/$`\infty`$: un sous-espace affine est soit vide, soit un singleton (direction $`\{\mathbf{0}\}`$), soit infini.
 
-##### Demonstration de la rigidite (0, 1 ou l'infini)
+##### Démonstration de la rigidité (0, 1 ou l'infini)
 
 Soient $`\mathbf{u}\ne\mathbf{v}`$ deux solutions de $`A\mathbf{x}=\mathbf{b}`$. Pour tout $`t\in\mathbb{R}`$, posons $`\mathbf{w}_t = \mathbf{u} + t(\mathbf{v}-\mathbf{u})`$. Alors
 ```math
@@ -872,11 +872,11 @@ print(theta_merged)                            # [1.5 1.5 2.5]
 
 Cette section rassemble et approfondit les liens déjà semés, pour montrer que **le machine learning est de l'algèbre linéaire en action**.
 
-#### Les donnees sont des matrices
+#### Les données sont des matrices
 
 Un jeu de données de $`N`$ exemples à $`d`$ caractéristiques est une matrice $`X\in\mathbb{R}^{N\times d}`$: une **ligne par exemple**, une **colonne par caractéristique**. Une image est un vecteur (ou un tenseur : un **tenseur** est la généralisation du tableau de nombres à plus de deux dimensions ; un nombre seul est un tenseur à 0 dimension, un vecteur à 1 dimension, une matrice à 2 dimensions, et une image couleur, qui a une hauteur, une largeur et trois couleurs, est un tenseur à 3 dimensions, comme un empilement de feuilles) ; un corpus de texte devient une matrice terme-document ou une pile de plongements. Le premier réflexe du praticien est **toujours**: « quelle est la forme (shape) de mon tableau, que représentent ses lignes et ses colonnes ? »
 
-#### La regression lineaire et les moindres carres
+#### La régression linéaire et les moindres carrés
 
 Le modèle linéaire prédit $`\hat{\mathbf{y}} = X\boldsymbol{\beta}`$. Comme il y a en général plus d'équations que d'inconnues ($`N > d`$), le système $`X\boldsymbol{\beta}=\mathbf{y}`$ n'a pas de solution exacte : on minimise alors l'erreur quadratique $`\lVert X\boldsymbol{\beta}-\mathbf{y}\rVert^2`$.
 
@@ -910,11 +910,11 @@ beta_hat, *_ = np.linalg.lstsq(X, y, rcond=None)   # SVD interne, recommande
 print(np.round(beta_hat, 3))                        # ~ [ 2. -1.  0.5]
 ```
 
-#### Le produit scalaire, les normes et la similarite
+#### Le produit scalaire, les normes et la similarité
 
 Le produit scalaire $`\mathbf{u}^\top\mathbf{v}`$ mesure l'alignement de deux vecteurs ; normalisé, il donne la **similarité cosinus** $`\cos(\mathbf{u},\mathbf{v}) = \frac{\mathbf{u}^\top\mathbf{v}}{\lVert\mathbf{u}\rVert\,\lVert\mathbf{v}\rVert}`$, omniprésente dans la recherche sémantique et les recommandations. C'est exactement le cœur de l'**attention** des Transformers (l'**attention** est le mécanisme par lequel un modèle de langage décide, pour chaque mot, quels autres mots du texte sont les plus pertinents à regarder ; un **Transformer** est l'architecture de réseau qui équipe les grands modèles de langage actuels) : les scores $`\mathbf{q}^\top\mathbf{k}`$ entre requêtes (queries) et clés (keys) sont des produits scalaires, organisés en un grand produit matriciel $`QK^\top`$.
 
-#### Valeurs propres, decomposition spectrale et SVD
+#### Valeurs propres, décomposition spectrale et SVD
 
 > **Le symbole valeur propre $`\lambda`$ et vecteur propre $`\mathbf{v}`$.** Pour une matrice carrée $`A`$, un **vecteur propre** (eigenvector) est une direction **que $`A`$ ne fait que dilater** sans la dévier : $`A\mathbf{v} = \lambda\mathbf{v}`$ avec $`\mathbf{v}\ne\mathbf{0}`$, où le scalaire $`\lambda`$ (valeur propre, eigenvalue) est le **facteur d'étirement** le long de cette direction. Ce sont les « axes naturels » de la transformation.
 
@@ -953,7 +953,7 @@ Entraîner un modèle, c'est minimiser une fonction de perte $`\mathcal{L}(\bold
 
 > **Mise à jour 2026.** L'**autodifférentiation** (autodiff) de JAX et PyTorch calcule ces gradients automatiquement et exactement, en composant les jacobiennes des opérations, c'est-à-dire en **chaînant des produits matriciels**. Les optimiseurs modernes **Adam / AdamW** adaptent le pas coordonnée par coordonnée à partir des moments du gradient ; ils restent, sous le capot, des mises à jour vectorielles et matricielles. L'algèbre linéaire n'est pas un prérequis lointain du deep learning : elle en est **la substance calculatoire**, du plus petit produit scalaire au plus grand modèle.
 
-#### Tableau de synthese : un concept, une application
+#### Tableau de synthèse : un concept, une application
 
 | Concept d'algèbre linéaire | Rôle en machine learning |
 |---|---|
@@ -973,7 +973,7 @@ Entraîner un modèle, c'est minimiser une fonction de perte $`\mathcal{L}(\bold
 
 Les corrigés suivent immédiatement chaque énoncé. Essayez d'abord seul, crayon en main.
 
-#### Exercice 1 : Resolution par Gauss
+#### Exercice 1 : Résolution par Gauss
 
 Résoudre le système :
 ```math
@@ -991,7 +991,7 @@ x + 2y - z = 2
 > Remontée : $`y - 2(3) = -4 \Rightarrow y = 2`$; puis $`x + 2 + 3 = 6 \Rightarrow x = 1`$.
 > **Solution unique** $`(x,y,z) = (1,2,3)`$. Vérification (éq. 2) : $`2(1)-2+3=3`$. Correct.
 
-#### Exercice 2 : Produit et transposee
+#### Exercice 2 : Produit et transposée
 
 Avec $`A=\begin{pmatrix}1&2\\0&1\\3&1\end{pmatrix}`$ et $`B=\begin{pmatrix}2&0&1\\1&1&0\end{pmatrix}`$, calculer $`AB`$, sa taille, et vérifier $`(AB)^\top = B^\top A^\top`$.
 
@@ -1010,7 +1010,7 @@ Les ensembles suivants sont-ils des sous-espaces de $`\mathbb{R}^3`$ ? (a) $`F=\
 > (b) **Non**: $`(1,0,0)`$ et $`(0,1,1)`$ sont dans $`G`$ (un facteur nul), mais leur somme $`(1,1,1)`$ a $`xyz=1\ne0`$: pas stable par addition.
 > (c) **Non**: $`\mathbf{0}=(0,0,0)`$ donne $`0\ne1`$, donc $`\mathbf{0}\notin H`$ (c'est un plan **affine**, pas vectoriel).
 
-#### Exercice 4 : Independance lineaire
+#### Exercice 4 : Indépendance linéaire
 
 Les vecteurs $`(1,1,0)`$, $`(0,1,1)`$, $`(1,0,1)`$ de $`\mathbb{R}^3`$ sont-ils libres ? Forment-ils une base ?
 
@@ -1023,7 +1023,7 @@ Pour $`A=\begin{pmatrix}1&2&1\\2&4&2\\3&6&4\end{pmatrix}`$, donner $`\mathrm{rg}
 
 > **Corrigé.** $`L_2\leftarrow L_2-2L_1 \Rightarrow (0,0,0)`$; $`L_3\leftarrow L_3-3L_1 \Rightarrow (0,0,1)`$. Restent **2 pivots** (colonnes 1 et 3) : $`\mathrm{rg}(A)=2`$. Par le théorème du rang, $`\dim\ker A = 3-2 = 1`$. Pour le noyau, la colonne 2 n'a pas de pivot : posons $`y=t`$. La ligne $`(0,0,1)`$ donne $`z=0`$, et la ligne 1 donne $`x+2t+z=0\Rightarrow x=-2t`$. Base du noyau : $`(-2,1,0)`$. Vérification : $`A(-2,1,0)^\top = (-2+2+0,\,-4+4+0,\,-6+6+0)=(0,0,0)`$. Correct.
 
-#### Exercice 6 : Application lineaire et matrice
+#### Exercice 6 : Application linéaire et matrice
 
 Soit $`f:\mathbb{R}^2\to\mathbb{R}^2`$ la projection orthogonale sur la droite $`y=x`$. Donner sa matrice dans la base canonique, puis $`\ker f`$ et $`\mathrm{Im} f`$.
 
@@ -1031,7 +1031,7 @@ Soit $`f:\mathbb{R}^2\to\mathbb{R}^2`$ la projection orthogonale sur la droite $
 > Vérification : $`f(\mathbf{e}_1)=\tfrac12(1,1)`$, $`f(\mathbf{e}_2)=\tfrac12(1,1)`$, ce sont bien les colonnes de $`P`$.
 > $`\mathrm{Im} f`$ = la droite $`y=x`$ (dimension 1). $`\ker f`$ = la droite **orthogonale** $`y=-x`$ (les vecteurs envoyés sur $`\mathbf{0}`$), dimension 1. On vérifie le théorème du rang : $`1+1=2`$. Idempotence : $`P^2=P`$ (projeter deux fois = projeter une fois).
 
-#### Exercice 7 : Espace affine et systeme
+#### Exercice 7 : Espace affine et système
 
 Décrire géométriquement l'ensemble solution de $`\begin{cases} x+y+z=3 \\ x - y + 2z = 4 \end{cases}`$.
 
@@ -1041,7 +1041,7 @@ Décrire géométriquement l'ensemble solution de $`\begin{cases} x+y+z=3 \\ x -
 > ```
 > C'est une **droite affine**: le point particulier $`(2,0,1)`$ translaté de la droite vectorielle $`\ker A = \mathrm{Vect}(-3,1,2)`$. Dimension 1, conforme à $`n-\mathrm{rg}(A)=3-2=1`$.
 
-#### Exercice 8 : Moindres carres a la main
+#### Exercice 8 : Moindres carrés à la main
 
 Ajuster une droite $`y = a x + b`$ aux points $`(0,1), (1,2), (2,2)`$ par les équations normales.
 
@@ -1053,9 +1053,9 @@ Ajuster une droite $`y = a x + b`$ aux points $`(0,1), (1,2), (2,2)`$ par les é
 #### Exercice 9 : Vrai ou faux (avec justification)
 
 1. Si $`AB = 0`$ alors $`A=0`$ ou $`B=0`$.
-2. Toute matrice carree est inversible.
+2. Toute matrice carrée est inversible.
 3. $`\mathrm{rg}(A) = \mathrm{rg}(A^\top)`$.
-4. Une famille de 3 vecteurs dans $`\mathbb{R}^2`$ est toujours liee.
+4. Une famille de 3 vecteurs dans $`\mathbb{R}^2`$ est toujours liée.
 
 > **Corrigé.**
 > 1. **Faux.** Contre-exemple : $`A=\begin{pmatrix}1&0\\0&0\end{pmatrix}`$, $`B=\begin{pmatrix}0&0\\0&1\end{pmatrix}`$, alors $`AB=0`$ sans que ni $`A`$ ni $`B`$ soit nulle. (Il existe des **diviseurs de zéro** : deux objets non nuls dont le produit est pourtant nul, ce qui est impossible avec les nombres ordinaires mais arrive avec les matrices.)

@@ -49,11 +49,11 @@ Formellement, voici le contrat de l'ACP. On dispose de $`n`$ points $`\mathbf{x}
 
 ```mermaid
 flowchart LR
-    A["Donnees brutes<br/>X dans R^(n x d)<br/>(d grand)"] --> B["Centrage<br/>retrait de la moyenne"]
+    A["Données brutes<br/>X dans R^(n x d)<br/>(d grand)"] --> B["Centrage<br/>retrait de la moyenne"]
     B --> C["Recherche de k<br/>directions principales"]
     C --> D["Projection<br/>Z dans R^(n x k)<br/>(k petit)"]
     D --> E["Reconstruction<br/>approximation de X"]
-    C -.->|"variance expliquee"| F["Choix de k"]
+    C -.->|"variance expliquée"| F["Choix de k"]
 ```
 
 Deux grandes lectures mènent **exactement au même calcul** mais éclairent l'ACP différemment :
@@ -101,7 +101,7 @@ S = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - 
 
 1. $`S`$ est **symétrique**: $`S^{\top} = S`$ (une matrice est **symétrique** quand elle est identique à sa transposée, c'est-à-dire que la case ligne $`j`$ colonne $`\ell`$ égale la case ligne $`\ell`$ colonne $`j`$ : le tableau est en miroir parfait de part et d'autre de sa diagonale, comme un papillon). En effet $`(\tilde{X}^{\top}\tilde{X})^{\top} = \tilde{X}^{\top}\tilde{X}`$. Conséquence majeure (le **théorème spectral**, vu au chapitre 4, est le grand résultat qui garantit qu'une matrice symétrique se range toujours proprement le long d'axes perpendiculaires) : $`S`$ possède une base **orthonormée** de vecteurs propres et toutes ses valeurs propres sont **réelles**.
 2. $`S`$ est **semi-définie positive**: pour tout vecteur $`\mathbf{u}`$, $`\mathbf{u}^{\top} S \,\mathbf{u} = \tfrac{1}{n}\sum_i (\tilde{\mathbf{x}}_i^{\top}\mathbf{u})^2 \ge 0`$. C'est une somme de carrés. Conséquence : toutes les valeurs propres de $`S`$ sont $`\ge 0`$. Ce sont, on le verra, des **variances**, et une variance ne peut pas être négative.
-3. La quantité $`\mathbf{u}^{\top} S\, \mathbf{u}`$ à une interprétation limpide : c'est **la variance des données une fois projetées sur la direction $`\mathbf{u}`$** (quand $`\|\mathbf{u}\|=1`$). Cette formule sera la cle de la perspective « variance maximale ».
+3. La quantité $`\mathbf{u}^{\top} S\, \mathbf{u}`$ à une interprétation limpide : c'est **la variance des données une fois projetées sur la direction $`\mathbf{u}`$** (quand $`\|\mathbf{u}\|=1`$). Cette formule sera la clé de la perspective « variance maximale ».
 
 > **Les doubles barres $`\|\cdot\|`$ : la longueur.** L'écriture $`\|\mathbf{u}\|`$ (deux barres verticales autour d'un vecteur) se lit « **norme de $`\mathbf{u}`$ » et veut dire **la longueur de la flèche** $`\mathbf{u}`$, sa taille mesurée du début à la pointe (comme on mesure une ficelle avec une règle). Donc $`\|\mathbf{u}\|=1`$ veut simplement dire « cette flèche mesure une unité de long ». À ne pas confondre avec une seule barre $`|\cdot|`$, qui sert pour un nombre tout seul (sa « valeur absolue », c'est-à-dire ce nombre rendu positif).
 
@@ -220,7 +220,7 @@ Le même calcul de Lagrange (avec deux contraintes) montre que $`\mathbf{u}_2`$ 
 > \text{ratio}_k = \frac{\lambda_1 + \dots + \lambda_k}{\lambda_1 + \dots + \lambda_d} = \frac{\sum_{j=1}^{k}\lambda_j}{\mathrm{tr}(S)}.
 > ```
 
-#### Exemple chiffré déroulé pas a pas
+#### Exemple chiffré déroulé pas à pas
 
 Choisissons un cas où les variables sont **corrélées** (deux variables sont **corrélées** quand elles ont tendance à bouger ensemble : quand l'une monte, l'autre monte aussi, comme la taille et la pointure de chaussure) pour voir l'ACP tourner le repère. Soit les points
 $`(1,1),\quad (2,2),\quad (3,3),\quad (4,4),\quad (5,5).`$
@@ -303,7 +303,7 @@ J(U_k) = \frac{1}{n}\sum_{i=1}^{n}\big\|\mathbf{x}_i - \hat{\mathbf{x}}_i\big\|^
 
 #### Le théorème de Pythagore qui relie les deux perspectives
 
-Voici le moment cle. Pour chaque point centré $`\tilde{\mathbf{x}}_i`$, décomposons-le en sa part **dans** le sous-espace ($`U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, gardée) et sa part **perpendiculaire** ($`\tilde{\mathbf{x}}_i - U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, jetée). Ces deux parts sont orthogonales (propriété du projecteur orthogonal), donc le théorème de Pythagore donne :
+Voici le moment clé. Pour chaque point centré $`\tilde{\mathbf{x}}_i`$, décomposons-le en sa part **dans** le sous-espace ($`U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, gardée) et sa part **perpendiculaire** ($`\tilde{\mathbf{x}}_i - U_kU_k^{\top}\tilde{\mathbf{x}}_i`$, jetée). Ces deux parts sont orthogonales (propriété du projecteur orthogonal), donc le théorème de Pythagore donne :
 
 > **Rappel du théorème de Pythagore.** C'est le résultat d'école sur le triangle rectangle (un triangle avec un angle droit) : le carré du grand côté (l'hypoténuse) égale la somme des carrés des deux autres côtés, souvent résumé par $`a^2 + b^2 = c^2`$. Ici, le « point complet » joue le rôle du grand côté, et ses deux morceaux perpendiculaires (la part gardée et la part jetée) jouent le rôle des deux petits côtés : la longueur-au-carré du tout égale la somme des longueurs-au-carré des morceaux.
 
@@ -455,7 +455,7 @@ L'ACP peut se voir comme la réponse à une question d'**algèbre matricielle pu
 
 > **La norme spectrale, en deux mots.** Le théorème parle aussi de la *norme spectrale*. Là où la norme de Frobenius mesurait la taille globale d'une matrice (tous ses coefficients mis dans un sac), la norme spectrale mesure son **étirement maximal** : si la matrice prend un vecteur et le déforme, c'est le plus grand facteur d'agrandissement qu'elle puisse appliquer. Ce nombre n'est autre que la plus grande valeur singulière, $`\sigma_1`$. Retenez juste l'idée : la même SVD tronquée est la meilleure approximation pour ces deux façons de mesurer la taille d'une matrice.
 
-> **Démonstration (esquisse rigoureuse).** Écrivons $`\tilde{X} = \sum_j \sigma_j \mathbf{u}_j\mathbf{v}_j^{\top}`$. Pour toute matrice $`B`$ de rang $`\le k`$, on montre via les valeurs singulières que $`\|\tilde{X}-B\|_F^2 \ge \sum_{j>k}\sigma_j^2`$, l'argument cle étant l'inégalité de Weyl sur les valeurs singulières d'une somme : tronquer la SVD après $`k`$ termes annule les $`k`$ plus grandes contributions $`\sigma_1,\dots,\sigma_k`$ et ne laisse que la queue $`\sigma_{k+1},\dots`$, ce qui sature la borne. La borne étant atteinte par $`\tilde{X}_k`$, c'est bien l'optimum. Le détail complet (cas Frobenius et cas spectral) est l'objet de l'exercice 5. $`\blacksquare`$
+> **Démonstration (esquisse rigoureuse).** Écrivons $`\tilde{X} = \sum_j \sigma_j \mathbf{u}_j\mathbf{v}_j^{\top}`$. Pour toute matrice $`B`$ de rang $`\le k`$, on montre via les valeurs singulières que $`\|\tilde{X}-B\|_F^2 \ge \sum_{j>k}\sigma_j^2`$, l'argument clé étant l'inégalité de Weyl sur les valeurs singulières d'une somme : tronquer la SVD après $`k`$ termes annule les $`k`$ plus grandes contributions $`\sigma_1,\dots,\sigma_k`$ et ne laisse que la queue $`\sigma_{k+1},\dots`$, ce qui sature la borne. La borne étant atteinte par $`\tilde{X}_k`$, c'est bien l'optimum. Le détail complet (cas Frobenius et cas spectral) est l'objet de l'exercice 5. $`\blacksquare`$
 
 Le lien avec l'ACP saute aux yeux : la reconstruction ACP de tous les points (centrés), empilée en matrice, est **précisément** $`\tilde{X}_k`$. L'erreur de reconstruction de l'ACP $`J_{\min} = \tfrac{1}{n}\sum_{j>k}\sigma_j^2 = \sum_{j>k}\lambda_j`$ est l'erreur d'Eckart–Young divisée par $`n`$. **L'ACP n'est rien d'autre que la SVD tronquée des données centrées.**
 
@@ -576,7 +576,7 @@ print("3 plus grandes variances           :", np.round(val[:3], 3))
 print("forme des composantes              :", comp.shape)   # (3, 5000)
 ```
 
-#### Vers l'ACP a noyau (kernel PCA)
+#### Vers l'ACP à noyau (kernel PCA)
 
 L'astuce de Gram a une conséquence théorique majeure : puisque tout le calcul ne fait intervenir que des **produits scalaires entre objets** ($`\tilde{\mathbf{x}}_i^{\top}\tilde{\mathbf{x}}_j`$), on peut remplacer ce produit scalaire par une fonction de similarité plus riche, un **noyau** (kernel) $`\kappa(\mathbf{x}_i,\mathbf{x}_j)`$. Cela donne l'**ACP à noyau** (kernel PCA), capable de capturer des structures **non linéaires** (spirales, anneaux) en projetant implicitement les données dans un espace de très grande dimension, sans jamais y aller explicitement. C'est le pont entre l'ACP linéaire de ce chapitre et les méthodes non linéaires.
 
@@ -588,20 +588,20 @@ L'astuce de Gram a une conséquence théorique majeure : puisque tout le calcul 
 
 Place à la recette complète, dans l'ordre, avec les pièges qui font échouer une ACP en production. Le calcul mathématique n'est qu'une partie du travail : le **prétraitement** et le **choix de $`k`$** décident souvent du résultat.
 
-#### Le pipeline pas a pas
+#### Le pipeline pas à pas
 
 ```mermaid
 flowchart TD
-    A["1. Donnees X (n x d)"] --> B["2. Centrer<br/>retirer la moyenne"]
-    B --> C{"3. Echelles<br/>comparables ?"}
-    C -->|non| D["Standardiser<br/>diviser par l'ecart-type"]
+    A["1. Données X (n x d)"] --> B["2. Centrer<br/>retirer la moyenne"]
+    B --> C{"3. Échelles<br/>comparables ?"}
+    C -->|non| D["Standardiser<br/>diviser par l'écart-type"]
     C -->|oui| E["Garder tel quel"]
     D --> F["4. SVD de la matrice<br/>(ou eigh de S / G)"]
     E --> F
     F --> G["5. Examiner le spectre<br/>valeurs propres, scree plot"]
     G --> H["6. Choisir k<br/>(seuil de variance, coude)"]
     H --> I["7. Projeter : Z = Xc @ V_k.T"]
-    I --> J["8. (option) Reconstruire,<br/>evaluer l'erreur"]
+    I --> J["8. (option) Reconstruire,<br/>évaluer l'erreur"]
 ```
 
 **Étape 1, Nettoyer et cadrer.** Traiter les valeurs manquantes (l'**imputation**, c'est boucher les trous : remplacer une case vide du tableau par une valeur raisonnable, par exemple la moyenne de la colonne), repérer les valeurs aberrantes (l'ACP, fondée sur la variance et donc sur des carrés, est **très sensible aux outliers**, c'est-à-dire aux points extrêmes, complètement à l'écart des autres : un seul point extrême peut détourner une composante entière).
@@ -723,7 +723,7 @@ L'histoire générative de la PPCA tient en deux temps :
 
 ```mermaid
 flowchart LR
-    Z["cause cachee z<br/>N(0, I_k), petite dim k"] -->|"x W"| WZ["W z<br/>(dans R^d)"]
+    Z["cause cachée z<br/>N(0, I_k), petite dim k"] -->|"x W"| WZ["W z<br/>(dans R^d)"]
     WZ -->|"+ mu"| M["W z + mu"]
     M -->|"+ bruit N(0, sigma^2 I)"| X["observation x<br/>(dans R^d)"]
 ```
@@ -832,7 +832,7 @@ On considère les trois points de $`\mathbb{R}^2`$: $`(0,0)`$, $`(2,0)`$, $`(4,2
 > **(c)** Projections : $`\tilde{\mathbf{x}}^{\top}\mathbf{u}=\tfrac{1}{\sqrt2}(\tilde x_1+\tilde x_2)`$. Valeurs : $`\tfrac{1}{\sqrt2}(-\tfrac83),\,\tfrac{1}{\sqrt2}(-\tfrac23),\,\tfrac{1}{\sqrt2}(\tfrac{10}{3})`$. Variance $`=\tfrac13\cdot\tfrac12\big(\tfrac{64}{9}+\tfrac49+\tfrac{100}{9}\big)=\tfrac16\cdot\tfrac{168}{9}=\tfrac{168}{54}=\tfrac{28}{9}`$.
 > Vérification : $`\mathbf{u}^{\top}S\mathbf{u}=\tfrac12(S_{11}+2S_{12}+S_{22})=\tfrac12\big(\tfrac83+\tfrac83+\tfrac89\big)=\tfrac12\cdot\tfrac{56}{9}=\tfrac{28}{9}`$. Les deux coïncident. $`\checkmark`$
 
-#### Exercice 2 : Diagonalisation a la main
+#### Exercice 2 : Diagonalisation à la main
 
 Soit $`S=\begin{pmatrix} 3 & 1 \\ 1 & 3\end{pmatrix}`$.
 **(a)** Trouver les valeurs propres et les vecteurs propres orthonormés.

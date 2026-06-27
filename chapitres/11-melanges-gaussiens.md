@@ -40,7 +40,7 @@ On suppose connue (chapitre 6) la **densité gaussienne multivariée** sur $`\ma
 
 Cette unique cloche a un centre unique et une seule région de forte densité. Insuffisant pour des données multimodales (à plusieurs bosses).
 
-#### Definition du modele de melange
+#### Définition du modèle de mélange
 
 > **Définition (mélange gaussien).** Un mélange gaussien à $`K`$ composantes est la densité de probabilité sur $`\mathbb{R}^d`$ définie par
 > ```math
@@ -74,7 +74,7 @@ La contrainte $`\sum_k \pi_k = 1`$ avec $`\pi_k \ge 0`$ (une *contrainte* est un
 
 > **Rappel sur le symbole $`\sum`$.** On le suppose connu : c'est « une boucle qui additionne ». $`\sum_{k=1}^{K} a_k`$ veut dire « fais la somme $`a_1 + a_2 + \dots + a_K`$ ». Ici la boucle additionne les $`K`$ cloches pondérées (*pondérer*, c'est **donner à chaque chose un poids, une importance** avant de l'additionner : ici chaque cloche compte selon son poids $`\pi_k`$, comme une note de contrôle qui compte « coefficient 2 » pèse double dans la moyenne). On a pu sortir chaque $`\pi_k`$ de l'intégrale car l'intégration porte sur $`\mathbf{x}`$, pas sur $`k`$.
 
-#### Le melange comme densite vraiment universelle
+#### Le mélange comme densité vraiment universelle
 
 Pourquoi se donner tant de mal ? Parce qu'un mélange gaussien est un **approximateur universel de densités** (c'est-à-dire qu'il peut imiter d'aussi près qu'on veut **n'importe quelle** forme de densité, comme un jeu de briques assez fin permet de reconstituer n'importe quelle silhouette). Intuitivement : en plaçant beaucoup de petites cloches côte à côte (à la manière des pixels qui reconstituent une image, ou des briques Lego qui épousent une courbe), on approche d'aussi près qu'on veut n'importe quelle densité continue raisonnable.
 
@@ -128,13 +128,13 @@ En pratique on contraint souvent la forme des $`\boldsymbol{\Sigma}_k`$ pour ré
 
 > **Piège (le nombre de paramètres explose).** Une covariance `full` coûte $`\frac{d(d+1)}{2}`$ nombres **par composante**. En dimension $`d=100`$ avec $`K=10`$, cela fait déjà $`10 \times \frac{100\times 101}{2} = 50\,500`$ paramètres rien que pour les covariances. Si on a peu de données, on préfère `diag` ou `spherical`, ou on régularise (voir plus loin).
 
-#### Generer un point : le mode d'emploi
+#### Générer un point : le mode d'emploi
 
-Un mélange n'est pas qu'une formule : c'est une **recette pour fabriquer des données**. Pour tirer un point au hasard selon $`p`$ (*tirer un point au hasard selon $`p`$*, ou « selon une loi », veut dire fabriquer une valeur en respectant les chances dictées par $`p`$ : les zones où $`p`$ est haute sortent souvent, celles où $`p`$ est basse rarement, comme une tombola truquée qui favorise certains numéros) :
+Un mélange n'est pas qu'une formule : c'est une **recette pour fabriquer des données**. Pour tirer un point au hasard selon $`p`$ (*tirer un point au hasard selon* $`p`$, ou « selon une loi », veut dire fabriquer une valeur en respectant les chances dictées par $`p`$ : les zones où $`p`$ est haute sortent souvent, celles où $`p`$ est basse rarement, comme une tombola truquée qui favorise certains numéros) :
 
 ```mermaid
 flowchart TD
-    A["Choisir une cloche k au hasard<br/>avec probabilites pi_1, ..., pi_K"] --> B["Tirer x dans la gaussienne<br/>N(mu_k, Sigma_k) de cette cloche"]
+    A["Choisir une cloche k au hasard<br/>avec probabilités pi_1, ..., pi_K"] --> B["Tirer x dans la gaussienne<br/>N(mu_k, Sigma_k) de cette cloche"]
     B --> C["Renvoyer x"]
 ```
 
@@ -226,7 +226,7 @@ Multiplier des milliers de nombres tous compris entre $`0`$ et $`1`$ donne un r�
 
 > **Piège central (le log d'une somme).** Pour une seule gaussienne, le $`\ln`$ « mange » l'exponentielle et tout se simplifie. Ici, le $`\ln`$ porte sur une **somme** $`\sum_k \pi_k \mathcal{N}(\cdot)`$: impossible de la casser proprement, car $`\ln(a+b) \ne \ln a + \ln b`$. C'est cette somme **à l'intérieur** du logarithme qui rend le problème difficile et interdit une solution en forme close (une *solution en forme close*, ou *solution close*, c'est une réponse qu'on peut écrire d'un coup avec une formule finie, comme « la moyenne = somme divisée par le nombre » ; quand il n'y en a pas, on doit procéder par essais successifs avec un algorithme : un *algorithme* est une **recette précise, une suite d'étapes mécaniques** qu'on exécute dans l'ordre pour obtenir un résultat, comme une recette de cuisine ou un mode d'emploi de meuble à monter). Tout l'algorithme EM (section suivante) est né pour contourner cet obstacle.
 
-#### Les equations de stationnarite
+#### Les équations de stationnarité
 
 Cherchons les points où le gradient s'annule. On introduit une quantité qui va devenir centrale.
 
@@ -292,8 +292,8 @@ Regardons bien les trois formules encadrées. Elles donnent $`\boldsymbol{\mu}_k
 
 ```mermaid
 flowchart LR
-    P["Parametres<br/>pi_k, mu_k, Sigma_k"] -->|"definissent"| R["Responsabilites<br/>r_nk"]
-    R -->|"definissent"| P
+    P["Paramètres<br/>pi_k, mu_k, Sigma_k"] -->|"définissent"| R["Responsabilités<br/>r_nk"]
+    R -->|"définissent"| P
 ```
 
 > **L'idée qui sauve tout.** Quand un système s'auto-référence comme ça, une stratégie naturelle est le **point fixe**: on devine des paramètres, on en déduit les responsabilités, puis on recalcule les paramètres à partir de ces responsabilités, et on recommence jusqu'à stabilisation. Cette alternance porte un nom : c'est l'algorithme espérance-maximisation, objet de la section suivante. Les équations encadrées ci-dessus ne sont donc pas une solution close, mais les **règles de mise à jour** d'une boucle.
@@ -314,13 +314,13 @@ L'algorithme **espérance-maximisation** (expectation-maximization, EM) résout 
 ```mermaid
 flowchart TD
     Init["Initialisation<br/>pi_k, mu_k, Sigma_k"] --> E
-    E["Etape E : calculer les responsabilites<br/>r_nk avec les parametres actuels"] --> M
-    M["Etape M : recalculer pi_k, mu_k, Sigma_k<br/>a partir des r_nk"] --> Conv{"Log-vraisemblance<br/>stabilisee ?"}
+    E["Étape E : calculer les responsabilités<br/>r_nk avec les paramètres actuels"] --> M
+    M["Étape M : recalculer pi_k, mu_k, Sigma_k<br/>à partir des r_nk"] --> Conv{"Log-vraisemblance<br/>stabilisée ?"}
     Conv -->|non| E
-    Conv -->|oui| Fin["Renvoyer les parametres"]
+    Conv -->|oui| Fin["Renvoyer les paramètres"]
 ```
 
-#### Algorithme detaille
+#### Algorithme détaillé
 
 > **Algorithme (EM pour mélange gaussien).**
 > **Entrée:** données $`\{\mathbf{x}_n\}_{n=1}^N`$, nombre de composantes $`K`$.
@@ -382,7 +382,7 @@ C'est la propriété fondamentale d'EM, démontrée en détail dans la section s
 
 > **« Singularité », « régulariser », et la flèche $`\leftarrow`$.** Une **singularité** est un endroit où une formule **déraille** (devient infinie ou n'a plus de sens), comme une division par zéro. **Régulariser**, c'est **ajouter un petit garde-fou** pour empêcher ce dérapage : ici on rajoute une mini-quantité $`\epsilon \mathbf{I}`$ à la covariance pour interdire à une cloche de devenir infiniment fine (le « **covariance floor** » est ce plancher minimal de largeur ; *borner* = poser une limite à ne pas franchir). Le **$`\epsilon`$** est encore notre tout petit nombre positif. La flèche **$`\leftarrow`$** se lit « **reçoit** » ou « **devient** » : $`\boldsymbol{\Sigma}_k \leftarrow \boldsymbol{\Sigma}_k + \epsilon \mathbf{I}`$ veut dire « **remplace** $`\boldsymbol{\Sigma}_k`$ par $`\boldsymbol{\Sigma}_k + \epsilon \mathbf{I}`$ » (on écrase l'ancienne valeur par la nouvelle, comme une affectation en informatique). Image : c'est le rail de sécurité qui empêche la bille de tomber dans le trou sans fond.
 
-#### Exemple chiffre deroule pas a pas
+#### Exemple chiffré déroulé pas à pas
 
 Prenons $`1`$ D, $`N=4`$ points : $`\mathbf{x} = (0,\ 1,\ 8,\ 9)`$, et $`K=2`$. Initialisons grossièrement : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=1`$, $`\mu_2=8`$, $`\sigma_1^2=\sigma_2^2=4`$.
 
@@ -446,7 +446,7 @@ print("log-vraisemblance croissante :",
       all(lv[i+1] >= lv[i] - 1e-9 for i in range(len(lv)-1)))  # True
 ```
 
-#### Application concrete en machine learning
+#### Application concrète en machine learning
 
 > **Segmentation et détection d'anomalies.** Après apprentissage, un GMM donne pour tout nouveau point $`\mathbf{x}`$: (1) une **étiquette de groupe** $`\arg\max_k r_{k}(\mathbf{x})`$ (segmentation de clientèle, regroupement de documents) ; (2) une **densité** $`p(\mathbf{x})`$, un point où $`p(\mathbf{x})`$ est très faible est une **anomalie** (fraude, défaut industriel). La covariance `full` capture des corrélations entre variables que $`k`$-moyennes ignore totalement.
 
@@ -466,7 +466,7 @@ print("log-vraisemblance croissante :",
 
 Nous avons jusqu'ici manipulé EM comme une recette qui marche. Cette dernière section dévoile **pourquoi** elle marche, grâce à un changement de point de vue d'une grande portée : voir le mélange comme un modèle à **variable latente** (latent variable), puis construire la **borne inférieure de l'évidence** (ELBO). C'est la clé théorique qui justifie la monotonie d'EM et qui sous-tend les modèles génératifs profonds modernes.
 
-#### Le tirage en deux temps, formalise
+#### Le tirage en deux temps, formalisé
 
 Reprenons la recette de génération (« choisir une cloche, puis tirer dedans »). Introduisons une variable cachée qui dit **de quelle cloche** vient chaque point.
 
@@ -500,7 +500,7 @@ r_{nk} = p(z_{nk}=1 \mid \mathbf{x}_n) = \frac{p(z_{nk}=1)\,p(\mathbf{x}_n\mid z
 
 > **Le déclic.** L'étape E n'est pas une astuce sortie d'un chapeau : c'est **le calcul de la loi a posteriori de la variable cachée**. « Quelle est la proba que ce point vienne de la cloche $`k`$, maintenant que je l'observe ? » Tout EM découle de cette lecture probabiliste.
 
-#### La vraisemblance complete
+#### La vraisemblance complète
 
 Si on connaissait les étiquettes $`\mathbf{z}_n`$ (données complètes), la log-vraisemblance serait **facile**, plus de log d'une somme :
 
@@ -514,7 +514,7 @@ Le $`\ln`$ tombe maintenant **directement** sur chaque gaussienne (grâce au $`z
 
 > **Que veut dire « espérance » et le symbole $`\mathbb{E}`$ ?** L'**espérance** d'une quantité qui varie au hasard, c'est sa **valeur moyenne attendue** sur le long terme, en pondérant chaque valeur possible par sa probabilité. Image : à un jeu où vous gagnez $`10`$ € une fois sur quatre et $`0`$ € sinon, votre gain « espéré » par partie est $`\tfrac14\times 10 + \tfrac34\times 0 = 2{,}5`$ € (même si vous ne gagnez jamais exactement $`2{,}5`$ € en une partie). Le symbole **$`\mathbb{E}`$** (le « E ajouré », lu « espérance de » ou « E de ») note cette moyenne : $`\mathbb{E}[\,\cdot\,]`$ se lit « la moyenne attendue de ce qu'il y a dans les crochets ». La barre $`\mid`$ à l'intérieur ($`\mathbb{E}[z_{nk}\mid\mathbf{x}_n]`$) signifie « **sachant** $`\mathbf{x}_n`$ » (la moyenne une fois qu'on a observé ce point). Joli résultat : comme $`z_{nk}`$ ne vaut que $`0`$ ou $`1`$, sa moyenne **est** directement la probabilité qu'il vaille $`1`$, c'est-à-dire la responsabilité $`r_{nk}`$. (Le petit indice de $`\mathbb{E}_q`$ croisé plus bas précise « moyenne calculée selon la loi $`q`$ ».)
 
-#### La borne inferieure de l'evidence (ELBO)
+#### La borne inférieure de l'évidence (ELBO)
 
 Voici l'outil qui unifie et justifie tout. Pour n'importe quelle distribution $`q(\mathbf{Z})`$ sur les étiquettes cachées, on a une décomposition exacte.
 
@@ -549,7 +549,7 @@ L'identité clé, valable pour tout $`q`$ et tout $`\boldsymbol{\theta}`$, est (
 
 Le premier terme vaut $`\ln p(\mathbf{X}\mid\boldsymbol{\theta})\sum_{\mathbf{Z}}q(\mathbf{Z}) = \ell(\boldsymbol{\theta})`$ (car $`\sum_{\mathbf{Z}}q(\mathbf{Z})=1`$ et $`\ln p(\mathbf{X}\mid\boldsymbol{\theta})`$ ne dépend pas de $`\mathbf{Z}`$). Le second vaut $`-\mathrm{KL}(q\,\|\,p(\cdot\mid\mathbf{X},\boldsymbol{\theta}))`$ (le signe vient du quotient inversé dans la définition de la KL). D'où $`\mathcal{F} = \ell - \mathrm{KL}`$, soit $`\ell = \mathcal{F} + \mathrm{KL}`$. Comme $`\mathrm{KL}\ge 0`$, on a $`\ell(\boldsymbol{\theta}) \ge \mathcal{F}(q,\boldsymbol{\theta})`$: l'ELBO est bien un plancher. $`\;\blacksquare`$
 
-#### EM relu comme une montee de colline a deux pas
+#### EM relu comme une montée de colline à deux pas
 
 Cette décomposition donne la **vraie** définition d'EM : une **maximisation par coordonnées alternées** de l'ELBO $`\mathcal{F}(q,\boldsymbol{\theta})`$, d'abord en $`q`$ (étape E), puis en $`\boldsymbol{\theta}`$ (étape M).
 
@@ -557,10 +557,10 @@ Cette décomposition donne la **vraie** définition d'EM : une **maximisation pa
 
 ```mermaid
 flowchart TD
-    subgraph EE["Etape E : on bouge q (theta fige)"]
+    subgraph EE["Étape E : on bouge q (theta figé)"]
       E1["Maximiser F en q<br/>=> q = p(Z|X, theta)<br/>=> KL = 0, le plancher touche le plafond"]
     end
-    subgraph MM["Etape M : on bouge theta (q fige)"]
+    subgraph MM["Étape M : on bouge theta (q figé)"]
       M1["Maximiser F en theta<br/>=> nouveaux pi, mu, Sigma<br/>=> le plancher monte, donc le plafond aussi"]
     end
     E1 --> M1 --> E1
@@ -570,7 +570,7 @@ flowchart TD
 
 > **Étape M = soulever le plancher.** À $`q^\star`$ fixé, on maximise $`\mathcal{F}(q^\star,\boldsymbol{\theta})`$ en $`\boldsymbol{\theta}`$. Comme l'entropie $`\mathbb{H}(q^\star)`$ ne dépend pas de $`\boldsymbol{\theta}`$, cela revient à maximiser $`\mathbb{E}_{q^\star}[\ln p(\mathbf{X},\mathbf{Z}\mid\boldsymbol{\theta})]`$, exactement la **vraisemblance complète espérée** vue plus haut, dont la solution close donne les formules de mise à jour de $`\pi_k, \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k`$.
 
-#### Demonstration propre de la monotonie d'EM
+#### Démonstration propre de la monotonie d'EM
 
 On peut maintenant prouver le théorème de la section précédente proprement.
 
@@ -594,17 +594,17 @@ En enchaînant : $`\ell(\boldsymbol{\theta}^{(t+1)}) \overset{(3)}{\ge} \mathcal
 
 > **Trois mots lâchés ci-dessus, pour aller plus loin (notions de chapitres ultérieurs).** La *différentiation automatique* est un outil qui calcule tout seul les dérivées d'une fonction écrite en code, sans qu'on ait à les poser à la main. L'*optimiseur Adam* est une recette très répandue pour ajuster les réglages pas à pas dans la bonne direction, une variante futée de la descente de gradient. L'*astuce de reparamétrisation* est une réécriture qui permet de dériver à travers un tirage aléatoire, en séparant le hasard des réglages. Vous pouvez ignorer ces trois termes pour le moment : ils ne servent que dans les modèles profonds et seront vus plus tard.
 
-#### Vue d'ensemble synthetique
+#### Vue d'ensemble synthétique
 
 ```mermaid
 flowchart TD
-    A["Donnees multimodales<br/>(plusieurs bosses)"] --> B["Modele : melange<br/>p = somme pi_k N(mu_k, Sigma_k)"]
+    A["Données multimodales<br/>(plusieurs bosses)"] --> B["Modèle : mélange<br/>p = somme pi_k N(mu_k, Sigma_k)"]
     B --> C["Variable latente z :<br/>de quelle cloche vient le point ?"]
     C --> D["Vraisemblance = log d'une somme<br/>=> pas de solution close"]
-    D --> E["EM : alterner E et M<br/>= monter l'ELBO par coordonnees"]
-    E --> F["E : responsabilites r_nk<br/>= posterior p(z|x)"]
-    E --> G["M : pi_k=Nk/N, mu_k, Sigma_k<br/>moyennes ponderees"]
-    F --> H["Garantie : ell croit, converge<br/>(optimum LOCAL)"]
+    D --> E["EM : alterner E et M<br/>= monter l'ELBO par coordonnées"]
+    E --> F["E : responsabilités r_nk<br/>= posterior p(z|x)"]
+    E --> G["M : pi_k=Nk/N, mu_k, Sigma_k<br/>moyennes pondérées"]
+    F --> H["Garantie : ell croît, converge<br/>(optimum LOCAL)"]
     G --> H
 ```
 
@@ -614,7 +614,7 @@ flowchart TD
 
 Les corrigés sont détaillés juste après chaque énoncé.
 
-#### Exercice 1 : Verifier qu'un melange est bien une densite
+#### Exercice 1 : Vérifier qu'un mélange est bien une densité
 
 Soit le mélange $`1`$ D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\mathcal{N}(x\mid 3, 4)`$ (les seconds arguments sont des **variances**).
 **(a)** Vérifier que $`p`$ est une densité. **(b)** Calculer l'espérance $`\mathbb{E}[X]`$. **(c)** La variance $`\mathrm{Var}[X]`$.
@@ -625,7 +625,7 @@ Soit le mélange $`1`$ D $`p(x) = 0{,}4\,\mathcal{N}(x\mid -2, 1) + 0{,}6\,\math
 > **(c)** On utilise $`\mathrm{Var}[X] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2`$ avec $`\mathbb{E}[X^2] = \sum_k \pi_k(\sigma_k^2 + \mu_k^2)`$ (car pour chaque composante $`\mathbb{E}[X^2\mid k] = \sigma_k^2+\mu_k^2`$). Donc $`\mathbb{E}[X^2] = 0{,}4(1 + 4) + 0{,}6(4 + 9) = 0{,}4\times 5 + 0{,}6\times 13 = 2 + 7{,}8 = 9{,}8`$. D'où $`\mathrm{Var}[X] = 9{,}8 - 1{,}0^2 = 8{,}8`$.
 > **Leçon:** la variance d'un mélange ($`8{,}8`$) dépasse la moyenne pondérée des variances ($`0{,}4\times1+0{,}6\times4 = 2{,}8`$) : l'écart entre les centres ajoute exactement la variance « inter-composantes » $`\sum_k \pi_k(\mu_k-\mathbb{E}[X])^2 = 0{,}4\times 9 + 0{,}6\times 4 = 6{,}0`$, et $`2{,}8 + 6{,}0 = 8{,}8`$.
 
-#### Exercice 2 : Calcul de responsabilites a la main
+#### Exercice 2 : Calcul de responsabilités à la main
 
 Mélange $`1`$ D : $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_2=2, \sigma_2^2=1`$. Calculer $`r_{1}`$ et $`r_{2}`$ pour le point $`x=1`$.
 
@@ -635,7 +635,7 @@ Mélange $`1`$ D : $`\pi_1=0{,}5, \mu_1=0, \sigma_1^2=1`$ et $`\pi_2=0{,}5, \mu_
 > Les deux sont égales ! Donc $`r_1 = \frac{0{,}5\,e^{-0{,}5}}{0{,}5\,e^{-0{,}5}+0{,}5\,e^{-0{,}5}} = 0{,}5`$ et $`r_2 = 0{,}5`$.
 > **Leçon:** le point $`x=1`$ est pile au milieu des deux centres ; il est partagé équitablement (responsabilités $`50/50`$). C'est la frontière de décision (la *frontière de décision* est la ligne de partage où l'on hésite à parts égales entre deux groupes : d'un côté on penche pour l'un, de l'autre côté pour l'autre, comme la limite entre deux territoires).
 
-#### Exercice 3 : Une iteration complete d'EM
+#### Exercice 3 : Une itération complète d'EM
 
 Données $`1`$ D : $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation : $`\pi_1=\pi_2=0{,}5`$, $`\mu_1=0, \mu_2=5`$, $`\sigma_1^2=\sigma_2^2=1`$. Effectuer **une** étape E puis **une** étape M (on pourra arrondir les responsabilités à $`0`$ ou $`1`$ vu la séparation).
 
@@ -647,7 +647,7 @@ Données $`1`$ D : $`x = (-1,\ 0,\ 4,\ 5)`$, $`K=2`$. Initialisation : $`\pi_1=\
 > - $`\sigma_1^2 = \tfrac12[(-1+0{,}5)^2+(0+0{,}5)^2] = \tfrac12[0{,}25+0{,}25] = 0{,}25`$; idem $`\sigma_2^2 = 0{,}25`$.
 > **Leçon:** une seule passe place déjà les centres sur les vraies moyennes des paquets et resserre les variances. EM converge très vite quand les groupes sont bien séparés.
 
-#### Exercice 4 : Singularite du maximum de vraisemblance
+#### Exercice 4 : Singularité du maximum de vraisemblance
 
 Montrer que pour un GMM $`1`$ D avec $`K\ge 2`$, on peut rendre la log-vraisemblance arbitrairement grande. En déduire un remède.
 
@@ -669,7 +669,7 @@ Sans recopier la démonstration du cours, montrer directement que $`\ell(\boldsy
 > ```
 > **Leçon:** l'ELBO surgit naturellement de Jensen. L'égalité a lieu quand le rapport $`p(\mathbf X,\mathbf Z\mid\boldsymbol\theta)/q(\mathbf Z)`$ est constant en $`\mathbf Z`$, c'est-à-dire quand $`q(\mathbf Z)\propto p(\mathbf X,\mathbf Z\mid\boldsymbol\theta)`$, soit (après normalisation) $`q(\mathbf Z) = p(\mathbf Z\mid\mathbf X,\boldsymbol\theta)`$: on retombe sur l'étape E.
 
-#### Exercice 6 : Choisir $`K`$ par critere d'information
+#### Exercice 6 : Choisir $`K`$ par critère d'information
 
 On hésite entre $`K=2`$ et $`K=3`$. Expliquer pourquoi maximiser la log-vraisemblance ne suffit pas, et proposer un critère.
 
@@ -680,7 +680,7 @@ On hésite entre $`K=2`$ et $`K=3`$. Expliquer pourquoi maximiser la log-vraisem
 > Ces deux formules disent la même idée : « bonne note = bon ajustement ($`-2\ell`$, petit quand $`\ell`$ est grand) **plus** un malus proportionnel au nombre de réglages $`P`$ ». (**AIC** = *Akaike Information Criterion*, **BIC** = *Bayesian Information Criterion* : ce sont juste les noms propres de ces deux notes ; retenez l'idée « ajustement pénalisé par la complexité », pas les sigles.)
 > On choisit le $`K`$ qui **minimise** le critère (l'AIC pénalise moins ; le BIC est plus parcimonieux car il pénalise davantage chaque paramètre, via $`\ln N`$ ; *parcimonieux* veut dire « économe, qui préfère le modèle le plus simple à qualité égale »). Pour un GMM `full` en dimension $`d`$: $`P = \underbrace{(K-1)}_{\pi} + \underbrace{Kd}_{\boldsymbol\mu} + \underbrace{K\frac{d(d+1)}{2}}_{\boldsymbol\Sigma}`$ (les poids ne comptent que pour $`K-1`$ à cause de la contrainte $`\sum_k\pi_k=1`$). Autres approches : validation croisée (une *validation croisée* consiste à **mettre de côté une partie des données pour tester** le modèle dessus, afin de vérifier qu'il marche sur du nouveau et pas seulement sur ce qu'il a vu) sur la log-vraisemblance de données de test, ou mélange bayésien à processus de Dirichlet (`BayesianGaussianMixture` de scikit-learn) qui **élague** (c'est-à-dire **coupe les branches inutiles**, comme on taille un arbre : ici en mettant à zéro le poids des cloches superflues) automatiquement les composantes inutiles en mettant leur poids à zéro.
 
-#### Exercice 7 : Implementer EM en dimension quelconque
+#### Exercice 7 : Implémenter EM en dimension quelconque
 
 Écrire une fonction NumPy `em_gmm(X, K)` pour $`\mathbf{X}\in\mathbb{R}^{N\times d}`$ (la notation $`\mathbb{R}^{N\times d}`$ désigne l'ensemble des **tableaux à $`N`$ lignes et $`d`$ colonnes** : ici une ligne par point de données, une colonne par mesure ; c'est tout le jeu de données rangé en un seul tableau) (covariances `full`), renvoyant $`\pi, \boldsymbol\mu, \boldsymbol\Sigma`$ et la courbe de log-vraisemblance, avec garde-fou anti-singularité.
 

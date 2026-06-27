@@ -12,7 +12,7 @@ L'analogie la plus utile pour tout le chapitre est celle du **gâteau découpé*
 
 > **Que veut dire « axiome » ?** Un **axiome**, c'est une **règle de départ qu'on décide d'accepter sans la démontrer**, une fondation. C'est comme les règles d'un jeu de société qu'on lit avant de jouer : on ne discute pas pourquoi on avance de six cases en faisant un six, on l'admet, et tout le reste de la partie découle de ces quelques règles. Ici, les trois axiomes sont les trois règles de base des probabilités ; tout le calcul probabiliste en découlera.
 
-#### Les trois ingredients : $`\Omega`$, $`\mathcal{F}`$, $`P`$
+#### Les trois ingrédients : $`\Omega`$, $`\mathcal{F}`$, $`P`$
 
 Un **espace probabilisé (probability space)** est un triplet $`(\Omega, \mathcal{F}, P)`$ (un **triplet**, c'est simplement un groupe de trois objets rangés ensemble dans un ordre fixé, comme on rangerait trois ingrédients côte à côte ; les parenthèses et les virgules disent juste « voici ces trois-là, dans cet ordre »). Examinons chaque ingrédient.
 
@@ -60,7 +60,7 @@ Ces trois axiomes sont la traduction littérale du gâteau : (A1) une part n'est
 
 > **Le symbole $`\varnothing`$ (ensemble vide).** Ce symbole représente **« rien du tout »**, le sac complètement vide, l'événement impossible. C'est l'assiette où il n'y a aucune part de gâteau. On verra à l'instant que $`P(\varnothing) = 0`$.
 
-#### Premieres consequences (et leurs preuves)
+#### Premières conséquences (et leurs preuves)
 
 De ces trois axiomes découlent, par pure logique, toutes les règles de calcul usuelles. Démontrons-les : chaque étape reste élémentaire. (Une **preuve** ou **démonstration**, c'est un raisonnement qui part des règles admises et enchaîne des étapes incontestables jusqu'à la conclusion, comme une recette qui prouve qu'on arrive bien au gâteau promis.)
 
@@ -90,7 +90,7 @@ P\!\left( \bigcup_{k=1}^{n} A_{k} \right) = \sum_{k=1}^{\infty} P(A_{k}) = \sum_
 
 > **Remarque (la formule du « ou »).** La règle 5 corrige un piège courant : on ne peut pas additionner bêtement $`P(A)`$ et $`P(B)`$ pour avoir « $`A`$ ou $`B`$ », car on compterait deux fois la zone commune $`A \cap B`$. On la retranche une fois. C'est exactement comme compter les élèves qui font du sport **ou** de la musique : on additionne les deux clubs, puis on enlève une fois ceux qui sont dans les deux.
 
-#### Un exemple chiffre deroule : le de equilibre
+#### Un exemple chiffré déroulé : le dé équilibré
 
 Prenons $`\Omega = \{1,2,3,4,5,6\}`$, $`\mathcal{F} = \mathcal{P}(\Omega)`$ (toutes les parties, ici $`2^{6} = 64`$ événements possibles, car chaque face est soit dedans soit dehors), et $`P`$ uniforme : $`P(\{\omega\}) = \tfrac{1}{6}`$ pour chaque face.
 
@@ -101,7 +101,7 @@ Prenons $`\Omega = \{1,2,3,4,5,6\}`$, $`\mathcal{F} = \mathcal{P}(\Omega)`$ (tou
 - $`A \cap B = \{6\}`$, donc $`P(A\cap B) = \tfrac{1}{6}`$.
 - Par inclusion-exclusion : $`P(A \cup B) = \tfrac{1}{2} + \tfrac{1}{3} - \tfrac{1}{6} = \tfrac{3}{6}+\tfrac{2}{6}-\tfrac{1}{6} = \tfrac{4}{6} = \tfrac{2}{3}`$. Vérification directe : $`A \cup B = \{2,4,5,6\}`$, soit $`4`$ faces sur $`6`$, bien $`\tfrac{2}{3}`$.
 
-#### Variables aleatoires et loi image
+#### Variables aléatoires et loi image
 
 En pratique, on ne s'intéresse presque jamais à $`\omega`$ brut (le « papier tiré »), mais à une **mesure numérique** qu'on en extrait : le gain d'un pari, la taille d'une personne, le pixel d'une image. C'est le rôle de la **variable aléatoire (random variable)**.
 
@@ -188,7 +188,7 @@ L'image est limpide : la masse de probabilité est posée en **paquets discrets*
 > ```
 > On le vérifie à la main : les séquences à $`2`$ piles sont PPF, PFP, FPP, soit $`3`$ cas sur $`2^3 = 8`$ également probables, bien $`\tfrac{3}{8}`$.
 
-#### Le cas continu : la densite
+#### Le cas continu : la densité
 
 Quand $`X`$ prend ses valeurs dans un continuum (un poids exact en kilogrammes, un temps d'attente), un phénomène contre-intuitif apparaît : la probabilité de tomber sur **une** valeur précise est **nulle**. La probabilité qu'une personne mesure exactement $`1{,}750000\dots`$ m est $`0`$, car il y a une infinité non dénombrable de tailles possibles. On ne peut plus poser des jetons sur des points : la masse est **étalée comme une couche de beurre** sur la droite, et ce qui compte est son **épaisseur locale**.
 
@@ -204,7 +204,7 @@ Quand $`X`$ prend ses valeurs dans un continuum (un poids exact en kilogrammes, 
 
 > **Piège classique.** En continu, $`P(X = a) = \int_a^a p_X(x)\,\mathrm{d}x = 0`$ pour tout point $`a`$. Conséquence pratique : les inégalités larges et strictes donnent la même probabilité, $`P(X \le a) = P(X < a)`$. C'est faux en discret, où un point porte une masse non nulle.
 
-#### Le pont unificateur : la fonction de repartition
+#### Le pont unificateur : la fonction de répartition
 
 La **fonction de répartition** $`F_X(x) = P(X \le x)`$ réconcilie les deux mondes : elle existe **toujours**, discret ou continu. Elle est croissante (au sens large), continue à droite, tend vers $`0`$ en $`-\infty`$ et vers $`1`$ en $`+\infty`$.
 
@@ -274,7 +274,7 @@ Tout l'édifice du calcul probabiliste, et, on le verra, de l'apprentissage bay�
 
 L'image est parlante : dans le tableur, la loi marginale de $`X`$, c'est la colonne des **totaux de lignes**, écrite dans la **marge** du tableau (d'où le nom). On a aplati la dimension $`Y`$ en additionnant tout le long.
 
-#### Probabilite conditionnelle, regle du produit
+#### Probabilité conditionnelle, règle du produit
 
 > **Le symbole barre $`\mid`$ dans $`p(x \mid y)`$ (conditionnement).** Cette barre verticale se lit **« sachant que »**. La quantité $`p(x \mid y) = P(X = x \mid Y = y)`$ est la probabilité que $`X = x`$ **une fois qu'on sait déjà** que $`Y = y`$. Image : on a appris une information ($`Y=y`$), donc on **jette tout le reste du gâteau** et on ne regarde plus que la tranche où $`Y=y`$; on y recalcule les proportions pour que cette tranche fasse à son tour un gâteau entier (de masse $`1`$). Conditionner, c'est **zoomer sur un sous-monde** et y renormaliser.
 
@@ -298,7 +298,7 @@ L'image est parlante : dans le tableur, la loi marginale de $`X`$, c'est la colo
 
 > **Le cas du tout premier facteur ($`i=1`$).** Pour $`i=1`$, le terme s'écrit $`p(x_1 \mid x_1, \dots, x_0)`$, c'est-à-dire un conditionnement sur un historique **vide** : il n'y a aucune variable avant $`x_1`$. Ne soyez pas dérouté par cette écriture de bord ; dans ce cas, le facteur vaut tout simplement la marginale $`p(x_1)`$, puisqu'on ne conditionne sur rien.
 
-#### Le theoreme de Bayes
+#### Le théorème de Bayes
 
 En combinant les deux écritures de la règle du produit, $`p(x \mid y)\,p(y) = p(y \mid x)\,p(x)`$, on isole $`p(x \mid y)`$ et l'on obtient le résultat le plus important de tout le chapitre.
 
@@ -365,7 +365,7 @@ print(round(posterior, 4))    # 0.0194  -> ~1.9 %
 
 Une distribution complète (PMF ou PDF) contient toute l'information, mais elle est souvent trop riche à manipuler. On la **résume** par quelques nombres clés : où est-elle centrée (espérance), à quel point est-elle étalée (variance), comment deux variables bougent-elles ensemble (covariance) ?
 
-#### L'esperance : le centre de gravite
+#### L'espérance : le centre de gravité
 
 > **Le symbole $`\mathbb{E}`$ (espérance).** Ce symbole (un E stylisé, qui se lit **« espérance de »**) représente **la moyenne pondérée par les probabilités** (« **pondérée** » veut dire que chaque valeur compte **proportionnellement à sa chance d'arriver** : les résultats fréquents pèsent plus lourd dans la moyenne, comme sur une balance où l'on poserait des poids différents), c'est-à-dire la valeur « typique » autour de laquelle la variable se balance. Image physique exacte : si on pose les masses de probabilité le long d'une règle, $`\mathbb{E}[X]`$ est le **point d'équilibre**, le centre de gravité où la règle tient en équilibre sur un doigt. On le note aussi $`\mu`$ (mu). Ce n'est pas la valeur la plus probable, c'est la moyenne « à la longue ».
 
@@ -419,7 +419,7 @@ On a juste utilisé la marginalisation $`\sum_y p(x,y) = p(x)`$. $`\blacksquare`
 > Variance : $`\mathrm{Var}(X) = \tfrac{91}{6} - 3{,}5^2 = 15{,}1\overline 6 - 12{,}25 = \tfrac{105}{36} \approx 2{,}9167`$.
 > Écart-type : $`\sigma_X = \sqrt{2{,}9167} \approx 1{,}708`$.
 
-#### Covariance et correlation : bouger ensemble
+#### Covariance et corrélation : bouger ensemble
 
 > **Le symbole $`\mathrm{Cov}`$ (covariance).** Ce symbole représente **la tendance de deux variables à varier dans le même sens**. Quand $`X`$ est au-dessus de sa moyenne, $`Y`$ l'est-il aussi ? Si oui (covariance positive), elles montent ensemble ; si $`Y`$ est plutôt en dessous quand $`X`$ est au-dessus (covariance négative), elles vont en sens opposés. Image : deux danseurs ; la covariance dit s'ils bougent en harmonie (positif), à contretemps (négatif) ou indépendamment (zéro).
 
@@ -457,7 +457,7 @@ Pour un **vecteur aléatoire** $`\mathbf{X} = (X_1, \dots, X_d)^\top`$, on rasse
 
 > **Pourquoi semi-définie positive ?** Pour tout vecteur $`\mathbf{v}`$, la combinaison $`\mathbf{v}^\top \mathbf{X}`$ est une variable aléatoire scalaire (un **scalaire**, c'est simplement **un nombre seul**, par opposition à une liste de nombres ou à un tableau : ici, le résultat de la combinaison se résume à un unique nombre), donc sa variance est $`\ge 0`$. Or $`\mathrm{Var}(\mathbf{v}^\top\mathbf{X}) = \mathbf{v}^\top \boldsymbol{\Sigma}\,\mathbf{v} \ge 0`$, ce qui est **exactement** la définition d'une matrice semi-définie positive. La structure géométrique (vecteurs/matrices des chapitres précédents) rejoint ici la probabilité.
 
-#### Independance
+#### Indépendance
 
 > **Définition (indépendance).** Deux variables $`X, Y`$ sont **indépendantes (independent)**, noté $`X \perp\!\!\!\perp Y`$, si leur loi jointe se **factorise** (« se **factoriser** », c'est pouvoir s'écrire comme un **produit** de morceaux plus simples, ici $`p(x)`$ fois $`p(y)`$ ; comme $`6 = 2\times3`$ se décompose en facteurs) :
 > ```math
@@ -524,7 +524,7 @@ La **loi normale**, ou **gaussienne (Gaussian)**, est la distribution la plus im
 
 Imaginez une planche de Galton : des billes tombent et rebondissent à gauche ou à droite sur des clous, au hasard. En bas, elles s'empilent : beaucoup au centre, de moins en moins sur les côtés, formant une **courbe en cloche** symétrique. Chaque bille subit une **somme** de petits chocs aléatoires indépendants ; le résultat se concentre autour du centre avec une dispersion régulière. Cette cloche, c'est la gaussienne, et son apparition systématique dès qu'on additionne du hasard n'est pas un accident : c'est une loi mathématique profonde.
 
-#### Definition univariee
+#### Définition univariée
 
 > **Le symbole $`\mathcal{N}(\mu, \sigma^2)`$ (loi normale).** Ce symbole représente **la cloche caractérisée par deux réglages seulement**: $`\mu`$ (mu), qui dit **où** est le sommet (le centre), et $`\sigma^2`$ (sigma au carré), qui dit **à quel point** la cloche est large ou étroite. Image : $`\mu`$ déplace la cloche horizontalement (translation), $`\sigma`$ l'étire ou la resserre (zoom horizontal). Deux boutons, et toute la famille des cloches est décrite.
 
@@ -551,14 +551,14 @@ Décortiquons cette formule, morceau par morceau, car chaque partie a un rôle p
 > On centre (on retranche la moyenne) puis on réduit (on divise par l'écart-type). Cette opération, le **z-score**, est exactement le prétraitement de **normalisation des données** omniprésent en ML.
 
 > **La règle empirique 68–95–99,7.** Pour une gaussienne, la probabilité de tomber dans un intervalle autour de la moyenne est universelle :
-> | Intervalle | Probabilite |
+> | Intervalle | Probabilité |
 > |---|---|
 > | $`[\mu - \sigma,\ \mu + \sigma]`$ | $`\approx 68{,}3\%`$ |
 > | $`[\mu - 2\sigma,\ \mu + 2\sigma]`$ | $`\approx 95{,}4\%`$ |
 > | $`[\mu - 3\sigma,\ \mu + 3\sigma]`$ | $`\approx 99{,}7\%`$ |
 > Autrement dit, il est très rare (moins de $`0{,}3\%`$) de s'éloigner de plus de trois écarts-types. D'où l'expression « événement à trois sigmas ».
 
-#### Theoreme central limite
+#### Théorème central limite
 
 > **Théorème (central limite, CLT).** Soit $`X_1, X_2, \dots`$ des variables i.i.d. d'espérance $`\mu`$ et de variance finie $`\sigma^2 > 0`$. Alors la moyenne empirique $`\bar X_n = \tfrac1n\sum_{i=1}^n X_i`$, une fois centrée et réduite, converge en loi vers la normale standard :
 > ```math
@@ -569,7 +569,7 @@ Décortiquons cette formule, morceau par morceau, car chaque partie a un rôle p
 
 C'est la justification profonde de l'omniprésence gaussienne : **dès qu'une grandeur résulte de la somme de nombreux petits effets aléatoires indépendants, elle est approximativement normale**, quelle que soit la loi de chaque effet. La planche de Galton en est l'incarnation physique. Ce théorème fonde aussi l'inférence statistique (intervalles de confiance, tests).
 
-#### La gaussienne multivariee
+#### La gaussienne multivariée
 
 En grande dimension, la cloche devient une « colline » dans l'espace, et les deux boutons deviennent un vecteur moyenne et une matrice de covariance.
 
@@ -580,7 +580,7 @@ En grande dimension, la cloche devient une « colline » dans l'espace, et les d
 
 La structure est **identique** au cas scalaire, traduite en algèbre linéaire (chapitres précédents) :
 
-| Univarie | Multivarie | Role |
+| Univarié | Multivarié | Rôle |
 |---|---|---|
 | $`\mu`$ | $`\boldsymbol\mu`$ (vecteur) | centre de la cloche |
 | $`\sigma^2`$ | $`\boldsymbol\Sigma`$ (matrice) | étalement + orientation |
@@ -637,7 +637,7 @@ print(round(mvn.pdf(x), 6))   # 0.040843
 
 Le théorème de Bayes nous donne le posterior, mais son calcul bute sur l'évidence (l'intégrale de normalisation). Il existe une situation bénie où tout se calcule à la main, de façon fermée : la **conjugaison**. Et derrière elle se cache une structure algébrique unificatrice : la **famille exponentielle**.
 
-#### Priors conjugues : rester dans la meme famille
+#### Priors conjugués : rester dans la même famille
 
 > **Définition (conjugaison).** Une famille de priors est **conjuguée (conjugate)** à une vraisemblance donnée si le posterior appartient à la **même famille** que le prior. Autrement dit, observer des données ne fait que **mettre à jour les paramètres** du prior, sans changer sa forme.
 
@@ -744,7 +744,7 @@ print(np.round(np.abs(grad_A - theta).max(), 3))    # ~0 : A'(eta) = E[X]
 
 Dernière brique : que devient une distribution quand on **transforme** la variable ? Comment passer la densité d'un côté à l'autre d'une fonction ? Cette mécanique fonde la simulation (générer n'importe quelle loi à partir du hasard uniforme) et les architectures génératives les plus expressives de 2026.
 
-#### Formule du changement de variables (univarie)
+#### Formule du changement de variables (univarié)
 
 Le piège à éviter d'emblée : **une densité ne se transforme pas comme une simple valeur de fonction**. Si $`Y = g(X)`$, on ne peut pas écrire naïvement $`p_Y(y) = p_X(g^{-1}(y))`$. Il faut corriger par un facteur d'**étirement local**, car transformer l'axe étire ou comprime les tranches d'aire, et l'aire (la probabilité) doit être préservée.
 
@@ -763,7 +763,7 @@ Le piège à éviter d'emblée : **une densité ne se transforme pas comme une s
 > ```
 > On **retrouve exactement** la densité de $`\mathcal N(\mu,\sigma^2)`$ ! Cela démontre au passage la règle de standardisation de la section gaussienne.
 
-#### Cas multivarie : le jacobien
+#### Cas multivarié : le jacobien
 
 > **Théorème (changement de variables, multivarié).** Pour $`\mathbf Y = g(\mathbf X)`$ avec $`g`$ inversible et différentiable (jacobien inversible) :
 > ```math
@@ -855,7 +855,7 @@ Un email est un spam avec probabilité $`P(S)=0{,}3`$. Le mot « gratuit » appa
 > Évidence (règle de la somme) : $`P(G) = P(G\mid S)P(S) + P(G\mid\overline S)P(\overline S) = 0{,}8\times0{,}3 + 0{,}1\times0{,}7 = 0{,}24 + 0{,}07 = 0{,}31`$.
 > Bayes : $`P(S\mid G) = \dfrac{P(G\mid S)P(S)}{P(G)} = \dfrac{0{,}24}{0{,}31} \approx 0{,}774`$, soit environ $`77{,}4\%`$. L'email est très probablement un spam.
 
-#### Exercice 3 : Esperance et variance d'une Bernoulli
+#### Exercice 3 : Espérance et variance d'une Bernoulli
 
 Soit $`X\sim\mathcal B(p)`$ (vaut $`1`$ avec proba $`p`$, $`0`$ sinon). Calculez $`\mathbb E[X]`$ et $`\mathrm{Var}(X)`$ à partir des définitions.
 
@@ -865,7 +865,7 @@ Soit $`X\sim\mathcal B(p)`$ (vaut $`1`$ avec proba $`p`$, $`0`$ sinon). Calculez
 > Variance (Koenig) : $`\mathrm{Var}(X) = \mathbb E[X^2] - \mathbb E[X]^2 = p - p^2 = p(1-p)`$.
 > Remarque : la variance est maximale en $`p=\tfrac12`$ (incertitude maximale) et nulle en $`p\in\{0,1\}`$ (certitude).
 
-#### Exercice 4 : Linearite et variance d'une somme
+#### Exercice 4 : Linéarité et variance d'une somme
 
 Soit $`X, Y`$ deux variables avec $`\mathbb E[X]=2`$, $`\mathbb E[Y]=3`$, $`\mathrm{Var}(X)=4`$, $`\mathrm{Var}(Y)=9`$, $`\mathrm{Cov}(X,Y)=2`$. Calculez $`\mathbb E[2X-Y+1]`$ et $`\mathrm{Var}(2X-Y)`$.
 
@@ -906,7 +906,7 @@ Soit $`X\sim\mathcal N(\mu,\sigma^2)`$ et $`Y = e^{X}`$. Trouvez la densité de 
 > ```
 > Le facteur $`1/y`$ est la correction jacobienne ; sans lui, l'aire ne ferait pas $`1`$. Cette loi modélise des grandeurs positives multiplicatives (prix, revenus, tailles de fichiers).
 
-#### Exercice 8 : Moindres carres comme maximum de vraisemblance gaussien
+#### Exercice 8 : Moindres carrés comme maximum de vraisemblance gaussien
 
 Montrez que, sous l'hypothèse $`y_i = \mathbf w^\top\mathbf x_i + \varepsilon_i`$ avec $`\varepsilon_i\sim\mathcal N(0,\sigma^2)`$ i.i.d., maximiser la vraisemblance des données revient à minimiser la somme des carrés des résidus (un **résidu** est l'**écart entre la vraie valeur observée et la valeur prédite par le modèle** : ce qui « reste » d'erreur une fois la prédiction faite).
 
