@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="680" height="430" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="678" height="428" rx="14" fill="none" stroke="#e2e8f0"/>
+
+  <text x="340" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1b2a4a">Une famille de droites candidates</text>
+  <text x="340" y="56" text-anchor="middle" font-size="13" fill="#64748b">Chaque couple (a, b) donne une droite. Apprendre, c'est choisir celle qui colle le mieux.</text>
+
+  <defs>
+    <marker id="afd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <clipPath id="plot"><rect x="71" y="74" width="549" height="296"/></clipPath>
+  </defs>
+
+  <g stroke="#94a3b8" stroke-width="2.5" fill="none" marker-end="url(#afd)">
+    <line x1="70" y1="370" x2="70" y2="74"/>
+    <line x1="70" y1="370" x2="636" y2="370"/>
+  </g>
+  <text x="350" y="400" text-anchor="middle" font-size="13" fill="#475569">température</text>
+  <text x="34" y="222" text-anchor="middle" font-size="13" fill="#475569" transform="rotate(-90 34 222)">ventes</text>
+
+  <!-- famille de droites candidates (estompées) -->
+  <g stroke="#94a3b8" stroke-width="1.6" opacity="0.30" clip-path="url(#plot)">
+    <line x1="80" y1="300" x2="610" y2="150"/>
+    <line x1="80" y1="336" x2="610" y2="124"/>
+    <line x1="80" y1="262" x2="610" y2="192"/>
+    <line x1="80" y1="350" x2="610" y2="172"/>
+    <line x1="80" y1="292" x2="610" y2="112"/>
+    <line x1="80" y1="322" x2="610" y2="240"/>
+    <line x1="80" y1="224" x2="610" y2="152"/>
+    <line x1="80" y1="360" x2="610" y2="100"/>
+  </g>
+
+  <!-- points de donnees -->
+  <g fill="#0ea5a4" stroke="#ffffff" stroke-width="1.5">
+    <circle cx="120" cy="330" r="6.5"/>
+    <circle cx="185" cy="300" r="6.5"/>
+    <circle cx="250" cy="285" r="6.5"/>
+    <circle cx="320" cy="250" r="6.5"/>
+    <circle cx="390" cy="225" r="6.5"/>
+    <circle cx="460" cy="185" r="6.5"/>
+    <circle cx="530" cy="165" r="6.5"/>
+    <circle cx="590" cy="135" r="6.5"/>
+  </g>
+
+  <!-- droite courante : (a,b) varie, puis se cale sur le bon ajustement -->
+  <line x1="80" x2="610" stroke="#f97316" stroke-width="4" stroke-linecap="round" clip-path="url(#plot)">
+    <animate attributeName="y1" dur="6s" repeatCount="indefinite"
+             values="300;262;352;292;330;330;300" keyTimes="0;0.16;0.33;0.5;0.7;0.9;1"
+             calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+    <animate attributeName="y2" dur="6s" repeatCount="indefinite"
+             values="150;192;172;112;128;128;150" keyTimes="0;0.16;0.33;0.5;0.7;0.9;1"
+             calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/>
+  </line>
+
+  <g font-size="13">
+    <rect x="430" y="400" width="22" height="5" rx="2.5" fill="#f97316"/>
+    <text x="458" y="404" fill="#475569">droite courante (a, b)</text>
+  </g>
+</svg>

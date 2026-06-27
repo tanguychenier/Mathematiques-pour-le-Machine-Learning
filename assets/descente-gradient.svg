@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="680" height="430" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="678" height="428" rx="14" fill="none" stroke="#e2e8f0"/>
+
+  <text x="340" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1b2a4a">La descente de gradient</text>
+  <text x="340" y="56" text-anchor="middle" font-size="13" fill="#64748b">On suit la pente vers le bas ; les pas rétrécissent en approchant du minimum</text>
+
+  <!-- axes -->
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <g stroke="#94a3b8" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+    <line x1="70" y1="370" x2="70" y2="74"/>
+    <line x1="70" y1="370" x2="636" y2="370"/>
+  </g>
+  <text x="350" y="402" text-anchor="middle" font-size="13" fill="#475569">paramètre</text>
+  <text x="34" y="225" text-anchor="middle" font-size="13" fill="#475569" transform="rotate(-90 34 225)">coût</text>
+
+  <!-- bol de coût (parabole) -->
+  <path d="M 120 100 Q 340 560 560 100" fill="none" stroke="#6366f1" stroke-width="3.5"/>
+
+  <!-- trajectoire (positions successives, estompées) -->
+  <g fill="#f97316" opacity="0.28">
+    <circle cx="155" cy="168" r="5"/>
+    <circle cx="208" cy="247" r="5"/>
+    <circle cx="252" cy="293" r="5"/>
+    <circle cx="287" cy="317" r="5"/>
+    <circle cx="314" cy="327" r="5"/>
+    <circle cx="327" cy="329" r="5"/>
+  </g>
+
+  <!-- minimum -->
+  <circle cx="340" cy="330" r="4" fill="#0ea5a4"/>
+  <text x="340" y="352" text-anchor="middle" font-size="12" fill="#0ea5a4" font-weight="600">minimum</text>
+
+  <!-- bille qui descend -->
+  <circle r="10" fill="#f97316" stroke="#fff" stroke-width="2">
+    <animate attributeName="cx" dur="4.5s" repeatCount="indefinite"
+             values="155;208;252;287;314;327;340;340;155"
+             keyTimes="0;0.14;0.28;0.42;0.56;0.70;0.84;0.93;1"
+             calcMode="spline"
+             keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1"/>
+    <animate attributeName="cy" dur="4.5s" repeatCount="indefinite"
+             values="168;247;293;317;327;329;330;330;168"
+             keyTimes="0;0.14;0.28;0.42;0.56;0.70;0.84;0.93;1"
+             calcMode="spline"
+             keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1"/>
+  </circle>
+</svg>
