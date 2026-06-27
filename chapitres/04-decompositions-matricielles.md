@@ -200,6 +200,8 @@ Voici le cœur battant de l'algèbre linéaire appliquée. L'idée est d'une sim
 
 Une matrice fait généralement deux choses à un vecteur : elle le **tourne** et elle l'**étire**. Mais pour certaines directions très spéciales, la matrice **ne tourne pas du tout**: elle se contente d'allonger ou de raccourcir le vecteur le long de sa propre ligne. Ces directions sont les **vecteurs propres** (eigenvectors), et le facteur d'étirement associé est la **valeur propre** (eigenvalue).
 
+![Vecteur propre : la direction que la transformation ne fait pas tourner, seulement etirer d un facteur lambda](../assets/vecteur-propre.svg)
+
 > **Image.** Posez une feuille sur une table et étirez-la horizontalement (×2) et verticalement (÷2). Une flèche dessinée horizontalement reste horizontale (juste deux fois plus longue) : c'est un vecteur propre, de valeur propre $`2`$. Une flèche verticale reste verticale (deux fois plus courte) : vecteur propre de valeur propre $`1/2`$. Une flèche en diagonale, elle, change de direction : ce n'est pas un vecteur propre.
 
 > **Le symbole $`\lambda`$ (lambda).** Ce symbole représente une **valeur propre**: le facteur par lequel un vecteur propre est étiré. Si $`\lambda = 2`$, le vecteur double de longueur sans tourner. Si $`\lambda = -1`$, il garde sa longueur mais pointe dans le sens opposé. Si $`\lambda = 0`$, il est écrasé sur le point zéro. C'est juste un nombre, mais un nombre qui raconte le comportement de la matrice dans une direction.

@@ -582,6 +582,8 @@ Plaçons-nous dans $`\mathbb R^n`$ (un axe par *observation*, pas par caractéri
 
 > **Théorème (projection orthogonale).** $`\hat{\mathbf y}=\mathbf X\hat{\mathbf w}`$ est la projection orthogonale de $`\mathbf y`$ sur $`\mathrm{Col}(\mathbf X)`$. Le résidu $`\mathbf y-\hat{\mathbf y}`$ est orthogonal à *toutes* les colonnes de $`\mathbf X`$: $`\mathbf X^\top(\mathbf y-\hat{\mathbf y})=\mathbf 0`$, ce qui *est* exactement l'équation normale.
 
+![Les moindres carres comme projection : la prediction est la projection orthogonale de y sur l espace des colonnes de X](../assets/projection.svg)
+
 *Démonstration.* L'équation normale $`\mathbf X^\top(\mathbf y-\mathbf X\hat{\mathbf w})=\mathbf0`$ dit que le résidu est orthogonal à chaque colonne de $`\mathbf X`$, donc à tout $`\mathrm{Col}(\mathbf X)`$. Par le théorème de projection dans un espace de Hilbert (un espace de Hilbert est un espace muni d'un produit scalaire, donc d'une notion de longueur et d'angle, et « complet », c'est-à-dire sans trou ; pas besoin d'en savoir plus ici, car notre espace est tout simplement $`\mathbb R^n`$ muni de la distance euclidienne usuelle, l'exemple de base), il existe un unique point de $`\mathrm{Col}(\mathbf X)`$ réalisant la distance minimale à $`\mathbf y`$, caractérisé précisément par cette orthogonalité. Donc $`\mathbf X\hat{\mathbf w}`$ est cette projection. $`\blacksquare`$
 
 ```mermaid

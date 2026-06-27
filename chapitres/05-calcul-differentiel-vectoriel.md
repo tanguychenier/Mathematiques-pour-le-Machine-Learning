@@ -32,6 +32,8 @@ Pour mesurer une pente, on prend deux points sur la courbe, séparés horizontal
 
 C'est la variation verticale (la sortie a bougé de $`f(x+h)-f(x)`$) divisée par la variation horizontale ($`h`$). On appelle cela le **taux d'accroissement**. Puis on fait rétrécir $`h`$ vers zéro : les deux points se rapprochent, la corde se confond avec la tangente, et l'on obtient la pente exacte.
 
+![La derivee est la pente de la tangente : la secante a deux points converge vers la tangente quand ils se rapprochent](../assets/derivee-tangente.svg)
+
 > **Définition (dérivée).** Soit $`f: I \to \mathbb{R}`$ définie sur un intervalle ouvert $`I \subseteq \mathbb{R}`$, et $`x \in I`$. On dit que $`f`$ est **dérivable** (synonyme : différentiable, pour une fonction d'une variable) en $`x`$ si la limite suivante existe et est finie :
 > ```math
 > f'(x) \;=\; \frac{\mathrm{d}f}{\mathrm{d}x}(x) \;=\; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}.
@@ -169,6 +171,8 @@ Considérons une fonction de deux variables, $`f(x_1, x_2)`$. Sa courbe n'est pl
 
 Sur un paysage, la question « quelle est la pente ? » n'a pas une seule réponse : tout dépend de la **direction** vers laquelle on regarde ! La pente vers l'est n'est pas la même que vers le nord. L'idée de la **dérivée partielle** est de fixer toutes les directions sauf une, et de ne mesurer la pente que dans cette direction-la.
 
+![Derivee partielle : a gauche deux robinets (on tourne seulement a), a droite la pente de la coupe du cout](../assets/derivee-partielle.svg)
+
 > **Le symbole $`\partial`$ (« d rond », dérivée partielle).** Ce symbole, un « d » arrondi, représente une dérivée **partielle**: on dérive par rapport à une seule variable en **gelant** toutes les autres comme si c'étaient des constantes. Imaginez que vous êtes sur une colline et que vous ne vous autorisez à marcher **que vers l'est** (variable $`x_1`$), en vous interdisant tout pas vers le nord (variable $`x_2`$ figée) : la pente que vous ressentez sous vos pieds, c'est $`\frac{\partial f}{\partial x_1}`$. Le « rond » sert juste à rappeler « attention, il y a d'autres variables qu'on a mises en pause ».
 
 > **Définition (dérivée partielle).** Soit $`f: \mathbb{R}^n \to \mathbb{R}`$ et $`\mathbf{x} = (x_1, \dots, x_n)`$. La **dérivée partielle** de $`f`$ par rapport à $`x_i`$ est
@@ -188,6 +192,8 @@ Sur un paysage, la question « quelle est la pente ? » n'a pas une seule répon
 Si l'on rassemble toutes les dérivées partielles dans un vecteur, on obtient le **gradient**. C'est l'objet central de toute l'optimisation.
 
 > **Le symbole $`\nabla`$ (nabla, le gradient).** Ce symbole en forme de triangle pointe vers le bas se lit « nabla ». $`\nabla f`$ représente le **vecteur des pentes dans toutes les directions à la fois**. Reprenons la colline : en un point donné, $`\nabla f`$ est une flèche posée au sol qui **pointe dans la direction de la montée la plus raide**, et dont la **longueur** indique à quel point ça grimpe fort. Si vous laissez tomber une bille, elle roule exactement dans la direction $`-\nabla f`$ (l'opposé du gradient). C'est la boussole de la descente de gradient.
+
+![Le gradient pointe vers la montee la plus raide d une colline ; la descente de gradient suit l inverse](../assets/gradient-pente.svg)
 
 > **Définition (gradient).** Pour $`f: \mathbb{R}^n \to \mathbb{R}`$ différentiable, le **gradient** de $`f`$ en $`\mathbf{x}`$ est le vecteur des dérivées partielles :
 > ```math

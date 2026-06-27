@@ -522,6 +522,8 @@ En revanche $`G=\{(x,y,z):x+2y-z = 5\}`$ n'en est pas un : $`\mathbf{0}\notin G`
 
 Intuition : $`\mathrm{Vect}(\mathbf{v})`$ est la droite portée par $`\mathbf{v}`$ (si $`\mathbf{v}\ne\mathbf{0}`$) ; $`\mathrm{Vect}(\mathbf{u},\mathbf{v})`$ est le plan qu'ils tendent (si non colinéaires : deux vecteurs sont **colinéaires** quand ils pointent dans la même direction ou la direction opposée, c'est-à-dire que l'un est un multiple de l'autre, comme deux flèches portées par une même ligne). « Engendrer » l'espace, c'est pouvoir l'atteindre **entièrement** par combinaisons.
 
+![Combinaison lineaire : on etire deux directions de base puis on les met bout a bout pour atteindre un point](../assets/combinaison-lineaire.svg)
+
 #### Application machine learning
 
 L'espace des **paramètres** d'un modèle est un espace vectoriel : un réseau à $`P`$ poids vit dans $`\mathbb{R}^P`$; l'optimisation se promène dans cet espace. (**Optimiser**, c'est chercher le meilleur réglage possible : la valeur des paramètres qui rend l'erreur la plus faible, comme on règle la hauteur d'une chaise jusqu'à la position la plus confortable.) L'espace des **caractéristiques** (features) est lui aussi vectoriel. Additionner deux plongements (embeddings) de mots, c'est de l'algèbre vectorielle, et c'est ce qui rend possibles les fameuses analogies « roi $`-`$ homme $`+`$ femme $`\approx`$ reine ». Enfin, l'ensemble des fonctions représentables par une architecture donnée n'est pas toujours un espace vectoriel (à cause des non-linéarités), mais beaucoup de raisonnements locaux (autour d'un point, via la différentielle) **le sont**: c'est tout l'intérêt de la linéarisation.

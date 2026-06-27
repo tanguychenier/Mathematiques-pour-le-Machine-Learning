@@ -128,6 +128,8 @@ Prenons en dimension $`d=1`$ (sur une droite) deux points : $`x_1 = 1`$ avec $`y
 
 > **« Vecteurs de support ».** Ce sont les *quelques* points qui touchent le bord de la route et qui, à eux seuls, décident où passe la frontière (on le démontrera plus loin). Imaginez une corde à linge tendue entre deux groupes de personnes : seules les personnes les plus avancées de chaque groupe « tiennent » la corde ; on pourrait retirer toutes les autres sans que la corde bouge. Ces points qui « soutiennent » (support) la frontière lui donnent son nom.
 
+![La marge maximale : la rue la plus large entre deux classes, fixee par les vecteurs de support](../assets/svm-marge.svg)
+
 ```python
 import numpy as np
 

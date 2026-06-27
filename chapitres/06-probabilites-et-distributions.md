@@ -307,6 +307,8 @@ En combinant les deux écritures de la règle du produit, $`p(x \mid y)\,p(y) = 
 > \underbrace{p(x \mid y)}_{\text{posterior}} = \frac{\overbrace{p(y \mid x)}^{\text{vraisemblance}}\ \overbrace{p(x)}^{\text{prior}}}{\underbrace{p(y)}_{\text{evidence}}}, \qquad \text{avec} \quad p(y) = \sum_{x'} p(y \mid x')\,p(x').
 > ```
 
+![Raisonnement bayesien : la croyance a priori (large) se resserre en croyance a posteriori apres les donnees](../assets/bayes-update.svg)
+
 > **Comment lire cette formule.** Les **accolades horizontales** (au-dessus ou en dessous des morceaux) ne sont que des **étiquettes** : elles donnent un nom à chaque bout de la formule (« ceci s'appelle le posterior », etc.), comme des flèches d'annotation. La grande barre de fraction se lit « divisé par ». Attention : le $`x'`$ (« $`x`$ prime ») dans la somme **n'est pas une dérivée** ici : c'est juste **un autre nom de variable**, qui sert à passer en revue toutes les valeurs possibles de $`x`$ une à une pendant l'addition (on ne pouvait pas réutiliser la lettre $`x`$ déjà prise à gauche). Les quatre mots posterior, vraisemblance, prior et évidence sont expliqués dans le tableau juste après.
 
 Le dénominateur $`p(y)`$ (l'**évidence**, ou *marginal likelihood*) se calcule par la règle de la somme appliquée au numérateur : il sert uniquement de **constante de normalisation** pour que $`p(\cdot \mid y)`$ soit une vraie loi sommant à $`1`$. D'où la forme opérationnelle qu'on retient :

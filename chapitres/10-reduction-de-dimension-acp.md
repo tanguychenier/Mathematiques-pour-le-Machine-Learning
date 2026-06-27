@@ -107,6 +107,8 @@ S = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{x}_i - \bar{\mathbf{x}})(\mathbf{x}_i - 
 
 > **« Projeter », c'est faire de l'ombre.** Projeter un point sur une direction, c'est exactement ce que fait le soleil avec votre ombre sur le sol : on écrase le point sur une ligne (ou un plan) en gardant seulement sa position le long de cette ligne. La *projection* d'un point, c'est donc l'ombre de ce point sur la direction choisie ; on perd ce qui dépassait sur les côtés et on ne garde que l'ombre.
 
+![ACP : on projette les points sur la direction qui garde le plus de variance (le point le plus proche sur le sous-espace)](../assets/projection.svg)
+
 ```python
 import numpy as np
 

@@ -86,6 +86,8 @@ Un piège guette le boulanger : il pourrait apprendre par cœur « le mardi 3 j'
 
 > **Piège (par cœur vs compréhension).** Une règle qui colle *parfaitement* aux données observées peut être *catastrophique* sur des données nouvelles : elle a appris le bruit, les détails, les accidents du cahier, au lieu de la tendance de fond. C'est le **surapprentissage** (overfitting). A l'opposé, une règle trop rigide rate la tendance : c'est le **sous-apprentissage** (underfitting). Tout l'art consiste à viser juste entre les deux, on y consacrera toute la dernière section, sur le compromis biais-variance.
 
+![Sous-apprentissage, bon ajustement, sur-apprentissage : un modele trop simple ou trop complexe rate la donnee de test](../assets/sur-apprentissage.svg)
+
 > **Le mot « variance ».** Ce mot reviendra souvent : retenez simplement qu'il mesure *à quel point des valeurs s'écartent les unes des autres autour de leur moyenne*, c'est-à-dire leur dispersion. Imaginez des fléchettes plantées dans une cible : si elles sont toutes serrées au même endroit, la variance est petite ; si elles sont éparpillées partout, la variance est grande. Plus précisément, c'est la moyenne des écarts au carré par rapport à la moyenne (on prend le carré pour que les écarts vers le haut et vers le bas ne s'annulent pas).
 
 Pour parler proprement de généralisation, il faut un cadre probabiliste : on suppose que les données ne tombent pas au hasard complet, mais sont **tirées** d'une certaine loi du monde.
@@ -754,6 +756,8 @@ Le double produit s'annule car $`\mathbb{E}[\bar h - \hat h] = \bar h - \bar h =
 > - **Biais** (bias) : l'erreur systématique de la *méthode*, même entraînée parfaitement en moyenne. Un modèle trop rigide (droite pour une courbe) vise toujours à côté : grand biais. C'est l'erreur de la flèche moyenne par rapport au centre de la cible.
 > - **Variance** (variance) : l'instabilité d'un entraînement à l'autre. Un modèle trop souple change radicalement selon le cahier tiré : grande variance. C'est la dispersion des flèches entre elles.
 > - **Bruit** (noise) : l'aléa irréductible $`\sigma^2`$ du monde, qu'*aucun* modèle ne peut effacer. C'est le plancher d'erreur incompressible.
+
+![Deux variances a ne pas confondre : le bruit des donnees (sigma2) versus la variance de l estimateur (la droite trouvee change selon l echantillon)](../assets/deux-variances.svg)
 
 ```mermaid
 flowchart LR

@@ -214,6 +214,8 @@ Le produit scalaire mesure à quel point deux flèches « **pointent dans la mê
 - Si elles sont **perpendiculaires**, leur produit scalaire est **nul** (elles s'ignorent totalement).
 - Si elles pointent en **sens opposés**, leur produit scalaire est **négatif** (elles « s'opposent »).
 
+![Produit scalaire : positif si les fleches vont dans le meme sens, nul si perpendiculaires, negatif si opposees](../assets/produit-scalaire.svg)
+
 Analogie physique : pour pousser un chariot, seule compte la part de votre force qui va dans le sens du mouvement. Le travail d'une force est précisément un produit scalaire $`W = \vec{F} \cdot \vec{d}`$.
 
 > **À propos de cette formule.** La petite flèche au-dessus d'une lettre, $`\vec{F}`$, est une **autre façon de noter un vecteur** (très courante en physique) : $`\vec{F}`$ est la force, $`\vec{d}`$ le déplacement. Le **travail** $`W`$ (de l'anglais *work*) est, en physique, l'énergie réellement fournie : si vous poussez perpendiculairement au mouvement, vous vous fatiguez pour rien, le travail est nul, exactement comme un produit scalaire entre deux flèches perpendiculaires.
@@ -936,6 +938,8 @@ Nous arrivons à l'application la plus opérationnelle de tout le chapitre. **Pr
 #### Intuition imagée
 
 Vous tenez un crayon en l'air au-dessus d'une table, en plein soleil zénithal. Son **ombre** sur la table est sa projection orthogonale sur le plan de la table. L'ombre est « la meilleure représentation » du crayon une fois aplati sur la table : c'est le point de la table le plus proche de la pointe du crayon, et le rayon de soleil (vertical) qui relie le crayon à son ombre est **perpendiculaire** à la table.
+
+![Projection orthogonale : le point le plus proche sur une droite, obtenu en laissant tomber une perpendiculaire](../assets/projection.svg)
 
 #### Projection sur une droite (un vecteur)
 
