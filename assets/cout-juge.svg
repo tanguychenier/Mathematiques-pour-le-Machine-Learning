@@ -3,7 +3,8 @@
   <rect x="1" y="1" width="718" height="438" rx="14" fill="none" stroke="#e2e8f0"/>
 
   <text x="360" y="32" text-anchor="middle" font-size="20" font-weight="700" fill="#1b2a4a">La fonction de coût J(θ) : le juge qui note chaque réglage</text>
-  <text x="360" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">Changez la droite à gauche : à droite, J donne sa note. Plus la droite colle, plus J est petit. Apprendre, c'est descendre au fond du bol.</text>
+  <text x="360" y="49" text-anchor="middle" font-size="12.5" fill="#64748b">Changez la droite à gauche : à droite, le juge J donne sa note.</text>
+  <text x="360" y="67" text-anchor="middle" font-size="12.5" fill="#64748b">Plus la droite colle aux points, plus J est petit. Apprendre, c'est descendre au fond du bol.</text>
 
   <line x1="360" y1="80" x2="360" y2="400" stroke="#e2e8f0" stroke-width="1.5"/>
 
