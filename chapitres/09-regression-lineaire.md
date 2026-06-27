@@ -4,15 +4,21 @@
 
 ### Formulation de la régression linéaire
 
-La régression linéaire est le point de départ de presque tout l'apprentissage statistique. On cherche à prédire une grandeur numérique (un prix, une température, une concentration) à partir d'une ou plusieurs grandeurs mesurées. L'hypothèse centrale, d'une simplicité trompeuse, est que la grandeur à prédire s'exprime comme une combinaison pondérée des grandeurs observées, plus un petit écart inexplicable.
+La régression linéaire est le point de départ de presque tout l'apprentissage statistique (c'est-à-dire l'art de faire apprendre à une machine, à partir d'exemples chiffrés, à deviner une réponse qu'on ne lui a pas donnée). On cherche à prédire une grandeur numérique (un nombre : un prix, une température, une concentration) à partir d'une ou plusieurs grandeurs mesurées. L'hypothèse centrale, d'une simplicité trompeuse, est que la grandeur à prédire s'exprime comme une combinaison pondérée des grandeurs observées (c'est-à-dire qu'on multiplie chaque grandeur par un nombre, son « poids », et qu'on additionne le tout, comme un prix total est la somme de chaque article multiplié par sa quantité), plus un petit écart inexplicable.
+
+> **Que veut dire « linéaire » ?** Le mot vient de « ligne ». Une relation est **linéaire** quand elle est *proportionnelle et additive* : si vous doublez l'entrée, la sortie double ; et l'effet de deux causes est la somme de leurs effets séparés. Pas de courbe, pas de seuil : tout se fait « en ligne droite ». Exemple : si 1 kg de pommes coûte 2 euros, alors 2 kg coûtent 4 euros, 3 kg coûtent 6 euros (proportionnel) ; et le total pommes + poires est la somme du prix des pommes et du prix des poires (additif).
 
 #### Le probleme et son vocabulaire
 
-On dispose de $`n`$ observations. Pour chaque observation $`i`$, on connaît un vecteur d'entrée $`\mathbf{x}_i \in \mathbb{R}^d`$ (les *caractéristiques*, en anglais *features*) et une sortie scalaire $`y_i \in \mathbb{R}`$ (la *cible*, en anglais *target* ou *label*). On postule l'existence d'un vecteur de poids $`\mathbf{w}`$ tel que
+On dispose de $`n`$ observations. Pour chaque observation $`i`$, on connaît un vecteur d'entrée (un *vecteur* est simplement une liste ordonnée de nombres, comme les coordonnées d'un point ou les cases d'une ligne de tableur) $`\mathbf{x}_i \in \mathbb{R}^d`$ (les *caractéristiques*, en anglais *features* : les renseignements mesurés sur l'objet) et une sortie scalaire (un *scalaire* est un nombre tout seul, par opposition à une liste de nombres) $`y_i \in \mathbb{R}`$ (la *cible*, en anglais *target* ou *label* : la valeur qu'on veut prédire). On postule l'existence d'un vecteur de poids $`\mathbf{w}`$ tel que
+
+> **Les symboles $`\in`$ et $`\mathbb{R}^d`$, $`\mathbb{R}`$.** Le symbole $`\in`$ se lit « appartient à » ou « est dans » : il dit de quelle sorte est un objet, comme on dirait « Médor appartient à l'ensemble des chiens ». Le symbole $`\mathbb{R}`$ (un grand R à double barre) se lit « les réels » : c'est l'ensemble de *tous les nombres* (entiers, virgules, négatifs : $`3`$, $`-1{,}5`$, $`0{,}0007`$…). Donc $`y_i \in \mathbb{R}`$ se lit « $`y_i`$ est un nombre ». Le petit exposant dans $`\mathbb{R}^d`$ (l'*exposant*, c'est le petit symbole écrit en haut à droite, comme le $`2`$ dans $`3^2`$) dit *combien* de nombres : $`\mathbb{R}^d`$ est l'ensemble des listes de $`d`$ nombres. Donc $`\mathbf{x}_i \in \mathbb{R}^d`$ se lit « $`\mathbf{x}_i`$ est une liste de $`d`$ nombres ». Image : $`\mathbb{R}^2`$ = tous les points d'une feuille (deux coordonnées), $`\mathbb{R}^3`$ = tous les points de l'espace (trois coordonnées).
 
 ```math
 y_i \approx \mathbf{w}^\top \mathbf{x}_i .
 ```
+
+> **Les symboles $`\approx`$ et $`\top`$, comment les lire.** Le symbole $`\approx`$ se lit « est à peu près égal à » (un signe égal ondulé) : on ne promet pas l'égalité parfaite, juste « très proche ». Le petit $`\top`$ en exposant, dans $`\mathbf{w}^\top`$, se lit **transposée** : transposer, c'est *basculer les lignes en colonnes* (et inversement), comme on ferait pivoter un domino debout pour le coucher. Ici ce basculement sert à coller deux listes de nombres bout à bout pour les multiplier terme à terme puis additionner : c'est exactement l'opération « combinaison pondérée » détaillée juste après. Toute la ligne se lit donc : « la cible $`y_i`$ vaut à peu près la combinaison des caractéristiques de l'exemple $`i`$ pondérées par les poids $`\mathbf{w}`$ ».
 
 > **Les symboles $`n`$ (nombre d'observations) et $`d`$ (nombre de caractéristiques).** $`n`$ est le nombre de *fiches* dont on dispose pour apprendre : si on étudie 200 appartements, $`n = 200`$. $`d`$ est le nombre de *renseignements* portés par chaque fiche : surface, nombre de pièces, étage donnent $`d = 3`$. Retenir : $`n`$ compte les lignes (les exemples), $`d`$ compte les colonnes (les caractéristiques).
 
@@ -64,7 +70,9 @@ x_{n1} & x_{n2} & \cdots & x_{nd}
 \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}.
 ```
 
-Le vecteur des $`n`$ prédictions du modèle s'écrit alors d'un seul coup, par un produit matrice-vecteur :
+> **Comment lire ce grand tableau.** Les grosses parenthèses verticales encadrent simplement une *matrice* (le tableau de nombres). Les petits tirets « --- » de part et d'autre de $`\mathbf{x}_i^\top`$ veulent dire « ici, la fiche $`\mathbf{x}_i`$ est couchée à plat sur toute une ligne ». Les pointillés $`\vdots`$ (verticaux), $`\cdots`$ (horizontaux) et $`\ddots`$ (en diagonale) signifient « et ainsi de suite, on continue le même motif » : on ne récrit pas les milliers de lignes intermédiaires, on les sous-entend. Bref, ce tableau dit juste : chaque ligne est un exemple, chaque colonne une caractéristique.
+
+Le vecteur des $`n`$ prédictions du modèle s'écrit alors d'un seul coup, par un produit matrice-vecteur (multiplier la matrice $`\mathbf{X}`$ par la liste $`\mathbf{w}`$ : pour chaque ligne, on fait la combinaison pondérée vue plus haut, ce qui donne une prédiction par ligne) :
 
 ```math
 \hat{\mathbf{y}} = \mathbf{X}\mathbf{w}, \qquad \hat{y}_i = \mathbf{x}_i^\top \mathbf{w} .
@@ -85,6 +93,8 @@ Le *modèle génératif* (la fiction probabiliste qui dit comment les données n
 ```math
 y_i = \mathbf{w}_\star^\top \mathbf{x}_i + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal{N}(0, \sigma^2),
 ```
+
+> **Le symbole $`\sim`$ (suit la loi) et $`\mathcal{N}`$.** Le tilde $`\sim`$ se lit ici « suit la loi » ou « est tiré au hasard selon » : il branche une quantité aléatoire sur la machine à tirages qui la produit, comme on dirait « le résultat $`\sim`$ un lancer de dé ». La lettre $`\mathcal{N}`$ (un grand N calligraphié) désigne la *loi normale*, la fameuse « courbe en cloche » (détaillée juste en dessous). Donc $`\varepsilon_i \sim \mathcal{N}(0, \sigma^2)`$ se lit : « le bruit $`\varepsilon_i`$ est tiré au hasard selon une cloche centrée sur $`0`$, d'étalement $`\sigma^2`$ ».
 
 ou $`\mathbf{w}_\star`$ est le « vrai » vecteur de poids (inconnu, celui de la nature) et les $`\varepsilon_i`$ sont des tirages indépendants d'une loi normale centrée de variance $`\sigma^2`$.
 
@@ -135,11 +145,11 @@ print("residus     :", residus)      # [ 0.5  0.8  0. ]
 
 ### Estimation des paramètres et moindres carrés
 
-On cherche le $`\mathbf{w}`$ qui rend les prédictions $`\mathbf{X}\mathbf{w}`$ aussi proches que possible des cibles $`\mathbf{y}`$. Reste à définir « proche ». Le choix historique, géométriquement et statistiquement justifié, est la somme des carrés des erreurs.
+On cherche le $`\mathbf{w}`$ qui rend les prédictions $`\mathbf{X}\mathbf{w}`$ aussi proches que possible des cibles $`\mathbf{y}`$. Reste à définir « proche ». Le choix historique, géométriquement et statistiquement justifié, est la somme des carrés des erreurs (d'où le nom *moindres carrés* : on cherche les réglages qui rendent cette somme de carrés la plus petite, « moindre » voulant dire « le plus petit possible »).
 
 #### La fonction de cout des moindres carres
 
-> **Intuition.** Pour chaque exemple, on regarde de combien on se trompe : $`r_i = y_i - \mathbf{x}_i^\top \mathbf{w}`$. On pourrait additionner les valeurs absolues $`|r_i|`$, mais elles ont un coin (non dérivable en 0) et tolèrent mal les grosses erreurs. On préfère additionner les *carrés* $`r_i^2`$: une erreur deux fois plus grande coûte quatre fois plus cher, ce qui pousse fort à corriger les gros écarts, et le carré est une jolie parabole lisse, dérivable partout.
+> **Intuition.** Pour chaque exemple, on regarde de combien on se trompe : $`r_i = y_i - \mathbf{x}_i^\top \mathbf{w}`$ (l'*erreur* sur l'exemple $`i`$, aussi appelée *résidu*). On pourrait additionner les valeurs absolues $`|r_i|`$ (la *valeur absolue*, notée avec deux barres droites $`|\cdot|`$, c'est le nombre rendu positif, sans son signe : $`|{-3}| = 3`$ et $`|3| = 3`$ ; ici cela transforme chaque erreur en distance toujours positive), mais elles ont un coin (la courbe de $`|r|`$ forme un V pointu en $`0`$, *non dérivable* à la pointe : la *dérivée* est la pente de la courbe, et à la pointe d'un V il n'y a pas de pente unique, ce qui gêne les calculs) et tolèrent mal les grosses erreurs. On préfère additionner les *carrés* $`r_i^2`$: une erreur deux fois plus grande coûte quatre fois plus cher, ce qui pousse fort à corriger les gros écarts, et le carré est une jolie parabole lisse, dérivable partout (la pente y est définie en chaque point).
 
 On définit le coût (en anglais *loss* ou *objective*)
 
@@ -165,6 +175,8 @@ Le facteur $`\tfrac12`$ ne change pas l'argument du minimum ; il sert juste à s
 
 Le coût $`J`$ est une fonction quadratique convexe de $`\mathbf{w}`$; son minimum s'obtient en annulant le gradient.
 
+> **« Quadratique » et « annuler le gradient ».** *Quadratique* veut dire « du second degré », c'est-à-dire faisant intervenir des carrés des inconnues (le mot vient du latin *quadratus*, carré) : sa courbe est une parabole (en forme de U), pas une droite. *Annuler le gradient*, c'est chercher l'endroit où la pente est nulle (le sol parfaitement plat) : au fond d'une cuvette, on ne descend ni ne monte dans aucune direction, donc c'est là qu'est le minimum. On résout donc l'équation « pente $`= 0`$ ».
+
 > **Le mot « convexe », rappel d'usage.** Imaginez une fonction en forme de bol, ou de cuvette : elle descend, atteint un creux, puis remonte, sans aucune bosse ni vallon secondaire. C'est cela, une fonction convexe. La conséquence est très pratique : il n'y a qu'un seul creux, et ce creux est forcément le point le plus bas de tous (le minimum global). Donc dès qu'on a trouvé un endroit où la pente est nulle, on est sûr d'être au fond : pas de « faux fond » qui piégerait la recherche. C'est pour cette raison que la régression linéaire se résout proprement, sans risque de rester coincé dans un mauvais minimum.
 
 > **Le symbole $`\nabla`$ (nabla, le gradient), rappel d'usage.** Le triangle pointe en bas représente la *pente dans chaque direction* à la fois : $`\nabla_{\mathbf{w}} J`$ est le vecteur dont la composante $`j`$ est $`\partial J / \partial w_j`$, la sensibilité du coût quand on bouge le curseur $`j`$. Au sommet ou au fond d'une vallée, la pente est nulle dans toutes les directions : c'est pour cela qu'on cherche $`\nabla J = \mathbf{0}`$.
@@ -189,7 +201,7 @@ Annuler ce gradient donne les **équations normales**:
 \boxed{\ \mathbf{X}^\top \mathbf{X}\, \hat{\mathbf{w}} = \mathbf{X}^\top \mathbf{y}\ }
 ```
 
-> **Théorème (existence, unicité, solution OLS).** Le coût $`J`$ est convexe (sa hessienne $`\mathbf{X}^\top\mathbf{X}`$ est semi-définie positive). Tout minimiseur vérifie les équations normales. Si $`\mathbf{X}`$ est de rang plein en colonnes ($`\mathrm{rang}\mathbf{X} = d`$, ce qui exige $`n \ge d`$ et des colonnes linéairement indépendantes), alors $`\mathbf{X}^\top\mathbf{X}`$ est inversible et le minimiseur est **unique**:
+> **Théorème (existence, unicité, solution OLS).** Le coût $`J`$ est convexe (sa hessienne $`\mathbf{X}^\top\mathbf{X}`$ est semi-définie positive ; ces deux mots, *hessienne* et *semi-définie positive*, sont expliqués dans les deux encadrés juste en dessous). Tout minimiseur (c'est-à-dire tout $`\mathbf{w}`$ qui réalise le plus petit coût possible) vérifie les équations normales. Si $`\mathbf{X}`$ est de rang plein en colonnes ($`\mathrm{rang}\mathbf{X} = d`$, ce qui exige $`n \ge d`$, le symbole $`\ge`$ se lisant « plus grand ou égal à » : il faut donc au moins autant d'exemples que de caractéristiques, et des colonnes linéairement indépendantes), alors $`\mathbf{X}^\top\mathbf{X}`$ est inversible (une matrice est *inversible* quand on peut « défaire » sa multiplication, comme la division défait la multiplication des nombres ; le petit exposant $`-1`$, écrit $`(\cdots)^{-1}`$, se lit « inverse de » et joue le rôle de $`1`$ divisé par, mais pour les matrices) et le minimiseur est **unique**:
 > ```math
 > \hat{\mathbf{w}} = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}.
 > ```
@@ -201,6 +213,8 @@ Annuler ce gradient donne les **équations normales**:
 > **Le symbole $`\mathrm{rang}\mathbf{X}`$ (rang), rappel d'usage.** Le rang est le nombre de colonnes *vraiment indépendantes* (non redondantes) de $`\mathbf{X}`$: le nombre de directions réellement distinctes que portent les caractéristiques. Si deux colonnes sont identiques ou proportionnelles (ex. une surface en m² et la même en cm²), elles n'apportent qu'une seule direction : le rang chute, et $`\mathbf{X}^\top\mathbf{X}`$ devient non inversible.
 
 *Démonstration.* La hessienne de $`J`$ est $`\nabla^2 J = \mathbf{X}^\top\mathbf{X}`$. Pour tout $`\mathbf{v}`$, $`\mathbf{v}^\top \mathbf{X}^\top\mathbf{X}\mathbf{v} = \lVert \mathbf{X}\mathbf{v}\rVert_2^2 \ge 0`$, donc $`J`$ est convexe et un point critique est un minimum global. Si $`\mathrm{rang}\mathbf{X}=d`$, alors $`\mathbf{X}\mathbf{v}=\mathbf{0} \Rightarrow \mathbf{v}=\mathbf{0}`$, donc $`\mathbf{v}^\top\mathbf{X}^\top\mathbf{X}\mathbf{v}>0`$ pour $`\mathbf{v}\neq\mathbf0`$: $`\mathbf{X}^\top\mathbf{X}`$ est définie positive, donc inversible, d'où l'unicité et la formule. $`\blacksquare`$
+
+> **Petit lexique de cette démonstration.** Un *point critique* est un endroit où la pente (le gradient) est nulle : un fond de cuvette, un sommet de colline ou un replat. Le symbole $`\Rightarrow`$ se lit « implique » ou « entraîne » : « si ceci, alors cela ». Le symbole $`\neq`$ se lit « différent de » (un signe égal barré : $`\mathbf{v}\neq\mathbf0`$ veut dire « $`\mathbf{v}`$ n'est pas la liste de zéros »). Le carré noir $`\blacksquare`$ en fin de paragraphe est juste la marque traditionnelle « fin de la démonstration » (l'équivalent moderne de « CQFD »).
 
 > **Le symbole $`\mathbf{X}^\top \mathbf{X}`$ (matrice de Gram ; proportionnelle à la matrice de covariance uniquement si les colonnes sont d'abord centrées).** Ce produit, de taille $`d \times d`$, contient *tous les produits scalaires entre colonnes*: sa case $`(j,k)`$ vaut $`\sum_i x_{ij}x_{ik}`$, c'est-à-dire la somme des produits, exemple par exemple, des valeurs des colonnes $`j`$ et $`k`$. Attention : on lit souvent cette case comme « à quel point les caractéristiques $`j`$ et $`k`$ varient ensemble » (une covariance), mais ce n'est exact que si l'on a au préalable retranché la moyenne de chaque colonne (colonnes *centrées*). Sans ce centrage, et en particulier pour la colonne constante de 1 du biais, c'est un simple produit scalaire brut, pas une covariance. C'est le cœur de calcul de la régression : tout se joue dans cette petite matrice carrée, même si on a des millions de lignes.
 
@@ -245,11 +259,11 @@ print(w_hat)                          # [3.07894737 1.81578947]
 print("residus :", y - X @ w_hat)     # somme ~ 0
 ```
 
-> **Piège numérique (important).** N'écrivez **jamais** `np.linalg.inv(XtX) @ Xty`. Former $`\mathbf{X}^\top\mathbf{X}`$ *carré* le conditionnement (en anglais *condition number*) : si $`\mathbf{X}`$ est déjà un peu mal conditionnée, $`\mathbf{X}^\top\mathbf{X}`$ l'est catastrophiquement, et l'inversion explicite amplifie les erreurs d'arrondi. Utilisez un solveur (`np.linalg.solve`), une factorisation de Cholesky de $`\mathbf{X}^\top\mathbf{X}`$, ou mieux une décomposition QR / SVD de $`\mathbf{X}`$ directement (voir plus bas).
+> **Piège numérique (important).** N'écrivez **jamais** `np.linalg.inv(XtX) @ Xty`. Former $`\mathbf{X}^\top\mathbf{X}`$ *carré* le conditionnement (en anglais *condition number* ; le *conditionnement* mesure à quel point une petite erreur sur les nombres d'entrée se transforme en grosse erreur sur le résultat : un calcul « mal conditionné » est comme une balance ultra-sensible qui s'affole au moindre souffle, et l'élever au carré rend la balance encore mille fois plus capricieuse) : si $`\mathbf{X}`$ est déjà un peu mal conditionnée, $`\mathbf{X}^\top\mathbf{X}`$ l'est catastrophiquement, et l'inversion explicite amplifie les erreurs d'arrondi (les minuscules imprécisions que l'ordinateur commet en ne gardant qu'un nombre fini de décimales). Utilisez un solveur (`np.linalg.solve`), une factorisation de Cholesky de $`\mathbf{X}^\top\mathbf{X}`$ (une façon économique de découper une matrice symétrique en deux morceaux triangulaires faciles à résoudre), ou mieux une décomposition QR / SVD de $`\mathbf{X}`$ directement (voir plus bas).
 
 #### La solution par QR (numeriquement stable)
 
-> **Le symbole de la décomposition QR, rappel d'usage.** Factoriser $`\mathbf{X} = \mathbf{Q}\mathbf{R}`$, c'est réécrire les colonnes de $`\mathbf{X}`$ dans une base *orthonormée* (des directions perpendiculaires de longueur 1, rangées dans $`\mathbf{Q}`$) tout en gardant trace du changement de base (dans la triangulaire $`\mathbf{R}`$). « Orthonormé » garantit $`\mathbf{Q}^\top\mathbf{Q} = \mathbf{I}`$, ce qui simplifie radicalement les calculs et évite l'amplification des erreurs d'arrondi.
+> **Le symbole de la décomposition QR, rappel d'usage.** *Factoriser*, c'est décomposer en facteurs, comme on écrit $`12 = 3\times 4`$ ; ici on décompose la matrice $`\mathbf{X}`$ en deux matrices $`\mathbf{Q}`$ et $`\mathbf{R}`$ plus pratiques. Factoriser $`\mathbf{X} = \mathbf{Q}\mathbf{R}`$, c'est réécrire les colonnes de $`\mathbf{X}`$ dans une base *orthonormée* (une *base* est un jeu de directions de référence qui permet de repérer tous les points, comme les axes « gauche-droite » et « haut-bas » d'une carte ; *orthonormée* veut dire que ces directions sont perpendiculaires entre elles et de longueur 1, rangées dans $`\mathbf{Q}`$) tout en gardant trace du changement de base (dans la matrice $`\mathbf{R}`$, dite *triangulaire* car tous ses nombres sous la diagonale sont des zéros, ce qui la rend très rapide à résoudre). « Orthonormé » garantit $`\mathbf{Q}^\top\mathbf{Q} = \mathbf{I}`$, ce qui simplifie radicalement les calculs et évite l'amplification des erreurs d'arrondi.
 
 Si $`\mathbf{X}=\mathbf{Q}\mathbf{R}`$ avec $`\mathbf{Q}\in\mathbb{R}^{n\times d}`$ à colonnes orthonormées ($`\mathbf{Q}^\top\mathbf{Q}=\mathbf{I}_d`$) et $`\mathbf{R}\in\mathbb{R}^{d\times d}`$ triangulaire supérieure inversible, alors $`\mathbf{X}^\top\mathbf{X}=\mathbf{R}^\top\mathbf{Q}^\top\mathbf{Q}\mathbf{R}=\mathbf{R}^\top\mathbf{R}`$ et les équations normales deviennent $`\mathbf{R}^\top\mathbf{R}\hat{\mathbf{w}}=\mathbf{R}^\top\mathbf{Q}^\top\mathbf{y}`$, soit, en simplifiant par $`\mathbf{R}^\top`$ inversible,
 
@@ -275,16 +289,16 @@ Via la SVD $`\mathbf{X}=\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top`$, on a $`\
 
 #### Proprietes statistiques de l'estimateur OLS
 
-Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}`$, $`\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)`$, et $`\mathbf{X}`$ de rang plein déterministe :
+Sous le modèle gaussien $`\mathbf{y}=\mathbf{X}\mathbf{w}_\star+\boldsymbol{\varepsilon}`$, $`\boldsymbol{\varepsilon}\sim\mathcal N(\mathbf0,\sigma^2\mathbf I_n)`$, et $`\mathbf{X}`$ de rang plein déterministe (*déterministe* veut dire « fixé d'avance, pas tiré au hasard » : on considère le tableau $`\mathbf{X}`$ comme connu et figé, seul le bruit $`\boldsymbol{\varepsilon}`$ étant aléatoire) :
 
 > **Le symbole $`\mathbb{E}`$ (espérance) et $`\mathrm{Cov}`$ (covariance), rappel d'usage.** L'espérance $`\mathbb{E}[\cdot]`$ est la *moyenne théorique* sur tous les tirages possibles du bruit : ce qu'on obtiendrait en répétant l'expérience une infinité de fois. La matrice de covariance $`\mathrm{Cov}(\hat{\mathbf{w}})`$ décrit la *dispersion* de l'estimateur autour de cette moyenne : sa diagonale donne la variance de chaque coefficient, ses cases hors diagonale disent si deux coefficients varient ensemble d'un tirage à l'autre.
 
-- **Sans biais (en anglais *unbiased*).** $`\mathbb{E}[\hat{\mathbf{w}}] = \mathbf{w}_\star`$. En effet $`\hat{\mathbf{w}}=(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y=\mathbf w_\star+(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\boldsymbol\varepsilon`$, et $`\mathbb E[\boldsymbol\varepsilon]=\mathbf0`$.
+- **Sans biais (en anglais *unbiased*).** $`\mathbb{E}[\hat{\mathbf{w}}] = \mathbf{w}_\star`$. (Attention : ce *biais* statistique n'est pas le terme constant $`b`$ vu au début ! Ici, *biais* veut dire *erreur systématique*, viser toujours un peu à côté dans le même sens, comme une balance déréglée qui ajoute 100 g à chaque pesée. *Sans biais* signifie donc qu'en moyenne, sur énormément de tirages, l'estimateur tombe pile sur la vraie valeur $`\mathbf{w}_\star`$.) En effet $`\hat{\mathbf{w}}=(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y=\mathbf w_\star+(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\boldsymbol\varepsilon`$, et $`\mathbb E[\boldsymbol\varepsilon]=\mathbf0`$.
 - **Covariance.** $`\mathrm{Cov}(\hat{\mathbf{w}}) = \sigma^2 (\mathbf{X}^\top\mathbf{X})^{-1}`$. Plus les données sont nombreuses et « étalées », plus $`\mathbf X^\top\mathbf X`$ est grande, plus la covariance est petite : l'estimation se resserre.
-- **Loi exacte.** $`\hat{\mathbf{w}} \sim \mathcal N\bigl(\mathbf{w}_\star,\ \sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\bigr)`$ (combinaison linéaire de gaussiennes).
+- **Loi exacte.** $`\hat{\mathbf{w}} \sim \mathcal N\bigl(\mathbf{w}_\star,\ \sigma^2(\mathbf{X}^\top\mathbf{X})^{-1}\bigr)`$ (combinaison linéaire de gaussiennes ; une *combinaison linéaire* est une somme pondérée, le même genre d'objet que la « combinaison pondérée » du début : on multiplie des quantités par des nombres et on additionne).
 - **Théorème de Gauss-Markov.** Parmi *tous* les estimateurs linéaires en $`\mathbf{y}`$ et sans biais, OLS a la plus petite variance (il est *BLUE*, en anglais *Best Linear Unbiased Estimator*). Remarquable : ce résultat ne suppose même pas la normalité, seulement bruit centré, non corrélé, de variance constante.
 
-> **Estimation de $`\sigma^2`$.** On l'estime sans biais par $`\hat\sigma^2=\dfrac{\lVert\mathbf y-\mathbf X\hat{\mathbf w}\rVert_2^2}{n-d}`$ (les $`d`$ paramètres ajustés consomment $`d`$ degrés de liberté ; diviser par $`n-d`$ et non $`n`$ corrige le biais).
+> **Estimation de $`\sigma^2`$.** On l'estime sans biais par $`\hat\sigma^2=\dfrac{\lVert\mathbf y-\mathbf X\hat{\mathbf w}\rVert_2^2}{n-d}`$ (les $`d`$ paramètres ajustés consomment $`d`$ degrés de liberté ; un *degré de liberté*, c'est une quantité que l'on a été libre de régler pour coller aux données, et chaque réglage utilisé « épuise » un peu l'information disponible, d'où le fait de diviser par $`n-d`$ et non $`n`$, ce qui corrige le biais).
 
 #### Descente de gradient : quand la formule fermee ne passe pas
 
@@ -352,7 +366,7 @@ Le gradient s'annule en $`-\mathbf X^\top(\mathbf y-\mathbf X\mathbf w)+\lambda\
 
 > **Pourquoi ça répare tout.** La matrice $`\mathbf X^\top\mathbf X+\lambda\mathbf I_d`$ est **toujours inversible** pour $`\lambda>0`$, même si $`\mathbf X^\top\mathbf X`$ est singulière : on ajoute $`\lambda`$ à chacune de ses valeurs propres, qui passent toutes strictement au-dessus de zéro. La solution existe et est unique même quand $`d>n`$. Le terme $`\lambda\mathbf I_d`$ « remonte la diagonale », d'où le nom historique de *ridge* (la crête).
 
-> **Lecture par la SVD (effet de rétrécissement, en anglais *shrinkage*).** Avec $`\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top`$, OLS donne des coefficients $`\propto 1/\sigma_k`$ sur chaque direction propre $`\mathbf v_k`$, ce qui explose quand $`\sigma_k`$ est minuscule. La ridge remplace le facteur $`1/\sigma_k`$ par $`\sigma_k/(\sigma_k^2+\lambda)`$: les directions à grande variance ($`\sigma_k`$ grand) sont quasi intactes, mais les directions à faible variance (les plus bruitées) sont **fortement atténuées**. La ridge dégonfle sélectivement le bruit. C'est aussi le lien avec l'ACP : on amortit les composantes de petite variance.
+> **Lecture par la SVD (effet de rétrécissement, en anglais *shrinkage*).** Avec $`\mathbf X=\mathbf U\boldsymbol\Sigma\mathbf V^\top`$, OLS donne des coefficients $`\propto 1/\sigma_k`$ (le symbole $`\propto`$ se lit « proportionnel à » : « qui varie comme », à un facteur multiplicatif près) sur chaque direction propre $`\mathbf v_k`$, ce qui explose quand $`\sigma_k`$ est minuscule. La ridge remplace le facteur $`1/\sigma_k`$ par $`\sigma_k/(\sigma_k^2+\lambda)`$: les directions à grande variance ($`\sigma_k`$ grand) sont quasi intactes, mais les directions à faible variance (les plus bruitées) sont **fortement atténuées**. La ridge dégonfle sélectivement le bruit. C'est aussi le lien avec l'ACP (l'*analyse en composantes principales*, une méthode du chapitre 10 qui range les directions des données de la plus étalée à la moins étalée) : on amortit les composantes de petite variance.
 
 ```math
 \hat{\mathbf w}_{\text{ridge}}=\sum_{k=1}^{d}\frac{\sigma_k}{\sigma_k^2+\lambda}\,(\mathbf u_k^\top\mathbf y)\,\mathbf v_k .
@@ -379,7 +393,7 @@ On remplace le carré de la norme par la norme $`\ell_1`$ (somme des valeurs abs
 J_{\text{lasso}}(\mathbf w)=\tfrac12\lVert\mathbf y-\mathbf X\mathbf w\rVert_2^2+\lambda\lVert\mathbf w\rVert_1 .
 ```
 
-> **Pourquoi le lasso sélectionne des variables (en anglais *sparsity*).** La boule $`\ell_1`$ $`\{\,\lVert\mathbf w\rVert_1\le t\,\}`$ est un losange (un *octaèdre* en dimension supérieure) : elle a des *coins* pointus situés sur les axes. Quand les lignes de niveau elliptiques du coût viennent toucher cette boule, le contact se fait très souvent *sur un coin*, c'est-à-dire en un point où certaines coordonnées sont nulles. La boule $`\ell_2`$, parfaitement ronde, n'a pas de coin : elle rétrécit les poids mais ne les annule jamais. Résultat : la lasso fait d'une pierre deux coups, elle régularise *et* sélectionne automatiquement un sous-ensemble de caractéristiques.
+> **Pourquoi le lasso sélectionne des variables (en anglais *sparsity*, la *parcimonie* : le fait d'avoir une solution faite surtout de zéros, donc peu de poids réellement actifs, comme une liste de courses très courte).** La boule $`\ell_1`$ (l'ensemble $`\{\,\lVert\mathbf w\rVert_1\le t\,\}`$ des poids dont la longueur-Manhattan ne dépasse pas $`t`$ ; on l'appelle « boule » par analogie, même si sa forme n'est pas ronde) est un losange (un *octaèdre*, c'est-à-dire la version à plusieurs dimensions du losange, comme un cube est la version 3D du carré) : elle a des *coins* pointus situés sur les axes. Quand les lignes de niveau elliptiques du coût (les *lignes de niveau* sont les courbes qui relient les points de même coût, exactement comme les courbes d'altitude sur une carte de randonnée relient les points de même hauteur ; *elliptiques* veut dire en forme d'ovale) viennent toucher cette boule, le contact se fait très souvent *sur un coin*, c'est-à-dire en un point où certaines coordonnées sont nulles. La boule $`\ell_2`$, parfaitement ronde, n'a pas de coin : elle rétrécit les poids mais ne les annule jamais. Résultat : la lasso fait d'une pierre deux coups, elle régularise *et* sélectionne automatiquement un sous-ensemble de caractéristiques.
 
 ```mermaid
 flowchart LR
@@ -420,6 +434,8 @@ Voici l'un des résultats les plus éclairants du chapitre. On reprend le modèl
 > **Le symbole $`p(\mathbf w \mid \mathbf y)`$ (loi a posteriori), rappel d'usage.** La barre verticale $`\mid`$ se lit « sachant » : $`p(\mathbf w \mid \mathbf y)`$ est la crédibilité des poids $`\mathbf w`$ *une fois les données $`\mathbf y`$ observées*. Le théorème de Bayes la relie à la *vraisemblance* $`p(\mathbf y \mid \mathbf w)`$ (à quel point ces poids expliquent les données) et à la *loi a priori* $`p(\mathbf w)`$ (ce qu'on croyait des poids avant de voir quoi que ce soit). Le *mode* de cette loi a posteriori (son sommet) est l'estimateur MAP.
 
 Le théorème de Bayes donne $`p(\mathbf w\mid\mathbf y)\propto p(\mathbf y\mid\mathbf w)\,p(\mathbf w)`$. En prenant le logarithme négatif :
+
+> **Le symbole $`\log`$ (logarithme) et l'astuce du « $`-\log`$ ».** Le *logarithme*, noté $`\log`$, est une fonction qui *écrase les grands nombres* et, surtout, *transforme les multiplications en additions* : $`\log(a\times b)=\log a+\log b`$. Image : c'est une réglette qui range les nombres non pas un par un, mais par « ordres de grandeur ». Pourquoi s'en servir ici ? Parce que les probabilités se multiplient (et un produit de plein de petits nombres est pénible à manipuler), tandis qu'avec le log on retombe sur de simples sommes. De plus, le logarithme *grandit toujours quand son entrée grandit* (il est croissant) : le réglage qui rend une probabilité maximale rend aussi son log maximal, donc on a le droit de remplacer la probabilité par son log sans changer le gagnant. On prend ici le log *négatif* (un signe moins devant) pour transformer « chercher le plus grand » en « chercher le plus petit », c'est-à-dire en un problème de minimisation comme les moindres carrés.
 
 ```math
 -\log p(\mathbf w\mid\mathbf y)=\underbrace{-\log p(\mathbf y\mid\mathbf w)}_{\text{attache aux donnees}}\ \underbrace{-\log p(\mathbf w)}_{\text{penalite}}+\text{const}.
@@ -469,11 +485,11 @@ Comme prior gaussien et vraisemblance gaussienne sont *conjugués* (en anglais *
 
 > **Les symboles $`\mathbf m_N`$ et $`\mathbf S_N`$.** $`\mathbf m_N`$ est la *moyenne* du posterior (le centre de notre croyance après avoir vu les $`N`$ données, et aussi l'estimateur MAP), $`\mathbf S_N`$ sa *matrice de covariance* (la forme et l'ampleur de notre incertitude résiduelle). L'indice $`N`$ rappelle que ces deux objets dépendent du nombre de données absorbées : plus on en voit, plus $`\mathbf S_N`$ se resserre.
 
-*Démonstration (par completion du carré).* Le log-posterior est
+*Démonstration (par completion du carré : une vieille astuce d'algèbre qui consiste à réécrire une expression du second degré sous la forme d'un carré parfait $`(\dots)^2`$ plus une constante, afin d'y lire directement le centre et l'étalement).* Le log-posterior est
 ```math
 \log p(\mathbf w\mid\mathbf y)=-\tfrac\beta2\lVert\mathbf y-\mathbf X\mathbf w\rVert^2-\tfrac\alpha2\lVert\mathbf w\rVert^2+\text{const}.
 ```
-Le terme quadratique en $`\mathbf w`$ est $`-\tfrac12\mathbf w^\top(\alpha\mathbf I+\beta\mathbf X^\top\mathbf X)\mathbf w`$: on identifie la matrice de précision du posterior $`\mathbf S_N^{-1}=\alpha\mathbf I+\beta\mathbf X^\top\mathbf X`$. Le terme linéaire est $`+\beta\mathbf w^\top\mathbf X^\top\mathbf y`$; pour une gaussienne $`\mathcal N(\mathbf m_N,\mathbf S_N)`$ il vaut $`+\mathbf w^\top\mathbf S_N^{-1}\mathbf m_N`$, d'où $`\mathbf S_N^{-1}\mathbf m_N=\beta\mathbf X^\top\mathbf y`$, soit $`\mathbf m_N=\beta\mathbf S_N\mathbf X^\top\mathbf y`$. $`\blacksquare`$
+Le terme quadratique en $`\mathbf w`$ est $`-\tfrac12\mathbf w^\top(\alpha\mathbf I+\beta\mathbf X^\top\mathbf X)\mathbf w`$: on identifie la matrice de précision du posterior $`\mathbf S_N^{-1}=\alpha\mathbf I+\beta\mathbf X^\top\mathbf X`$ (la *matrice de précision* est simplement l'inverse de la matrice de covariance, exactement comme la précision scalaire est l'inverse de la variance). Le terme linéaire est $`+\beta\mathbf w^\top\mathbf X^\top\mathbf y`$; pour une gaussienne $`\mathcal N(\mathbf m_N,\mathbf S_N)`$ il vaut $`+\mathbf w^\top\mathbf S_N^{-1}\mathbf m_N`$, d'où $`\mathbf S_N^{-1}\mathbf m_N=\beta\mathbf X^\top\mathbf y`$, soit $`\mathbf m_N=\beta\mathbf S_N\mathbf X^\top\mathbf y`$. $`\blacksquare`$
 
 > **Cohérence avec ce qu'on sait.** La moyenne du posterior $`\mathbf m_N`$ *est* l'estimateur MAP ; et c'est exactement la ridge avec $`\lambda=\alpha/\beta=\alpha\sigma^2`$. Quand $`\alpha\to0`$ (prior plat), $`\mathbf m_N\to(\mathbf X^\top\mathbf X)^{-1}\mathbf X^\top\mathbf y`$: on retrouve OLS. La nouveauté, c'est $`\mathbf S_N`$: la *forme de notre ignorance*.
 
@@ -489,7 +505,7 @@ p(y_\star\mid\mathbf x_\star,\mathbf y)=\int p(y_\star\mid\mathbf x_\star,\mathb
 \sigma_\star^2(\mathbf x_\star)=\underbrace{\sigma^2}_{\text{bruit irreductible}}+\underbrace{\mathbf x_\star^\top\mathbf S_N\,\mathbf x_\star}_{\text{incertitude sur }\mathbf w}.
 ```
 
-> **Lecture cruciale.** La variance prédictive à **deux sources**: (1) le bruit de mesure $`\sigma^2`$, qu'on ne pourra jamais supprimer même avec des données infinies ; (2) l'incertitude épistémique $`\mathbf x_\star^\top\mathbf S_N\mathbf x_\star`$, qui *diminue* à mesure qu'on accumule des données. Géométriquement, cette seconde variance **enfle quand $`\mathbf x_\star`$ s'éloigne** des zones où l'on a observé des données : le modèle « avoue » qu'il extrapole. C'est précisément ce qui manque à une prédiction OLS nue.
+> **Lecture cruciale.** La variance prédictive à **deux sources**: (1) le bruit de mesure $`\sigma^2`$, qu'on ne pourra jamais supprimer même avec des données infinies ; (2) l'incertitude épistémique (le mot *épistémique* vient du grec « savoir » : c'est l'incertitude due à notre *manque de connaissance*, celle qui se réduit quand on apprend davantage, par opposition au hasard pur du bruit) $`\mathbf x_\star^\top\mathbf S_N\mathbf x_\star`$, qui *diminue* à mesure qu'on accumule des données. Géométriquement, cette seconde variance **enfle quand $`\mathbf x_\star`$ s'éloigne** des zones où l'on a observé des données : le modèle « avoue » qu'il extrapole (*extrapoler*, c'est deviner *en dehors* de la plage des données déjà vues, terrain où l'on a beaucoup moins de garanties). C'est précisément ce qui manque à une prédiction OLS nue.
 
 > **Le symbole $`\int`$ (intégrale), rappel d'usage.** L'intégrale ici additionne sur toutes les valeurs possibles de $`\mathbf w`$, chacune pondérée par sa crédibilité $`p(\mathbf w\mid\mathbf y)`$. C'est une « moyenne pondérée continue » : au lieu de parier sur un seul $`\mathbf w`$, on consulte *tous* les modèles plausibles et on mélange leurs avis. On appelle cela la *marginalisation*.
 
@@ -540,9 +556,11 @@ Sous le modèle gaussien, la vraisemblance des $`n`$ observations indépendantes
 p(\mathbf y\mid\mathbf w)=\prod_{i=1}^n\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left(-\frac{(y_i-\mathbf x_i^\top\mathbf w)^2}{2\sigma^2}\right).
 ```
 
+> **Les symboles $`\exp`$, $`\sqrt{\ }`$ et $`\pi`$ de cette formule.** $`\exp(\cdot)`$ se lit « exponentielle » : c'est la fonction qui transforme un nombre en une puissance de la constante $`e\approx 2{,}718`$ ; tout ce qu'il faut retenir ici, c'est qu'elle vaut $`1`$ en $`0`$ et décroît très vite vers $`0`$ quand son entrée devient très négative, ce qui dessine justement la « cloche » : plus l'erreur $`(y_i-\mathbf x_i^\top\mathbf w)^2`$ est grande, plus $`\exp`$ de son opposé est petit, donc moins ce réglage est probable. Le signe $`\sqrt{\ }`$ se lit « racine carrée » (l'opération inverse du carré : $`\sqrt{9}=3`$). La lettre $`\pi`$ (pi) est le nombre $`\approx 3{,}14159`$, la même constante que pour le cercle ; ici elle n'est qu'une constante de normalisation pour que l'aire sous la cloche fasse exactement $`1`$.
+
 > **Le symbole $`\prod`$ (produit), rappel d'usage.** Le grand pi est une *boucle qui multiplie* (le frère du sigma qui additionne) : $`\prod_{i=1}^n a_i=a_1\times a_2\times\dots\times a_n`$. Ici on multiplie les probabilités des $`n`$ observations indépendantes (la proba de tout = produit des probas, par indépendance).
 
-La log-vraisemblance (on prend le log car il transforme le produit en somme et est croissant, donc ne déplace pas l'argmax) vaut
+La log-vraisemblance (on prend le log car il transforme le produit en somme et est croissant, donc ne déplace pas l'argmax : l'*argmax* est, comme l'argmin vu plus haut mais dans l'autre sens, l'endroit où une fonction atteint sa plus *grande* valeur) vaut
 ```math
 \log p(\mathbf y\mid\mathbf w)=-\frac{n}{2}\log(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-\mathbf x_i^\top\mathbf w)^2 .
 ```
@@ -655,7 +673,9 @@ print(w)                                          # ~ [0.03 -0.03 1.01]
 
 #### Le passage au dual : tout via les produits scalaires
 
-Observons la solution ridge sous un autre angle. Une identité matricielle (le lemme de Woodbury / *push-through*) donne :
+Observons la solution ridge sous un autre angle. Une identité matricielle (un *lemme* est un petit résultat outil qui sert à en démontrer un plus grand ; celui-ci, le lemme de Woodbury, aussi appelé *push-through*, est une égalité toujours vraie entre deux écritures d'une même matrice) donne :
+
+> **Les mots « primal » et « dual ».** Résoudre un problème sous sa forme *primale*, c'est travailler directement avec les poids $`\mathbf{w}`$ (une coordonnée par caractéristique). Le passer au *dual*, c'est le réécrire en travaillant plutôt avec un coefficient par *exemple d'entraînement* : deux points de vue sur le même problème, comme regarder une maison de face ou de derrière. On choisira celui qui mène à la plus petite matrice à inverser.
 
 ```math
 \hat{\mathbf w}=(\boldsymbol\Phi^\top\boldsymbol\Phi+\lambda\mathbf I_p)^{-1}\boldsymbol\Phi^\top\mathbf y

@@ -6,13 +6,21 @@
 
 Avant de parler de « décomposition » d'une matrice, il faut deux nombres qui résument, à eux seuls, des informations cruciales sur ce que fait une matrice. Ces deux nombres sont le **déterminant** et la **trace**. Tout le chapitre s'appuiera dessus.
 
+> **Que veut dire « matrice » ?** Une **matrice** est simplement un **tableau de nombres** rangés en lignes et en colonnes, comme une grille de mots croisés remplie de chiffres, ou les cases d'un tableur. Par exemple $`\begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}`$ est une matrice à 2 lignes et 2 colonnes. On verra plus loin qu'une matrice sert de « machine » qui transforme des flèches (des vecteurs). Les **lignes** sont les rangées horizontales, les **colonnes** les rangées verticales (comme dans un immeuble : les étages sont les lignes, les ascenseurs les colonnes).
+
+> **Que veut dire « déterminant » et « trace » ?** Ce sont deux nombres qu'on calcule à partir d'une matrice pour la résumer. Le **déterminant** (détaillé juste en dessous) dit de combien la matrice agrandit ou rétrécit les surfaces ; la **trace** (détaillée plus bas) est simplement la somme des nombres posés sur la diagonale du tableau. Retenez pour l'instant : deux nombres-résumés, rien de plus.
+
 #### Le déterminant : combien une matrice étire l'espace
 
 Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine qui transforme l'espace**. On lui donne un vecteur, elle renvoie un autre vecteur. Si on donne tout un cube unité (un petit carré en dimension 2, un cube en dimension 3), la machine le déforme : elle l'étire, l'écrase, le tourne, le retourne. Le déterminant mesure **de combien le volume de ce cube change**, et **s'il se retourne**.
 
+> **« Matrice carrée » et la taille $`n \times n`$.** Une matrice est **carrée** quand elle a autant de lignes que de colonnes (le tableau forme un carré). La notation $`n \times n`$ (qui se lit « n croix n », ou « n par n ») donne la taille : $`n`$ lignes et $`n`$ colonnes. La lettre $`n`$ désigne juste un nombre quelconque qu'on ne fixe pas (2, 3, 100... selon le cas) ; c'est une façon de parler de « n'importe quelle taille » d'un coup.
+
+> **Que veut dire « vecteur » ?** Un **vecteur** est une **liste ordonnée de nombres**, qu'on peut voir comme une **flèche** partant de l'origine (le point zéro). En dimension 2, $`\begin{pmatrix} 3 \\ 1 \end{pmatrix}`$ est la flèche qui va « 3 pas vers la droite, 1 pas vers le haut ». La **dimension** est le nombre de cases dans cette liste (2 cases = plan, 3 cases = espace de tous les jours). L'**espace** est l'ensemble de tous ces points/flèches possibles.
+
 > **Le symbole $`\det`$.** Ce symbole représente le **déterminant** d'une matrice. Imaginez une feuille de pâte à modeler en forme de carré d'aire $`1`$. La matrice $`A`$ écrase et étire cette pâte ; $`\det(A)`$ vous dit l'aire du nouveau morceau. Si $`\det(A) = 3`$, l'aire a triplé. Si $`\det(A) = 0`$, la pâte a été écrasée en un fil plat (aire nulle) : la matrice « perd » une dimension. Si $`\det(A) < 0`$, la pâte a été **retournée** comme une crêpe (l'orientation s'inverse). On le note $`\det(A)`$ ou $`|A|`$.
 
-> **Le symbole $`|A|`$.** C'est juste une **autre écriture** de $`\det(A)`$. Attention : les barres verticales ressemblent à une valeur absolue, mais ici elles encadrent une matrice entière, pas un nombre. $`|A|`$ peut donc être négatif (contrairement à la valeur absolue d'un nombre réel).
+> **Le symbole $`|A|`$.** C'est juste une **autre écriture** de $`\det(A)`$. Attention : les barres verticales ressemblent à une valeur absolue (la **valeur absolue** d'un nombre, notée par exemple $`|-3| = 3`$, c'est ce nombre rendu positif : on oublie le signe, comme une distance qui est toujours positive), mais ici elles encadrent une matrice entière, pas un nombre. $`|A|`$ peut donc être négatif (contrairement à la valeur absolue d'un nombre réel).
 
 ##### Définition rigoureuse
 
@@ -23,6 +31,15 @@ Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine
 > \det(A) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)}
 > ```
 > où $`\mathcal{S}_n`$ est l'ensemble des permutations de $`\{1,\dots,n\}`$ et $`\varepsilon(\sigma) \in \{-1,+1\}`$ est la signature de la permutation $`\sigma`$.
+
+> **Décodons la notation de cette définition.** Plusieurs symboles apparaissent ici pour la première fois :
+> - **« coefficients »** : ce sont simplement les **nombres** rangés dans le tableau (chaque case de la matrice est un coefficient).
+> - **$`a_{ij}`$ (les indices)** : $`a_{ij}`$ désigne le nombre situé à la **ligne $`i`$, colonne $`j`$**. Les petits chiffres en bas (les **indices**) servent d'adresse, comme « rangée 2, place 3 » dans une salle de cinéma. Ainsi $`a_{12}`$ se lit « a indice un-deux » : le nombre de la ligne 1, colonne 2.
+> - **$`\mathbb{R}`$** (se lit « R » ou « l'ensemble des réels ») : c'est l'**ensemble de tous les nombres ordinaires** : entiers, fractions, nombres à virgule (positifs ou négatifs), comme $`3`$, $`-1{,}5`$, $`\tfrac{2}{7}`$. **$`\mathbb{C}`$** (« l'ensemble des complexes ») est un ensemble plus large qui contient en plus des nombres « imaginaires » (utiles plus loin) ; pour l'instant pensez juste « des nombres ».
+> - **$`\in`$** (se lit « **appartient à** ») : ce symbole dit qu'un objet **fait partie** d'un ensemble. « $`x \in \mathbb{R}`$ » veut dire « $`x`$ est un nombre réel », comme « Marie appartient à la classe ».
+> - **$`\le`$** (se lit « **inférieur ou égal** ») : $`1 \le i \le n`$ veut dire « $`i`$ est compris entre $`1`$ et $`n`$ (bornes incluses) ».
+> - **$`\{1,\dots,n\}`$** (les **accolades**) : les accolades $`\{\ \}`$ décrivent un **ensemble**, c'est-à-dire une collection d'objets. Ici la collection des nombres $`1, 2, \dots, n`$. Les trois petits points $`\dots`$ veulent dire « et ainsi de suite jusqu'à ».
+> - **« matrice identité »** : c'est la matrice « qui ne change rien » (détaillée plus bas, symbole $`I`$) ; elle joue le rôle du nombre $`1`$ pour la multiplication.
 
 > **Le symbole $`\sum`$ (sigma majuscule).** Ce symbole représente une **somme**. C'est comme une boucle qui additionne plein de morceaux. En dessous on écrit où la boucle commence (ici $`\sigma \in \mathcal{S}_n`$: « pour chaque permutation $`\sigma`$ »), et on additionne tout ce qui est écrit à droite. Ici, on parcourt toutes les façons de réordonner les colonnes et on additionne un produit signé pour chacune.
 
@@ -50,12 +67,24 @@ En dimension 3 (règle de Sarrus) :
 
 Pour calculer un déterminant en pratique, on **triangularise** la matrice par élimination de Gauss (opérations sur les lignes), puis on multiplie les coefficients diagonaux. Chaque échange de deux lignes change le signe du déterminant, et l'ajout d'un multiple d'une ligne à une autre le laisse inchangé ; on suit donc ces opérations pour retrouver $`\det(A)`$. C'est le coût $`O(n^3)`$, pas $`O(n!)`$.
 
-> **Propriété clé.** Le déterminant d'une matrice triangulaire (supérieure ou inférieure) est le **produit de sa diagonale**:
+> **Quelques mots de cette phrase.** La **diagonale** d'une matrice, ce sont les cases alignées en biais du coin haut-gauche au coin bas-droit (les coefficients $`a_{11}, a_{22}, \dots`$) ; les **coefficients diagonaux** sont les nombres posés sur cette ligne en biais. **Triangulariser** (par **élimination de Gauss**), c'est ajouter/retrancher des lignes les unes aux autres jusqu'à n'avoir que des zéros sous la diagonale (la matrice prend alors la forme d'un triangle de nombres) : c'est la méthode qu'on apprend pour résoudre des systèmes d'équations « en cascade ».
+
+> **La notation $`O(n^3)`$ (« grand O »).** Elle dit **combien d'opérations** un calcul demande quand la taille $`n`$ grandit, sans s'embarrasser des détails. $`O(n^3)`$ se lit « de l'ordre de $`n`$ au cube » : doublez $`n`$, le travail est multiplié par $`8`$ ($`2^3`$). $`O(n!)`$ (« factorielle ») explose bien plus vite encore. C'est une mesure de « combien ça coûte en temps », comme estimer la durée d'un trajet selon la distance.
+
+> **Propriété clé.** Le déterminant d'une matrice triangulaire (supérieure ou inférieure) est le **produit de sa diagonale** (une matrice est **triangulaire** quand tous les nombres d'un côté de la diagonale sont des zéros, comme un escalier rempli seulement d'un côté ; « supérieure » si les zéros sont en bas, « inférieure » si en haut) :
 > ```math
 > \det(T) = \prod_{i=1}^{n} t_{ii}
 > ```
 
 ##### Propriétés fondamentales du déterminant
+
+> **Avant de lire le tableau, quelques notations nouvelles.**
+> - **$`AB`$ (produit de deux matrices)** : multiplier deux matrices, c'est **enchaîner deux machines** : appliquer d'abord $`B`$ puis $`A`$. Le résultat est encore une matrice. (Attention, ce n'est pas une multiplication case par case ; c'est une combinaison de lignes et de colonnes, mais retenez surtout l'image « faire l'une après l'autre ».)
+> - **$`A^\top`$ (se lit « A transposée »)** : le petit $`\top`$ en exposant **bascule les lignes en colonnes** (la matrice pivote autour de sa diagonale, comme si on échangeait étages et ascenseurs). La ligne devient colonne et inversement.
+> - **$`A^{-1}`$ (se lit « A inverse ») et « inversible »** : l'**inverse** est la matrice qui **annule** l'effet de $`A`$ (faire $`A`$ puis $`A^{-1}`$ revient à ne rien faire), comme une touche « annuler ». Une matrice est **inversible** quand cette annulation est possible (quand elle n'a écrasé aucune dimension).
+> - **$`\iff`$ (se lit « si et seulement si »)** : indique que les deux affirmations de part et d'autre sont **équivalentes** (l'une est vraie exactement quand l'autre l'est).
+> - **$`\neq`$ (se lit « différent de »)** : c'est le signe $`=`$ barré, il veut dire « pas égal ».
+> - **$`\lambda`$ dans $`\lambda A`$** : ici la lettre grecque $`\lambda`$ (« lambda ») n'est **qu'un nombre** par lequel on multiplie toute la matrice (plus loin elle aura un autre rôle, valeur propre, mais pas ici).
 
 | Propriété | Énoncé | Intuition |
 |---|---|---|
@@ -68,6 +97,8 @@ Pour calculer un déterminant en pratique, on **triangularise** la matrice par �
 | Triangulaire/diagonale | produit de la diagonale | Étirements indépendants par axe |
 
 > **Démonstration de $`\det(AB) = \det(A)\det(B)`$ (esquisse rigoureuse).** Fixons $`B`$. L'application $`A \mapsto \det(AB)`$ est une forme $`n`$-linéaire alternée des lignes de $`A`$ (car les lignes de $`AB`$ sont des combinaisons linéaires de celles de $`B`$, et $`\det`$ est multilinéaire alternée). Or l'espace des formes $`n`$-linéaires alternées sur les lignes est de dimension $`1`$, engendré par $`\det`$. Donc $`A \mapsto \det(AB) = c \cdot \det(A)`$ pour une constante $`c`$ ne dépendant que de $`B`$. En prenant $`A = I`$, on obtient $`c = \det(B)`$. D'où le résultat. $`\quad\blacksquare`$
+
+> **Notations de cette démonstration.** Le symbole **$`\mapsto`$** (se lit « **envoie sur** ») décrit une règle de transformation : « $`A \mapsto \det(AB)`$ » se lit « à la matrice $`A`$ on associe le nombre $`\det(AB)`$ », comme une recette qui à chaque ingrédient associe un plat. Une **combinaison linéaire** de plusieurs vecteurs, c'est ce qu'on obtient en les multipliant chacun par un nombre puis en additionnant le tout (par exemple $`3v + 2w`$) : on « mélange » les ingrédients dans certaines proportions. Dire qu'un ensemble est **engendré** par certains objets veut dire que toutes ses combinaisons linéaires se construisent à partir de ces objets-là (ce sont les « briques de base » qui, mélangées, donnent tout le reste). Le petit carré noir **$`\blacksquare`$** marque simplement la **fin de la démonstration** (l'équivalent de « C.Q.F.D. », ce qu'il fallait démontrer).
 
 > **Piège fréquent.** Le déterminant **n'est pas additif**: en général $`\det(A + B) \neq \det(A) + \det(B)`$. Par exemple avec $`A = B = I_2`$: $`\det(I_2 + I_2) = \det(2I_2) = 4 \neq \det(I_2) + \det(I_2) = 2`$.
 
@@ -99,6 +130,8 @@ Pour calculer un déterminant en pratique, on **triangularise** la matrice par �
 
 La conséquence sur la similitude est centrale : $`\mathrm{tr}(P^{-1}AP) = \mathrm{tr}\big((P^{-1}A)P\big) = \mathrm{tr}\big(P(P^{-1}A)\big) = \mathrm{tr}(A)`$. **La trace ne dépend pas de la base** dans laquelle on regarde l'application linéaire. Idem pour le déterminant : $`\det(P^{-1}AP) = \det(P^{-1})\det(A)\det(P) = \det(A)`$. Ce sont des **invariants**.
 
+> **« Base », « application linéaire », « invariant ».** Une **base** est un jeu de directions de référence qui sert de repère pour décrire l'espace (comme les axes « droite/gauche » et « haut/bas » d'une carte) : changer de base, c'est regarder la même chose avec d'autres axes. Une **application linéaire** est une transformation « sans courbure » (elle étire, tourne, mais garde les lignes droites droites) : c'est justement ce que fait une matrice. Un **invariant** est une quantité qui **ne change pas** même quand on change de base : la trace et le déterminant restent les mêmes quel que soit le repère choisi, comme le poids d'un objet qui ne dépend pas de la langue dans laquelle on le décrit.
+
 #### Lien profond avec les valeurs propres (annonce)
 
 Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant le résultat qui irrigue tout le chapitre. Si $`\lambda_1, \dots, \lambda_n`$ sont les valeurs propres de $`A`$ (comptées avec multiplicité, dans $`\mathbb{C}`$) :
@@ -111,12 +144,23 @@ Nous le démontrerons dans les sections suivantes, mais retenons dès maintenant
 
 #### Application en machine learning
 
+> **Le vocabulaire de cette section (lisez d'abord ceci).** Les exemples qui suivent emploient des mots de statistiques. Voici l'essentiel, simplement :
+> - **Vraisemblance** (en anglais *likelihood*) : un nombre qui mesure à quel point un modèle « colle » aux données observées (grande vraisemblance = le modèle explique bien ce qu'on a vu).
+> - **Densité** : une fonction qui dit où les valeurs ont le plus de chances de tomber (haute là où c'est fréquent, basse là où c'est rare), comme la hauteur d'une colline qui indique où il y a le plus de monde.
+> - **Loi normale multivariée** : la fameuse « courbe en cloche » (forte au milieu, faible sur les bords), mais en **plusieurs dimensions** à la fois (*multivariée* = « à plusieurs variables »).
+> - **Matrice de covariance** ($`\Sigma`$) : un tableau qui décrit comment les données sont **dispersées** et comment leurs coordonnées **varient ensemble** (large nuage ou nuage resserré, allongé dans telle ou telle direction).
+> - **$`\sqrt{\ }`$** (se lit « **racine carrée** ») : l'opération inverse du carré ; $`\sqrt{9} = 3`$ car $`3 \times 3 = 9`$ (le côté d'un carré dont on connaît l'aire).
+> - **$`\pi`$** (se lit « **pi** ») : la constante bien connue $`\approx 3{,}14`$ (le symbole $`\approx`$ se lit « **environ égal à** » : presque égal, à peu de chose près).
+> - **$`\log`$** (se lit « **logarithme** ») : une fonction qui **compresse les grands nombres** (le log de $`1000`$ vaut $`3`$ en base 10, celui de $`1\,000\,000`$ vaut $`6`$) ; pratique pour manipuler des nombres énormes ou minuscules sans déborder, et qui transforme les produits en sommes.
+
 - **Vraisemblance gaussienne (likelihood):** la densité d'une loi normale multivariée contient le terme $`\frac{1}{\sqrt{(2\pi)^n \det(\Sigma)}}`$. Le déterminant de la matrice de covariance $`\Sigma`$ mesure le « volume » de dispersion des données. En pratique on calcule $`\log \det(\Sigma)`$ (plus stable).
 - **Entropie d'une gaussienne :** l'entropie différentielle d'une loi $`\mathcal{N}(\mu,\Sigma)`$ vaut $`\frac12 \log\big((2\pi e)^n \det(\Sigma)\big)`$, donc croît comme $`\frac12 \log\det(\Sigma)`$, un déterminant élevé signifie une distribution très étalée, donc incertaine. Pour situer les mots : $`\mathcal{N}(\mu,\Sigma)`$ désigne une **loi normale** (la fameuse courbe en cloche, en plusieurs dimensions ici) de moyenne $`\mu`$ et de covariance $`\Sigma`$ ; et l'**entropie** mesure l'incertitude, l'étalement d'une distribution (plus elle est grande, moins on sait prédire où va tomber un tirage). Intuitivement, plus le déterminant de la covariance est grand, plus la gaussienne est étalée, donc imprévisible : grand déterminant et grande entropie vont de pair.
-- **Régularisation et trace :** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$. Quelques mots pour les non-initiés (ces notions sont détaillées dans les chapitres consacrés à l'apprentissage) : la **régression Ridge** est une régression à laquelle on ajoute une pénalité $`\|w\|^2`$ (la longueur au carré du vecteur de coefficients) pour empêcher ceux-ci de devenir trop grands et ainsi éviter le surapprentissage, c'est-à-dire un modèle qui colle au bruit des données plutôt qu'à leur tendance ; et le **nombre de degrés de liberté effectifs** mesure, en gros, combien de paramètres le modèle utilise réellement une fois cette pénalité appliquée (plus la pénalité est forte, plus ce nombre diminue).
+- **Régularisation et trace :** la pénalité de Ridge s'écrit $`\|w\|^2`$, et le « nombre de degrés de liberté effectifs » d'un modèle linéaire régularisé est $`\mathrm{tr}\big(X(X^\top X + \lambda I)^{-1} X^\top\big)`$. Quelques mots pour les non-initiés (ces notions sont détaillées dans les chapitres consacrés à l'apprentissage) : la **régression Ridge** est une régression à laquelle on ajoute une pénalité $`\|w\|^2`$ (les doubles barres $`\|\cdot\|`$ se lisent « **norme** » et désignent la **longueur** d'un vecteur, comme la longueur d'une flèche mesurée à la règle ; donc $`\|w\|^2`$ est la longueur au carré du vecteur de coefficients) pour empêcher ceux-ci de devenir trop grands et ainsi éviter le surapprentissage, c'est-à-dire un modèle qui colle au bruit des données plutôt qu'à leur tendance ; et le **nombre de degrés de liberté effectifs** mesure, en gros, combien de paramètres le modèle utilise réellement une fois cette pénalité appliquée (plus la pénalité est forte, plus ce nombre diminue).
 - **Jacobien des flux normalisants (normalizing flows):** pour transformer une densité, on a besoin de $`\log\left|\det \frac{\partial f}{\partial x}\right|`$. Toute l'ingénierie des flux modernes consiste à concevoir des transformations dont ce log-déterminant est calculable rapidement.
 
-> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $`\log\det`$ par factorisation dense $`O(n^3)`$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $`\log\det(A) = \mathrm{tr}(\log A)`$, et on estime cette trace via $`\mathrm{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j`$ avec $`z_j`$ des vecteurs aléatoires (Rademacher, donc $`\mathbb{E}[z_j z_j^\top] = I`$). Deux mots de vocabulaire pour décoder cette ligne : un **vecteur de Rademacher** est un vecteur dont chaque composante vaut, au hasard, $`+1`$ ou $`-1`$ avec une chance sur deux (comme un pile ou face par coordonnée) ; et le symbole $`\mathbb{E}[\cdot]`$ désigne l'**espérance**, c'est-à-dire la moyenne de la quantité entre crochets sur tous les tirages aléatoires possibles. Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
+> **« Jacobien » et le symbole $`\partial`$.** Le symbole **$`\partial`$** (un « d » arrondi) se lit « **d rond** » et sert à écrire une **dérivée partielle** : $`\frac{\partial f}{\partial x}`$ se lit « dérivée partielle de $`f`$ par rapport à $`x`$ », c'est-à-dire **la vitesse à laquelle $`f`$ change quand on bouge un peu $`x`$** (en laissant les autres variables tranquilles), comme la pente d'une route quand on n'avance que vers l'est. Le **Jacobien** est la matrice qui rassemble toutes ces dérivées partielles d'une transformation : il dit, localement, comment celle-ci étire l'espace.
+
+> **Mise à jour 2026.** Pour de très grandes matrices SPD (symétriques définies positives), on n'évalue plus $`\log\det`$ par factorisation dense $`O(n^3)`$ mais par des **estimateurs stochastiques** (Hutchinson) combinés à des approximations de Lanczos : $`\log\det(A) = \mathrm{tr}(\log A)`$, et on estime cette trace via $`\mathrm{tr}(M) \approx \frac1m \sum_{j=1}^m z_j^\top M z_j`$ avec $`z_j`$ des vecteurs aléatoires (Rademacher, donc $`\mathbb{E}[z_j z_j^\top] = I`$). Quelques mots de vocabulaire pour décoder cette ligne : « **stochastique** » veut simplement dire « **qui fait intervenir le hasard** » (un **estimateur stochastique** devine une quantité en tirant des nombres au hasard, plutôt qu'en la calculant exactement, comme estimer le nombre de bonbons dans un bocal en piochant quelques poignées) ; un **vecteur de Rademacher** est un vecteur dont chaque composante vaut, au hasard, $`+1`$ ou $`-1`$ avec une chance sur deux (comme un pile ou face par coordonnée) ; et le symbole $`\mathbb{E}[\cdot]`$ désigne l'**espérance**, c'est-à-dire la moyenne de la quantité entre crochets sur tous les tirages aléatoires possibles. Ces méthodes sont au cœur des bibliothèques de processus gaussiens à grande échelle (type GPyTorch) et exploitent l'autodifférenciation (JAX/PyTorch) pour propager les gradients à travers l'estimateur.
 
 ```python
 import numpy as np
@@ -162,11 +206,13 @@ Une matrice fait généralement deux choses à un vecteur : elle le **tourne** e
 
 #### Définition rigoureuse
 
-> **Définition (valeur propre, vecteur propre).** Soit $`A \in \mathbb{C}^{n \times n}`$. Un scalaire $`\lambda \in \mathbb{C}`$ est une **valeur propre** de $`A`$ s'il existe un vecteur **non nul** $`v \in \mathbb{C}^n`$ tel que
+> **Définition (valeur propre, vecteur propre).** Soit $`A \in \mathbb{C}^{n \times n}`$. Un scalaire $`\lambda \in \mathbb{C}`$ (un **scalaire** est simplement un **nombre tout seul**, par opposition à un vecteur qui est une liste de nombres ; le mot vient de « échelle », car un scalaire sert à agrandir ou réduire) est une **valeur propre** de $`A`$ s'il existe un vecteur **non nul** $`v \in \mathbb{C}^n`$ tel que
 > ```math
 > A v = \lambda v.
 > ```
 > Le vecteur $`v`$ est alors un **vecteur propre** associé à $`\lambda`$. L'ensemble $`E_\lambda = \ker(A - \lambda I) = \{ v \in \mathbb{C}^n: Av = \lambda v \}`$ est le **sous-espace propre** associé à $`\lambda`$; sa dimension est la **multiplicité géométrique** de $`\lambda`$.
+
+> **« Sous-espace » et l'écriture $`\{ v : \dots \}`$.** Un **sous-espace** est une partie de l'espace qui est elle-même « plate et complète » : par exemple une droite passant par l'origine, ou un plan passant par l'origine, à l'intérieur de l'espace en 3D. La **dimension** d'un sous-espace compte ses directions indépendantes (une droite : dimension 1 ; un plan : dimension 2). L'écriture $`\{ v \in \mathbb{C}^n: Av = \lambda v \}`$ se lit « **l'ensemble des $`v`$ tels que** $`Av = \lambda v`$ » : les accolades posent un ensemble, et les deux-points « $`:`$ » se lisent « tels que » (ils annoncent la condition que doivent remplir les éléments). C'est comme dire « l'ensemble des élèves tels qu'ils ont 10 ans ».
 
 > **Le symbole $`v`$.** $`v`$ représente le **vecteur propre**: la flèche-direction qui ne tourne pas. On exige $`v \neq 0`$ car le vecteur nul vérifierait l'équation pour n'importe quel $`\lambda`$ (ce serait tricher et n'apprendrait rien). Noter que $`E_\lambda`$, lui, contient bien le vecteur nul : c'est un sous-espace vectoriel, mais seuls ses éléments non nuls sont des vecteurs propres.
 
@@ -184,6 +230,8 @@ Comment trouver les $`\lambda`$ ? On réécrit $`Av = \lambda v`$ comme $`(A - \
 > ```
 > $`\chi_A`$ est un polynôme de degré $`n`$ en $`\lambda`$, le **polynôme caractéristique** (characteristic polynomial). Ses racines (dans $`\mathbb{C}`$) sont exactement les valeurs propres ; l'ordre de multiplicité d'une racine est la **multiplicité algébrique**.
 
+> **« Polynôme », « degré », « racine ».** Un **polynôme** est une expression bâtie avec une inconnue (ici $`\lambda`$) élevée à différentes puissances et combinée par additions et multiplications, par exemple $`\lambda^2 - 7\lambda + 10`$. Le **degré** est la plus haute puissance présente (ici $`2`$). Une **racine** est une valeur de l'inconnue qui rend le polynôme **égal à zéro** (« la racine, c'est là où la courbe touche le sol »). Trouver les valeurs propres revient donc à trouver les racines de ce polynôme.
+
 > **Le symbole $`\chi`$ (chi).** $`\chi_A`$ est juste le **nom** qu'on donne au polynôme caractéristique de $`A`$. Comme on nomme une fonction $`f`$, ici on la nomme $`\chi`$ (lettre grecque pour « caractéristique »). On lui donne un nombre $`\lambda`$, il renvoie $`\det(A - \lambda I)`$.
 
 > **Le symbole $`:=`$.** Ce symbole signifie « **est défini comme** ». La barre des deux-points indique qu'on **pose une définition** (on baptise le membre de gauche par le membre de droite), pas qu'on constate une égalité déjà connue.
@@ -193,6 +241,8 @@ Comment trouver les $`\lambda`$ ? On réécrit $`Av = \lambda v`$ comme $`(A - \
 > **Piège central.** Pour chaque valeur propre :
 > - **multiplicité algébrique** $`m_a(\lambda)`$ = nombre de fois où $`\lambda`$ est racine de $`\chi_A`$;
 > - **multiplicité géométrique** $`m_g(\lambda)`$ = dimension de $`E_\lambda`$ = nombre de vecteurs propres indépendants.
+>
+> (Des vecteurs sont **indépendants** quand aucun ne peut s'obtenir en mélangeant les autres : ils pointent vers des directions vraiment différentes, comme « droite » et « haut » qu'on ne peut pas confondre. Deux flèches sur la même ligne, elles, ne sont pas indépendantes.)
 >
 > On a toujours $`1 \le m_g(\lambda) \le m_a(\lambda)`$. Quand $`m_g < m_a`$ pour au moins une valeur propre, la matrice est **défective** (non diagonalisable).
 
@@ -215,7 +265,9 @@ Prenons $`A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}`$.
 ```math
 \begin{pmatrix} -1 & 1 \\ 2 & -2 \end{pmatrix} v = 0 \;\Rightarrow\; -v_1 + v_2 = 0 \;\Rightarrow\; v_1 = v_2.
 ```
-Donc $`v^{(1)} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}`$ (à un facteur près).
+
+> **Notation.** Le symbole **$`\Rightarrow`$** se lit « **implique** » (ou « donc ») : « ceci $`\Rightarrow`$ cela » veut dire « si ceci est vrai, alors cela l'est aussi ». Les notations $`v_1`$ et $`v_2`$ désignent les **deux nombres (composantes)** du vecteur $`v`$ (sa 1re et sa 2e case). L'exposant entre parenthèses, comme dans $`v^{(1)}`$, est juste une **étiquette** (« le vecteur numéro 1 ») et **non** une puissance.
+Donc $`v^{(1)} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}`$ (à un facteur près : « à un facteur près » veut dire qu'on peut multiplier ce vecteur par n'importe quel nombre non nul et obtenir un vecteur propre tout aussi valable ; seule la **direction** compte, pas la longueur).
 
 **Étape 4, vecteur propre pour $`\lambda_2 = 2`$:** on résout $`(A - 2I)v = 0`$:
 ```math
@@ -223,7 +275,7 @@ Donc $`v^{(1)} = \begin{pmatrix} 1 \\ 1 \end{pmatrix}`$ (à un facteur près).
 ```
 Donc $`v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}`$.
 
-**Vérification (faite ici pour $`\lambda_1`$ ; le même calcul pour $`\lambda_2`$ donne bien $`A v^{(2)} = 2\, v^{(2)}`$) :** $`A v^{(1)} = \begin{pmatrix} 4+1 \\ 2+3 \end{pmatrix} = \begin{pmatrix} 5 \\ 5 \end{pmatrix} = 5 v^{(1)}`$. $`\checkmark`$
+**Vérification (faite ici pour $`\lambda_1`$ ; le même calcul pour $`\lambda_2`$ donne bien $`A v^{(2)} = 2\, v^{(2)}`$) :** $`A v^{(1)} = \begin{pmatrix} 4+1 \\ 2+3 \end{pmatrix} = \begin{pmatrix} 5 \\ 5 \end{pmatrix} = 5 v^{(1)}`$. $`\checkmark`$ (le symbole $`\checkmark`$ est une simple coche signifiant « c'est vérifié, ça marche »).
 
 #### Propriétés essentielles
 
@@ -235,9 +287,9 @@ Donc $`v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}`$.
 
 > **Théorème de Cayley–Hamilton.** Toute matrice annule son propre polynôme caractéristique : $`\chi_A(A) = 0`$. Autrement dit, en remplaçant $`\lambda`$ par $`A`$ (et le terme constant $`c`$ par $`cI`$), on obtient la matrice nulle.
 
-> **Spectre et matrices particulières.**
+> **Spectre et matrices particulières.** (Le **spectre** d'une matrice est simplement la **collection de toutes ses valeurs propres** : sa « liste de facteurs d'étirement ».)
 > - Valeurs propres d'une matrice **triangulaire** = ses coefficients diagonaux.
-> - Une matrice **symétrique réelle** a toutes ses valeurs propres **réelles** (démontré à la section diagonalisation).
+> - Une matrice **symétrique réelle** (une matrice est **symétrique** quand elle est son propre reflet dans le miroir de sa diagonale : la case ligne $`i`$-colonne $`j`$ est égale à la case ligne $`j`$-colonne $`i`$, ce qui s'écrit $`A = A^\top`$) a toutes ses valeurs propres **réelles** (démontré à la section diagonalisation).
 > - Valeurs propres de $`A^k`$: ce sont les $`\lambda_i^k`$ (mêmes vecteurs propres).
 > - $`A`$ inversible $`\iff`$ $`0`$ n'est pas valeur propre.
 
@@ -247,11 +299,16 @@ Donc $`v^{(2)} = \begin{pmatrix} 1 \\ -2 \end{pmatrix}`$.
 
 #### Application en machine learning
 
-- **PageRank:** le score d'importance des pages web est le **vecteur propre dominant** (associé à $`\lambda = 1`$) d'une matrice stochastique de transition. On le calcule par la **méthode de la puissance** (power iteration).
-- **Stabilité de l'entraînement:** la plus grande valeur propre de la matrice hessienne contrôle le pas maximal admissible d'une descente de gradient. La courbure (les $`\lambda`$ du hessien) gouverne la vitesse de convergence.
+- **PageRank:** le score d'importance des pages web est le **vecteur propre dominant** (le mot **dominant** désigne ici celui qui correspond à la **plus grande** valeur propre, donc la direction la plus « forte ») (associé à $`\lambda = 1`$) d'une matrice stochastique de transition. On le calcule par la **méthode de la puissance** (power iteration).
+- **Stabilité de l'entraînement:** la plus grande valeur propre de la matrice hessienne contrôle le pas maximal admissible d'une descente de gradient. La courbure (les $`\lambda`$ du hessien) gouverne la vitesse de convergence (**converger**, c'est se rapprocher de plus en plus d'une valeur cible ; la **vitesse de convergence** dit à quel point on s'en approche vite, comme une voiture qui ralentit en arrivant au but).
 - **Convolutions et théorie spectrale des graphes:** les réseaux de neurones sur graphes (GNN) reposent sur les valeurs/vecteurs propres du **laplacien** du graphe.
 
-> **La méthode de la puissance (power iteration).** Pour trouver le vecteur propre dominant, on multiplie un vecteur aléatoire par $`A`$ encore et encore, en normalisant. Les composantes selon les autres directions s'amenuisent ; il ne reste que la direction dominante. Elle converge lorsqu'il existe une unique valeur propre de module maximal, à la vitesse gouvernée par le rapport $`|\lambda_2|/|\lambda_1|`$.
+> **Le vocabulaire de ces exemples (détaillé dans les chapitres suivants).**
+> - **Gradient** : la flèche qui indique **la direction de plus forte montée** d'une fonction (comme la pente la plus raide d'une colline) ; la **descente de gradient** consiste à avancer dans le sens inverse, pas à pas, pour **descendre vers le point le plus bas** (entraîner un modèle = chercher ce creux). Le « **pas** » est la longueur de chaque enjambée.
+> - **Matrice hessienne** (ou **hessien**) : le tableau des dérivées secondes d'une fonction ; il décrit la **courbure** (le creux est-il en pente douce ou très bombé ?). La **courbure** mesure justement à quel point la surface se recourbe.
+> - **Graphe** : un réseau de points (les **nœuds**) reliés par des traits (les **arêtes**), comme une carte d'amitiés ou un plan de métro. Le **laplacien** d'un graphe est une matrice qui résume sa structure de connexions.
+
+> **La méthode de la puissance (power iteration).** Pour trouver le vecteur propre dominant, on multiplie un vecteur aléatoire par $`A`$ encore et encore, en normalisant (**normaliser** = ramener le vecteur à une longueur de $`1`$ après chaque étape, pour qu'il ne grossisse pas indéfiniment). Les composantes selon les autres directions s'amenuisent ; il ne reste que la direction dominante. Elle converge lorsqu'il existe une unique valeur propre de module maximal (le **module** d'un nombre est sa « taille » sans son signe, c'est-à-dire sa valeur absolue ; ici les barres $`|\lambda|`$ désignent ce module), à la vitesse gouvernée par le rapport $`|\lambda_2|/|\lambda_1|`$.
 
 ```python
 import numpy as np
@@ -297,6 +354,8 @@ Nous abordons la première vraie **factorisation**: écrire une matrice comme pr
 
 Les matrices SPD sont omniprésentes : matrices de covariance, matrices de Gram $`X^\top X`$, hessiennes de fonctions convexes, matrices de noyau (kernels) en SVM et processus gaussiens.
 
+> **Trois termes au passage.** Une **matrice de Gram** est le tableau de tous les **produits scalaires** entre des vecteurs (un produit scalaire mesure à quel point deux flèches « vont dans le même sens » : grand s'ils pointent pareil, nul s'ils sont perpendiculaires). Une fonction est **convexe** quand son graphe a la forme d'une **cuvette** (un seul creux, pas de bosses). Ici une **matrice de noyau** (ou *kernel*, à ne pas confondre avec le noyau $`\ker`$ vu plus haut !) est un tableau de « ressemblances » entre points de données, utilisé par des méthodes comme les **SVM** (un type de classifieur) ; ne vous attardez pas dessus, ce sont des sujets de chapitres ultérieurs.
+
 #### Le théorème
 
 > **Théorème (décomposition de Cholesky).** Si $`A`$ est symétrique définie positive, il existe une **unique** matrice triangulaire inférieure $`L`$ à coefficients diagonaux strictement positifs telle que
@@ -335,6 +394,8 @@ L L^\top = \begin{pmatrix} 2 & 0 \\ 1 & 2 \end{pmatrix}\begin{pmatrix} 2 & 1 \\ 
 
 #### Coût et comparaison
 
+> **Pour lire le tableau.** Le symbole **$`\sim`$** se lit ici « **de l'ordre de** » (à peu près, aux détails près) : $`\sim n^3/3`$ veut dire « environ $`n^3/3`$ opérations ». Les **flops** sont le nombre d'opérations élémentaires (additions, multiplications) : une façon de compter le travail. **LU** et **QR** sont deux autres méthodes pour découper une matrice en morceaux plus simples ; les **moindres carrés** désignent la technique pour trouver la « meilleure droite/solution approchée » quand il n'y a pas de solution exacte (on minimise l'erreur, détaillé plus loin).
+
 | Factorisation | Coût (flops) | Matrices visées |
 |---|---|---|
 | Cholesky | $`\sim n^3/3`$ | SPD |
@@ -344,6 +405,8 @@ L L^\top = \begin{pmatrix} 2 & 0 \\ 1 & 2 \end{pmatrix}\begin{pmatrix} 2 & 1 \\ 
 Cholesky coûte **deux fois moins** que LU : c'est la méthode de choix dès que la matrice est SPD.
 
 #### Démonstration de l'existence et de l'unicité
+
+> **Qu'est-ce qu'une démonstration « par récurrence » ?** C'est une preuve en **dominos** : on montre que le résultat est vrai pour le plus petit cas (ici une matrice $`1\times 1`$), puis que « s'il est vrai pour la taille $`n-1`$, il l'est aussi pour la taille $`n`$ ». De proche en proche, tout tombe, comme une rangée de dominos qui s'enchaînent. Écrire une matrice « **par blocs** » signifie la découper en quartiers rectangulaires pour la traiter morceau par morceau.
 
 > **Démonstration (existence et unicité).** *Existence* par récurrence sur $`n`$. Pour $`n=1`$, $`A = (a_{11})`$ avec $`a_{11} > 0`$, on pose $`\ell_{11} = \sqrt{a_{11}}`$. Supposons le résultat pour $`n-1`$ et écrivons par blocs
 > ```math
@@ -361,7 +424,9 @@ Cholesky coûte **deux fois moins** que LU : c'est la méthode de choix dès que
 
 2. **Échantillonnage gaussien.** Pour tirer $`x \sim \mathcal{N}(\mu, \Sigma)`$, on calcule $`\Sigma = LL^\top`$, on tire $`z \sim \mathcal{N}(0, I)`$ (gaussiennes standard indépendantes), et $`x = \mu + Lz`$ a exactement la covariance voulue. En effet, $`\mathrm{Cov}(Lz) = L\,\mathrm{Cov}(z)\,L^\top = L I L^\top = \Sigma`$. C'est **la** méthode de simulation gaussienne.
 
-3. **Processus gaussiens (GP).** Toute l'inférence (prédiction, log-vraisemblance) passe par la factorisation de Cholesky de la matrice de noyau $`K + \sigma^2 I`$. Le terme $`\log\det(K+\sigma^2 I) = 2\sum_i \log \ell_{ii}`$ se lit gratuitement sur la diagonale de $`L`$.
+> **Notation.** Ici le symbole **$`\sim`$** se lit « **suit la loi** » (et non « de l'ordre de » comme dans le tableau de coûts) : « $`x \sim \mathcal{N}(\mu,\Sigma)`$ » se lit « $`x`$ est tiré au hasard selon la loi normale de moyenne $`\mu`$ et de covariance $`\Sigma`$ ». **Tirer** un vecteur, c'est en fabriquer un au hasard. Et $`\mathrm{Cov}(\cdot)`$ désigne la **covariance** du résultat (sa dispersion).
+
+3. **Processus gaussiens (GP).** Toute l'inférence (l'**inférence**, c'est le fait de **tirer des conclusions à partir des données** : deviner, prédire, estimer) (prédiction, log-vraisemblance) passe par la factorisation de Cholesky de la matrice de noyau $`K + \sigma^2 I`$. Le terme $`\log\det(K+\sigma^2 I) = 2\sum_i \log \ell_{ii}`$ se lit gratuitement sur la diagonale de $`L`$.
 
 > **Mise à jour 2026.** Pour des matrices de noyau gigantesques (GP à $`n > 10^5`$), on remplace la factorisation exacte par des **approximations creuses** (points inducteurs) ou par le **gradient conjugué préconditionné** sans jamais former $`L`$ explicitement, avec préconditionnement par Cholesky pivoté partiel. Côté deep learning, des couches imposant la structure $`LL^\top`$ (paramétrisation de Cholesky) garantissent qu'une matrice apprise reste SPD pendant tout l'entraînement par descente de gradient, technique standard pour apprendre des covariances ou des métriques.
 
@@ -425,6 +490,8 @@ Dans la base standard, une matrice mélange tout. Mais si on regarde le monde **
 
 C'est spectaculaire : calculer $`A^{1000}`$ directement coûterait $`999`$ produits matriciels ; via la diagonalisation, c'est **une** diagonalisation puis $`n`$ exponentiations scalaires. Cela permet aussi de définir des **fonctions de matrices**: $`\exp(A) = P \exp(D) P^{-1}`$ où $`\exp(D) = \mathrm{diag}(e^{\lambda_i})`$.
 
+> **Notation $`\exp`$ et $`e^{\lambda}`$.** $`\exp`$ (se lit « **exponentielle** ») est une fonction de croissance très rapide : $`\exp(\lambda) = e^{\lambda}`$, où $`e \approx 2{,}718`$ est une constante célèbre. $`e^{\lambda}`$ se lit « e puissance $`\lambda`$ ». Une « **fonction de matrice** » comme $`\exp(A)`$ veut dire qu'on applique cette fonction non pas à un nombre mais à toute une matrice : grâce à la diagonalisation, il suffit de l'appliquer à chaque valeur propre.
+
 #### Exemple chiffré déroulé pas à pas
 
 Reprenons $`A = \begin{pmatrix} 4 & 1 \\ 2 & 3 \end{pmatrix}`$, dont on a trouvé $`\lambda_1 = 5, v^{(1)} = \binom{1}{1}`$ et $`\lambda_2 = 2, v^{(2)} = \binom{1}{-2}`$.
@@ -443,6 +510,8 @@ PDP^{-1} = \begin{pmatrix} 1 & 1 \\ 1 & -2 \end{pmatrix}\begin{pmatrix} 5 & 0 \\
 #### Le cas roi : le théorème spectral (matrices symétriques)
 
 Pour les matrices symétriques réelles, la diagonalisation est encore plus belle : la base de vecteurs propres peut être choisie **orthonormée**.
+
+> **Que veut dire « orthonormée » ?** Deux choses réunies. **Ortho**(gonal) veut dire **perpendiculaire** (à angle droit, comme les coins d'une feuille). **Normé** veut dire **de longueur 1** (chaque flèche est ramenée à une longueur unité). Une base **orthonormée** est donc un repère fait de flèches toutes perpendiculaires entre elles et toutes de longueur 1, comme les axes parfaits d'un quadrillage de cahier.
 
 > **Théorème spectral (réel).** Si $`A \in \mathbb{R}^{n\times n}`$ est symétrique ($`A = A^\top`$), alors :
 > 1. toutes ses valeurs propres sont **réelles**;
@@ -467,6 +536,8 @@ Pour les matrices symétriques réelles, la diagonalisation est encore plus bell
 #### Application reine en machine learning : l'ACP
 
 > **Analyse en composantes principales (Principal Component Analysis, PCA).** On centre les données, on forme la matrice de covariance $`C = \frac1n X^\top X`$ (symétrique, semi-définie positive), on la diagonalise $`C = Q\Lambda Q^\top`$. Les vecteurs propres (colonnes de $`Q`$) sont les **axes principaux**; les valeurs propres $`\lambda_i`$ sont les **variances** le long de ces axes. La variance mesure simplement l'étalement des données autour de leur moyenne : une grande variance le long d'un axe signifie que les données sont très dispersées dans cette direction, une petite variance qu'elles y sont au contraire bien resserrées. Projeter sur les $`k`$ plus grandes valeurs propres = compresser en gardant le maximum de variance.
+
+> **Quelques mots de l'ACP.** **Centrer les données** veut dire retrancher la moyenne pour que le nuage de points soit recentré autour de zéro (comme déplacer une cible pour mettre son centre à l'origine). Les **axes principaux** sont les directions dans lesquelles le nuage de points est le plus étiré (les « grands axes » du nuage). **Projeter** un point sur une direction, c'est en garder seulement « l'ombre » sur cette direction (comme l'ombre d'un objet sur un mur quand on l'éclaire de face) : on simplifie en ne gardant que ce qui compte le plus.
 
 ```python
 import numpy as np
@@ -501,12 +572,14 @@ Voici la décomposition la plus puissante et la plus universelle de toute l'alg�
 
 #### L'intuition : toute matrice est rotation–étirement–rotation
 
-Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice, même rectangulaire, agit géométriquement comme la succession de trois opérations simples :
+Une affirmation extraordinaire et pourtant exacte : **n'importe quelle** matrice, même rectangulaire (une matrice **rectangulaire** a un nombre de lignes différent du nombre de colonnes, par opposition à une carrée), agit géométriquement comme la succession de trois opérations simples :
 1. une **rotation** (ou réflexion) dans l'espace de départ ;
 2. un **étirement** le long des axes (les valeurs singulières), avec éventuel changement de dimension ;
 3. une **rotation** (ou réflexion) dans l'espace d'arrivée.
 
 > **Image.** Prenez la sphère unité (le cercle unité en dimension 2). Appliquez n'importe quelle matrice : vous obtenez toujours une **ellipse** (un ellipsoïde en dimension supérieure), éventuellement aplati. La SVD identifie les axes de cette ellipse (leurs directions = vecteurs singuliers à gauche, leurs demi-longueurs = valeurs singulières) et les rotations qui amènent de la sphère à l'ellipse.
+
+> **Les mots géométriques.** La **sphère unité** est la surface d'un ballon de rayon 1 (en 2D, c'est le **cercle unité**, un rond de rayon 1). Une **ellipse** est un cercle aplati ou étiré, en forme d'œuf ou de ballon de rugby ; un **ellipsoïde** est sa version en relief (un ballon de rugby en 3D). Une **rotation** fait tourner sans déformer ; une **réflexion** est un retournement dans un miroir.
 
 #### Le théorème
 
@@ -590,20 +663,22 @@ On vérifie $`\|u_1\| = \frac{1}{\sqrt6}\sqrt{1+4+1} = 1`$ et $`\|u_2\| = \frac{
 | Espace image | engendré par les $`u_i`$ avec $`\sigma_i>0`$ |
 | Noyau | engendré par les $`v_i`$ avec $`\sigma_i=0`$ |
 
-> **Le symbole $`\|A\|_2`$ (norme spectrale).** C'est le facteur d'étirement **maximal** de la matrice : $`\|A\|_2 = \max_{x\neq 0}\frac{\|Ax\|}{\|x\|} = \sigma_1`$. Elle prolonge aux matrices la notion de « taille » déjà vue pour les vecteurs.
+> **Le symbole $`\|A\|_2`$ (norme spectrale).** C'est le facteur d'étirement **maximal** de la matrice : $`\|A\|_2 = \max_{x\neq 0}\frac{\|Ax\|}{\|x\|} = \sigma_1`$. Elle prolonge aux matrices la notion de « taille » déjà vue pour les vecteurs. (Le symbole $`\max`$ se lit « **maximum** » : la **plus grande valeur** quand on essaie tous les $`x`$ possibles ; son jumeau $`\min`$, qui apparaîtra plus bas, se lit « **minimum** », la plus petite.)
 
 > **Le symbole $`\|A\|_F`$ (norme de Frobenius).** C'est la racine de la somme des carrés de **tous** les coefficients, $`\|A\|_F = \sqrt{\sum_{i,j} a_{ij}^2}`$, exactement la norme euclidienne si l'on déroule la matrice en un long vecteur. On montre qu'elle vaut aussi $`\sqrt{\sum_i \sigma_i^2}`$.
 
 > **Le symbole $`\kappa(A)`$ (conditionnement, condition number).** $`\kappa`$ mesure à quel point un système $`Ax=b`$ est **sensible aux erreurs**. Un $`\kappa`$ proche de $`1`$: système docile. Un $`\kappa`$ énorme : une minuscule erreur sur $`b`$ provoque une catastrophe sur $`x`$. C'est le rapport entre le plus grand et le plus petit étirement.
 
-> **Le symbole $`A^+`$ (pseudo-inverse de Moore–Penrose).** $`A^+`$ est le « meilleur inverse possible » même quand $`A`$ n'est pas inversible (rectangulaire ou singulière). Il fournit la solution de **norme minimale** au problème des moindres carrés $`\min_x \|Ax - b\|`$.
+> **Le symbole $`A^+`$ (pseudo-inverse de Moore–Penrose).** $`A^+`$ est le « meilleur inverse possible » même quand $`A`$ n'est pas inversible (rectangulaire ou **singulière**, c'est-à-dire carrée mais non inversible : elle a écrasé au moins une direction, son déterminant est nul). Il fournit la solution de **norme minimale** au problème des moindres carrés $`\min_x \|Ax - b\|`$.
+
+> **« Espace image ».** L'**espace image** d'une matrice est l'ensemble de **tous les résultats** qu'elle peut produire en sortie (toutes les flèches d'arrivée possibles), un peu comme la liste de tous les plats qu'une recette peut donner. Le **noyau**, vu plus haut, en est le miroir : l'ensemble des entrées envoyées sur zéro.
 
 #### Applications phares en machine learning
 
 - **ACP, vraiment:** la SVD de la matrice de données centrée $`X = U\Sigma V^\top`$ donne directement les axes principaux ($`V`$) et les variances ($`\sigma_i^2/n`$), sans former la covariance. Plus stable que la décomposition propre.
 - **Moindres carrés et pseudo-inverse:** la solution $`\min_w \|Xw-y\|`$ est $`w = X^+ y = V\Sigma^+ U^\top y`$, robuste même si $`X^\top X`$ est mal conditionnée.
-- **Systèmes de recommandation:** la factorisation de la matrice utilisateurs×items (Netflix) est une SVD tronquée, qui révèle des « facteurs latents » (genres implicites).
-- **Compression et débruitage:** garder les grandes valeurs singulières, jeter les petites (section suivante).
+- **Systèmes de recommandation:** la factorisation de la matrice utilisateurs×items (Netflix) est une SVD tronquée, qui révèle des « facteurs latents » (genres implicites). (Un **facteur latent** est une cause cachée, non mesurée directement, qui explique les données : par exemple un « goût pour la comédie » qu'on ne demande jamais mais qu'on devine d'après les notes données.)
+- **Compression et débruitage:** garder les grandes valeurs singulières, jeter les petites (section suivante). (Le **débruitage** consiste à **enlever le bruit**, c'est-à-dire les petites imperfections aléatoires, pour ne garder que le signal utile : comme nettoyer une photo granuleuse.)
 - **Word embeddings:** la SVD de matrices de co-occurrence (LSA) fut l'ancêtre de Word2Vec.
 
 ```python
@@ -633,13 +708,15 @@ x = np.linalg.pinv(A) @ b
 print("solution moindres carres :", x.round(4))
 ```
 
-> **Mise à jour 2026.** Pour les matrices massives, la **SVD randomisée** (Halko–Martinsson–Tropp) est devenue le standard : on projette $`A`$ sur un petit sous-espace aléatoire $`A\Omega`$, on orthonormalise, puis on fait une petite SVD exacte. Coût quasi linéaire pour un rang cible $`k \ll n`$, et précision contrôlable par quelques itérations de puissance. C'est ce qui rend l'ACP et les approximations de rang faible possibles à l'échelle des données actuelles, et c'est intégré à `scikit-learn`, `PyTorch` (`torch.svd_lowrank`) et JAX. La SVD intervient aussi dans l'analyse des grands modèles (compression de poids, adaptateurs de rang faible **LoRA**, qui apprennent une correction $`\Delta W = BA`$ de rang faible).
+> **Mise à jour 2026.** Pour les matrices massives, la **SVD randomisée** (Halko–Martinsson–Tropp) est devenue le standard : on projette $`A`$ sur un petit sous-espace aléatoire $`A\Omega`$, on orthonormalise, puis on fait une petite SVD exacte. Coût quasi linéaire pour un rang cible $`k \ll n`$ (le symbole $`\ll`$ se lit « **très petit devant** » : $`k`$ est bien plus petit que $`n`$), et précision contrôlable par quelques itérations de puissance. C'est ce qui rend l'ACP et les approximations de rang faible possibles à l'échelle des données actuelles, et c'est intégré à `scikit-learn`, `PyTorch` (`torch.svd_lowrank`) et JAX. La SVD intervient aussi dans l'analyse des grands modèles (compression de poids, adaptateurs de rang faible **LoRA**, qui apprennent une correction $`\Delta W = BA`$ de rang faible ; la lettre grecque $`\Delta`$, « delta majuscule », signale une **variation**, un petit changement ajouté, donc $`\Delta W`$ est une correction qu'on ajoute aux poids $`W`$).
 
 ---
 
 ### Approximation de matrices de rang faible
 
 La SVD ne sert pas qu'à décomposer : elle fournit la **meilleure compression possible** d'une matrice. C'est le principe derrière la compression d'images, le débruitage, les recommandations et les adaptateurs LoRA des grands modèles.
+
+> **Que veut dire « rang faible » ?** Rappel : le **rang** est le nombre de directions vraiment utiles d'une matrice. Une matrice est de **rang faible** quand ce nombre est petit : malgré sa grande taille, elle contient peu d'information indépendante (beaucoup de ses lignes/colonnes se ressemblent ou se déduisent les unes des autres). C'est exactement ce qui la rend **compressible** : on peut la résumer avec peu de chiffres, comme une grande grille qui ne serait, au fond, qu'une table de multiplication.
 
 #### L'idée : garder l'essentiel, jeter le détail
 
@@ -663,11 +740,15 @@ Chaque terme $`\sigma_i u_i v_i^\top`$ est une matrice de **rang 1** (une couche
 
 > **Intuition.** L'erreur qu'on commet en tronquant au rang $`k`$ est exactement gouvernée par les valeurs singulières **qu'on a jetées**. Si elles sont minuscules, l'approximation est quasi parfaite. Aucune autre matrice de rang $`k`$ ne fait mieux : la SVD tronquée est **optimale**, pas seulement bonne.
 
+> **Trois notations de la preuve qui suit.** $`\ge`$ se lit « **supérieur ou égal** » (le miroir de $`\le`$). Le symbole $`\cap`$ se lit « **inter** » (intersection) : $`E \cap F`$ est ce qui appartient **à la fois** à $`E`$ et à $`F`$ (la partie commune, comme la zone où deux cercles se chevauchent). $`\mathrm{vect}(v_1,\dots)`$ est le sous-espace **engendré** par ces vecteurs (toutes leurs combinaisons linéaires). Un vecteur **unitaire** est un vecteur de longueur $`1`$.
+
 > **Démonstration (norme spectrale, esquisse).** $`\|A - A_k\|_2 = \sigma_{k+1}`$ est immédiat car $`A - A_k = \sum_{i>k}\sigma_i u_i v_i^\top`$ a pour plus grande valeur singulière $`\sigma_{k+1}`$. Pour la borne inférieure : soit $`B`$ de rang $`\le k`$. Son noyau est de dimension $`\ge n-k`$. L'espace engendré par $`v_1,\dots,v_{k+1}`$ est de dimension $`k+1`$. Ces deux sous-espaces de $`\mathbb{R}^n`$ se rencontrent ailleurs qu'en zéro (la somme de leurs dimensions $`(n-k)+(k+1) = n+1 > n`$) : il existe $`x`$ unitaire dans $`\ker(B) \cap \mathrm{vect}(v_1,\dots,v_{k+1})`$. Alors $`\|(A-B)x\|^2 = \|Ax\|^2 = \sum_{i\le k+1}\sigma_i^2 (v_i^\top x)^2 \ge \sigma_{k+1}^2\sum_{i\le k+1}(v_i^\top x)^2 = \sigma_{k+1}^2`$, donc $`\|A-B\|_2 \ge \sigma_{k+1}`$. $`\quad\blacksquare`$
 
 #### Exemple chiffré déroulé pas à pas
 
 Soit $`A = \begin{pmatrix} 3 & 0 \\ 0 & 1 \end{pmatrix}`$ (déjà diagonale, donc $`\sigma_1 = 3, \sigma_2 = 1`$, $`u_i = v_i = e_i`$).
+
+> **Notation $`e_i`$.** $`e_i`$ désigne le $`i`$-ème **vecteur de base standard** : la flèche qui vaut $`1`$ sur l'axe numéro $`i`$ et $`0`$ partout ailleurs. Ainsi $`e_1 = \binom{1}{0}`$ pointe « tout droit vers la droite » et $`e_2 = \binom{0}{1}`$ « tout droit vers le haut » (la notation $`\binom{a}{b}`$ est simplement un vecteur colonne à deux cases, écrit verticalement).
 
 Approximation de rang $`1`$: on garde la plus grande couche.
 ```math
@@ -769,9 +850,9 @@ Voici, des matrices les plus structurées aux plus générales, comment chaque c
 | Carrée | $`m=n`$ | LU, déterminant | trace, det définis |
 | Quelconque $`m\times n`$ | aucune | **SVD** $`U\Sigma V^\top`$ | existe toujours |
 
-> **Note sur l'emboîtement.** Les inclusions strictes vont du haut vers le bas : SPD $`\subset`$ semi-définie positive $`\subset`$ symétrique réelle $`\subset`$ normale $`\subset`$ diagonalisable $`\subset`$ carrée $`\subset`$ quelconque. Attention toutefois : « normale » et « diagonalisable » ne sont pas comparables à « inversible » (une matrice peut être normale et non inversible, ou inversible et non diagonalisable) ; l'arbre de décision ci-dessus trie par questions pratiques, ce tableau par richesse de structure.
+> **Note sur l'emboîtement.** Les inclusions strictes vont du haut vers le bas (le symbole $`\subset`$ se lit « **est inclus dans** » : il dit qu'une catégorie est entièrement contenue dans une autre, plus large, comme « les chats $`\subset`$ les animaux ») : SPD $`\subset`$ semi-définie positive $`\subset`$ symétrique réelle $`\subset`$ normale $`\subset`$ diagonalisable $`\subset`$ carrée $`\subset`$ quelconque. Attention toutefois : « normale » et « diagonalisable » ne sont pas comparables à « inversible » (une matrice peut être normale et non inversible, ou inversible et non diagonalisable) ; l'arbre de décision ci-dessus trie par questions pratiques, ce tableau par richesse de structure.
 
-> **Le symbole $`U D U^*`$ (matrices normales).** Une matrice **normale** commute avec sa transposée conjuguée ($`AA^* = A^*A`$, avec $`A^* = \bar A^\top`$). Le théorème spectral complexe dit qu'elle se diagonalise dans une base orthonormée (matrice unitaire $`U`$, vérifiant $`U^*U = I`$). Les matrices symétriques réelles, antisymétriques, orthogonales et unitaires sont toutes des cas particuliers de matrices normales.
+> **Le symbole $`U D U^*`$ (matrices normales).** Une matrice **normale** commute avec sa transposée conjuguée ($`AA^* = A^*A`$, avec $`A^* = \bar A^\top`$). (Deux matrices **commutent** quand l'ordre de la multiplication ne change pas le résultat : $`AB = BA`$, comme $`3 \times 5 = 5 \times 3`$ ; pour les matrices, c'est rarement le cas, d'où l'intérêt de le signaler.) Le théorème spectral complexe dit qu'elle se diagonalise dans une base orthonormée (matrice unitaire $`U`$, vérifiant $`U^*U = I`$). Les matrices symétriques réelles, antisymétriques, orthogonales et unitaires sont toutes des cas particuliers de matrices normales.
 
 #### Relations entre décompositions
 
@@ -840,7 +921,7 @@ Soit $`A = \begin{pmatrix} 9 & 3 \\ 3 & 5 \end{pmatrix}`$.
 **(a)** Vérifier qu'elle est SPD. **(b)** Calculer sa décomposition de Cholesky $`L`$. **(c)** En déduire $`\det(A)`$.
 
 > **Corrigé.**
-> **(a)** Symétrique. Critère des mineurs principaux (Sylvester) : $`9 > 0`$ et $`\det(A) = 45 - 9 = 36 > 0`$, donc **SPD**.
+> **(a)** Symétrique. Critère des mineurs principaux (Sylvester) : $`9 > 0`$ et $`\det(A) = 45 - 9 = 36 > 0`$, donc **SPD**. (Un **mineur principal** est le déterminant d'un carré pris dans le coin haut-gauche de la matrice : ici le tout premier coefficient $`9`$, puis le déterminant de la matrice entière. Le **critère de Sylvester** dit qu'une matrice symétrique est SPD lorsque tous ces déterminants emboîtés sont strictement positifs.)
 > **(b)** $`\ell_{11} = \sqrt 9 = 3`$; $`\ell_{21} = 3/3 = 1`$; $`\ell_{22} = \sqrt{5 - 1^2} = 2`$. Donc $`L = \begin{pmatrix} 3 & 0 \\ 1 & 2 \end{pmatrix}`$. (Vérif : $`LL^\top = \begin{pmatrix} 9 & 3 \\ 3 & 5\end{pmatrix}`$. $`\checkmark`$)
 > **(c)** $`\det(A) = \det(L)\det(L^\top) = (\ell_{11}\ell_{22})^2 = (3\cdot2)^2 = 36`$. $`\checkmark`$
 
@@ -850,7 +931,7 @@ Soit $`A = \begin{pmatrix} 0 & 2 \\ 2 & 0 \end{pmatrix}`$.
 **(a)** Diagonaliser $`A`$ (elle est symétrique : utiliser une base orthonormée). **(b)** Calculer $`A^{10}`$.
 
 > **Corrigé.**
-> **(a)** $`\chi_A(\lambda) = \lambda^2 - 4 \Rightarrow \lambda = \pm 2`$. Pour $`\lambda=2`$: $`v_1 = \frac1{\sqrt2}\binom{1}{1}`$; pour $`\lambda=-2`$: $`v_2 = \frac1{\sqrt2}\binom{1}{-1}`$. Ils sont orthonormés, donc $`Q = \frac1{\sqrt2}\begin{pmatrix} 1 & 1 \\ 1 & -1\end{pmatrix}`$, $`\Lambda = \begin{pmatrix} 2 & 0 \\ 0 & -2\end{pmatrix}`$, et $`A = Q\Lambda Q^\top`$.
+> **(a)** $`\chi_A(\lambda) = \lambda^2 - 4 \Rightarrow \lambda = \pm 2`$ (le symbole $`\pm`$ se lit « **plus ou moins** » : il résume d'un coup les deux valeurs $`+2`$ et $`-2`$). Pour $`\lambda=2`$: $`v_1 = \frac1{\sqrt2}\binom{1}{1}`$; pour $`\lambda=-2`$: $`v_2 = \frac1{\sqrt2}\binom{1}{-1}`$. Ils sont orthonormés, donc $`Q = \frac1{\sqrt2}\begin{pmatrix} 1 & 1 \\ 1 & -1\end{pmatrix}`$, $`\Lambda = \begin{pmatrix} 2 & 0 \\ 0 & -2\end{pmatrix}`$, et $`A = Q\Lambda Q^\top`$.
 > **(b)** $`A^{10} = Q\Lambda^{10}Q^\top`$ avec $`\Lambda^{10} = \begin{pmatrix} 2^{10} & 0 \\ 0 & (-2)^{10}\end{pmatrix} = 1024\, I`$. Donc $`A^{10} = Q(1024\,I)Q^\top = 1024\,QQ^\top = 1024\, I = \begin{pmatrix} 1024 & 0 \\ 0 & 1024\end{pmatrix}`$. (Cohérent : $`A^2 = 4I`$, donc $`A^{10} = (A^2)^5 = 4^5 I = 1024\,I`$.)
 
 #### Exercice 5 : SVD à la main
@@ -870,7 +951,7 @@ Une matrice $`A`$ de taille $`4\times 4`$ a pour valeurs singulières $`\sigma =
 
 > **Corrigé.**
 > **(a)** Norme spectrale : $`\|A - A_2\|_2 = \sigma_3 = 0{,}5`$. Norme de Frobenius : $`\|A - A_2\|_F = \sqrt{\sigma_3^2 + \sigma_4^2} = \sqrt{0{,}25 + 0{,}01} = \sqrt{0{,}26} \approx 0{,}51`$.
-> **(b)** Variance totale $`\propto \sum\sigma_i^2 = 100 + 36 + 0{,}25 + 0{,}01 = 136{,}26`$. Capturée par rang 2 : $`136/136{,}26 \approx 0{,}9981`$, soit **99,8 %**. (Attention : au numérateur, $`136`$ n'est pas un arrondi mais la valeur **exacte** $`100 + 36 = \sigma_1^2 + \sigma_2^2`$ ; seul le résultat de la division, $`0{,}9981`$, est arrondi.)
+> **(b)** Variance totale $`\propto \sum\sigma_i^2 = 100 + 36 + 0{,}25 + 0{,}01 = 136{,}26`$ (le symbole $`\propto`$ se lit « **proportionnel à** » : la variance totale est égale à cette somme à un facteur constant près, qui se simplifie dans le rapport). Capturée par rang 2 : $`136/136{,}26 \approx 0{,}9981`$, soit **99,8 %**. (Attention : au numérateur, $`136`$ n'est pas un arrondi mais la valeur **exacte** $`100 + 36 = \sigma_1^2 + \sigma_2^2`$ ; seul le résultat de la division, $`0{,}9981`$, est arrondi.)
 > **(c)** Oui, excellent : il y a un **coude** net après $`\sigma_2`$ (chute de $`6`$ à $`0{,}5`$). Les deux dernières composantes sont quasi du bruit ; le rang $`2`$ est le choix naturel.
 
 #### Exercice 7 : Synthèse (raisonnement)

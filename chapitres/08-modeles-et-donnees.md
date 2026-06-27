@@ -12,9 +12,11 @@ Ce chapitre raconte cette rencontre : d'un côté des **données** (ce que le mo
 
 Commençons par poser les objets. On observe des **exemples** (samples). Chaque exemple est décrit par des **caractéristiques** (features) : pour un appartement, ce serait sa surface, son nombre de pièces, son étage. On rassemble ces caractéristiques dans un vecteur.
 
+> **Que veut dire « vecteur » ?** Un **vecteur**, ici, est simplement *une liste ordonnée de nombres*, rangés dans un ordre fixe. C'est comme une étiquette de produit qui annonce, dans l'ordre, plusieurs chiffres : « poids, prix, quantité ». L'ordre compte : le premier nombre veut toujours dire la même chose (la surface), le deuxième aussi (le nombre de pièces), et ainsi de suite. Un seul nombre tout seul (par exemple un prix) s'appelle au contraire un **scalaire**.
+
 > **Le symbole $`\mathbf{x}`$.** Ce symbole représente *un exemple décrit par ses caractéristiques*, rangé comme une liste de nombres. C'est comme la fiche d'identité d'une chose : pour un appartement, $`\mathbf{x} = (72, 3, 4)`$ veut dire « 72 mètres carrés, 3 pièces, 4e étage ». On l'écrit en **gras** parce que c'est un vecteur (plusieurs nombres d'un coup), et on dit qu'il vit dans $`\mathcal{X}`$, l'ensemble de toutes les fiches possibles. La lettre calligraphiée $`\mathcal{X}`$ est juste « le grand sac qui contient toutes les fiches imaginables ».
 
-> **Le symbole $`y`$.** Ce symbole représente *la réponse* qu'on aimerait prédire pour l'exemple $`\mathbf{x}`$. Pour l'appartement, $`y`$ serait son prix. On dit que $`y`$ vit dans $`\mathcal{Y}`$ (le sac de toutes les réponses possibles). Quand $`y`$ est un nombre réel (un prix), on parle de **régression**; quand $`y`$ est une catégorie (chat / chien), on parle de **classification**.
+> **Le symbole $`y`$.** Ce symbole représente *la réponse* qu'on aimerait prédire pour l'exemple $`\mathbf{x}`$. Pour l'appartement, $`y`$ serait son prix. On dit que $`y`$ vit dans $`\mathcal{Y}`$ (le sac de toutes les réponses possibles). Quand $`y`$ est un nombre réel (un nombre « ordinaire » qui peut avoir des décimales, comme un prix : 250,75), on parle de **régression**; quand $`y`$ est une catégorie (chat / chien), on parle de **classification**.
 
 Une **donnée** (datum) est donc un couple $`(\mathbf{x}, y)`$: une question et sa réponse. Un **jeu de données** (dataset) est une collection de tels couples.
 
@@ -27,6 +29,8 @@ Une **donnée** (datum) est donc un couple $`(\mathbf{x}, y)`$: une question et 
 > **Le symbole $`n`$.** Ce symbole représente *combien d'exemples on a*: le nombre de lignes du cahier. Si on a observé 500 appartements, alors $`n = 500`$. Plus $`n`$ est grand, plus on a de matière pour apprendre.
 
 Le boulanger ne se contente pas de mémoriser ; il veut une **règle** qui, face à une *nouvelle* pâte jamais vue, prédit le bon geste. Cette règle, c'est une fonction.
+
+> **Que veut dire « fonction » ?** Une **fonction** est une *machine à transformer* : on lui donne quelque chose en entrée, elle rend quelque chose en sortie, toujours de la même façon. Comme un distributeur automatique : vous mettez une pièce (l'entrée), vous recevez une canette (la sortie). Ici, on lui donne la fiche d'un appartement, elle rend un prix.
 
 > **Le symbole $`f`$ (et $`h`$).** Ces symboles représentent *la règle qui transforme une question en réponse*: on donne $`\mathbf{x}`$, la machine rend une prédiction $`f(\mathbf{x})`$. C'est exactement la « recette intérieure » du boulanger. On note souvent la règle apprise $`h`$ (pour **hypothèse**, hypothesis), parce que c'est une *proposition* de règle qu'on teste. Prédire, c'est calculer $`\hat{y} = h(\mathbf{x})`$.
 
@@ -44,9 +48,12 @@ On écrit alors une règle paramétrée $`h_{\boldsymbol{\theta}}`$: c'est « la
 ```math
 \mathcal{H} = \{\, h_{\boldsymbol{\theta}} : \boldsymbol{\theta} \in \Theta \,\}.
 ```
+
+> **Le symbole $`\in`$.** Ce petit signe se lit « appartient à » ou « est dans ». Écrire $`\boldsymbol{\theta} \in \Theta`$ veut dire « le réglage $`\boldsymbol{\theta}`$ fait partie du sac $`\Theta`$ des réglages autorisés », exactement comme on dirait « la pomme est dans le panier ». Le deux-points « $`:`$ » au milieu des accolades se lit ici « tels que » : la formule entière se lit « l'ensemble des règles $`h_{\boldsymbol{\theta}}`$ telles que $`\boldsymbol{\theta}`$ appartient à $`\Theta`$ ».
+
 **Apprendre, c'est choisir $`\boldsymbol{\theta}`$.** Toute la suite du chapitre répond à la question : *parmi tous les réglages possibles, lequel choisir au vu du cahier $`\mathcal{D}`$ ?*
 
-> **Définition (problème d'apprentissage supervisé).** On dispose d'un espace des entrées $`\mathcal{X}`$, d'un espace des sorties $`\mathcal{Y}`$, d'une classe d'hypothèses $`\mathcal{H} \subseteq \mathcal{Y}^{\mathcal{X}}`$ et d'un jeu de données $`\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n`$. Un **algorithme d'apprentissage** (learning algorithm) est une application $`\mathcal{A}`$ qui, à tout jeu de données, associe une hypothèse : $`\mathcal{A}(\mathcal{D}) = \hat{h} \in \mathcal{H}`$. On dit que l'apprentissage est **supervisé** (supervised) quand chaque exemple porte sa réponse $`y_i`$; **non supervisé** (unsupervised) quand on n'a que les $`\mathbf{x}_i`$ (pas de réponse) et qu'on cherche une structure cachée.
+> **Définition (problème d'apprentissage supervisé).** On dispose d'un espace des entrées $`\mathcal{X}`$, d'un espace des sorties $`\mathcal{Y}`$, d'une classe d'hypothèses $`\mathcal{H} \subseteq \mathcal{Y}^{\mathcal{X}}`$ et d'un jeu de données $`\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n`$. Un **algorithme d'apprentissage** (learning algorithm) est une application $`\mathcal{A}`$ (en mathématiques, « **application** » est un autre mot pour « fonction », une machine entrée-sortie) qui, à tout jeu de données, associe une hypothèse : $`\mathcal{A}(\mathcal{D}) = \hat{h} \in \mathcal{H}`$. On dit que l'apprentissage est **supervisé** (supervised) quand chaque exemple porte sa réponse $`y_i`$; **non supervisé** (unsupervised) quand on n'a que les $`\mathbf{x}_i`$ (pas de réponse) et qu'on cherche une structure cachée.
 
 > **Le symbole $`\mathcal{Y}^{\mathcal{X}}`$.** Cette notation représente *l'ensemble de toutes les fonctions* qui partent de $`\mathcal{X}`$ et arrivent dans $`\mathcal{Y}`$. C'est l'usage habituel de l'exposant pour les ensembles : tout comme $`\mathcal{Y}^n`$ désigne les listes de $`n`$ éléments de $`\mathcal{Y}`$ (une valeur par indice $`1,\dots,n`$), $`\mathcal{Y}^{\mathcal{X}}`$ désigne les « listes » indexées par tous les $`\mathbf{x} \in \mathcal{X}`$, c'est-à-dire les règles. Écrire $`\mathcal{H} \subseteq \mathcal{Y}^{\mathcal{X}}`$ dit simplement : notre catalogue $`\mathcal{H}`$ est un sous-ensemble de toutes les règles concevables.
 
@@ -68,6 +75,8 @@ flowchart LR
 | Classe d'hypothèses $`\mathcal{H}`$ | *Quelle forme* peut prendre la règle ? | toutes les droites $`\theta_1 x + \theta_0`$ |
 | Critère d'apprentissage | *Comment juger* qu'une règle est bonne ? | erreur quadratique moyenne |
 | Algorithme $`\mathcal{A}`$ | *Comment trouver* la meilleure règle ? | moindres carrés / descente de gradient |
+
+> **Trois mots du tableau, en avant-goût.** L'**erreur quadratique moyenne** est *la moyenne des écarts mis au carré* entre prédictions et vérités (on met au carré pour tout compter en positif et punir davantage les grosses erreurs) ; les **moindres carrés** sont la méthode qui cherche la droite rendant cette erreur la plus petite possible ; la **descente de gradient** est une façon de trouver ce minimum en descendant pas à pas la pente, comme une bille qui roule vers le fond d'une cuvette. Les trois sont détaillés plus loin ; ne retenez ici que l'idée.
 
 > **Remarque (le cœur du chapitre).** Les deux grandes façons de définir le critère d'apprentissage donneront les deux grandes sections suivantes : minimiser une **erreur** mesurée sur les données (vision *minimisation du risque empirique*), ou maximiser la **plausibilité** des données sous un modèle probabiliste (vision *maximum de vraisemblance*). On verra que ces deux visions, apparemment différentes, se rejoignent souvent, c'est l'un des plus beaux ponts du domaine.
 
@@ -95,7 +104,7 @@ Reprenons le boulanger. Pour savoir si sa règle est bonne, il lui faut une **no
 
 #### La fonction de perte : mesurer une erreur
 
-> **Le symbole $`\ell`$ (la fonction de perte, loss).** Ce symbole représente *le prix à payer quand on se trompe*. On lui donne deux choses : la prédiction $`\hat{y}`$ et la vraie réponse $`y`$, et il rend un nombre $`\ell(\hat{y}, y) \ge 0`$ qui dit « voilà à quel point cette prédiction est mauvaise ». C'est comme un arbitre sévère : si vous prédisez pile la vérité, il dit « 0, parfait » ; plus vous vous éloignez, plus la note monte. La perte vaut toujours zéro ou plus (on ne peut pas être *récompensé* pour une erreur), et elle vaut zéro quand $`\hat{y} = y`$.
+> **Le symbole $`\ell`$ (la fonction de perte, loss).** Ce symbole représente *le prix à payer quand on se trompe*. On lui donne deux choses : la prédiction $`\hat{y}`$ et la vraie réponse $`y`$, et il rend un nombre $`\ell(\hat{y}, y) \ge 0`$ (le symbole $`\ge`$ se lit « plus grand ou égal à » : ici, la note est toujours zéro ou un nombre positif) qui dit « voilà à quel point cette prédiction est mauvaise ». C'est comme un arbitre sévère : si vous prédisez pile la vérité, il dit « 0, parfait » ; plus vous vous éloignez, plus la note monte. La perte vaut toujours zéro ou plus (on ne peut pas être *récompensé* pour une erreur), et elle vaut zéro quand $`\hat{y} = y`$.
 
 Quelques pertes classiques, selon le type de problème :
 
@@ -106,7 +115,9 @@ Quelques pertes classiques, selon le type de problème :
 | 0–1 (zéro-one) | $`\mathbf{1}[\hat{y} \neq y]`$ | classification, compte les erreurs |
 | Logistique (log-loss) | $`-\big(y \ln \hat{p} + (1-y)\ln(1-\hat{p})\big)`$ | classification probabiliste |
 
-> **Le symbole $`\mathbf{1}[\,\cdot\,]`$ (indicatrice).** Ce symbole représente *un interrupteur qui vaut 1 si c'est vrai, 0 si c'est faux*. Ainsi $`\mathbf{1}[\hat{y} \neq y]`$ vaut 1 quand on s'est trompé de classe, et 0 quand on a vu juste. C'est l'ampoule qui s'allume uniquement quand la condition entre crochets est réalisée. La perte 0–1 est donc, littéralement, « compte un point à chaque erreur ».
+> **Les barres $`\lvert\,\cdot\,\rvert`$ (valeur absolue).** Deux barres verticales autour d'un nombre veulent dire « *prenez ce nombre en oubliant son signe* » (la *valeur absolue*) : $`\lvert -3\rvert = 3`$ et $`\lvert 3\rvert = 3`$. C'est la *distance* du nombre à zéro, toujours positive. Ainsi $`\lvert \hat{y} - y\rvert`$ est l'écart entre prédiction et vérité, compté en positif qu'on ait prédit trop haut ou trop bas. Les **valeurs aberrantes** (outliers) citées dans le tableau sont des points franchement bizarres, très loin des autres (une erreur de saisie, un cas extrême) ; la perte absolue leur résiste mieux que la quadratique, qui les amplifie en les mettant au carré.
+
+> **Le symbole $`\mathbf{1}[\,\cdot\,]`$ (indicatrice).** Ce symbole représente *un interrupteur qui vaut 1 si c'est vrai, 0 si c'est faux*. (Au passage, le signe $`\neq`$ se lit « différent de » : $`\hat{y} \neq y`$ veut dire « la prédiction n'est pas égale à la vérité ».) Ainsi $`\mathbf{1}[\hat{y} \neq y]`$ vaut 1 quand on s'est trompé de classe, et 0 quand on a vu juste. C'est l'ampoule qui s'allume uniquement quand la condition entre crochets est réalisée. La perte 0–1 est donc, littéralement, « compte un point à chaque erreur ».
 
 > **Le symbole $`\hat{p}`$ (probabilité prédite).** Dans la log-loss, $`\hat{p}`$ représente *la probabilité que le modèle attribue à la classe 1* (par exemple « 0,8 de chance que ce soit un chat »). C'est un nombre entre 0 et 1, alors que la vraie étiquette $`y`$ vaut 0 ou 1. La log-loss récompense un modèle *confiant et correct* (prédire 0,99 quand $`y=1`$ coûte presque rien) et punit sévèrement un modèle *confiant et faux* (prédire 0,01 quand $`y=1`$ coûte très cher).
 
@@ -124,6 +135,8 @@ Le but idéal de l'apprentissage est de trouver la règle de **risque minimal**:
 ```math
 h^\star = \arg\min_{h \in \mathcal{H}} R(h).
 ```
+
+> **Les symboles $`\arg\min`$ et l'étoile $`{}^\star`$.** L'écriture $`\arg\min_{h\in\mathcal{H}} R(h)`$ se lit « *l'endroit qui rend $`R`$ le plus petit* » : ce n'est pas la valeur minimale elle-même, mais *la règle $`h`$ qui réalise ce minimum* (« $`\arg`$ » abrège *argument*, l'entrée gagnante). C'est comme chercher non pas la note la plus basse, mais *l'élève* qui l'a obtenue. La petite **étoile** en exposant, $`h^\star`$ (« h étoile »), est une simple décoration qui signale « *le meilleur*, l'idéal recherché ».
 
 > **Remarque (le mur infranchissable).** On ne peut **pas** calculer $`R(h)`$: il faudrait connaître la loi $`P`$ du monde entier, qui est précisément ce qu'on ignore ! On ne dispose que d'un échantillon fini, le cahier $`\mathcal{D}`$. Toute la suite consiste à *remplacer* cette moyenne idéale, inaccessible, par une moyenne *concrète* calculée sur nos données.
 
@@ -144,7 +157,7 @@ L'idée maîtresse, le **principe de minimisation du risque empirique** (empiric
 \hat{\boldsymbol{\theta}} = \arg\min_{\boldsymbol{\theta} \in \Theta} \frac{1}{n}\sum_{i=1}^n \ell\big(h_{\boldsymbol{\theta}}(\mathbf{x}_i), y_i\big).
 ```
 
-> **Définition (ERM).** Étant donné une classe $`\mathcal{H}`$, une perte $`\ell`$ et des données $`\mathcal{D}`$, l'**estimateur du risque empirique** est tout $`\hat{h} \in \arg\min_{h\in\mathcal{H}} \hat{R}_n(h)`$. C'est le pari, fondamental et souvent justifié, que *bien faire sur les exemples vus* tend à *bien faire sur les exemples futurs*, à condition de ne pas surapprendre.
+> **Définition (ERM).** Étant donné une classe $`\mathcal{H}`$, une perte $`\ell`$ et des données $`\mathcal{D}`$, l'**estimateur du risque empirique** est tout $`\hat{h} \in \arg\min_{h\in\mathcal{H}} \hat{R}_n(h)`$. C'est le pari, fondamental et souvent justifié, que *bien faire sur les exemples vus* tend à *bien faire sur les exemples futurs*, à condition de ne pas surapprendre. (Un **estimateur** est simplement *une recette de calcul qui, à partir des données, sort une réponse chiffrée* : on lui donne le cahier, il rend un nombre ou une règle. C'est l'outil ; son résultat est l'*estimation*, marquée d'un chapeau.)
 
 > **Le symbole $`\arg\min`$ (rappel d'usage).** Il ne rend pas la *valeur* minimale de la fonction, mais *l'endroit* (ici le $`\boldsymbol{\theta}`$) où ce minimum est atteint. « $`\arg`$ » = *argument*, c'est-à-dire l'entrée qui réalise le mieux. On écrit « $`\hat{h} \in \arg\min`$ » (appartenance) plutôt que « $`\hat{h} = \arg\min`$ » quand le minimum peut être atteint en plusieurs endroits : l'$`\arg\min`$ est alors un *ensemble* de minimiseurs, et on en choisit un.
 
@@ -156,6 +169,7 @@ Pourquoi remplacer $`R`$ par $`\hat{R}_n`$ serait-il légitime ? Parce que, sous
 > ```math
 > \hat{R}_n(h) \;\xrightarrow[n \to \infty]{} \; R(h) \quad \text{(presque surement).}
 > ```
+> (Le symbole $`\infty`$ se lit « **l'infini** » : « $`< \infty`$ » veut juste dire « ce nombre est *fini*, pas démesurément grand ». La flèche surmontée de $`n\to\infty`$ se lit « *quand $`n`$ tend vers l'infini* », c'est-à-dire « à mesure que le nombre d'exemples devient immense » ; et la grande flèche elle-même signifie « *se rapproche de plus en plus de* ». La phrase entière dit donc : « plus on accumule de données, plus la moyenne calculée $`\hat{R}_n(h)`$ se colle au vrai risque $`R(h)`$ ».)
 > **Démonstration.** Posons $`Z_i = \ell(h(\mathbf{x}_i), y_i)`$. Les $`Z_i`$ sont i.i.d. (image par la même fonction $`\ell(h(\cdot),\cdot)`$ de variables i.i.d.), d'espérance $`\mathbb{E}[Z_i] = R(h)`$ par définition même du risque. Le risque empirique $`\hat{R}_n(h) = \frac{1}{n}\sum_i Z_i`$ est exactement la moyenne empirique de ces variables. La loi forte des grands nombres affirme que la moyenne empirique de variables i.i.d. intégrables converge presque sûrement vers leur espérance commune. D'où la conclusion. $`\blacksquare`$
 
 > **Le symbole « presque sûrement ».** Cette expression (notée p.s.) signifie *« avec probabilité 1 »*: l'événement de convergence est certain, à l'exception éventuelle de cas si rares que leur probabilité totale est nulle. C'est la forme de convergence la plus forte qu'on rencontre ici ; intuitivement, « si l'on accumule assez de données, la moyenne observée finit par coller à la vraie moyenne, sans exception qui compte ».
@@ -168,7 +182,11 @@ Mettons l'ERM en action sur le cas le plus célèbre : une droite, avec la perte
 
 Classe d'hypothèses : les fonctions affines $`h_{\boldsymbol{\theta}}(\mathbf{x}) = \boldsymbol{\theta}^\top \mathbf{x}`$, où l'on a glissé un 1 en tête de $`\mathbf{x}`$ pour absorber le terme constant (le biais).
 
-> **Convention de l'« intercept ».** Pour ne pas traîner séparément la hauteur $`\theta_0`$, on ajoute artificiellement une coordonnée constante égale à 1 à chaque exemple : $`\mathbf{x} = (1, x_1, \dots, x_d)`$. Alors $`\boldsymbol{\theta}^\top \mathbf{x} = \theta_0 \cdot 1 + \theta_1 x_1 + \dots + \theta_d x_d`$ contient le terme constant $`\theta_0`$ « gratuitement ». C'est un truc de comptable pour écrire tout d'un bloc.
+> **Que veut dire « affine » ?** Une fonction **affine** dessine *une droite* (ou, à plusieurs entrées, un plan) : on multiplie chaque entrée par un nombre, on additionne le tout, et on ajoute éventuellement une hauteur de départ. Pas de courbe, pas de bosse. C'est la forme la plus simple après « tout multiplier par le même nombre ».
+
+> **Le symbole $`\top`$ (transposée) et le produit $`\boldsymbol{\theta}^\top \mathbf{x}`$.** Le petit « T » en exposant se lit **« transposée »** : il *bascule une liste de nombres debout (en colonne) en une liste couchée (en ligne)*, comme on tournerait une pile d'assiettes pour les aligner. Son seul rôle ici est d'autoriser la multiplication : $`\boldsymbol{\theta}^\top \mathbf{x}`$ est le **produit scalaire** des deux listes, c'est-à-dire « je multiplie terme à terme et j'additionne tout » : $`\theta_1 x_1 + \theta_2 x_2 + \dots`$. Recette de cuisine : on multiplie chaque ingrédient $`x_j`$ par son importance $`\theta_j`$, puis on fait la somme ; le résultat est *un seul nombre*, la prédiction.
+
+> **Convention de l'« intercept ».** Pour ne pas traîner séparément la hauteur $`\theta_0`$, on ajoute artificiellement une coordonnée constante égale à 1 à chaque exemple : $`\mathbf{x} = (1, x_1, \dots, x_d)`$. (Ici $`d`$ est juste *le nombre de caractéristiques* : si chaque appartement est décrit par 3 chiffres, alors $`d = 3`$. Et « $`x_1, \dots, x_d`$ » est une façon courte d'écrire « le premier nombre, le deuxième, …, jusqu'au $`d`$-ième » sans tous les recopier ; les trois petits points « $`\dots`$ » veulent dire « et ainsi de suite ».) Alors $`\boldsymbol{\theta}^\top \mathbf{x} = \theta_0 \cdot 1 + \theta_1 x_1 + \dots + \theta_d x_d`$ contient le terme constant $`\theta_0`$ « gratuitement ». C'est un truc de comptable pour écrire tout d'un bloc.
 
 Le risque empirique avec la perte quadratique s'écrit
 ```math
@@ -176,17 +194,24 @@ Le risque empirique avec la perte quadratique s'écrit
 ```
 
 Empilons les exemples en une matrice de **design** $`X \in \mathbb{R}^{n \times d}`$ (une ligne par exemple, $`d`$ colonnes pour les caractéristiques intercept inclus) et les réponses en un vecteur $`\mathbf{y} \in \mathbb{R}^n`$. Alors
+
+> **Que veut dire « matrice » ?** Une **matrice** est *un tableau de nombres à double entrée*, avec des lignes et des colonnes, comme une grille de mots croisés remplie de chiffres ou un tableur Excel. Là où un vecteur est une simple liste, la matrice est une grille.
+
+> **Le symbole $`\mathbb{R}`$ et l'écriture $`\mathbb{R}^{n\times d}`$.** La lettre $`\mathbb{R}`$ (un « R » à double barre, qui se lit « erre ») désigne *l'ensemble de tous les nombres ordinaires* (les **réels** : entiers, décimaux, positifs ou négatifs, comme $`-3`$, $`0`$, $`2{,}5`$). L'exposant indique la *taille* : $`\mathbb{R}^n`$ est « toutes les listes de $`n`$ nombres », et $`\mathbb{R}^{n\times d}`$ « tous les tableaux à $`n`$ lignes et $`d`$ colonnes ». Donc $`X \in \mathbb{R}^{n\times d}`$ se lit « $`X`$ est un tableau de $`n`$ lignes et $`d`$ colonnes de nombres ».
+
 ```math
 \hat{R}_n(\boldsymbol{\theta}) = \frac{1}{n}\,\lVert X\boldsymbol{\theta} - \mathbf{y}\rVert^2.
 ```
 
-> **La matrice de design $`X`$.** Elle représente *tout le cahier rangé en tableau*: une ligne par exemple, une colonne par caractéristique. Le produit $`X\boldsymbol{\theta}`$ calcule d'un seul coup les $`n`$ prédictions (la $`i`$-e ligne de $`X\boldsymbol{\theta}`$ est $`\boldsymbol{\theta}^\top\mathbf{x}_i`$), et $`X\boldsymbol{\theta} - \mathbf{y}`$ est le vecteur des $`n`$ écarts entre prédictions et vérités. Sa norme au carré est donc la somme des carrés des résidus.
+> **Le symbole $`\lVert\,\cdot\,\rVert`$ (la norme).** Les *doubles* barres autour d'une liste de nombres représentent sa **norme**, c'est-à-dire *sa longueur*, sa « taille » globale. C'est la généralisation à plusieurs nombres de la valeur absolue (qui, elle, mesurait la taille d'un seul nombre). Pour deux ou trois nombres, c'est exactement la longueur de la flèche par le théorème de Pythagore : on met chaque nombre au carré, on additionne, on prend la racine carrée. Donc $`\lVert X\boldsymbol{\theta} - \mathbf{y}\rVert^2`$ (la norme *au carré*, sans la racine) est simplement *la somme des carrés des écarts* entre prédictions et vérités : un seul nombre qui résume « à quel point on s'est trompé en tout ».
+
+> **La matrice de design $`X`$.** Elle représente *tout le cahier rangé en tableau*: une ligne par exemple, une colonne par caractéristique. Le produit $`X\boldsymbol{\theta}`$ calcule d'un seul coup les $`n`$ prédictions (la $`i`$-e ligne de $`X\boldsymbol{\theta}`$ est $`\boldsymbol{\theta}^\top\mathbf{x}_i`$), et $`X\boldsymbol{\theta} - \mathbf{y}`$ est le vecteur des $`n`$ écarts entre prédictions et vérités. Sa norme au carré est donc la somme des carrés des résidus (un **résidu** est *ce qui reste* d'une prédiction : l'écart entre ce qu'on a prédit et la vraie valeur, le « reste à expliquer »).
 
 Pour trouver le minimum, on annule le gradient (la pente est nulle au creux de la vallée).
 
 > **Le symbole $`\nabla`$ (nabla, le gradient, rappel d'usage).** Ce symbole en triangle pointe vers le bas représente *la pente dans toutes les directions à la fois*: $`\nabla_{\boldsymbol{\theta}} g`$ est le vecteur dont chaque composante dit « de combien $`g`$ monte si je pousse ce bouton-la ». Au fond d'une vallée (un minimum d'une fonction convexe lisse), il n'y a plus de pente nulle part : le gradient est le vecteur nul. Résoudre $`\nabla_{\boldsymbol{\theta}}\hat{R}_n = \mathbf{0}`$, c'est chercher ce fond de vallée. Une fonction **convexe** est, en gros, une fonction en forme de bol ou de cuvette : elle n'a qu'un seul fond, et nulle part de petite bosse ou de creux secondaire où l'on pourrait rester coincé. C'est pour cela qu'ici annuler le gradient (trouver le seul endroit sans pente) donne directement LE minimum, et non un faux minimum local.
 
-Développons $`\lVert X\boldsymbol{\theta} - \mathbf{y}\rVert^2 = \boldsymbol{\theta}^\top X^\top X \boldsymbol{\theta} - 2\,\boldsymbol{\theta}^\top X^\top \mathbf{y} + \mathbf{y}^\top \mathbf{y}`$, puis dérivons :
+Développons $`\lVert X\boldsymbol{\theta} - \mathbf{y}\rVert^2 = \boldsymbol{\theta}^\top X^\top X \boldsymbol{\theta} - 2\,\boldsymbol{\theta}^\top X^\top \mathbf{y} + \mathbf{y}^\top \mathbf{y}`$, puis dérivons (« **dériver** » une fonction, c'est calculer sa *pente* : de combien la sortie monte ou descend quand on bouge un peu l'entrée ; au creux d'une vallée, cette pente vaut zéro, ce qui sert justement à repérer le minimum) :
 ```math
 \nabla_{\boldsymbol{\theta}}\, \hat{R}_n(\boldsymbol{\theta}) = \frac{2}{n}\big(X^\top X \boldsymbol{\theta} - X^\top \mathbf{y}\big).
 ```
@@ -197,11 +222,16 @@ X^\top X\, \hat{\boldsymbol{\theta}} = X^\top \mathbf{y}
 \hat{\boldsymbol{\theta}} = (X^\top X)^{-1} X^\top \mathbf{y} \quad (\text{si } X^\top X \text{ inversible}).
 ```
 
-> **Lecture géométrique.** $`X\hat{\boldsymbol{\theta}}`$ est la **projection orthogonale** de $`\mathbf{y}`$ sur l'espace engendré par les colonnes de $`X`$. Les équations normales disent exactement que le résidu $`\mathbf{y} - X\hat{\boldsymbol{\theta}}`$ est orthogonal à toutes les colonnes de $`X`$ (puisque $`X^\top(\mathbf{y} - X\hat{\boldsymbol{\theta}}) = \mathbf{0}`$). On choisit le point de l'espace des prédictions le plus proche de la vérité : l'ombre de $`\mathbf{y}`$ sur le plan des règles possibles.
+> **L'exposant $`{}^{-1}`$ (l'inverse d'une matrice) et « inversible ».** Pour un nombre, l'exposant $`-1`$ veut dire « l'inverse » : $`5^{-1} = 1/5`$, et $`5 \times 5^{-1} = 1`$. Pour une matrice, $`(X^\top X)^{-1}`$ joue le même rôle : c'est *la matrice qui « défait »* $`X^\top X`$ (leur produit redonne la matrice neutre, celle qui ne change rien). Cela permet de « passer de l'autre côté » pour isoler $`\hat{\boldsymbol{\theta}}`$, comme on divise des deux côtés d'une équation. Une matrice est **inversible** quand un tel inverse existe ; certaines matrices n'en ont pas (comme on ne peut pas inverser le nombre $`0`$), et c'est précisément le cas problématique que la régularisation, plus loin, viendra réparer. Le grand symbole $`\Longrightarrow`$ se lit « donc » ou « entraîne que ».
+
+> **Lecture géométrique.** $`X\hat{\boldsymbol{\theta}}`$ est la **projection orthogonale** de $`\mathbf{y}`$ sur l'espace engendré par les colonnes de $`X`$. (Deux directions sont **orthogonales** quand elles forment un *angle droit*, comme les deux bords d'une feuille de papier ; « **orthogonal** » est le mot savant pour « perpendiculaire ». L'**espace engendré par les colonnes** est *l'ensemble de tous les points qu'on peut atteindre* en combinant ces colonnes, comme une nappe plate tendue dans l'espace. **Projeter** un point sur cette nappe, c'est trouver son ombre au sol quand le soleil est juste au-dessus : le point de la nappe le plus proche.) Les équations normales disent exactement que le résidu $`\mathbf{y} - X\hat{\boldsymbol{\theta}}`$ est orthogonal à toutes les colonnes de $`X`$ (puisque $`X^\top(\mathbf{y} - X\hat{\boldsymbol{\theta}}) = \mathbf{0}`$). On choisit le point de l'espace des prédictions le plus proche de la vérité : l'ombre de $`\mathbf{y}`$ sur le plan des règles possibles.
 
 Faisons tourner un mini-exemple à la main. Trois points : $`(x, y) \in \{(1, 2), (2, 2), (3, 4)\}`$. Avec l'intercept, $`X = \begin{pmatrix}1&1\\1&2\\1&3\end{pmatrix}`$, $`\mathbf{y} = (2, 2, 4)^\top`$.
 
 Calculons $`X^\top X = \begin{pmatrix}3 & 6\\ 6 & 14\end{pmatrix}`$ et $`X^\top \mathbf{y} = (8, 18)^\top`$. Le déterminant vaut $`3\cdot 14 - 6\cdot 6 = 6`$, donc
+
+> **Que veut dire « déterminant » ?** Le **déterminant** est *un seul nombre que l'on calcule à partir d'une matrice carrée* et qui résume une de ses propriétés clés : il dit notamment si la matrice est inversible. Règle simple : *si le déterminant vaut zéro, la matrice n'est pas inversible* (l'inverse n'existe pas) ; s'il est non nul, l'inverse existe. Pour une petite matrice $`2\times2`$ $`\begin{pmatrix}a&b\\c&d\end{pmatrix}`$, on le calcule par $`a\,d - b\,c`$ (le produit de la diagonale moins le produit de l'autre diagonale) : ici $`3\cdot14 - 6\cdot6 = 6`$, qui n'est pas zéro, donc tout va bien.
+
 ```math
 (X^\top X)^{-1} = \frac{1}{6}\begin{pmatrix}14 & -6\\ -6 & 3\end{pmatrix},
 \qquad
@@ -209,11 +239,11 @@ Calculons $`X^\top X = \begin{pmatrix}3 & 6\\ 6 & 14\end{pmatrix}`$ et $`X^\top 
 = \frac{1}{6}\begin{pmatrix}112 - 108\\ -48 + 54\end{pmatrix}
 = \begin{pmatrix}2/3\\ 1\end{pmatrix}.
 ```
-La droite ajustée est donc $`\hat{y} = 1\cdot x + \tfrac{2}{3}`$: pente 1, ordonnée à l'origine $`2/3`$. Les trois résidus valent alors $`-\tfrac13,\ +\tfrac23,\ -\tfrac13`$ (par exemple en $`x=2`$: $`\hat{y} = 2 + \tfrac23 = \tfrac83 \approx 2{,}67`$ contre $`y=2`$ observé). Leur somme est nulle, signature de l'orthogonalité avec la colonne d'intercept, et le risque empirique vaut $`\tfrac13\big(\tfrac19+\tfrac49+\tfrac19\big) = \tfrac{2}{9} \approx 0{,}22`$.
+La droite ajustée est donc $`\hat{y} = 1\cdot x + \tfrac{2}{3}`$: pente 1, ordonnée à l'origine $`2/3`$ (l'**ordonnée à l'origine** est *la hauteur de la droite quand l'entrée vaut zéro* : l'endroit où elle croise l'axe vertical, son point de départ). Les trois résidus valent alors $`-\tfrac13,\ +\tfrac23,\ -\tfrac13`$ (par exemple en $`x=2`$: $`\hat{y} = 2 + \tfrac23 = \tfrac83 \approx 2{,}67`$ contre $`y=2`$ observé). Leur somme est nulle, signature de l'orthogonalité avec la colonne d'intercept, et le risque empirique vaut $`\tfrac13\big(\tfrac19+\tfrac49+\tfrac19\big) = \tfrac{2}{9} \approx 0{,}22`$.
 
 #### Application machine learning et code
 
-Les moindres carrés sont la brique de base de la régression. En pratique on n'inverse pas $`X^\top X`$ à la main (instable si les colonnes sont presque colinéaires) : on résout les équations normales par décomposition (QR ou SVD).
+Les moindres carrés sont la brique de base de la régression. En pratique on n'inverse pas $`X^\top X`$ à la main (instable si les colonnes sont presque colinéaires, c'est-à-dire si deux caractéristiques disent presque la même chose, comme « surface en mètres carrés » et « surface en pieds carrés » : le calcul devient alors fragile) : on résout les équations normales par décomposition (QR ou SVD sont des *méthodes de calcul plus stables*, des façons astucieuses de découper la matrice en morceaux plus faciles à manier ; on peut s'en tenir au nom pour l'instant).
 
 ```python
 import numpy as np
@@ -238,7 +268,7 @@ print("theta (intercept, pente) =", theta)        # [0.667 1.   ]
 print("risque empirique          =", empirical_risk(theta, X, y))  # 0.222
 ```
 
-> **Mise à jour 2026.** Pour les très grands jeux de données ($`n`$ ou $`d`$ énormes), on ne forme jamais $`X^\top X`$ (coût $`O(nd^2)`$ et mauvais conditionnement). On préfère : (i) la **SVD tronquée randomisée** pour une solution stable de rang réduit ; (ii) surtout la **descente de gradient stochastique** (stochastic gradient descent, SGD) et ses variantes adaptatives **Adam / AdamW**, qui minimisent le risque empirique par petits lots sans jamais matérialiser la matrice normale. Le gradient $`\frac{2}{n} X^\top(X\boldsymbol{\theta} - \mathbf{y})`$ se calcule par produits matrice-vecteur, et en apprentissage profond il est obtenu par **différentiation automatique** (autodiff, via PyTorch ou JAX) plutôt qu'à la main.
+> **Mise à jour 2026.** Pour les très grands jeux de données ($`n`$ ou $`d`$ énormes), on ne forme jamais $`X^\top X`$ (coût $`O(nd^2)`$ et mauvais conditionnement). (La notation $`O(nd^2)`$, dite « grand O », donne *l'ordre de grandeur du travail à faire* : ici, à peu près $`n`$ fois $`d`$ fois $`d`$ opérations, ce qui explose vite quand $`d`$ grandit. Le **conditionnement** mesure *à quel point un calcul est sensible aux petites erreurs* : un « mauvais conditionnement » veut dire qu'un minuscule grain de poussière dans les données peut faire dérailler complètement le résultat, comme une balance si déréglée qu'un souffle d'air change l'affichage.) On préfère : (i) la **SVD tronquée randomisée** pour une solution stable de rang réduit ; (ii) surtout la **descente de gradient stochastique** (stochastic gradient descent, SGD) et ses variantes adaptatives **Adam / AdamW**, qui minimisent le risque empirique par petits lots sans jamais matérialiser la matrice normale. Le gradient $`\frac{2}{n} X^\top(X\boldsymbol{\theta} - \mathbf{y})`$ se calcule par produits matrice-vecteur, et en apprentissage profond il est obtenu par **différentiation automatique** (autodiff, via PyTorch ou JAX) plutôt qu'à la main.
 
 #### Regularisation : empecher le surapprentissage des l'ERM
 
@@ -251,7 +281,7 @@ L'objectif **régularisé** s'écrit
 \hat{\boldsymbol{\theta}}_\lambda = \arg\min_{\boldsymbol{\theta}} \;\underbrace{\frac{1}{n}\sum_{i=1}^n \ell\big(h_{\boldsymbol{\theta}}(\mathbf{x}_i), y_i\big)}_{\text{coller aux donnees}} \;+\; \underbrace{\lambda\, \Omega(\boldsymbol{\theta})}_{\text{rester simple}}.
 ```
 
-> **Le symbole $`\Omega(\boldsymbol{\theta})`$ (pénalité de complexité).** Ce symbole (la lettre grecque *oméga* majuscule) représente *une mesure de « combien le réglage est compliqué »*: plus les coefficients sont gros, plus $`\Omega`$ est grand. On la choisit positive et minimale (souvent nulle) au réglage le plus simple. Le produit $`\lambda\,\Omega(\boldsymbol{\theta})`$ est l'amende ajoutée à la note d'erreur ; minimiser la somme, c'est arbitrer entre coller aux données et rester sobre.
+> **Le symbole $`\Omega(\boldsymbol{\theta})`$ (pénalité de complexité).** Ce symbole (la lettre grecque *oméga* majuscule) représente *une mesure de « combien le réglage est compliqué »*: plus les coefficients sont gros, plus $`\Omega`$ est grand. (Un **coefficient** est simplement *un des nombres de réglage* $`\theta_j`$, le « poids » que la règle donne à une caractéristique : un gros coefficient dit « cette caractéristique compte énormément », un coefficient nul dit « je l'ignore ».) On la choisit positive et minimale (souvent nulle) au réglage le plus simple. Le produit $`\lambda\,\Omega(\boldsymbol{\theta})`$ est l'amende ajoutée à la note d'erreur ; minimiser la somme, c'est arbitrer entre coller aux données et rester sobre.
 
 | Pénalité $`\Omega(\boldsymbol{\theta})`$ | Nom | Effet |
 |---|---|---|
@@ -259,10 +289,13 @@ L'objectif **régularisé** s'écrit
 | $`\lVert \boldsymbol{\theta}\rVert_1 = \sum_j \lvert \theta_j\rvert`$ | Lasso (L1) | met des coefficients exactement à zéro (sélection de variables) |
 
 Pour la régression ridge, la solution reste explicite et *toujours* bien définie (le terme $`n\lambda I`$ rend la matrice inversible dès que $`\lambda > 0`$) :
+
+> **Le symbole $`I`$ (matrice identité).** $`I`$ désigne la **matrice identité** : *la matrice « neutre » qui ne change rien* quand on multiplie par elle, exactement comme le nombre $`1`$ ne change rien dans une multiplication ($`7\times1 = 7`$). Elle a des $`1`$ sur sa diagonale et des $`0`$ partout ailleurs. Ajouter un petit $`n\lambda I`$ revient à *renforcer la diagonale* de la matrice, ce qui suffit à la rendre inversible (à la « réparer » quand elle était fragile).
+
 ```math
 \hat{\boldsymbol{\theta}}_\lambda = (X^\top X + n\lambda I)^{-1} X^\top \mathbf{y}.
 ```
-On verra dans la section suivante que cette pénalité n'est pas un bricolage : elle correspond *exactement* à une croyance a priori gaussienne sur $`\boldsymbol{\theta}`$ (estimation MAP). Le pont entre « ajouter une pénalité » et « avoir une opinion a priori » est l'un des résultats les plus éclairants du chapitre.
+On verra dans la section suivante que cette pénalité n'est pas un bricolage : elle correspond *exactement* à une croyance a priori gaussienne (gaussienne = *en forme de cloche*, la répartition de hasard la plus courante, détaillée plus bas) sur $`\boldsymbol{\theta}`$ (estimation MAP). Le pont entre « ajouter une pénalité » et « avoir une opinion a priori » est l'un des résultats les plus éclairants du chapitre.
 
 ---
 
@@ -274,7 +307,7 @@ Changeons de lunettes. Jusqu'ici, on *mesurait une erreur*. Adoptons maintenant 
 
 Imaginez une machine à fabriquer des données, dont le comportement dépend de boutons $`\boldsymbol{\theta}`$. Pour un réglage donné, elle a une certaine probabilité de cracher exactement le cahier $`\mathcal{D}`$ que vous avez sous les yeux. La **vraisemblance** retourne le point de vue : les données sont *fixées* (c'est ce qu'on a vu), et on regarde cette probabilité *comme une fonction des boutons*.
 
-> **Le symbole $`p(\cdot \mid \boldsymbol{\theta})`$ (loi du modèle, ou densité paramétrée).** Ce symbole représente la règle de hasard de la machine quand ses boutons valent $`\boldsymbol{\theta}`$. La barre verticale « $`\mid`$ » se lit « sachant » ou « étant donné » : $`p(\mathbf{y} \mid \boldsymbol{\theta})`$ veut dire « la probabilité (ou densité) de voir les réponses $`\mathbf{y}`$, *si* la machine est réglée sur $`\boldsymbol{\theta}`$ ». C'est la fiche technique de la machine : pour chaque réglage, elle dit quelles sorties sont fréquentes et lesquelles sont rares.
+> **Le symbole $`p(\cdot \mid \boldsymbol{\theta})`$ (loi du modèle, ou densité paramétrée).** Ce symbole représente la règle de hasard de la machine quand ses boutons valent $`\boldsymbol{\theta}`$. La barre verticale « $`\mid`$ » se lit « sachant » ou « étant donné » : $`p(\mathbf{y} \mid \boldsymbol{\theta})`$ veut dire « la probabilité (ou densité) de voir les réponses $`\mathbf{y}`$, *si* la machine est réglée sur $`\boldsymbol{\theta}`$ ». (Une **densité** est l'équivalent de la probabilité pour les grandeurs *continues* qui peuvent prendre une infinité de valeurs, comme une taille ou un prix : on ne peut pas demander « quelle chance de mesurer pile 1,7000… mètre », mais la densité dit *où les valeurs se concentrent*, quelles plages sont fréquentes et lesquelles sont rares, comme l'épaisseur d'un nuage dit où il y a le plus de gouttes.) C'est la fiche technique de la machine : pour chaque réglage, elle dit quelles sorties sont fréquentes et lesquelles sont rares.
 
 > **Le symbole $`\mathcal{L}(\boldsymbol{\theta})`$ (la vraisemblance, likelihood).** Ce symbole représente *la plausibilité d'un réglage au vu des données observées*. C'est numériquement la même expression que $`p(\text{donnees} \mid \boldsymbol{\theta})`$, mais on a échangé les rôles : on bloque les données (elles sont connues, c'est notre cahier) et on fait varier $`\boldsymbol{\theta}`$. Question posée : « quel réglage explique le mieux ce que j'ai vu ? ». Sous l'hypothèse i.i.d., la machine fabrique chaque exemple indépendamment, donc la probabilité du paquet est le **produit** des probabilités :
 > ```math
@@ -308,16 +341,21 @@ L'**estimateur du maximum de vraisemblance** (maximum likelihood estimator, MLE)
 
 Voici le résultat qui relie les deux premières sections. Maximiser une vraisemblance, c'est minimiser une perte bien choisie ($`\ell_{\text{perte}}(\hat y, y) = -\ln p`$), et inversement. Démontrons-le sur le cas roi.
 
+> **Le symbole $`\mathcal{N}`$ (loi normale, ou « gaussienne »).** $`\mathcal{N}`$ désigne la **loi normale**, surnommée **gaussienne** : *la fameuse courbe en cloche*. C'est la façon la plus courante dont le hasard se répartit dans la nature : la plupart des valeurs se serrent autour d'un centre, et plus on s'en éloigne, plus c'est rare (comme les tailles des gens : beaucoup autour de la moyenne, très peu de géants ou de nains). On l'écrit $`\mathcal{N}(\text{centre},\ \text{étalement})`$ : $`\mathcal{N}(0, \sigma^2)`$ se lit « cloche centrée sur 0, d'étalement $`\sigma^2`$ ».
+
 > **Théorème (moindres carrés = vraisemblance gaussienne).** Supposons le modèle $`y_i = \boldsymbol{\theta}^\top \mathbf{x}_i + \varepsilon_i`$ avec des bruits $`\varepsilon_i \sim \mathcal{N}(0, \sigma^2)`$ i.i.d. (et $`\sigma^2`$ fixe connu). Alors l'estimateur du maximum de vraisemblance de $`\boldsymbol{\theta}`$ coïncide avec l'estimateur des moindres carrés.
 
 > **Le symbole $`\varepsilon`$ (epsilon, le bruit).** Ce symbole représente *le grain de hasard* qui fait que la réalité ne tombe jamais pile sur la droite : la petite erreur de mesure, l'imprévu, l'aléa. On le suppose ici centré (moyenne nulle : il ne tire pas systématiquement vers le haut ou le bas) et de variance $`\sigma^2`$ (son ampleur typique). C'est le tremblement de la main du monde quand il écrit les données.
 
-> **Le symbole $`\sigma^2`$ (variance du bruit).** Ce symbole représente *l'ampleur typique du tremblement*: un grand $`\sigma^2`$ signifie des points très dispersés autour de la droite, un petit $`\sigma^2`$ des points presque alignés. C'est le carré de l'écart-type $`\sigma`$; on travaille avec le carré parce que c'est lui qui apparaît naturellement dans la densité gaussienne.
+> **Le symbole $`\sigma^2`$ (variance du bruit).** Ce symbole représente *l'ampleur typique du tremblement*: un grand $`\sigma^2`$ signifie des points très dispersés autour de la droite, un petit $`\sigma^2`$ des points presque alignés. C'est le carré de l'écart-type $`\sigma`$ (l'**écart-type** est *la mesure de dispersion la plus parlante* : la racine carrée de la variance, exprimée dans la même unité que les données ; gros écart-type = points éparpillés, petit écart-type = points serrés) ; on travaille avec le carré parce que c'est lui qui apparaît naturellement dans la densité gaussienne.
 
 **Démonstration.** La densité gaussienne d'un résidu donne, pour chaque exemple,
 ```math
 p(y_i \mid \mathbf{x}_i, \boldsymbol{\theta}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left(-\frac{(y_i - \boldsymbol{\theta}^\top \mathbf{x}_i)^2}{2\sigma^2}\right).
 ```
+
+> **Le symbole $`\exp`$ (l'exponentielle).** $`\exp(\cdot)`$ est *la fonction exponentielle* : c'est l'opération inverse du logarithme $`\ln`$ (l'un défait l'autre). Retenez surtout sa forme : $`\exp`$ d'un grand nombre négatif donne un résultat *minuscule, proche de zéro*. Dans cette formule, plus l'écart $`(y_i - \boldsymbol{\theta}^\top\mathbf{x}_i)`$ est grand, plus l'intérieur est très négatif, donc plus la densité chute : c'est ce qui fait la *cloche* qui décroît à mesure qu'on s'éloigne du centre. ($`\sqrt{\,\cdot\,}`$ est la racine carrée, et $`\pi \approx 3{,}14`$ la constante du cercle ; ils ne servent ici qu'à ajuster la hauteur de la cloche.)
+
 La log-vraisemblance vaut donc
 ```math
 \ell(\boldsymbol{\theta}) = \sum_{i=1}^n \ln p(y_i \mid \mathbf{x}_i, \boldsymbol{\theta})
@@ -331,7 +369,9 @@ Le premier terme ne dépend pas de $`\boldsymbol{\theta}`$; le second est, au fa
 
 Le cas le plus simple pour sentir le mécanisme. On lance $`n`$ fois une pièce qui tombe sur « face » avec une probabilité inconnue $`\theta \in [0,1]`$. On observe $`k`$ faces. Quel $`\hat\theta`$ ?
 
-Chaque lancer suit une loi de **Bernoulli**: $`p(y_i \mid \theta) = \theta^{y_i}(1-\theta)^{1-y_i}`$ (avec $`y_i = 1`$ pour face). La log-vraisemblance :
+> **L'écriture $`[0,1]`$ (un intervalle).** Deux nombres entre crochets désignent *toutes les valeurs comprises entre eux, bornes incluses* : $`[0,1]`$ veut dire « n'importe quel nombre de 0 à 1 » (0, 0,3, 0,75, 1…). C'est logique pour une probabilité, qui va de 0 (impossible) à 1 (certain).
+
+Chaque lancer suit une loi de **Bernoulli** (la loi du *oui ou non*, du *pile ou face* : une seule épreuve avec deux issues, l'une de probabilité $`\theta`$, l'autre de probabilité $`1-\theta`$) : $`p(y_i \mid \theta) = \theta^{y_i}(1-\theta)^{1-y_i}`$ (avec $`y_i = 1`$ pour face). L'astuce de l'exposant $`y_i`$ vaut $`\theta`$ quand $`y_i=1`$ et $`1-\theta`$ quand $`y_i=0`$ (car tout nombre élevé à la puissance $`0`$ vaut $`1`$), ce qui couvre les deux cas en une seule écriture. La log-vraisemblance :
 ```math
 \ell(\theta) = \sum_{i=1}^n \big[y_i \ln\theta + (1-y_i)\ln(1-\theta)\big] = k\ln\theta + (n-k)\ln(1-\theta).
 ```
@@ -351,14 +391,16 @@ Résultat très intuitif : la meilleure estimation de la probabilité de face es
 
 Le MLE n'est pas qu'une recette : c'est un estimateur aux propriétés remarquables quand $`n`$ grandit.
 
+> **Que veut dire « asymptotique » ?** Le mot **asymptotique** décrit *ce qui se passe à la limite, quand on a énormément de données* ($`n`$ qui devient très grand, « tend vers l'infini »). Une propriété asymptotique n'est pas forcément vraie avec 5 exemples, mais le devient de mieux en mieux à mesure que le cahier grossit. C'est comme dire « en jouant un très grand nombre de fois, la moyenne de mes lancers de dé finira par s'approcher de 3,5 ».
+
 > **Théorème (propriétés asymptotiques du MLE).** Sous des conditions de régularité (identifiabilité, support fixe, dérivabilité, vrai paramètre $`\boldsymbol{\theta}_0`$ à l'intérieur de $`\Theta`$), l'estimateur du maximum de vraisemblance est :
 > 1. **Consistant**: $`\hat{\boldsymbol{\theta}}_{\text{MV}} \xrightarrow{P} \boldsymbol{\theta}_0`$ (il converge vers la vérité).
 > 2. **Asymptotiquement normal**: $`\sqrt{n}\,(\hat{\boldsymbol{\theta}}_{\text{MV}} - \boldsymbol{\theta}_0) \xrightarrow{d} \mathcal{N}\big(0, I_1(\boldsymbol{\theta}_0)^{-1}\big)`$, où $`I_1`$ est l'information de Fisher d'*une seule* observation.
-> 3. **Asymptotiquement efficace**: sa variance atteint la borne de Cramér–Rao (le minimum théorique pour un estimateur sans biais). Dit autrement : il existe un *plancher* infranchissable sur la précision de n'importe quel estimateur honnête (sans biais), aucune méthode ne peut faire trembler ses estimations moins que cette limite, et le maximum de vraisemblance finit, quand on a beaucoup de données, par toucher exactement ce plancher. C'est en ce sens qu'il est « le meilleur possible ».
+> 3. **Asymptotiquement efficace**: sa variance atteint la borne de Cramér–Rao (le minimum théorique pour un estimateur sans biais). (Un estimateur est **sans biais** quand il *ne se trompe pas en moyenne* : si on refaisait l'expérience un très grand nombre de fois, la moyenne de ses réponses tomberait pile sur la vraie valeur, sans pencher systématiquement trop haut ni trop bas.) Dit autrement : il existe un *plancher* infranchissable sur la précision de n'importe quel estimateur honnête (sans biais), aucune méthode ne peut faire trembler ses estimations moins que cette limite, et le maximum de vraisemblance finit, quand on a beaucoup de données, par toucher exactement ce plancher. C'est en ce sens qu'il est « le meilleur possible ».
 
 > **Les symboles $`\xrightarrow{P}`$ et $`\xrightarrow{d}`$ (modes de convergence).** La flèche $`\xrightarrow{P}`$ se lit « converge en probabilité » : la probabilité que l'estimateur s'écarte de la cible de plus d'un cheveu tend vers 0. La flèche $`\xrightarrow{d}`$ se lit « converge en loi » : ce n'est plus une valeur qui se fige, mais la *forme de la distribution* (ici, des fluctuations $`\sqrt{n}(\hat{\boldsymbol{\theta}} - \boldsymbol{\theta}_0)`$) qui se rapproche d'une loi limite, la gaussienne. Intuition : non seulement le MLE vise juste, mais ses erreurs prennent une forme de cloche dont on connaît la largeur.
 
-> **Le symbole $`I(\boldsymbol{\theta})`$ (information de Fisher).** Ce symbole représente *combien les données sont instructives sur le paramètre*, à quel point la vraisemblance est « pointue » autour de son maximum. Une vraisemblance très piquée (information grande) signifie qu'on localise très précisément $`\boldsymbol{\theta}`$; une vraisemblance plate (information faible) signifie que beaucoup de réglages expliquent aussi bien les données. Formellement, c'est la courbure moyenne (l'opposé de l'espérance de la hessienne) de la log-vraisemblance d'une observation :
+> **Le symbole $`I(\boldsymbol{\theta})`$ (information de Fisher).** Ce symbole représente *combien les données sont instructives sur le paramètre*, à quel point la vraisemblance est « pointue » autour de son maximum. Une vraisemblance très piquée (information grande) signifie qu'on localise très précisément $`\boldsymbol{\theta}`$; une vraisemblance plate (information faible) signifie que beaucoup de réglages expliquent aussi bien les données. Formellement, c'est la courbure moyenne (l'opposé de l'espérance de la hessienne, une mesure de courbure expliquée juste après) de la log-vraisemblance d'une observation :
 > ```math
 > I_1(\boldsymbol{\theta}) = -\,\mathbb{E}\big[\nabla^2_{\boldsymbol{\theta}} \ln p(y\mid\boldsymbol{\theta})\big].
 > ```
@@ -370,6 +412,8 @@ Le MLE n'est pas qu'une recette : c'est un estimateur aux propriétés remarquab
 
 Le MLE ne croit qu'aux données. Mais souvent on a une **opinion préalable** : avant de lancer la pièce, on pense raisonnablement qu'elle est à peu près équilibrée. L'approche **bayésienne** (Bayesian) formalise cela en traitant $`\boldsymbol{\theta}`$ lui-même comme une variable aléatoire, dotée d'une loi *avant* de voir les données.
 
+> **Que veut dire « variable aléatoire » ?** Une **variable aléatoire** est *une grandeur dont la valeur dépend du hasard*, et à laquelle on attache des probabilités. Le résultat d'un dé qu'on va lancer est une variable aléatoire : avant le lancer on ne sait pas, mais on connaît les chances de chaque face. Dire qu'on traite $`\boldsymbol{\theta}`$ « comme une variable aléatoire », c'est accepter de ne pas connaître sa vraie valeur et de décrire nos croyances à son sujet par des probabilités.
+
 > **Le symbole $`p(\boldsymbol{\theta})`$ (loi a priori, prior).** Ce symbole représente *ce qu'on croit sur les réglages avant d'avoir regardé la moindre donnée*. C'est notre opinion de départ, notre préjugé quantifié : « je pense que la pièce est probablement équilibrée », « je pense que les coefficients sont probablement petits ». C'est la carte de nos croyances initiales.
 
 Le théorème de Bayes met à jour cette croyance à la lumière des données :
@@ -379,13 +423,15 @@ Le théorème de Bayes met à jour cette croyance à la lumière des données :
 
 > **Le symbole $`p(\boldsymbol{\theta} \mid \mathcal{D})`$ (loi a posteriori, posterior).** Ce symbole représente *ce qu'on croit sur les réglages APRÈS avoir vu les données*. C'est la croyance initiale, corrigée par l'expérience. La barre « $`\mid \mathcal{D}`$ » dit « sachant ce que j'ai observé ». Tout l'apprentissage bayésien tient dans une phrase : on part d'un a priori, les données parlent via la vraisemblance, et on obtient un a posteriori, la connaissance mise à jour.
 
+> **Le symbole $`\int`$ (l'intégrale).** Ce grand « S » étiré se lit « **intégrale de** » : c'est une *somme*, mais pour des grandeurs continues. Là où le $`\sum`$ additionne des cases bien séparées, le $`\int \dots\, d\boldsymbol{\theta}`$ additionne une infinité de tranches infiniment fines en balayant *toutes* les valeurs possibles de $`\boldsymbol{\theta}`$. Le « $`d\boldsymbol{\theta}`$ » à la fin précise *sur quelle variable on balaie* (ici $`\boldsymbol{\theta}`$). Imaginez calculer l'aire sous une colline en empilant une infinité de rectangles minuscules : c'est exactement cela.
+
 > **Le symbole $`p(\mathcal{D})`$ (évidence, ou vraisemblance marginale).** Ce symbole représente *la probabilité totale d'observer ces données, toutes machines confondues*: $`p(\mathcal{D}) = \int p(\mathcal{D}\mid\boldsymbol{\theta})\,p(\boldsymbol{\theta})\,d\boldsymbol{\theta}`$. C'est une simple constante de normalisation (elle ne dépend pas de $`\boldsymbol{\theta}`$) qui fait que l'a posteriori, intégré sur tous les $`\boldsymbol{\theta}`$, vaut bien 1. Pour *trouver* le $`\boldsymbol{\theta}`$ le plus probable, on peut souvent l'ignorer.
 
 #### L'estimation MAP : le sommet de l'a posteriori
 
 Plutôt que de manipuler toute la distribution a posteriori, on peut se contenter de son point culminant : le réglage le plus probable après avoir vu les données. C'est l'estimation du **maximum a posteriori** (MAP).
 
-> **Définition (maximum a posteriori, MAP).** L'estimateur MAP est le mode de la loi a posteriori :
+> **Définition (maximum a posteriori, MAP).** L'estimateur MAP est le mode de la loi a posteriori (le **mode**, expliqué juste après, est le point le plus probable, le sommet de la courbe) :
 > ```math
 > \hat{\boldsymbol{\theta}}_{\text{MAP}} = \arg\max_{\boldsymbol{\theta}} p(\boldsymbol{\theta}\mid\mathcal{D}) = \arg\max_{\boldsymbol{\theta}} \big[\ln p(\mathcal{D}\mid\boldsymbol{\theta}) + \ln p(\boldsymbol{\theta})\big].
 > ```
@@ -448,7 +494,7 @@ print("MLE Bernoulli (frequence de faces) =", mle_bernoulli(coins))   # 0.7
 
 On observe ce qu'annonce la théorie : à $`\lambda = 0`$ les coefficients estimés collent au vrai $`\boldsymbol{\theta}`$, puis ils sont *rétrécis* vers zéro à mesure que $`\lambda`$ croît.
 
-> **Mise à jour 2026.** Quand l'a posteriori n'est pas calculable en forme close (la règle générale dès que le modèle est un tant soit peu complexe), on l'*approche*. Deux grandes familles dominent : l'**inférence variationnelle** (variational inference, qui remplace l'a posteriori par la loi la plus proche dans une famille simple, via optimisation) et les **méthodes de Monte-Carlo par chaînes de Markov** (MCMC, notamment le **Hamiltonian Monte Carlo / NUTS** des bibliothèques comme Stan, PyMC, NumPyro). Le deep learning bayésien et les **ensembles profonds** (deep ensembles) sont devenus les outils pratiques d'estimation de l'incertitude à grande échelle.
+> **Mise à jour 2026.** Quand l'a posteriori n'est pas calculable en forme close (une **forme close** est *une formule explicite, finie, qu'on peut écrire et calculer directement*, comme $`\hat\theta = k/n`$ ; quand elle n'existe pas, il faut approcher le résultat par calcul numérique), on l'*approche* (la règle générale dès que le modèle est un tant soit peu complexe). Deux grandes familles dominent : l'**inférence variationnelle** (variational inference, qui remplace l'a posteriori par la loi la plus proche dans une famille simple, via optimisation) et les **méthodes de Monte-Carlo par chaînes de Markov** (MCMC, notamment le **Hamiltonian Monte Carlo / NUTS** des bibliothèques comme Stan, PyMC, NumPyro). Le deep learning bayésien et les **ensembles profonds** (deep ensembles) sont devenus les outils pratiques d'estimation de l'incertitude à grande échelle.
 
 ---
 
@@ -462,7 +508,7 @@ Dans la vraie vie, on ne voit pas tout. Le boulanger observe le pain, mais pas l
 
 > **Le symbole $`\mathbf{z}`$ (variable latente).** Ce symbole représente *une cause cachée qu'on ne mesure pas directement* mais qui influence ce qu'on observe. C'est le fil invisible derrière la marionnette : on voit la marionnette bouger ($`\mathbf{x}`$), on devine qu'il y a une main ($`\mathbf{z}`$) qui tire les fils. Exemples : le *thème* d'un texte, le *groupe* auquel appartient un client, l'*intention* derrière un clic.
 
-Un modèle probabiliste spécifie la **loi jointe** de tout ce petit monde, $`p(\mathbf{x}, \mathbf{z} \mid \boldsymbol{\theta})`$. L'inférence répond ensuite à des questions du type : « connaissant ce que j'observe, que puis-je dire des causes cachées ? », c'est-à-dire calculer une loi conditionnelle $`p(\mathbf{z}\mid\mathbf{x})`$.
+Un modèle probabiliste spécifie la **loi jointe** de tout ce petit monde, $`p(\mathbf{x}, \mathbf{z} \mid \boldsymbol{\theta})`$. L'inférence répond ensuite à des questions du type : « connaissant ce que j'observe, que puis-je dire des causes cachées ? », c'est-à-dire calculer une loi conditionnelle $`p(\mathbf{z}\mid\mathbf{x})`$ (une **loi conditionnelle** est *la loi d'une chose une fois qu'on en connaît une autre* : « les chances de pluie *sachant que* le ciel est gris » ; la barre $`\mid`$ se lit toujours « sachant »).
 
 > **Le symbole « loi jointe ».** La loi *jointe* de plusieurs variables, notée $`p(\mathbf{x}, \mathbf{z})`$, représente *la probabilité de toutes leurs valeurs prises ensemble, simultanément*: « quelle chance que la cause cachée soit ceci ET l'observation cela ». A partir d'elle on retrouve tout : la loi d'une variable seule (par marginalisation, ci-dessous) et la loi de l'une sachant l'autre (par conditionnement). C'est le document maître du modèle.
 
@@ -479,7 +525,7 @@ Toute inférence se ramène à deux opérations sur la loi jointe.
 > ```math
 > p(\mathbf{x}) = \sum_{\mathbf{z}} p(\mathbf{x}, \mathbf{z}) \quad\text{(variables discretes)}, \qquad p(\mathbf{x}) = \int p(\mathbf{x}, \mathbf{z})\, d\mathbf{z}\quad\text{(continues)}.
 > ```
-> Cette $`p(\mathbf{x})`$ est dite **marginale**: on a « marginalisé » (mis de côté) la variable $`\mathbf{z}`$. La somme sert quand $`\mathbf{z}`$ prend des valeurs discrètes (un groupe parmi $`K`$), l'intégrale quand $`\mathbf{z}`$ est continue.
+> Cette $`p(\mathbf{x})`$ est dite **marginale**: on a « marginalisé » (mis de côté) la variable $`\mathbf{z}`$. La somme sert quand $`\mathbf{z}`$ prend des valeurs discrètes (un groupe parmi $`K`$), l'intégrale quand $`\mathbf{z}`$ est continue. (Une grandeur **discrète** ne prend que des valeurs *séparées*, qu'on peut compter une à une, comme le nombre d'enfants d'une famille : 0, 1, 2, 3… jamais 2,5. Une grandeur **continue** peut prendre *n'importe quelle valeur sans trou*, comme la taille ou le poids, où l'on peut toujours s'intercaler entre deux valeurs. On additionne les premières avec $`\sum`$, les secondes avec $`\int`$.)
 
 Le **conditionnement**, lui, c'est l'application de la règle de Bayes : $`p(\mathbf{z}\mid\mathbf{x}) = p(\mathbf{x},\mathbf{z})/p(\mathbf{x})`$. On *fixe* ce qu'on sait et on renormalise.
 
@@ -513,7 +559,7 @@ Problème : pour estimer $`\boldsymbol{\theta} = \{\pi_k, \mu_k, \Sigma_k\}`$ pa
 
 > **Idée de l'EM (en une image).** C'est un dialogue poule-œuf. Si je connaissais les groupes, j'estimerais facilement les gaussiennes ; si je connaissais les gaussiennes, je devinerais facilement les groupes. EM brise le cercle en alternant : on devine les groupes au mieux (étape E), on en déduit les meilleures gaussiennes (étape M), on redevine les groupes, etc., chaque tour ne peut qu'améliorer (ou laisser stable) la vraisemblance.
 
-> **Théorème (EM fait monter la vraisemblance).** A chaque itération, l'algorithme EM ne diminue jamais la log-vraisemblance des données observées : $`\ell(\boldsymbol{\theta}^{(t+1)}) \ge \ell(\boldsymbol{\theta}^{(t)})`$.
+> **Théorème (EM fait monter la vraisemblance).** A chaque itération, l'algorithme EM ne diminue jamais la log-vraisemblance des données observées : $`\ell(\boldsymbol{\theta}^{(t+1)}) \ge \ell(\boldsymbol{\theta}^{(t)})`$. (L'exposant entre parenthèses $`{}^{(t)}`$ est un *numéro d'étape*, pas une puissance : $`\boldsymbol{\theta}^{(t)}`$ est « le réglage au tour numéro $`t`$ » et $`\boldsymbol{\theta}^{(t+1)}`$ « celui du tour suivant ». Une **itération** est un tour de boucle, une répétition de la même série d'étapes.)
 
 **Démonstration (esquisse).** EM maximise à chaque tour une **borne inférieure** (lower bound) de la log-vraisemblance, construite par l'inégalité de Jensen. Pour toute loi $`q(\mathbf{z})`$ sur les latentes,
 ```math
@@ -521,7 +567,7 @@ Problème : pour estimer $`\boldsymbol{\theta} = \{\pi_k, \mu_k, \Sigma_k\}`$ pa
 = \ln \sum_{\mathbf{z}} q(\mathbf{z})\,\frac{p(\mathbf{x},\mathbf{z}\mid\boldsymbol{\theta})}{q(\mathbf{z})}
 \;\ge\; \sum_{\mathbf{z}} q(\mathbf{z})\ln\frac{p(\mathbf{x},\mathbf{z}\mid\boldsymbol{\theta})}{q(\mathbf{z})} =: \mathcal{F}(q,\boldsymbol{\theta}),
 ```
-où l'inégalité vient de la concavité du logarithme ($`\ln \mathbb{E}[\cdot] \ge \mathbb{E}[\ln \cdot]`$). Cette borne $`\mathcal{F}`$ est appelée **borne inférieure de l'évidence** (evidence lower bound, ELBO). L'étape E choisit $`q(\mathbf{z}) = p(\mathbf{z}\mid\mathbf{x},\boldsymbol{\theta}^{(t)})`$, ce qui *rend la borne exacte* (égalité : l'écart entre $`\ell`$ et $`\mathcal{F}`$ est une divergence de Kullback–Leibler, nulle pour ce choix). L'étape M maximise $`\mathcal{F}`$ en $`\boldsymbol{\theta}`$. Comme la borne touche la vraie log-vraisemblance après l'étape E et qu'on la fait ensuite monter, la log-vraisemblance elle-même monte. $`\blacksquare`$
+où l'inégalité vient de la concavité du logarithme ($`\ln \mathbb{E}[\cdot] \ge \mathbb{E}[\ln \cdot]`$). (Une fonction **concave** est l'inverse d'une fonction convexe : au lieu d'une cuvette, c'est *une bosse, un dôme arrondi* comme une colline. Le logarithme a cette forme bombée, et c'est ce qui garantit l'inégalité ci-dessus, dite *inégalité de Jensen* : pour une courbe en dôme, la valeur de la moyenne est toujours plus haute que la moyenne des valeurs.) (Le symbole $`=:`$ dans la formule ci-dessus se lit « que l'on baptise » ou « est défini comme » : il sert juste à *donner un nom court*, ici $`\mathcal{F}`$, à l'expression qui le précède.) Cette borne $`\mathcal{F}`$ est appelée **borne inférieure de l'évidence** (evidence lower bound, ELBO). L'étape E choisit $`q(\mathbf{z}) = p(\mathbf{z}\mid\mathbf{x},\boldsymbol{\theta}^{(t)})`$, ce qui *rend la borne exacte* (égalité : l'écart entre $`\ell`$ et $`\mathcal{F}`$ est une divergence de Kullback–Leibler, nulle pour ce choix). L'étape M maximise $`\mathcal{F}`$ en $`\boldsymbol{\theta}`$. Comme la borne touche la vraie log-vraisemblance après l'étape E et qu'on la fait ensuite monter, la log-vraisemblance elle-même monte. $`\blacksquare`$
 
 > **Le symbole divergence de Kullback–Leibler $`\mathrm{KL}(q\,\|\,p)`$.** Cette quantité représente *l'écart entre deux lois de probabilité*: combien $`q`$ s'éloigné de $`p`$. Elle vaut zéro quand les deux lois sont identiques et grandit à mesure qu'elles différent ; attention, elle n'est pas symétrique (la distance de $`q`$ à $`p`$ n'égale pas celle de $`p`$ à $`q`$). Dans l'EM, c'est exactement l'écart entre l'ELBO et la vraie log-vraisemblance, que l'étape E annule en posant $`q = p(\mathbf{z}\mid\mathbf{x},\boldsymbol{\theta}^{(t)})`$.
 
@@ -588,7 +634,7 @@ Quand un modèle relie beaucoup de variables, les formules deviennent illisibles
 
 > **Le symbole d'un réseau bayésien (DAG).** Un **modèle graphique dirigé** (directed graphical model), ou **réseau bayésien** (Bayesian network), est un graphe orienté sans cycle (directed acyclic graph, DAG) où chaque nœud est une variable aléatoire et chaque flèche $`A \to B`$ se lit « $`A`$ influence directement $`B`$ », ou « $`A`$ est un *parent* de $`B`$ ». « Sans cycle » signifie qu'en suivant les flèches on ne revient jamais à son point de départ : c'est un arbre généalogique de causes, les flèches pointant des causes vers leurs effets.
 
-La règle d'or relie le dessin à la formule : la loi jointe se **factorise** en un produit, où chaque variable ne dépend que de ses parents directs.
+La règle d'or relie le dessin à la formule : la loi jointe se **factorise** en un produit (la **factoriser**, c'est *l'écrire comme une multiplication de morceaux plus simples*, comme on écrit $`12 = 3\times4`$), où chaque variable ne dépend que de ses parents directs.
 
 > **Définition (factorisation d'un réseau bayésien).** Pour des variables $`X_1, \dots, X_m`$ et un DAG donné, en notant $`\mathrm{pa}(X_j)`$ l'ensemble des **parents** de $`X_j`$ (les nœuds d'où partent les flèches arrivant sur $`X_j`$),
 > ```math
@@ -645,7 +691,7 @@ Voir la pelouse mouillée fait passer la probabilité de pluie de 20 pour cent (
 
 La force des graphes est de *lire* les indépendances sans calcul. La notion clef est l'**indépendance conditionnelle**.
 
-> **Le symbole $`\perp\!\!\!\perp`$ (indépendance).** Ce double symbole perpendiculaire représente *« ces deux choses n'ont rien à se dire »*. $`X \perp\!\!\!\perp Y`$ veut dire « savoir $`X`$ ne change rien à ce que je crois sur $`Y`$ », soit $`p(X,Y) = p(X)\,p(Y)`$. La version conditionnelle, $`X \perp\!\!\!\perp Y \mid Z`$, dit « *une fois $`Z`$ connu*, $`X`$ et $`Y`$ deviennent indépendants » : $`Z`$ contenait toute l'information partagée. C'est comme deux témoins qui semblent d'accord uniquement parce qu'ils ont lu le même journal $`Z`$: on neutralise $`Z`$, leur accord disparaît.
+> **Le symbole $`\perp\!\!\!\perp`$ (indépendance).** Ce double symbole perpendiculaire représente *« ces deux choses n'ont rien à se dire »*. $`X \perp\!\!\!\perp Y`$ veut dire « savoir $`X`$ ne change rien à ce que je crois sur $`Y`$ », soit $`p(X,Y) = p(X)\,p(Y)`$. La version conditionnelle, $`X \perp\!\!\!\perp Y \mid Z`$, dit « *une fois $`Z`$ connu*, $`X`$ et $`Y`$ deviennent indépendants » : $`Z`$ contenait toute l'information partagée. C'est comme deux témoins qui semblent d'accord uniquement parce qu'ils ont lu le même journal $`Z`$: on neutralise $`Z`$, leur accord disparaît. (Le contraire de l'indépendance est la **corrélation** : *deux grandeurs sont corrélées quand elles varient ensemble*, quand connaître l'une renseigne sur l'autre, comme la taille et la pointure ont tendance à grandir de pair.)
 
 Trois motifs élémentaires structurent toute lecture d'indépendance dans un DAG :
 
@@ -663,7 +709,7 @@ Trois motifs élémentaires structurent toute lecture d'indépendance dans un DA
 
 Avec un modèle graphique, on retrouve les mêmes deux tâches que précédemment, organisées par le graphe :
 - **Apprentissage des paramètres**: estimer les tables conditionnelles $`p(X_j\mid\mathrm{pa}(X_j))`$ (par MLE/MAP, souvent en forme close grâce à la factorisation).
-- **Inférence**: calculer une marginale ou une conditionnelle d'intérêt. Sur des graphes en arbre, l'algorithme de **propagation de croyances** (belief propagation, ou somme-produit) est exact et efficace ; sur des graphes généraux, l'inférence exacte est NP-difficile et on recourt à des approximations (variationnelles, MCMC).
+- **Inférence**: calculer une marginale ou une conditionnelle d'intérêt. Sur des graphes en arbre, l'algorithme de **propagation de croyances** (belief propagation, ou somme-produit) est exact et efficace ; sur des graphes généraux, l'inférence exacte est NP-difficile et on recourt à des approximations (variationnelles, MCMC). (« **NP-difficile** » est l'étiquette des problèmes *réputés trop coûteux à résoudre exactement* en pratique : le temps de calcul exploserait de façon démesurée dès que le problème grandit, comme s'il fallait tester un à un tous les trajets possibles d'un facteur entre des milliers de villes. D'où le recours à des solutions approchées.)
 
 > **Place dans le paysage.** Les réseaux bayésiens sont la branche *dirigée* (causale, générative) des modèles graphiques ; il existe une branche *non dirigée* (champs de Markov, énergie). De nombreux modèles connus *sont* des réseaux bayésiens déguisés : le **classifieur bayésien naïf** (naive Bayes) est l'étoile $`Y \to X_1, \dots, Y \to X_d`$ (toutes les caractéristiques conditionnellement indépendantes sachant la classe) ; les **chaînes de Markov cachées** (hidden Markov models, HMM) sont une chaîne de latentes $`z_1 \to z_2 \to \dots`$ émettant chacune une observation. Tous se lisent, s'estiment et s'interrogent avec la même grammaire.
 
@@ -673,11 +719,15 @@ Avec un modèle graphique, on retrouve les mêmes deux tâches que précédemmen
 
 ### Sélection de modèle et compromis biais-variance
 
-Reste la question pratique cruciale : *quelle complexité* donner au modèle ? Un polynôme de degré 1, 3, ou 15 ? Un $`\lambda`$ de 0,01 ou de 10 ? Trop simple, on rate la tendance ; trop riche, on épouse le bruit. Ce dilemme porte un nom mathématique précis : le **compromis biais-variance** (bias–variance tradeoff).
+Reste la question pratique cruciale : *quelle complexité* donner au modèle ? Un polynôme de degré 1, 3, ou 15 ? Un $`\lambda`$ de 0,01 ou de 10 ?
+
+> **Que veut dire « polynôme » et « degré » ?** Un **polynôme** est *une formule faite de puissances de l'entrée additionnées*, du genre $`\theta_0 + \theta_1 x + \theta_2 x^2 + \theta_3 x^3 + \dots`$. Le **degré** est la plus haute puissance utilisée : un polynôme de degré 1 ($`\theta_0 + \theta_1 x`$) dessine une simple droite ; de degré 2, une parabole (une courbe en U) ; et plus le degré monte, plus la courbe peut faire de vagues et d'ondulations. Augmenter le degré, c'est donc donner au modèle *plus de liberté pour se tortiller* afin de coller aux points.
+
+Trop simple, on rate la tendance ; trop riche, on épouse le bruit. Ce dilemme porte un nom mathématique précis : le **compromis biais-variance** (bias–variance tradeoff).
 
 #### La decomposition biais-variance
 
-Plaçons-nous en régression avec perte quadratique. La vraie relation est $`y = f(\mathbf{x}) + \varepsilon`$ avec un bruit centré de variance $`\sigma^2`$. On entraîne, sur un jeu de données aléatoire $`\mathcal{D}`$, un prédicteur $`\hat{h}_{\mathcal{D}}`$. La question : en un point $`\mathbf{x}_0`$, quelle est l'erreur *attendue sur tous les jeux d'entraînement possibles* ?
+Plaçons-nous en régression avec perte quadratique. La vraie relation est $`y = f(\mathbf{x}) + \varepsilon`$ avec un bruit centré de variance $`\sigma^2`$. On entraîne, sur un jeu de données aléatoire $`\mathcal{D}`$, un prédicteur $`\hat{h}_{\mathcal{D}}`$. La question : en un point $`\mathbf{x}_0`$ (l'indice $`0`$ désigne juste *un point de test précis qu'on fixe*, par exemple un appartement particulier dont on veut prédire le prix), quelle est l'erreur *attendue sur tous les jeux d'entraînement possibles* ?
 
 > **Théorème (décomposition biais-variance).** L'erreur quadratique espérée se décompose en trois termes :
 > ```math
@@ -694,7 +744,7 @@ Plaçons-nous en régression avec perte quadratique. La vraie relation est $`y =
 ```math
 \mathbb{E}\big[(y_0 - \hat h)^2\big] = \mathbb{E}\big[(f + \varepsilon - \hat h)^2\big] = \mathbb{E}\big[(f - \hat h)^2\big] + \mathbb{E}[\varepsilon^2] + 2\,\mathbb{E}[\varepsilon]\,\mathbb{E}[f - \hat h].
 ```
-Le dernier terme s'annule ($`\mathbb{E}[\varepsilon]=0`$ et $`\varepsilon \perp \mathcal D`$) et $`\mathbb{E}[\varepsilon^2] = \sigma^2`$. Il reste à décomposer $`\mathbb{E}[(f-\hat h)^2]`$ en insérant $`\bar h`$:
+Le dernier terme s'annule ($`\mathbb{E}[\varepsilon]=0`$ et $`\varepsilon \perp \mathcal D`$, où la barre simple $`\perp`$ veut dire « indépendant de », comme la double barre vue plus haut) et $`\mathbb{E}[\varepsilon^2] = \sigma^2`$. Il reste à décomposer $`\mathbb{E}[(f-\hat h)^2]`$ en insérant $`\bar h`$:
 ```math
 \mathbb{E}\big[(f - \hat h)^2\big] = \mathbb{E}\big[((f - \bar h) + (\bar h - \hat h))^2\big] = (f-\bar h)^2 + \mathbb{E}\big[(\bar h - \hat h)^2\big] + 2(f-\bar h)\,\mathbb{E}[\bar h - \hat h].
 ```
@@ -728,7 +778,7 @@ Quand on augmente la complexité du modèle, le biais baisse (on épouse mieux l
 | Bien choisie | modéré | modéré | basse | **minimale** | bon compromis |
 | Trop forte | faible | élevée | très basse (≈0) | élevée | surapprentissage |
 
-> **Diagnostic pratique.** Un grand écart « erreur de test ≫ erreur d'entraînement » signe la **variance** (surapprentissage) : remèdes = plus de données, plus de régularisation, modèle plus simple. Une erreur d'entraînement *déjà* élevée signe le **biais** (sous-apprentissage) : remèdes = modèle plus riche, meilleures caractéristiques, moins de régularisation.
+> **Diagnostic pratique.** Un grand écart « erreur de test ≫ erreur d'entraînement » (le signe ≫ se lit « *très supérieur à*, beaucoup plus grand que ») signe la **variance** (surapprentissage) : remèdes = plus de données, plus de régularisation, modèle plus simple. Une erreur d'entraînement *déjà* élevée signe le **biais** (sous-apprentissage) : remèdes = modèle plus riche, meilleures caractéristiques, moins de régularisation.
 
 #### Estimer l'erreur de generalisation : validation et validation croisee
 
@@ -796,13 +846,13 @@ for degree in [1, 3, 5, 9, 15]:
     print(f"degre {degree:2d} -> erreur de validation croisee = {cv:.4f}")
 ```
 
-L'exécution fait apparaître une erreur élevée aux petits degrés (biais : la droite ne peut pas suivre un sinus), un minimum vers un degré intermédiaire (ici autour du degré 5), puis une remontée aux grands degrés (variance : le polynôme se met à osciller violemment pour passer au plus près de chaque point bruité). Le creux du U désigne le degré à retenir.
+L'exécution fait apparaître une erreur élevée aux petits degrés (biais : la droite ne peut pas suivre un sinus, qui est *une courbe ondulée régulière*, montant et descendant comme des vagues), un minimum vers un degré intermédiaire (ici autour du degré 5), puis une remontée aux grands degrés (variance : le polynôme se met à osciller violemment pour passer au plus près de chaque point bruité). Le creux du U désigne le degré à retenir.
 
 #### Au-dela du U classique : regularisation, parcimonie et double descente
 
 Le compromis biais-variance ne se pilote pas qu'en changeant le *nombre* de paramètres : la régularisation déplace le curseur **en continu**. Augmenter $`\lambda`$ (ridge) *augmente le biais* et *réduit la variance*, c'est le même U, parcouru le long de $`\lambda`$ plutôt que du degré. Choisir $`\lambda`$ par validation croisée est la pratique standard.
 
-> **Critères d'information (AIC, BIC).** Quand on tient à la vraisemblance, on peut pénaliser la complexité *analytiquement* plutôt que par validation. L'**AIC** (Akaike) vaut $`-2\,\ell(\hat{\boldsymbol{\theta}}) + 2k`$ et le **BIC** (Bayésien) vaut $`-2\,\ell(\hat{\boldsymbol{\theta}}) + k\ln n`$, où $`k`$ est le nombre de paramètres et $`\ell(\hat{\boldsymbol{\theta}})`$ la log-vraisemblance maximisée. Dans les deux cas : récompenser l'ajustement (la log-vraisemblance) *moins* une amende par paramètre, et l'on choisit le modèle de plus petit critère. Le BIC, qui pénalise plus fort ($`\ln n > 2`$ des $`n \ge 8`$), tend à choisir des modèles plus parcimonieux et est cohérent (il retrouve le vrai modèle quand $`n\to\infty`$).
+> **Critères d'information (AIC, BIC).** Quand on tient à la vraisemblance, on peut pénaliser la complexité *analytiquement* plutôt que par validation. L'**AIC** (Akaike) vaut $`-2\,\ell(\hat{\boldsymbol{\theta}}) + 2k`$ et le **BIC** (Bayésien) vaut $`-2\,\ell(\hat{\boldsymbol{\theta}}) + k\ln n`$, où $`k`$ est le nombre de paramètres et $`\ell(\hat{\boldsymbol{\theta}})`$ la log-vraisemblance maximisée. Dans les deux cas : récompenser l'ajustement (la log-vraisemblance) *moins* une amende par paramètre, et l'on choisit le modèle de plus petit critère. Le BIC, qui pénalise plus fort ($`\ln n > 2`$ des $`n \ge 8`$), tend à choisir des modèles plus parcimonieux (un modèle **parcimonieux** est *économe* : il utilise le moins de paramètres possible, comme une recette qui vise le minimum d'ingrédients) et est cohérent (il retrouve le vrai modèle quand $`n\to\infty`$).
 
 > **Mise à jour 2026 (la double descente).** Le « U » classique n'est pas toute l'histoire. En régime très surparamétré (modèles dont le nombre de paramètres dépasse de loin $`n`$, typiques de l'apprentissage profond), on observe la **double descente** (double descent) : passe le pic d'interpolation (là où le modèle colle exactement aux données, $`k \approx n`$), l'erreur de test *redescend* et peut atteindre un nouveau minimum, parfois meilleur que le creux classique. La régularisation implicite de la descente de gradient stochastique sélectionne, parmi l'infinité de solutions qui interpolent, des solutions de faible norme qui generalisent bien. Cela ne contredit pas la décomposition biais-variance (toujours exacte) mais montre que, dans ces régimes, la « variance » se comporte de façon non monotone, un domaine de recherche très actif.
 
@@ -842,6 +892,9 @@ On observe $`(x,y) \in \{(1,1),(2,3),(3,4)\}`$ et on ajuste $`\hat y = \theta x`
 #### Exercice 3 : MLE d'une loi exponentielle
 
 Des durées de vie $`t_1, \dots, t_n`$ sont supposées i.i.d. de loi exponentielle de densité $`p(t\mid\lambda) = \lambda e^{-\lambda t}`$ (pour $`t \ge 0`$, $`\lambda > 0`$).
+
+> **La lettre $`e`$ et la loi exponentielle.** Le $`e`$ est un nombre fixe célèbre, $`e \approx 2{,}718`$ (le « nombre d'Euler ») ; écrire $`e^{-\lambda t}`$ revient exactement à écrire $`\exp(-\lambda t)`$, la fonction exponentielle déjà vue, qui décroît vers zéro quand $`t`$ grandit. La **loi exponentielle** est *la loi des temps d'attente* : elle décrit combien de temps s'écoule avant qu'un événement survienne (une panne, un appel téléphonique), avec des temps courts plus fréquents que les longs.
+
 (a) Écrire la log-vraisemblance.
 (b) Trouver l'estimateur du maximum de vraisemblance $`\hat\lambda`$.
 (c) Application : pour des durées $`\{2, 3, 5\}`$ (heures), donner $`\hat\lambda`$.
@@ -854,6 +907,9 @@ Des durées de vie $`t_1, \dots, t_n`$ sont supposées i.i.d. de loi exponentiel
 #### Exercice 4 : MAP avec a priori beta (le lien regularisation/a priori)
 
 On reprend la pièce truquée ($`k`$ faces sur $`n`$ lancers, paramètre $`\theta`$), avec cette fois un a priori **bêta** $`p(\theta) \propto \theta^{\alpha-1}(1-\theta)^{\beta-1}`$.
+
+> **Le symbole $`\propto`$ et la loi bêta.** Le signe $`\propto`$ se lit « **proportionnel à** » : il dit que les deux côtés sont égaux *à un facteur constant près* (comme « le prix est proportionnel au poids » : on connaît la forme, pas encore le coefficient exact). On l'emploie pour une densité quand on se moque de la constante qui la fait sommer à 1. La **loi bêta** est une loi de probabilité sur les valeurs entre 0 et 1 : parfaite pour décrire une croyance sur une *probabilité* (ici celle de tomber sur face). Ses deux réglages $`\alpha`$ (lettre grecque *alpha*) et $`\beta`$ (*bêta*) en règlent la forme : avec $`\alpha=\beta`$ elle est symétrique, centrée sur $`1/2`$.
+
 (a) Écrire la log-densité a posteriori (à une constante près).
 (b) Trouver l'estimateur MAP.
 (c) Avec $`\alpha=\beta=2`$ (a priori « doux » centré sur 1/2), recalculer l'estimation pour $`k=0`$ face sur $`n=3`$ lancers, et comparer au MLE.

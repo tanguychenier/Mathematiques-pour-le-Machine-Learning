@@ -6,18 +6,28 @@
 
 Avant de parler de géométrie, il faut savoir **mesurer**. En géométrie analytique, tout objet, un point, une direction, une donnée, vit dans un espace vectoriel, et la première question que l'on se pose est : « quelle est la *taille* de ce vecteur ? » C'est exactement ce que formalise la notion de **norme** (norm).
 
+> **Que veut dire « vecteur » ?** Un **vecteur** est tout simplement une **liste ordonnée de nombres**, par exemple $`(3, -4)`$ ou $`(1, 2, 5)`$. On peut le voir de deux façons : comme un **point** repéré par ses coordonnées (la $`3`$ veut dire « $`3`$ pas vers la droite », la $`-4`$ « $`4`$ pas vers le bas »), ou comme une **flèche** qui part de l'origine (le point de départ $`(0,0)`$) et pointe vers ce point. Chaque nombre de la liste est une **coordonnée**. C'est exactement comme l'adresse d'un siège au cinéma (« rangée $`3`$, place $`7`$ ») : deux nombres qui, ensemble, désignent un endroit précis.
+
+> **Que veut dire « espace vectoriel » ?** Un **espace vectoriel** est le « monde » dans lequel vivent tous les vecteurs d'une même taille de liste : par exemple l'ensemble de tous les couples $`(x, y)`$ (le plan d'une feuille), ou de tous les triplets $`(x, y, z)`$ (l'espace de la pièce où vous êtes). On l'appelle « vectoriel » parce qu'on peut y faire deux opérations de base : **additionner** deux vecteurs (mettre deux flèches bout à bout) et **étirer** un vecteur en le multipliant par un nombre. C'est comme une boîte de Lego : un ensemble de pièces avec des règles claires pour les assembler.
+
 #### Intuition imagée
 
 Imaginez une flèche dessinée sur une feuille, partant de l'origine. Sa norme, c'est tout simplement sa **longueur**: la distance entre la pointe et la queue. Si la flèche est deux fois plus longue, sa norme double. Si la flèche est réduite à un point (le vecteur nul), sa norme vaut zéro. Une norme ne peut jamais être négative : une longueur négative n'a aucun sens.
 
-Mais, et c'est le cœur de l'affaire, il existe **plusieurs façons légitimes** de mesurer une « longueur ». À vol d'oiseau (la distance euclidienne usuelle), ou à la manière d'un taxi qui ne peut rouler que dans des rues perpendiculaires (la distance de Manhattan). Ce sont des normes différentes, toutes valides.
+Mais, et c'est le cœur de l'affaire, il existe **plusieurs façons légitimes** de mesurer une « longueur ». À vol d'oiseau (la distance euclidienne usuelle ; le mot **euclidienne** vient d'Euclide, un mathématicien grec de l'Antiquité, et désigne la géométrie « ordinaire » de la règle et du compas que l'on apprend à l'école), ou à la manière d'un taxi qui ne peut rouler que dans des rues perpendiculaires (deux directions **perpendiculaires** forment un angle droit, comme le coin d'une feuille ; c'est la distance de Manhattan). Ce sont des normes différentes, toutes valides.
 
 #### Définition rigoureuse
 
 > **Le symbole $`\|\cdot\|`$ (double barre verticale).**
-> Ce symbole représente la **norme**, c'est-à-dire la « longueur » d'un vecteur. Quand on écrit $`\|x\|`$, lisez « norme de $`x`$ ». Pourquoi une *double* barre, et non une seule comme la valeur absolue $`|a|`$ d'un nombre ? Parce qu'un vecteur a *plusieurs coordonnées*: la double barre nous rappelle qu'on combine toutes ces coordonnées en une seule mesure de taille. C'est comme demander la taille d'une personne : on résume plein d'informations (longueur des jambes, du torse, du cou) en un seul nombre, en centimètres.
+> Ce symbole représente la **norme**, c'est-à-dire la « longueur » d'un vecteur. Quand on écrit $`\|x\|`$, lisez « norme de $`x`$ ». Pourquoi une *double* barre, et non une seule comme la valeur absolue $`|a|`$ d'un nombre ? (La **valeur absolue** $`|a|`$, écrite avec une *simple* barre de chaque côté, est la **distance du nombre $`a`$ à zéro**, donc toujours positive : $`|5| = 5`$ et $`|{-5}| = 5`$. On efface le signe « moins ».) Parce qu'un vecteur a *plusieurs coordonnées*: la double barre nous rappelle qu'on combine toutes ces coordonnées en une seule mesure de taille. C'est comme demander la taille d'une personne : on résume plein d'informations (longueur des jambes, du torse, du cou) en un seul nombre, en centimètres.
+
+> **Le mot « Soit ».** En mathématiques, « Soit $`V`$ un espace vectoriel… » est une formule rituelle qui veut simplement dire « **Donnons-nous** un espace vectoriel et appelons-le $`V`$ ». C'est comme dire « Prenons une boîte, appelons-la $`V`$ » avant d'expliquer ce qu'on va en faire.
+
+> **Le mot « corps » (en mathématiques).** Ici, un **corps** n'a rien à voir avec le corps humain : c'est le nom savant d'un **ensemble de nombres où l'on peut additionner, soustraire, multiplier et diviser** sans jamais sortir de l'ensemble (sauf diviser par zéro). Les nombres réels $`\mathbb{R}`$ forment un tel corps. Retenez juste : « sur le corps $`\mathbb{R}`$ » signifie « avec des nombres réels ordinaires ».
 
 Soit $`V`$ un espace vectoriel sur le corps $`\mathbb{R}`$ (l'ensemble des nombres réels, c'est-à-dire tous les nombres « avec une virgule », positifs ou négatifs). Une **norme** sur $`V`$ est une application
+
+> **Le mot « application » (en mathématiques).** Une **application** (on dit aussi une **fonction**) est une **machine** qui prend une entrée et rend une sortie. On la décrit comme un trajet : ici « $`V \longrightarrow \mathbb{R}_{\geq 0}`$ » se lit « prend en entrée un vecteur de $`V`$ et rend en sortie un nombre positif ou nul ». Pensez à une machine à café : vous mettez une dosette (l'entrée), elle rend une tasse (la sortie).
 
 ```math
 \|\cdot\| : V \longrightarrow \mathbb{R}_{\geq 0}
@@ -25,14 +35,22 @@ Soit $`V`$ un espace vectoriel sur le corps $`\mathbb{R}`$ (l'ensemble des nombr
 
 qui à chaque vecteur associe un nombre réel positif ou nul, et qui vérifie les **trois axiomes** suivants, pour tous vecteurs $`x, y \in V`$ et tout scalaire $`\lambda \in \mathbb{R}`$:
 
+> **Le mot « axiome ».** Un **axiome** est une **règle de base que l'on décide d'imposer**, sans la démontrer, parce qu'on veut que notre objet s'y plie. C'est comme les règles d'un jeu de société : on ne les prouve pas, on les pose au départ, et tout le reste en découle. Ici, on déclare qu'une « vraie » norme doit obéir à trois règles ; toute mesure qui les respecte mérite le nom de norme.
+
+> **Le mot « scalaire ».** Un **scalaire** est simplement un **nombre tout seul** (par opposition à un vecteur, qui est une liste de nombres). Le mot vient de « échelle » : un scalaire sert à *mettre à l'échelle*, c'est-à-dire à agrandir ou rétrécir un vecteur. Ici, la lettre grecque $`\lambda`$ (qui se lit « lambda ») est juste un nom donné à un tel nombre. Multiplier une flèche par le scalaire $`2`$ la rend deux fois plus longue ; par $`\tfrac12`$, deux fois plus courte.
+
 > **Le symbole $`\in`$ (appartient à).**
 > Ce symbole, qui ressemble à un « e » arrondi, représente l'**appartenance**. $`x \in V`$ se lit « $`x`$ appartient à $`V`$ », c'est-à-dire « $`x`$ est un élément de l'ensemble $`V`$ ». C'est comme dire « Médor appartient à l'ensemble des chiens ». Le symbole $`\mathbb{R}_{\geq 0}`$ désigne quant à lui l'ensemble des réels supérieurs ou égaux à zéro (les longueurs possibles).
+
+> **Les symboles $`\geq`$ et $`\leq`$ (comparaison).** $`\geq`$ se lit « **supérieur ou égal à** » et $`\leq`$ « **inférieur ou égal à** ». Ainsi $`a \geq 0`$ veut dire « $`a`$ vaut zéro ou plus » et $`a \leq b`$ « $`a`$ ne dépasse pas $`b`$ ». Astuce pour ne pas confondre : la pointe (le côté fermé) désigne toujours le **plus petit** des deux, la grande ouverture le plus grand, comme une bouche affamée qui s'ouvre vers la plus grosse part.
 
 | Axiome | Formule | Lecture intuitive |
 |---|---|---|
 | **(N1) Positivité / séparation** | $`\|x\| \geq 0`$, et $`\|x\| = 0 \iff x = 0`$ | Une longueur est positive ; seule la flèche nulle a une longueur nulle. |
 | **(N2) Homogénéité absolue** | $`\|\lambda x\| = \vert \lambda\vert \,\|x\|`$ | Étirer la flèche d'un facteur $`\lambda`$ multiplie sa longueur par $`\vert \lambda\vert `$. |
 | **(N3) Inégalité triangulaire** | $`\|x + y\| \leq \|x\| + \|y\|`$ | Un détour est toujours plus long que la ligne directe. |
+
+> **Le mot « homogénéité » (axiome N2).** Ne soyez pas effrayé par ce mot savant : être **homogène** signifie simplement que **si l'on agrandit l'entrée, la sortie s'agrandit dans la même proportion**. Doubler la flèche double sa longueur, la tripler la triple : pas de surprise, tout suit « à l'échelle ». « Absolue » rappelle juste qu'on utilise la valeur absolue $`|\lambda|`$ (le signe ne compte pas).
 
 > **Attention à l'axiome (N2).** On écrit $`|\lambda|`$ (valeur absolue, **simple** barre) car $`\lambda`$ est un *nombre*, pas un vecteur. La double barre $`\|\cdot\|`$ est réservée aux vecteurs. Si l'on étire une flèche par $`\lambda = -3`$, sa longueur est multipliée par $`|-3| = 3`$: le signe disparaît, car une longueur reste positive même quand on retourne la flèche.
 
@@ -52,6 +70,8 @@ Sur $`\mathbb{R}^n`$ (l'espace des vecteurs à $`n`$ coordonnées réelles), la 
 > **Le symbole $`\sum`$ (sigma majuscule, la somme).**
 > Ce grand symbole en forme de « E » anguleux représente une **somme répétée**. Voyez-le comme une **boucle qui additionne**: $`\sum_{i=1}^{n}`$ veut dire « faites varier le compteur $`i`$ depuis $`1`$ jusqu'à $`n`$, et additionnez tout ce qui suit ». Par exemple $`\sum_{i=1}^{3} a_i = a_1 + a_2 + a_3`$. La lettre $`i`$ en bas est l'**indice** (le compteur), $`1`$ est sa valeur de départ, $`n`$ (en haut) sa valeur d'arrivée. C'est exactement comme empiler des pièces une par une et compter le total. Le symbole $`|x_i|`$ à l'intérieur est la **valeur absolue** de la $`i`$-ème coordonnée : la distance de $`x_i`$ à zéro, toujours positive (par exemple $`|{-3}| = 3`$).
 
+> **Les exposants (petits nombres en haut, comme $`x^2`$ ou $`x^p`$).** Un **exposant** indique combien de fois on multiplie un nombre par lui-même. $`x^2`$ (lu « $`x`$ au carré ») veut dire $`x \times x`$; $`x^3`$ (« $`x`$ au cube ») veut dire $`x \times x \times x`$, et $`x^p`$ veut dire « $`x`$ multiplié $`p`$ fois par lui-même ». Cas particulier utile : l'exposant $`1/p`$ représente la **racine $`p`$-ième** (l'opération inverse de la puissance $`p`$), exactement comme $`x^{1/2} = \sqrt{x}`$ « défait » le carré. Dans la formule ci-dessus, on élève chaque coordonnée à la puissance $`p`$, on additionne, puis le $`^{1/p}`$ final défait cette puissance pour revenir à une longueur. (Attention : un *exposant* est en haut, un *indice* est en bas. $`x_i`$ avec $`i`$ en bas désigne la $`i`$-ème coordonnée ; $`x^p`$ avec $`p`$ en haut est une puissance.)
+
 Trois valeurs de $`p`$ dominent la pratique :
 
 | Nom | Notation | Formule | Image mentale |
@@ -62,11 +82,15 @@ Trois valeurs de $`p`$ dominent la pratique :
 
 La norme euclidienne $`\ell_2`$ est la « longueur » usuelle, celle de notre intuition géométrique. Elle correspond à $`p=2`$ et généralise directement Pythagore : dans le plan, $`\|x\|_2 = \sqrt{x_1^2 + x_2^2}`$ est bien la longueur de l'hypoténuse d'un triangle rectangle de côtés $`x_1`$ et $`x_2`$.
 
+> **Rappel : le théorème de Pythagore.** Un **triangle rectangle** est un triangle qui possède un **angle droit** (un coin parfaitement carré, comme le coin d'une feuille). Le grand côté, celui qui fait face à l'angle droit, s'appelle l'**hypoténuse** ; c'est toujours le plus long. Le **théorème de Pythagore** affirme que, dans un tel triangle, le carré de l'hypoténuse égale la somme des carrés des deux autres côtés : si les petits côtés mesurent $`3`$ et $`4`$, l'hypoténuse mesure $`\sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5`$. C'est exactement la formule de la longueur « à vol d'oiseau ».
+
 > **Le symbole $`\sqrt{\ }`$ (racine carrée).** Il représente l'opération inverse du carré : $`\sqrt{9}=3`$ parce que $`3^2 = 9`$. Intuitivement, si une surface carrée a une aire de $`9`$, son côté mesure $`\sqrt 9 = 3`$. La racine carrée d'une somme de carrés « défait » la mise au carré des coordonnées pour revenir à une longueur.
 
-> **Le symbole $`\max`$ (maximum).** $`\max_i |x_i|`$ signifie « le plus grand parmi les nombres $`|x_i|`$ ». Imaginez une rangée d'enfants : le maximum, c'est la taille du plus grand. La norme $`\ell_\infty`$ est la limite des normes $`\ell_p`$ quand $`p \to \infty`$; quand $`p`$ devient gigantesque, le terme le plus grand de la somme écrase tous les autres.
+> **Le symbole $`\max`$ (maximum).** $`\max_i |x_i|`$ signifie « le plus grand parmi les nombres $`|x_i|`$ ». Imaginez une rangée d'enfants : le maximum, c'est la taille du plus grand. La norme $`\ell_\infty`$ est la limite des normes $`\ell_p`$ quand $`p \to \infty`$; quand $`p`$ devient gigantesque, le terme le plus grand de la somme écrase tous les autres. (Le symbole $`\infty`$ est l'**infini**: « plus grand que tout nombre, sans fin ». La flèche $`\to`$ se lit ici « **tend vers** », c'est-à-dire « se rapproche de plus en plus de » : $`p \to \infty`$ veut dire « $`p`$ grandit sans jamais s'arrêter ».)
 
 > **Piège fréquent.** Pour $`0 < p < 1`$, la formule ci-dessus **n'est plus une norme**: l'inégalité triangulaire (N3) est violée. On parle alors de « quasi-norme ». De même, le « comptage de coefficients non nuls » noté abusivement $`\|x\|_0`$ (la pseudo-norme $`\ell_0`$, omniprésente en parcimonie) **n'est pas une norme**: elle n'est pas homogène ($`\|2x\|_0 = \|x\|_0 \neq 2\|x\|_0`$).
+
+> **Le mot « coefficient ».** Un **coefficient** est tout simplement **un des nombres** qui composent un objet : ici, les coefficients d'un vecteur sont ses coordonnées (les nombres de sa liste). Plus largement, un coefficient est un nombre qui joue un rôle dans une formule (par exemple le $`3`$ dans « $`3 \times x`$ »). Le symbole $`\neq`$ qui apparaît ici se lit « **est différent de** » (le contraire de $`=`$).
 
 #### Boules unité : visualiser une norme
 
@@ -84,6 +108,10 @@ graph LR
 
 Dans le plan, la boule unité $`\ell_1`$ est un **losange** (pointes sur les axes), la boule $`\ell_2`$ est un **cercle** parfait, et la boule $`\ell_\infty`$ est un **carré** aligné sur les axes. Cette géométrie n'est pas anecdotique : en apprentissage automatique, les **coins** du losange $`\ell_1`$ (situés sur les axes, donc avec des coordonnées nulles) expliquent pourquoi la régularisation $`\ell_1`$ (le LASSO) produit des solutions **parcimonieuses** (sparse), c'est-à-dire avec beaucoup de zéros.
 
+> **Le mot « axe ».** Un **axe** est une ligne droite graduée qui sert de repère, comme la ligne horizontale et la ligne verticale d'un graphique. Dans le plan, l'axe horizontal porte la première coordonnée, l'axe vertical la seconde. « Une coordonnée nulle » veut dire que le point est posé pile sur l'un de ces axes.
+
+> **Le mot « régularisation ».** En apprentissage automatique (c'est-à-dire la branche qui fait *apprendre* des règles à un ordinateur à partir d'exemples), un modèle qui colle trop parfaitement aux données d'entraînement apprend aussi leurs défauts et se trompe ensuite sur de nouvelles données. La **régularisation** est une petite **pénalité** ajoutée pour empêcher le modèle de devenir trop compliqué, comme un professeur qui retire des points quand une réponse est inutilement alambiquée. La régularisation $`\ell_1`$ (appelée **LASSO**) a la particularité de mettre carrément certains réglages à zéro, d'où des solutions « parcimonieuses » (avec beaucoup de zéros).
+
 #### Inégalités entre normes et équivalence
 
 Sur $`\mathbb{R}^n`$, toutes ces normes vérifient des relations d'encadrement. On a notamment, pour tout $`x \in \mathbb{R}^n`$:
@@ -93,6 +121,10 @@ Sur $`\mathbb{R}^n`$, toutes ces normes vérifient des relations d'encadrement. 
 ```
 
 Plus profondément, un théorème central :
+
+> **Le mot « théorème ».** Un **théorème** est une **affirmation mathématique démontrée**, c'est-à-dire dont on a prouvé qu'elle est toujours vraie, sans la moindre exception. À la différence d'un axiome (une règle qu'on pose au départ), un théorème se *gagne* par un raisonnement. La **démonstration** (ou *preuve*) est justement la suite d'arguments logiques qui établit ce théorème.
+
+> **Le mot « dimension » (finie ou infinie).** La **dimension** d'un espace est son **nombre de directions indépendantes**, autrement dit combien de nombres il faut pour repérer un point. Une droite est de dimension $`1`$ (un seul nombre suffit), un plan de dimension $`2`$ (deux nombres : gauche-droite et haut-bas), l'espace de dimension $`3`$. Tant que ce nombre est fini, on parle de **dimension finie** ; les espaces de fonctions, eux, demandent une infinité de nombres et sont de **dimension infinie**.
 
 > **Théorème (équivalence des normes en dimension finie).** Sur un espace vectoriel de dimension finie, **toutes les normes sont équivalentes**: pour deux normes $`\|\cdot\|_a`$ et $`\|\cdot\|_b`$, il existe des constantes $`0 < c \leq C`$ telles que
 > ```math
@@ -106,7 +138,11 @@ Plus profondément, un théorème central :
 
 *Démonstration (esquisse).* Il suffit de montrer que toute norme $`\|\cdot\|`$ est équivalente à $`\|\cdot\|_2`$. La fonction $`x \mapsto \|x\|`$ est continue pour $`\|\cdot\|_2`$ (par l'inégalité triangulaire et l'homogénéité). La sphère unité $`S = \{x: \|x\|_2 = 1\}`$ est **compacte** (fermée et bornée en dimension finie, théorème de Heine–Borel). Une fonction continue sur un compact atteint ses bornes : posons $`c = \min_{x \in S} \|x\|`$ et $`C = \max_{x \in S} \|x\|`$. Comme $`0 \notin S`$ et que $`\|x\| = 0 \iff x = 0`$, on a $`c > 0`$. Pour $`x \neq 0`$ quelconque, en appliquant à $`x/\|x\|_2 \in S`$ et en utilisant l'homogénéité, on obtient $`c \leq \|x\|/\|x\|_2 \leq C`$, d'où le résultat. $`\blacksquare`$
 
+> **Le symbole $`\blacksquare`$ (petit carré noir).** Ce carré plein marque la **fin d'une démonstration** : il veut dire « voilà, c'est prouvé, fin de la preuve ». C'est l'équivalent moderne du fameux « CQFD » (« ce qu'il fallait démontrer »). Quand vous le voyez, vous savez que le raisonnement est terminé.
+
 > **Le symbole $`\mapsto`$ (« associe à »).** La flèche à barre $`\mapsto`$ décrit l'**action** d'une fonction sur un élément : $`x \mapsto \|x\|`$ se lit « à $`x`$, on associe $`\|x\|`$ ». À ne pas confondre avec $`\to`$ (qui relie des *ensembles*: $`f: V \to \mathbb{R}`$). Pensez à une machine : $`\to`$ décrit le type d'entrée et de sortie de la machine, $`\mapsto`$ décrit ce qu'elle fait à un objet précis.
+
+> **Deux autres symboles de la preuve ci-dessus.** $`\notin`$ est le contraire de $`\in`$: il se lit « **n'appartient pas à** » (le $`\in`$ barré). Et $`\min`$ (minimum) est le jumeau de $`\max`$: $`\min`$ désigne **le plus petit** d'un ensemble de nombres, là où $`\max`$ désigne le plus grand. (Cette démonstration étant réservée aux lecteurs avancés, vous pouvez la sauter sans dommage.)
 
 #### Exemple chiffré déroulé
 
@@ -122,8 +158,14 @@ On vérifie bien l'encadrement : $`4 \leq 5 \leq 7`$, soit $`\|x\|_\infty \leq \
 
 Les normes sont **omniprésentes**:
 
+> **Le symbole $`\hat{y}`$ (le « chapeau »).** Le petit accent en forme de toit $`\hat{\ }`$ posé sur une lettre signifie « **valeur estimée / prédite par le modèle** ». On lit $`\hat{y}`$ « $`y`$ chapeau ». On oppose $`\hat{y}`$ (ce que le modèle a *deviné*) à $`y`$ tout court (la *vraie* valeur observée). Le chapeau, c'est le signe « attention, ceci est une estimation, pas la réalité exacte ». Du coup $`\hat{y} - y`$ est l'**erreur** : l'écart entre la prédiction et la vérité.
+
+> **Le mot « fonction de perte » (loss).** Une **fonction de perte** est un **score de mauvaise note** : un nombre qui mesure à quel point le modèle se trompe (plus c'est grand, plus c'est mauvais). Entraîner un modèle, c'est chercher les réglages qui rendent cette perte la plus petite possible, comme régler un jeu vidéo pour faire le plus petit score de fautes. L'**erreur quadratique moyenne** (la moyenne des écarts mis au carré) en est l'exemple le plus courant. On parle aussi de **fonction de coût**, c'est la même idée.
+
 - **Fonctions de perte:** l'erreur quadratique moyenne (mean squared error) est $`\frac{1}{n}\|\hat{y} - y\|_2^2`$; l'erreur absolue moyenne (mean absolute error) est $`\frac{1}{n}\|\hat{y} - y\|_1`$.
 - **Régularisation:** on ajoute $`\lambda \|w\|_2^2`$ (Ridge, qui rétrécit les poids) ou $`\lambda \|w\|_1`$ (LASSO, qui en annule) à la fonction de coût pour contrôler la complexité du modèle.
+
+> **Les « poids » $`w`$ et le coefficient $`\lambda`$.** Les **poids** (notés ici $`w`$, pour *weights*) sont les **réglages internes** du modèle, les boutons qu'on tourne pour qu'il colle aux données, comme les molettes d'une vieille radio que l'on ajuste pour capter la station. Le coefficient $`\lambda`$ (« lambda ») devant la pénalité règle **la force** de la régularisation : grand $`\lambda`$, on pénalise fort (modèle très simple) ; petit $`\lambda`$, on laisse plus de liberté.
 - **Normalisation de données:** mettre chaque échantillon à norme $`\ell_2`$ unitaire.
 
 ```python
@@ -146,6 +188,10 @@ A = np.array([[1.0, 2.0], [3.0, 4.0]])
 print(np.linalg.norm(A, 'fro'))        # sqrt(1+4+9+16) = sqrt(30) ~ 5.477
 ```
 
+> **Que veut dire « matrice » ?** Une **matrice** est un **tableau rectangulaire de nombres**, rangés en lignes et en colonnes, comme une grille de mots croisés remplie de chiffres. Par exemple $`\begin{pmatrix}1 & 2\\ 3 & 4\end{pmatrix}`$ a $`2`$ lignes et $`2`$ colonnes. On s'en sert surtout pour **transformer** des vecteurs (les faire tourner, les étirer…). Si un vecteur est une simple liste de nombres, une matrice est une liste de listes. (Les matrices sont étudiées en détail au chapitre précédent ; ici, retenez juste « tableau de nombres ».)
+
+> **Le mot « gradient ».** Le **gradient** d'une fonction est la **flèche qui indique la direction de plus forte montée**, et sa longueur dit à quel point ça monte vite. Sur une carte de randonnée, le gradient en un point pointe vers le haut de la pente la plus raide. En apprentissage automatique, on l'utilise à l'envers : on **descend** dans le sens opposé au gradient pour faire baisser la perte (« descente de gradient »), comme une bille qui dévale vers le fond d'une vallée. Le **sous-gradient** est une version de secours du gradient, utile aux endroits anguleux où la flèche n'est pas définie de façon unique.
+
 > **Mise à jour 2026.** Dans les bibliothèques d'autodifférenciation modernes (JAX, PyTorch), la fonction `norm` est entièrement **différentiable**, sauf en $`0`$ pour $`\ell_1`$ et $`\ell_\infty`$, où l'on utilise un **sous-gradient** (subgradient). C'est précisément ce qui permet d'optimiser des pénalités $`\ell_1`$ par descente de (sous-)gradient. Le *clipping* de gradient par la norme (`torch.nn.utils.clip_grad_norm_`), qui borne $`\|g\|_2`$ pour stabiliser l'entraînement des grands modèles, et la *normalisation spectrale* (qui contrôle la plus grande valeur singulière d'une matrice de poids) sont devenus des outils standard de l'entraînement à grande échelle.
 
 > **Le mot « valeur singulière ».** Une valeur singulière d'une matrice est un **facteur d'étirement** de cette matrice dans une de ses directions principales : la plus grande valeur singulière mesure l'étirement maximal qu'elle peut appliquer à un vecteur. Imaginez que la matrice transforme un cercle en une ellipse : les valeurs singulières sont les longueurs des demi-axes de cette ellipse. Contrôler la plus grande, c'est donc empêcher la matrice de trop dilater l'espace. Ces valeurs sont étudiées en détail au chapitre « Décompositions matricielles ».
@@ -156,6 +202,10 @@ print(np.linalg.norm(A, 'fro'))        # sqrt(1+4+9+16) = sqrt(30) ~ 5.477
 
 La norme nous dit *combien long* est un vecteur. Le **produit scalaire** (inner product / dot product) va beaucoup plus loin : il nous dit comment **deux** vecteurs sont orientés l'un par rapport à l'autre. C'est l'outil qui transforme l'algèbre linéaire « sèche » en véritable **géométrie**, avec des angles, des projections et de la perpendicularité.
 
+> **Que veut dire « linéaire » ?** Le mot vient de « ligne ». Une relation est **linéaire** quand elle est *proportionnelle et additive* : si vous doublez l'entrée, la sortie double ; et l'effet de deux causes est la somme de leurs effets séparés. Pas de courbe, pas de seuil : tout se fait « en ligne droite ». L'**algèbre linéaire** est justement la branche des mathématiques qui étudie les vecteurs, les matrices et ces relations « en ligne droite ».
+
+> **Que veut dire « projection » ?** **Projeter**, c'est obtenir l'**ombre** d'un objet sur un support, comme l'ombre d'un crayon tenu au soleil sur une table. Géométriquement, projeter un vecteur sur une droite (ou un plan), c'est l'« écraser » dessus en gardant seulement la part qui va dans cette direction. C'est l'idée centrale de la fin de ce chapitre ; pour l'instant, retenez juste l'image de l'ombre.
+
 #### Intuition imagée
 
 Le produit scalaire mesure à quel point deux flèches « **pointent dans la même direction** ». Trois situations résument tout :
@@ -165,6 +215,8 @@ Le produit scalaire mesure à quel point deux flèches « **pointent dans la mê
 - Si elles pointent en **sens opposés**, leur produit scalaire est **négatif** (elles « s'opposent »).
 
 Analogie physique : pour pousser un chariot, seule compte la part de votre force qui va dans le sens du mouvement. Le travail d'une force est précisément un produit scalaire $`W = \vec{F} \cdot \vec{d}`$.
+
+> **À propos de cette formule.** La petite flèche au-dessus d'une lettre, $`\vec{F}`$, est une **autre façon de noter un vecteur** (très courante en physique) : $`\vec{F}`$ est la force, $`\vec{d}`$ le déplacement. Le **travail** $`W`$ (de l'anglais *work*) est, en physique, l'énergie réellement fournie : si vous poussez perpendiculairement au mouvement, vous vous fatiguez pour rien, le travail est nul, exactement comme un produit scalaire entre deux flèches perpendiculaires.
 
 #### Le produit scalaire canonique sur $`\mathbb{R}^n`$
 
@@ -185,11 +237,13 @@ On multiplie les coordonnées **deux à deux** (la première de $`x`$ avec la pr
 
 Autrement dit, **la norme euclidienne est la racine du produit scalaire d'un vecteur avec lui-même**. La géométrie des longueurs découle de celle des produits scalaires.
 
-> **Le symbole $`x^\top`$ (transposée), en rappel.** La transposée transforme un vecteur colonne en vecteur ligne (vu au chapitre précédent). L'écriture $`x^\top y`$ est donc le produit d'une matrice ligne $`1\times n`$ par une matrice colonne $`n\times 1`$, qui donne bien une matrice $`1\times 1`$, identifiée à un nombre. Le symbole $`\Longrightarrow`$ se lit « **donc** » / « implique » : si la chose de gauche est vraie, alors celle de droite l'est aussi.
+> **Le symbole $`x^\top`$ (transposée), en rappel.** Le petit $`\top`$ en exposant **se lit « transposée »**; transposer, c'est **basculer les lignes en colonnes** (et inversement), comme si l'on couchait un objet debout. Un **vecteur colonne** est une liste écrite verticalement (les nombres empilés de haut en bas), un **vecteur ligne** la même liste écrite horizontalement. La transposée transforme donc un vecteur colonne en vecteur ligne (vu au chapitre précédent). L'écriture $`x^\top y`$ est le produit d'une matrice ligne $`1\times n`$ (une ligne, $`n`$ colonnes) par une matrice colonne $`n\times 1`$, qui donne une matrice $`1\times 1`$ (un seul nombre dans la grille), identifiée à un nombre. Le symbole $`\Longrightarrow`$ se lit « **donc** » / « implique » : si la chose de gauche est vraie, alors celle de droite l'est aussi.
 
 #### Définition rigoureuse (produit scalaire abstrait)
 
 La puissance du concept vient de son **axiomatisation**: on peut définir des produits scalaires bien au-delà de la formule canonique (sur des espaces de matrices, de fonctions, etc.).
+
+> **Petit aparté de lecture.** Le mot **axiomatisation** désigne l'action de **poser les règles de base** (les axiomes) qui définissent un objet. La lettre grecque $`\mu`$ se lit « **mu** » et désigne, comme $`\lambda`$, un simple **nombre** (un scalaire) : on en utilise deux car on combine deux vecteurs. Enfin, le mot **argument** (d'une fonction) signifie **« entrée »**, l'objet qu'on lui donne à manger : « le premier argument » du produit scalaire, c'est le premier des deux vecteurs.
 
 > **Définition (produit scalaire réel).** Soit $`V`$ un $`\mathbb{R}`$-espace vectoriel. Un **produit scalaire** est une application $`\langle \cdot, \cdot \rangle: V \times V \to \mathbb{R}`$ vérifiant, pour tous $`x, y, z \in V`$ et $`\lambda, \mu \in \mathbb{R}`$:
 
@@ -205,17 +259,23 @@ La puissance du concept vient de son **axiomatisation**: on peut définir des pr
 
 Un espace vectoriel muni d'un produit scalaire s'appelle un **espace préhilbertien** ; s'il est complet (toute suite de Cauchy y converge), c'est un **espace de Hilbert** (Hilbert space), la structure reine de l'analyse fonctionnelle et de la théorie de l'apprentissage (noyaux, RKHS, pour *Reproducing Kernel Hilbert Space*, c'est-à-dire espace de Hilbert à noyau reproduisant).
 
+> **Vocabulaire de cette phrase.** « **Muni de** » veut simplement dire « **équipé de** » : un espace vectoriel *muni* d'un produit scalaire, c'est un espace vectoriel auquel on a ajouté cet outil de mesure des angles. Un **espace préhilbertien** est donc juste un nom savant pour « espace vectoriel + produit scalaire ». Quant au mot **noyau** (kernel), il désigne ici une **fonction qui mesure la ressemblance entre deux objets** en se comportant comme un produit scalaire (attention : ce mot « noyau » aura un *autre* sens plus loin, le « noyau d'une matrice » ; le contexte permettra de distinguer). Retenez l'essentiel : ce sont des structures où toute la géométrie de ce chapitre (angles, longueurs, projections) continue de fonctionner.
+
 > **Le mot « complet ».** Dire qu'un espace est *complet*, c'est dire qu'il n'a **aucun trou** : si une suite de points s'y resserre indéfiniment, elle finit toujours par atteindre un point de l'espace, et non un point qui « manquerait ». Pensez à la différence entre les nombres réels et les nombres rationnels (les fractions) : on peut fabriquer une suite de fractions qui se rapprochent de plus en plus de $`\sqrt 2`$, mais $`\sqrt 2`$ n'est pas une fraction, il « manque » chez les rationnels, qui sont donc troués. Les réels, eux, sont complets : la limite est toujours là. Une **suite de Cauchy** est justement une suite dont les termes finissent par être tous très proches les uns des autres (l'écart entre eux devient aussi petit que l'on veut quand on avance assez loin) ; « converger » signifie qu'elle se rapproche d'un point précis. Un espace est donc complet quand toute suite de Cauchy y converge bel et bien.
 
 #### Produits scalaires généraux : la matrice de Gram
 
 Toute matrice **symétrique définie positive** $`A`$ engendre un produit scalaire valide :
 
+> **Le mot « symétrique » (pour une matrice).** Une matrice est **symétrique** quand elle est son propre reflet en miroir le long de sa diagonale (le trait qui descend du coin haut-gauche au coin bas-droite) : le nombre situé ligne $`i`$, colonne $`j`$ est égal à celui situé ligne $`j`$, colonne $`i`$. Par exemple $`\begin{pmatrix}2 & 5\\ 5 & 3\end{pmatrix}`$ est symétrique (le $`5`$ se retrouve des deux côtés). Le verbe « **engendre** » signifie ici « **fabrique / donne naissance à** ».
+
 ```math
 \langle x, y \rangle_A = x^\top A\, y
 ```
 
 > **Le symbole « définie positive ».** Une matrice symétrique $`A`$ est dite *définie positive* (notée $`A \succ 0`$) si $`x^\top A x > 0`$ pour tout $`x \neq 0`$. Intuitivement, $`A`$ « ne renverse jamais » un vecteur au point de rendre son carré de longueur négatif. C'est la condition exacte pour que $`\langle \cdot,\cdot\rangle_A`$ respecte la positivité définie. La symétrie de $`A`$ garantit, elle, la symétrie du produit scalaire. Le cas $`A = I`$ (matrice identité) redonne le produit scalaire canonique.
+
+> **La matrice identité $`I`$.** La **matrice identité**, notée $`I`$, est la matrice qui **ne change rien** quand on l'applique à un vecteur (comme multiplier un nombre par $`1`$). Elle a des $`1`$ sur sa diagonale (du coin haut-gauche au coin bas-droite) et des $`0`$ partout ailleurs, par exemple $`\begin{pmatrix}1 & 0\\ 0 & 1\end{pmatrix}`$. C'est l'élément « neutre » des matrices.
 
 Ce produit scalaire « pondéré » est au cœur de la **distance de Mahalanobis** en statistique, où $`A = \Sigma^{-1}`$ est l'inverse de la matrice de covariance : il déforme l'espace pour tenir compte des corrélations entre variables. Concrètement, cette distance **rapproche** les points le long des directions où les données sont très dispersées et les **éloigne** le long des directions où elles le sont peu : au lieu de mesurer un écart « brut », elle le pondère par la façon dont les données varient réellement.
 
@@ -234,6 +294,8 @@ C'est sans doute **l'inégalité la plus importante** de toute l'analyse. Elle r
 > avec **égalité si et seulement si** $`x`$ et $`y`$ sont **colinéaires** (l'un est multiple de l'autre).
 
 *Démonstration (élégante, par le discriminant).* Si $`y = 0`$, l'inégalité est triviale ($`0 \leq 0`$). Sinon, considérons pour tout $`t \in \mathbb{R}`$ le polynôme du second degré en $`t`$:
+
+> **Vocabulaire.** En mathématiques, « **trivial** » ne veut pas dire « sans intérêt » mais « **évident, immédiat, sans aucun calcul à faire** » : ici, si $`y = 0`$, l'inégalité se réduit à $`0 \leq 0`$, ce qui est évident. Un **polynôme du second degré** (ou **trinôme**) en $`t`$ est une expression de la forme $`a t^2 + b t + c`$ (un nombre fois $`t`$ au carré, plus un nombre fois $`t`$, plus un nombre) ; sa courbe est une **parabole**, expliquée juste après.
 
 ```math
 P(t) = \langle x - t y,\; x - t y\rangle = \|x\|^2 - 2t\langle x, y\rangle + t^2 \|y\|^2 \;\geq\; 0.
@@ -268,10 +330,16 @@ Vérifions Cauchy–Schwarz : $`\|x\|_2 = \sqrt{1+4+9} = \sqrt{14} \approx 3{,}7
 
 Le produit scalaire est **le calcul élémentaire du deep learning**:
 
+> **Le mot « deep learning » (apprentissage profond).** C'est la famille de méthodes qui empilent de nombreuses couches de petits calculs (des **neurones** artificiels) pour apprendre des choses très compliquées (reconnaître une image, traduire un texte…). « Profond » fait référence au grand nombre de couches superposées, comme un mille-feuille.
+
+> **Les mots « neurone », « biais », « fonction d'activation ».** Un **neurone** artificiel est une mini-machine de calcul : il prend des entrées, les combine en faisant un produit scalaire avec ses poids (il donne plus ou moins d'importance à chaque entrée), ajoute un **biais** (un petit nombre fixe qui décale le résultat, comme une note de départ avant même de répondre), puis passe le tout dans une **fonction d'activation** (une petite transformation qui décide si le neurone « s'allume » ou non, et introduit de la souplesse non linéaire). C'est une caricature très simplifiée d'un neurone du cerveau.
+
 - Un **neurone** calcule $`\langle w, x\rangle + b`$ (combinaison pondérée des entrées plus un biais), puis applique une fonction d'activation.
 - Une **multiplication matrice-vecteur** $`Wx`$ n'est qu'une *pile* de produits scalaires (une ligne de $`W`$ avec $`x`$).
 - La **similarité cosinus** entre deux plongements (embeddings), mots, images, documents, est un produit scalaire normalisé : c'est le cœur de la recherche sémantique et des systèmes de recommandation.
 - L'**attention** des Transformers calcule des scores $`\langle q, k\rangle`$ entre une requête (query) et des clés (keys).
+
+> **Le mot « plongement » (embedding).** Un **plongement** consiste à **transformer un objet (un mot, une image, un document) en une liste de nombres (un vecteur)** qui en capture le sens, de sorte que deux objets proches par le sens donnent des vecteurs proches dans l'espace. C'est comme attribuer des coordonnées GPS à des idées : « chat » et « chien » se retrouvent voisins, « chat » et « avion » très éloignés. La **similarité cosinus** sert ensuite à mesurer ce voisinage.
 
 ```python
 import numpy as np
@@ -358,6 +426,8 @@ Chaque norme engendre sa distance. Voici un récapitulatif comparatif sur deux p
 | Tchebychev ($`\ell_\infty`$) | $`\max_i \vert x_i - y_i\vert `$ | Jeux d'échecs (mouvement du roi), tolérances. |
 | Minkowski ($`\ell_p`$) | $`\big(\sum_i \vert x_i-y_i\vert ^p\big)^{1/p}`$ | Famille paramétrée généralisant les précédentes. |
 
+> **Vocabulaire de ce tableau.** Une **valeur aberrante** (outlier) est une donnée bizarre, très éloignée des autres (par exemple un âge de $`200`$ ans dans une liste de clients) : « robuste aux valeurs aberrantes » veut dire « peu perturbé par ces données folles ». **$`k`$-means** et **$`k`$-NN** sont deux algorithmes très courants qui reposent sur des distances : $`k`$-means **regroupe** automatiquement des points en $`k`$ paquets (clusters) selon leur proximité, et $`k`$-NN (*$`k`$ plus proches voisins*) classe un nouveau point en regardant les $`k`$ points connus les plus proches de lui et en prenant leur avis majoritaire, comme demander leur métier aux $`k`$ voisins les plus proches pour deviner le sien. « **Paramétrée** » signifie « réglable par un nombre » (ici le $`p`$) : en changeant ce réglage, on obtient toutes les distances précédentes.
+
 #### Exemple chiffré
 
 Soit $`x = (1, 2)`$ et $`y = (4, 6)`$.
@@ -369,6 +439,8 @@ Soit $`x = (1, 2)`$ et $`y = (4, 6)`$.
 #### Le fléau de la dimension
 
 > **Mise en garde (curse of dimensionality).** En très grande dimension, un phénomène contre-intuitif apparaît : les distances euclidiennes entre points tirés au hasard deviennent **toutes presque égales**. Le rapport entre la distance maximale et la distance minimale tend vers $`1`$. Conséquence pratique : les algorithmes fondés sur la distance ($`k`$-NN, $`k`$-means) perdent leur pouvoir discriminant, et l'on préfère parfois les distances $`\ell_1`$, ou des distances apprises, ou une réduction de dimension préalable (ACP, voir plus loin).
+
+> **« Réduction de dimension » et « ACP ».** Travailler en très grande dimension (des vecteurs à des milliers de coordonnées) est lourd et trompeur. La **réduction de dimension** consiste à **résumer** chaque vecteur avec beaucoup moins de nombres tout en gardant l'essentiel de l'information, comme résumer un long livre en quelques phrases. L'**ACP** (**analyse en composantes principales**) est la méthode reine pour cela : elle repère les quelques directions le long desquelles les données varient le plus et ne garde que celles-là. Elle est détaillée plus loin dans le cours.
 
 #### Application en machine learning et code
 
@@ -408,6 +480,8 @@ Nous avons maintenant tout pour définir la notion la plus géométrique qui soi
 
 L'inégalité de Cauchy–Schwarz nous a offert un cadeau : le rapport $`\frac{\langle x,y\rangle}{\|x\|\|y\|}`$ est toujours dans $`[-1, 1]`$. C'est donc le cosinus d'un angle bien défini.
 
+> **La notation $`[a, b]`$ (intervalle).** Écrire $`[a, b]`$ désigne un **intervalle**, c'est-à-dire **tous les nombres compris entre $`a`$ et $`b`$**, ces deux bornes incluses. Ainsi « dans $`[-1, 1]`$ » veut dire « un nombre entre $`-1`$ et $`+1`$ (ces valeurs comprises) ». Les crochets *fermés* $`[\ ]`$ incluent les bornes ; des crochets *ouverts* (tournés vers l'extérieur) les excluraient. C'est comme dire « la température est comprise entre $`-1`$ et $`1`$ degré ». Le **rapport** $`\frac{a}{b}`$, lui, est simplement une **division** (un nombre divisé par un autre, écrit en fraction).
+
 > **Définition (angle non orienté entre deux vecteurs non nuls).**
 > ```math
 > \cos\theta = \frac{\langle x, y\rangle}{\|x\|\,\|y\|}, \qquad \theta = \arccos\!\left(\frac{\langle x, y\rangle}{\|x\|\,\|y\|}\right) \in [0, \pi].
@@ -415,7 +489,7 @@ L'inégalité de Cauchy–Schwarz nous a offert un cadeau : le rapport $`\frac{\
 
 > **Le symbole $`\cos\theta`$ (cosinus).** Le cosinus est une fonction qui, à un angle, associe un nombre entre $`-1`$ et $`1`$. Imaginez une grande aiguille d'horloge de longueur $`1`$: le cosinus de l'angle, c'est la **position horizontale de sa pointe** (sa projection sur l'axe horizontal). À $`0°`$ l'aiguille pointe à droite : $`\cos 0 = 1`$. À $`90°`$ elle pointe en haut, sa pointe est à l'horizontale $`0`$: $`\cos 90° = 0`$. À $`180°`$ elle pointe à gauche : $`\cos 180° = -1`$. La lettre grecque $`\theta`$ (thêta) est juste le nom traditionnel donné à un angle.
 
-> **Le symbole $`\arccos`$ (arc cosinus) et $`\pi`$ (pi).** $`\arccos`$ fait l'**inverse** du cosinus : on lui donne un nombre entre $`-1`$ et $`1`$, il rend l'angle correspondant. Le symbole $`\pi \approx 3{,}1416`$ est le célèbre nombre « pi » ; en **radians** (l'unité d'angle des mathématiciens), un demi-tour ($`180°`$) vaut exactement $`\pi`$, et un tour complet ($`360°`$) vaut $`2\pi`$. Pourquoi les radians ? Parce que les formules d'analyse (dérivées de $`\sin`$, $`\cos`$) y sont les plus simples.
+> **Le symbole $`\arccos`$ (arc cosinus) et $`\pi`$ (pi).** $`\arccos`$ fait l'**inverse** du cosinus : on lui donne un nombre entre $`-1`$ et $`1`$, il rend l'angle correspondant. Le symbole $`\pi \approx 3{,}1416`$ est le célèbre nombre « pi » ; en **radians** (l'unité d'angle des mathématiciens), un demi-tour ($`180°`$) vaut exactement $`\pi`$, et un tour complet ($`360°`$) vaut $`2\pi`$. Pourquoi les radians ? Parce que les formules d'analyse (dérivées de $`\sin`$, $`\cos`$) y sont les plus simples. (Une **dérivée** mesure la **vitesse de variation** d'une quantité : à quelle vitesse une sortie change quand on bouge un peu l'entrée, comme le compteur de vitesse d'une voiture indique à quelle vitesse la distance change. Ce concept est développé dans un chapitre ultérieur.)
 
 Le cosinus traduit fidèlement l'intuition :
 
@@ -439,6 +513,8 @@ Le cosinus traduit fidèlement l'intuition :
 #### Familles orthogonales et indépendance
 
 > **Théorème.** Une famille de vecteurs **non nuls** deux à deux orthogonaux est **linéairement indépendante**.
+
+> **Vocabulaire de ce théorème.** Une **famille** de vecteurs est simplement une **collection** de plusieurs vecteurs qu'on étudie ensemble (comme une liste d'invités). « **Deux à deux** orthogonaux » signifie que **chaque paire** prise séparément forme un angle droit (le premier avec le deuxième, le premier avec le troisième, etc.). Une famille est **linéairement indépendante** (on dit aussi **libre**) quand **aucun de ses vecteurs ne peut se reconstruire à partir des autres** : chacun apporte une direction vraiment nouvelle, rien n'est redondant. Par exemple « gauche-droite » et « haut-bas » sont indépendants ; mais « gauche-droite » et « deux fois gauche-droite » ne le sont pas (le second n'est qu'une copie agrandie du premier).
 
 *Démonstration.* Soit $`\{v_1, \dots, v_k\}`$ orthogonaux deux à deux, et supposons $`\sum_{j=1}^k \lambda_j v_j = 0`$. Prenons le produit scalaire des deux côtés avec un $`v_i`$ fixé :
 
@@ -507,6 +583,8 @@ print(np.round(sims, 3))   # scores de similarite, le plus grand = plus pertinen
 
 Parmi toutes les bases possibles d'un espace vectoriel, certaines sont **infiniment plus commodes** que les autres : les bases orthonormales. Elles sont aux espaces vectoriels ce que le quadrillage à angle droit est à une feuille : le système de coordonnées idéal.
 
+> **Que veut dire « base » (d'un espace vectoriel) ?** Une **base** est un **jeu de vecteurs de référence** qui permet de fabriquer **tous** les autres vecteurs de l'espace en les combinant (en les additionnant après les avoir étirés), et cela **d'une seule façon possible**. Ce sont les « briques de construction » de l'espace : avec la flèche « un pas vers la droite » et la flèche « un pas vers le haut », on atteint n'importe quel point du plan. Il faut juste assez de briques (autant que la dimension) et qu'aucune ne soit redondante (une famille *libre*). Un **système de coordonnées** est exactement le repère que fournit une base : il donne à chaque point son « adresse » en nombres.
+
 #### Définition
 
 > **Le symbole $`\delta_{ij}`$ (delta de Kronecker).**
@@ -553,6 +631,8 @@ Autrement dit : **dans une base orthonormale, le produit scalaire abstrait redev
 
 #### Matrices orthogonales
 
+> **Vocabulaire avant la définition.** Une **matrice carrée** est une matrice qui a **autant de lignes que de colonnes** (une grille carrée). La notation $`\mathbb{R}^{n\times n}`$ se lit « les matrices à $`n`$ lignes et $`n`$ colonnes remplies de nombres réels » (le $`\times`$ se lit « par », comme « $`3`$ par $`3`$ »). Enfin, l'**inverse** d'une matrice $`Q`$, notée $`Q^{-1}`$ (« $`Q`$ puissance moins un »), est la matrice qui **annule l'effet** de $`Q`$ : appliquer $`Q`$ puis $`Q^{-1}`$ ramène tout vecteur à sa place de départ, exactement comme $`\times 3`$ puis $`\div 3`$.
+
 > **Définition.** Une matrice carrée $`Q \in \mathbb{R}^{n\times n}`$ est **orthogonale** si ses colonnes forment une base orthonormale de $`\mathbb{R}^n`$, ce qui équivaut à
 > ```math
 > Q^\top Q = Q Q^\top = I \qquad \Longleftrightarrow \qquad Q^{-1} = Q^\top.
@@ -567,6 +647,8 @@ C'est une propriété **en or**: l'inverse d'une matrice orthogonale est sa simp
 ```
 
 Géométriquement, ce sont exactement les **isométries linéaires**: rotations (déterminant $`+1`$) et réflexions (déterminant $`-1`$). Elles ne déforment ni ne dilatent l'espace ; elles le font seulement tourner ou se refléter.
+
+> **Les mots « isométrie », « déterminant », « réflexion ».** Une **isométrie** est une transformation qui **conserve les distances** : « iso » veut dire « même » et « métrie » « mesure ». Tourner ou retourner une figure ne change pas ses longueurs : ce sont des isométries. Le **déterminant** d'une matrice est un nombre qui dit de combien elle **agrandit les aires** (ou les volumes), avec un **signe** pour l'orientation : $`+1`$ = aires inchangées et figure non retournée (une rotation), $`-1`$ = aires inchangées mais figure retournée comme dans un miroir (une **réflexion**, c'est-à-dire une symétrie miroir).
 
 #### Le procédé de Gram–Schmidt
 
@@ -603,6 +685,8 @@ Vérification : $`\langle e_1, e_2\rangle = \frac{1}{2}\big((1)(1) + (1)(-1)\big
 
 Les bases orthonormales sont **partout**: la décomposition QR (au cœur de la résolution des moindres carrés), l'**ACP** (analyse en composantes principales, dont les axes principaux forment une base orthonormale), les couches orthogonales en deep learning (qui préservent la norme des activations et combattent l'explosion/disparition du gradient).
 
+> **« Moindres carrés », « décomposition », « activations ».** La méthode des **moindres carrés** consiste à **faire passer au mieux une droite (ou une courbe) à travers un nuage de points**, en rendant la **somme des carrés des écarts** la plus petite possible (« moindres » = « les plus petits »). C'est le cœur de la *régression*, détaillée plus loin dans ce chapitre. Une **décomposition** d'une matrice, c'est la **découper en un produit de matrices plus simples** (comme on factorise $`12 = 3 \times 4`$) ; la décomposition **QR** en est une, où $`Q`$ est orthogonale. Enfin, les **activations** sont simplement les **valeurs de sortie des neurones** d'une couche du réseau ; « explosion/disparition du gradient » désigne le problème où le signal d'apprentissage devient soit gigantesque, soit minuscule en traversant un réseau très profond.
+
 ```python
 import numpy as np
 
@@ -633,6 +717,8 @@ print(c1 * e1 + c2 * e2)            # reconstruit v = [3. 1.]
 ### Complément orthogonal
 
 Si l'on dispose d'un sous-espace (un plan dans l'espace, une droite dans le plan…), il existe une notion duale fondamentale : tout ce qui lui est **perpendiculaire**. C'est le complément orthogonal, pierre angulaire des projections et des moindres carrés.
+
+> **Que veut dire « sous-espace » ?** Un **sous-espace** est un **espace plus petit, plat, contenu dans un plus grand et passant par l'origine** $`(0,0,\dots)`$. Dans l'espace de la pièce où vous êtes (dimension $`3`$), un mur passant par le coin du sol est un sous-espace de dimension $`2`$ (un plan), et une arête est un sous-espace de dimension $`1`$ (une droite). « Sous- » comme dans « sous-ensemble » : une partie du tout, mais une partie qui reste elle-même un espace vectoriel (stable par addition et étirement). Le mot **dual** signifie ici « **concept jumeau / en miroir** » : à chaque sous-espace correspond son monde perpendiculaire.
 
 #### Définition
 
@@ -692,6 +778,8 @@ Le complément orthogonal éclaire les **quatre sous-espaces fondamentaux** d'un
 
 Dans $`\mathbb{R}^3`$, soit $`U = \text{Vect}\{(1,0,0),(0,1,0)\}`$ (le plan horizontal $`z=0`$). Un vecteur $`(a,b,c)`$ est dans $`U^\perp`$ si et seulement s'il est orthogonal à $`(1,0,0)`$ **et** à $`(0,1,0)`$:
 
+> **La notation $`\text{Vect}\{\dots\}`$.** $`\text{Vect}`$ se lit « **espace vectoriel engendré par** » (en anglais *span*) : $`\text{Vect}\{u\}`$ est l'ensemble de **toutes les combinaisons** que l'on peut fabriquer avec les vecteurs entre accolades, c'est-à-dire toutes leurs sommes après les avoir étirés. $`\text{Vect}\{u\}`$ d'un seul vecteur, c'est **la droite** qui le porte (tous ses multiples) ; $`\text{Vect}`$ de deux vecteurs non alignés, c'est **le plan** qu'ils balaient. C'est l'ombre que projetteraient ces vecteurs si on les laissait s'allonger et se combiner librement.
+
 ```math
 \langle (a,b,c),(1,0,0)\rangle = a = 0, \qquad \langle (a,b,c),(0,1,0)\rangle = b = 0.
 ```
@@ -723,6 +811,8 @@ x_hat, *_ = np.linalg.lstsq(A, b, rcond=None)
 residual = b - A @ x_hat
 print(np.round(A.T @ residual, 10))   # ~ 0 : le residu est orthogonal aux colonnes de A
 ```
+
+> **« Régression linéaire » et « résidu ».** La **régression linéaire** est la technique qui cherche **la droite (ou le plan) qui résume le mieux un nuage de données**, par exemple prédire le prix d'une maison à partir de sa surface. Le **résidu** est ce qui **reste** : l'écart entre la vraie valeur et celle prédite par la droite, c'est-à-dire l'erreur point par point (de l'idée de « ce qui résiste, ce qui n'a pas été expliqué »). La régression cherche à rendre ces résidus globalement aussi petits que possible.
 
 > **Pourquoi ça compte en ML.** Tout l'édifice des **moindres carrés** (régression linéaire) repose là-dessus : la meilleure approximation $`A\hat{x}`$ de $`b`$ est sa projection sur $`\mathrm{Im} A`$, et le **résidu** $`b - A\hat x`$ est orthogonal à cet espace, donc dans $`\ker A^\top`$. C'est ce qui donne les **équations normales** $`A^\top A \hat x = A^\top b`$, que nous retrouvons dans la section suivante.
 
@@ -773,6 +863,8 @@ Toutes les notions précédentes se transposent **mot pour mot**:
 
 Le résultat le plus spectaculaire : sur $`[-\pi, \pi]`$, les fonctions trigonométriques
 
+> **« Fonctions trigonométriques » et $`\cos(2t)`$, $`\sin(3t)`$.** Les **fonctions trigonométriques** sont les fonctions **sinus** et **cosinus** (déjà rencontrées : ce sont les positions verticale et horizontale d'une aiguille qui tourne). Ce sont des **ondes régulières** qui montent et descendent sans fin. Écrire $`\cos(2t)`$ ou $`\sin(3t)`$, c'est faire osciller l'onde **deux fois, trois fois plus vite** : plus le nombre devant $`t`$ est grand, plus l'onde est serrée. L'intervalle $`[-\pi, \pi]`$ est simplement le morceau de l'axe allant de $`-\pi`$ à $`+\pi`$ sur lequel on travaille (un tour complet du cercle).
+
 ```math
 1,\quad \cos(t),\ \sin(t),\ \cos(2t),\ \sin(2t),\ \cos(3t),\ \sin(3t),\ \dots
 ```
@@ -802,6 +894,8 @@ Les fonctions $`t`$ et $`t^2`$ sont **orthogonales** sur $`[-1,1]`$ ! (Logique :
 #### Application en machine learning et code
 
 Les produits scalaires de fonctions fondent : les **méthodes à noyaux** (un noyau est un produit scalaire dans un espace de fonctions), les **espaces de Hilbert à noyau reproduisant** (RKHS), les **processus gaussiens**, les bases de fonctions (Fourier, ondelettes, polynômes orthogonaux de Legendre/Hermite) utilisées en régression fonctionnelle et en résolution d'EDP (équations aux dérivées partielles) par réseaux de neurones.
+
+> **Vocabulaire (applications avancées, survolables).** Une **équation aux dérivées partielles** (EDP) est une équation qui relie une quantité à ses **dérivées partielles**, c'est-à-dire ses vitesses de variation **dans chaque direction prise séparément** (par exemple comment la température d'une plaque change quand on se déplace vers la droite, et séparément vers le haut) ; ces équations décrivent la physique (chaleur, ondes, fluides). Les **ondelettes** sont, comme les sinus/cosinus, des petites briques d'ondes servant à décomposer un signal, mais **localisées** dans le temps (de courtes bouffées plutôt que des ondes infinies). Un **processus gaussien** est une façon de modéliser une fonction inconnue **avec son incertitude** (« voici ma meilleure courbe, et voici à quel point je doute »). Ces notions ne sont pas nécessaires pour la suite immédiate.
 
 ```python
 import numpy as np
@@ -836,6 +930,8 @@ print(round(b1, 6))   # 2.0  -> t = 2 sin(t) - sin(2t) + (2/3) sin(3t) - ...
 ### Projections orthogonales
 
 Nous arrivons à l'application la plus opérationnelle de tout le chapitre. **Projeter**, c'est trouver, dans un sous-espace donné, le point **le plus proche** d'un vecteur cible. C'est *le* fondement géométrique de la régression linéaire, de la compression et de l'ACP.
+
+> **Le mot « compression ».** **Compresser** des données, c'est les **stocker avec moins d'informations** tout en gardant l'essentiel, comme résumer une photo très détaillée par une version plus légère mais encore reconnaissable. Projeter sur un sous-espace plus petit est une façon mathématique de compresser : on garde la part importante, on jette le reste.
 
 #### Intuition imagée
 
@@ -886,6 +982,8 @@ Cas général : projeter $`b \in \mathbb{R}^m`$ sur le sous-espace $`\mathrm{Im}
 | Symétrie | $`P^\top = P`$ | La projection est *orthogonale* (et non oblique). |
 | Projection complémentaire | $`I - P`$ projette sur $`(\mathrm{Im}A)^\perp`$ | $`(I-P)b = b - p`$ est le résidu. |
 | Valeurs propres | $`\lambda \in \{0, 1\}`$ | $`1`$ sur le sous-espace, $`0`$ sur l'orthogonal. |
+
+> **Le mot « valeur propre ».** Une **valeur propre** d'une matrice est un **facteur d'étirement** le long d'une direction spéciale (une **direction propre**) qui n'est pas déviée par la matrice, seulement allongée ou raccourcie. Imaginez une pâte que l'on étire : certaines directions s'allongent de $`\times 2`$, d'autres restent identiques ($`\times 1`$) ; ces facteurs sont les valeurs propres. Pour une projection, c'est très parlant : les vecteurs déjà dans le sous-espace ne bougent pas (facteur $`1`$), ceux qui lui sont perpendiculaires sont écrasés à zéro (facteur $`0`$). Ce sujet est approfondi au chapitre suivant ; ici, retenez « facteur d'étirement selon une direction privilégiée ».
 
 > **Le symbole $`P^2 = P`$ (idempotence).** « Idempotent » signifie « qui ne change plus après une première application ». $`P^2 = P`$ dit : appliquer $`P`$ une fois ou deux fois donne le même résultat. C'est logique : une fois le crayon aplati en ombre sur la table, ré-aplatir l'ombre ne fait rien, elle est déjà plate sur la table.
 
@@ -957,6 +1055,8 @@ print(np.round(A.T @ residual, 10))  # ~ 0 : residu orthogonal a Im(A)
 
 > **Mise à jour 2026.** Pour les grands systèmes, **on ne forme jamais explicitement** $`(A^\top A)^{-1}`$ ni la matrice $`P`$ (coûteux et numériquement instable, surtout si $`A`$ est mal conditionnée). On utilise la **décomposition QR** ($`A = QR \Rightarrow \hat x = R^{-1}Q^\top b`$) ou la **SVD** (décomposition en valeurs singulières, qui fournit la pseudo-inverse de Moore–Penrose, robuste au rang déficient), c'est ce que fait `np.linalg.lstsq`. Pour des matrices énormes et creuses, les méthodes itératives (gradient conjugué, LSQR) ou le **gradient stochastique** projettent implicitement, sans jamais matérialiser $`P`$. Les couches de projection apparaissent aussi dans les méthodes d'optimisation sous contraintes (gradient projeté) très utilisées en apprentissage.
 
+> **Vocabulaire de cette mise à jour (technique, survolable).** Une matrice est **mal conditionnée** quand de minuscules erreurs sur les données provoquent d'**énormes** erreurs sur le résultat : le **conditionnement** est justement ce nombre qui mesure cette sensibilité (faible = stable et fiable, élevé = fragile), comme une balance si déréglée qu'un souffle d'air fausse la pesée. Une matrice **creuse** est une matrice **remplie presque uniquement de zéros** (on ne stocke alors que les rares nombres non nuls, pour économiser la mémoire). La **SVD** (décomposition en valeurs singulières) et la **pseudo-inverse** sont des outils de secours qui permettent de « résoudre quand même » lorsque la matrice n'a pas d'inverse classique (cas du **rang déficient**, c'est-à-dire quand certaines colonnes sont redondantes). Le **gradient stochastique** est la méthode reine d'entraînement : au lieu de tout calculer d'un coup, elle améliore le modèle petit pas par petit pas, sur un échantillon de données à la fois.
+
 ---
 
 ### Rotations
@@ -997,6 +1097,8 @@ R(\theta)\begin{pmatrix}x\\y\end{pmatrix} = \begin{pmatrix} x\cos\theta - y\sin\
 
 La propriété de composition révèle une structure de **groupe**: l'ensemble des rotations du plan, muni de la composition, est le groupe $`SO(2)`$ (*special orthogonal group*). « Special » = déterminant $`+1`$, « orthogonal » = préserve la géométrie.
 
+> **Les mots « composition » et « groupe ».** **Composer** deux transformations, c'est les **enchaîner**: faire l'une, puis l'autre (composer deux rotations donne une seule rotation totale). Un **groupe**, en mathématiques, est un **ensemble d'opérations que l'on peut enchaîner sans jamais sortir de l'ensemble**, avec une opération « ne rien faire » (l'identité) et, pour chacune, une opération inverse qui l'annule. Pensez aux mouvements d'un Rubik's cube : enchaîner deux mouvements donne un mouvement, il existe le « ne pas bouger », et tout mouvement peut être défait : c'est un groupe.
+
 #### Rotations en dimension 3 et au-delà
 
 En 3D, une rotation se fait **autour d'un axe**. Les rotations autour des axes $`x, y, z`$ d'angle $`\theta`$ sont :
@@ -1008,6 +1110,8 @@ R_z = \begin{pmatrix}\cos\theta&-\sin\theta&0\\\sin\theta&\cos\theta&0\\0&0&1\en
 ```
 
 L'ensemble des rotations de $`\mathbb{R}^3`$ forme le groupe $`SO(3)`$. Contrairement à $`SO(2)`$, il est **non commutatif**: tourner d'abord autour de $`x`$ puis de $`y`$ ne donne **pas** le même résultat que l'inverse (essayez avec un livre !).
+
+> **Le mot « commutatif ».** Une opération est **commutative** quand **l'ordre n'a pas d'importance** : $`3 + 5`$ donne la même chose que $`5 + 3`$, l'addition est commutative. **Non commutatif** veut donc dire « l'ordre change le résultat » : enfiler ses chaussettes puis ses chaussures n'est pas la même chose que l'inverse ! Les rotations dans l'espace sont dans ce cas.
 
 > **Le théorème de rotation d'Euler.** Toute rotation de $`\mathbb{R}^3`$, aussi compliquée soit-elle, est *équivalente* à une **unique** rotation autour d'un **seul axe** bien choisi. C'est ce qui fonde la représentation « axe-angle » et les **quaternions**.
 
