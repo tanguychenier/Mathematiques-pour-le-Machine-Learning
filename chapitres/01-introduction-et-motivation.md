@@ -148,11 +148,11 @@ On fait enfin la **moyenne** de ces carrés sur les $`n`$ jours :
 J(\boldsymbol{\theta}) = \frac{1}{n} \sum_{i=1}^{n} \big( f_{\boldsymbol{\theta}}(x_i) - y_i \big)^2 = \frac{1}{n} \sum_{i=1}^{n} \big( a\, x_i + b - y_i \big)^2 .
 ```
 
+> **Lecture de $`J(\boldsymbol{\theta})`$.** La lettre $`J`$ est le nom du juge : on lui donne un réglage $`\boldsymbol{\theta}`$ et il renvoie un nombre, d'autant plus **petit** que le modèle est bon. Le « $`\frac{1}{n}`$ » devant transforme la somme en **moyenne** (on partage le total entre les $`n`$ jours, comme on partage une addition de restaurant entre les convives). L'exposant $`2`$ sur la parenthèse veut dire « **au carré** », c'est-à-dire le nombre multiplié par lui-même : un écart de $`3`$ compte pour $`9`$, un écart de $`5`$ pour $`25`$, les grosses erreurs pèsent donc beaucoup plus lourd.
+
 ![Déconstruction de la formule du coût, morceau par morceau : ce que signifie chaque terme de J(θ)](../assets/formule-cout.svg)
 
 ![Schéma des moindres carrés : chaque erreur devient un carré, une aire toujours positive, qu'on soit au-dessus ou en dessous de la droite](../assets/moindres-carres.svg)
-
-> **Lecture de $`J(\boldsymbol{\theta})`$.** La lettre $`J`$ est le nom du juge : on lui donne un réglage $`\boldsymbol{\theta}`$ et il renvoie un nombre, d'autant plus **petit** que le modèle est bon. Le « $`\frac{1}{n}`$ » devant transforme la somme en **moyenne** (on partage le total entre les $`n`$ jours, comme on partage une addition de restaurant entre les convives). L'exposant $`2`$ sur la parenthèse veut dire « **au carré** », c'est-à-dire le nombre multiplié par lui-même : un écart de $`3`$ compte pour $`9`$, un écart de $`5`$ pour $`25`$, les grosses erreurs pèsent donc beaucoup plus lourd.
 
 Apprendre se reformule alors en un problème net : **trouver le réglage $`\boldsymbol{\theta}`$ qui rend $`J(\boldsymbol{\theta})`$ le plus petit possible.** C'est un problème d'optimisation, deuxième pilier. Mais avant de le résoudre, prenons de la hauteur et regardons les quatre piliers ensemble.
 
