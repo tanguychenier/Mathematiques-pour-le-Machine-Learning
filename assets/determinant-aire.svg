@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="db" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2563eb"/></marker>
+    <marker id="dg" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#16a34a"/></marker>
+  </defs>
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="700" fill="#1b2a4a">Le déterminant : de combien une transformation agrandit les aires</text>
+  <text x="360" y="53" text-anchor="middle" font-size="12.5" fill="#64748b">On part du carré unité (aire 1). La matrice le déforme en parallélogramme ; sa nouvelle aire, c'est |det|.</text>
+
+  <line x1="80" y1="300" x2="430" y2="300" stroke="#e2e8f0" stroke-width="1.5"/>
+  <line x1="150" y1="340" x2="150" y2="90" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <polygon points="150,300 214,300 214,236 150,236" fill="#f97316" fill-opacity="0.22" stroke="#ea580c" stroke-width="2.5"><animate attributeName="points" values="150,300 214,300 214,236 150,236;150,300 214,300 214,236 150,236;150,300 278,236 342,108 214,172;150,300 278,236 342,108 214,172;150,300 214,300 214,236 150,236" keyTimes="0;0.18;0.5;0.85;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></polygon>
+  <line x1="150" y1="300" x2="214" y2="300" stroke="#2563eb" stroke-width="3.5" marker-end="url(#db)"><animate attributeName="x2" values="214;214;278;278;214" keyTimes="0;0.18;0.5;0.85;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/><animate attributeName="y2" values="300;300;236;236;300" keyTimes="0;0.18;0.5;0.85;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></line>
+  <line x1="150" y1="300" x2="150" y2="236" stroke="#16a34a" stroke-width="3.5" marker-end="url(#dg)"><animate attributeName="x2" values="150;150;214;214;150" keyTimes="0;0.18;0.5;0.85;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/><animate attributeName="y2" values="236;236;172;172;236" keyTimes="0;0.18;0.5;0.85;1" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1"/></line>
+  <circle cx="150" cy="300" r="4" fill="#475569"/>
+
+  <g opacity="0"><animate attributeName="opacity" values="0;0;0;1;0" keyTimes="0;0.18;0.5;0.62;1" dur="6s" repeatCount="indefinite"/>
+    <text x="300" y="200" text-anchor="middle" font-size="20" font-weight="700" fill="#ea580c">aire = 3</text>
+  </g>
+  <text x="230" y="332" text-anchor="middle" font-size="13" fill="#64748b">carré de départ : aire = 1</text>
+
+  <rect x="466" y="120" width="228" height="158" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="486" y="140" width="16" height="16" rx="3" fill="#2563eb"/>
+  <text x="510" y="153" font-size="12.5" fill="#1b2a4a">image de e₁ : (2, 1)</text>
+  <rect x="486" y="164" width="16" height="16" rx="3" fill="#16a34a"/>
+  <text x="510" y="177" font-size="12.5" fill="#1b2a4a">image de e₂ : (1, 2)</text>
+  <line x1="486" y1="194" x2="674" y2="194" stroke="#e2e8f0"/>
+  <text x="580" y="216" text-anchor="middle" font-size="15" fill="#1b2a4a">det A = 2×2 − 1×1 = <tspan font-weight="700" fill="#ea580c">3</tspan></text>
+  <text x="580" y="240" text-anchor="middle" font-size="12.5" fill="#64748b">L'aire est donc multipliée par 3.</text>
+  <text x="580" y="261" text-anchor="middle" font-size="11" fill="#94a3b8">(un det négatif retourne aussi l'espace)</text>
+
+  <text x="360" y="362" text-anchor="middle" font-size="12.5" fill="#1b2a4a">Comme un agrandissement de photo : le déterminant dit par combien toutes les aires sont multipliées.</text>
+</svg>

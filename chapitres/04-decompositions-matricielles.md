@@ -20,6 +20,8 @@ Imaginons une matrice carrée $`A`$ de taille $`n \times n`$ comme une **machine
 
 > **Le symbole $`\det`$.** Ce symbole représente le **déterminant** d'une matrice. Imaginez une feuille de pâte à modeler en forme de carré d'aire $`1`$. La matrice $`A`$ écrase et étire cette pâte ; $`\det(A)`$ vous dit l'aire du nouveau morceau. Si $`\det(A) = 3`$, l'aire a triplé. Si $`\det(A) = 0`$, la pâte a été écrasée en un fil plat (aire nulle) : la matrice « perd » une dimension. Si $`\det(A) < 0`$, la pâte a été **retournée** comme une crêpe (l'orientation s'inverse). On le note $`\det(A)`$ ou $`|A|`$.
 
+![Le déterminant comme facteur d'agrandissement des aires : le carré unité (aire 1) se déforme en parallélogramme dont l'aire vaut le déterminant, ici 3](../assets/determinant-aire.svg)
+
 > **Le symbole $`|A|`$.** C'est juste une **autre écriture** de $`\det(A)`$. Attention : les barres verticales ressemblent à une valeur absolue (la **valeur absolue** d'un nombre, notée par exemple $`|-3| = 3`$, c'est ce nombre rendu positif : on oublie le signe, comme une distance qui est toujours positive), mais ici elles encadrent une matrice entière, pas un nombre. $`|A|`$ peut donc être négatif (contrairement à la valeur absolue d'un nombre réel).
 
 ##### Définition rigoureuse
