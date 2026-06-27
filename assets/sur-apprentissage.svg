@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#1b2a4a">Trois façons d'ajuster un modèle aux mêmes données</text>
+  <text x="360" y="49" text-anchor="middle" font-size="12" fill="#64748b">Points noirs : données connues. Point orange : une donnée nouvelle (test). Le trait orange est l'erreur de prédiction.</text>
+    <rect x="32" y="102" width="190" height="204" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+  <polyline points="38.0 221.6 45.1 219.3 52.2 216.9 59.4 214.5 66.5 212.2 73.6 209.8 80.7 207.4 87.8 205.1 95.0 202.7 102.1 200.3 109.2 198.0 116.3 195.6 123.4 193.2 130.6 190.9 137.7 188.5 144.8 186.1 151.9 183.8 159.0 181.4 166.2 179.0 173.3 176.7 180.4 174.3 187.5 171.9 194.6 169.6 201.8 167.2 208.9 164.8 216.0 162.5" fill="none" stroke="#dc2626" stroke-width="3"/>
+  <circle cx="48.7" cy="230.3" r="3.6" fill="#1b2a4a"/>
+  <circle cx="73.6" cy="195.5" r="3.6" fill="#1b2a4a"/>
+  <circle cx="98.5" cy="221.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="125.2" cy="174.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="150.1" cy="192.0" r="3.6" fill="#1b2a4a"/>
+  <circle cx="176.8" cy="145.1" r="3.6" fill="#1b2a4a"/>
+  <circle cx="203.5" cy="165.9" r="3.6" fill="#1b2a4a"/>
+  <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.18;0.30;0.9;1" dur="6.0s" repeatCount="indefinite"/><line x1="162.6" y1="157.2" x2="162.6" y2="180.2" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 3"/><circle cx="162.6" cy="157.2" r="5.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.4"/></g>
+  <text x="127" y="320" text-anchor="middle" font-size="14.5" font-weight="700" fill="#dc2626">Sous-apprentissage</text>
+  <text x="127" y="336" text-anchor="middle" font-size="11" fill="#64748b">trop simple : rate la tendance</text>
+  <rect x="264" y="102" width="190" height="204" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+  <polyline points="270.0 226.8 277.1 224.7 284.2 222.4 291.4 220.0 298.5 217.5 305.6 214.9 312.7 212.1 319.8 209.2 327.0 206.2 334.1 203.1 341.2 199.8 348.3 196.5 355.4 193.0 362.6 189.3 369.7 185.6 376.8 181.7 383.9 177.8 391.0 173.6 398.2 169.4 405.3 165.1 412.4 160.6 419.5 156.0 426.6 151.3 433.8 146.4 440.9 141.4 448.0 136.4" fill="none" stroke="#16a34a" stroke-width="3"/>
+  <circle cx="280.7" cy="230.3" r="3.6" fill="#1b2a4a"/>
+  <circle cx="305.6" cy="195.5" r="3.6" fill="#1b2a4a"/>
+  <circle cx="330.5" cy="221.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="357.2" cy="174.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="382.1" cy="192.0" r="3.6" fill="#1b2a4a"/>
+  <circle cx="408.8" cy="145.1" r="3.6" fill="#1b2a4a"/>
+  <circle cx="435.5" cy="165.9" r="3.6" fill="#1b2a4a"/>
+  <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.18;0.30;0.9;1" dur="6.0s" repeatCount="indefinite"/><line x1="394.6" y1="157.2" x2="394.6" y2="171.5" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 3"/><circle cx="394.6" cy="157.2" r="5.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.4"/></g>
+  <text x="359" y="320" text-anchor="middle" font-size="14.5" font-weight="700" fill="#16a34a">Bon ajustement</text>
+  <text x="359" y="336" text-anchor="middle" font-size="11" fill="#64748b">capture la vraie tendance</text>
+  <rect x="496" y="102" width="190" height="204" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+  <path d="M 512.7 230.3 C 516.8 224.5 529.3 197.0 537.6 195.5 C 545.9 194.1 553.9 225.1 562.5 221.6 C 571.1 218.1 580.6 179.6 589.2 174.6 C 597.8 169.7 605.5 197.0 614.1 192.0 C 622.7 187.1 631.9 149.4 640.8 145.1 C 649.7 140.7 663.1 162.5 667.5 165.9 " fill="none" stroke="#7c3aed" stroke-width="3"/>
+  <circle cx="512.7" cy="230.3" r="3.6" fill="#1b2a4a"/>
+  <circle cx="537.6" cy="195.5" r="3.6" fill="#1b2a4a"/>
+  <circle cx="562.5" cy="221.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="589.2" cy="174.6" r="3.6" fill="#1b2a4a"/>
+  <circle cx="614.1" cy="192.0" r="3.6" fill="#1b2a4a"/>
+  <circle cx="640.8" cy="145.1" r="3.6" fill="#1b2a4a"/>
+  <circle cx="667.5" cy="165.9" r="3.6" fill="#1b2a4a"/>
+  <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.18;0.30;0.9;1" dur="6.0s" repeatCount="indefinite"/><line x1="626.6" y1="157.2" x2="626.6" y2="170.1" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 3"/><circle cx="626.6" cy="157.2" r="5.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.4"/></g>
+  <text x="591" y="320" text-anchor="middle" font-size="14.5" font-weight="700" fill="#7c3aed">Sur-apprentissage</text>
+  <text x="591" y="336" text-anchor="middle" font-size="11" fill="#64748b">apprend le bruit par cœur</text>
+  <text x="360" y="372" text-anchor="middle" font-size="12.5" fill="#1b2a4a">Le bon modèle prédit bien la donnée nouvelle. Trop simple ou trop complexe, on la rate : c'est l'échec de généralisation.</text>
+</svg>

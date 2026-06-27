@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2563eb"/></marker>
+    <marker id="aro" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#ea580c"/></marker>
+  </defs>
+  <rect width="720" height="380" rx="14" fill="#fbfdff"/>
+  <rect x="1" y="1" width="718" height="378" rx="14" fill="none" stroke="#e2e8f0"/>
+  <text x="360" y="33" text-anchor="middle" font-size="20" font-weight="700" fill="#1b2a4a">Projeter sur un sous-espace : le point le plus proche</text>
+  <text x="360" y="55" text-anchor="middle" font-size="12.5" fill="#64748b">On laisse tomber une perpendiculaire depuis le point ; là où elle touche la droite, c'est la projection (son « ombre »).</text>
+
+  <line x1="90.9" y1="307.3" x2="624.5" y2="173.9" stroke="#0f766e" stroke-width="3"/>
+  <text x="250" y="288" text-anchor="middle" font-size="13" fill="#0f766e" font-weight="600">le sous-espace (une droite passant par l'origine)</text>
+  <circle cx="120" cy="300" r="4.5" fill="#0f766e"/>
+  <text x="111" y="318" text-anchor="end" font-size="14" fill="#0f766e">O</text>
+
+  <line x1="120" y1="300" x2="384" y2="120" stroke="#2563eb" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="384" y="105" text-anchor="middle" font-size="15" fill="#2563eb" font-weight="700">x  <tspan font-size="11.5" fill="#64748b" font-weight="400">(le point de départ)</tspan></text>
+
+  <line x1="384" y1="120" x2="384" y2="120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4">
+    <animate attributeName="x2" values="384;410.8;410.8;410.8" keyTimes="0;0.30;0.92;1" dur="7.0s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="120;227.3;227.3;227.3" keyTimes="0;0.30;0.92;1" dur="7.0s" repeatCount="indefinite"/>
+  </line>
+  <circle r="7" fill="#f59e0b" stroke="#b45309" stroke-width="1.5">
+    <animate attributeName="cx" values="384;410.8;410.8;384" keyTimes="0;0.30;0.92;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.5 0 0.6 1;0 0 1 1;0.4 0 0.2 1"/>
+    <animate attributeName="cy" values="120;227.3;227.3;120" keyTimes="0;0.30;0.92;1" dur="7.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.5 0 0.6 1;0 0 1 1;0.4 0 0.2 1"/>
+  </circle>
+
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.30;0.36;0.92;1" dur="7.0s" repeatCount="indefinite"/>
+    <path d="M 424.4 223.9 L 421.0 210.3 L 407.4 213.7" fill="none" stroke="#475569" stroke-width="1.6"/>
+    <line x1="120" y1="300" x2="410.8" y2="227.3" stroke="#ea580c" stroke-width="4" marker-end="url(#aro)"/>
+    <circle cx="410.8" cy="227.3" r="5.5" fill="#ea580c"/>
+    <text x="425" y="251" font-size="14" fill="#ea580c" font-weight="700">projection de x</text>
+  </g>
+
+  <text x="360" y="357" text-anchor="middle" font-size="13.5" fill="#1b2a4a">Comme une bille qui tombe tout droit sur le sol : son point de chute, c'est sa projection.</text>
+</svg>
