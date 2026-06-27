@@ -31,7 +31,7 @@ qui à chaque vecteur associe un nombre réel positif ou nul, et qui vérifie le
 | Axiome | Formule | Lecture intuitive |
 |---|---|---|
 | **(N1) Positivité / séparation** | $`\|x\| \geq 0`$, et $`\|x\| = 0 \iff x = 0`$ | Une longueur est positive ; seule la flèche nulle a une longueur nulle. |
-| **(N2) Homogénéité absolue** | $`\|\lambda x\| = |\lambda|\,\|x\|`$ | Étirer la flèche d'un facteur $`\lambda`$ multiplie sa longueur par $`|\lambda|`$. |
+| **(N2) Homogénéité absolue** | $`\|\lambda x\| = \vert \lambda\vert \,\|x\|`$ | Étirer la flèche d'un facteur $`\lambda`$ multiplie sa longueur par $`\vert \lambda\vert `$. |
 | **(N3) Inégalité triangulaire** | $`\|x + y\| \leq \|x\| + \|y\|`$ | Un détour est toujours plus long que la ligne directe. |
 
 > **Attention à l'axiome (N2).** On écrit $`|\lambda|`$ (valeur absolue, **simple** barre) car $`\lambda`$ est un *nombre*, pas un vecteur. La double barre $`\|\cdot\|`$ est réservée aux vecteurs. Si l'on étire une flèche par $`\lambda = -3`$, sa longueur est multipliée par $`|-3| = 3`$ : le signe disparaît, car une longueur reste positive même quand on retourne la flèche.
@@ -56,9 +56,9 @@ Trois valeurs de $`p`$ dominent la pratique :
 
 | Nom | Notation | Formule | Image mentale |
 |---|---|---|---|
-| Norme de Manhattan / taxi ($`\ell_1`$) | $`\|x\|_1`$ | $`\sum_{i=1}^n |x_i|`$ | Distance parcourue dans un quadrillage de rues. |
+| Norme de Manhattan / taxi ($`\ell_1`$) | $`\|x\|_1`$ | $`\sum_{i=1}^n \vert x_i\vert `$ | Distance parcourue dans un quadrillage de rues. |
 | Norme euclidienne ($`\ell_2`$) | $`\|x\|_2`$ | $`\sqrt{\sum_{i=1}^n x_i^2}`$ | Distance « à vol d'oiseau », le théorème de Pythagore. |
-| Norme du sup / max ($`\ell_\infty`$) | $`\|x\|_\infty`$ | $`\max_{1 \leq i \leq n} |x_i|`$ | La plus grande coordonnée en valeur absolue. |
+| Norme du sup / max ($`\ell_\infty`$) | $`\|x\|_\infty`$ | $`\max_{1 \leq i \leq n} \vert x_i\vert `$ | La plus grande coordonnée en valeur absolue. |
 
 La norme euclidienne $`\ell_2`$ est la « longueur » usuelle, celle de notre intuition géométrique. Elle correspond à $`p=2`$ et généralise directement Pythagore : dans le plan, $`\|x\|_2 = \sqrt{x_1^2 + x_2^2}`$ est bien la longueur de l'hypoténuse d'un triangle rectangle de côtés $`x_1`$ et $`x_2`$.
 
@@ -341,10 +341,10 @@ Chaque norme engendre sa distance. Voici un récapitulatif comparatif sur deux p
 
 | Distance | Formule | Cas d'usage typique |
 |---|---|---|
-| Manhattan ($`\ell_1`$) | $`\sum_i |x_i - y_i|`$ | Données sur grille, robustesse aux valeurs aberrantes. |
+| Manhattan ($`\ell_1`$) | $`\sum_i \vert x_i - y_i\vert `$ | Données sur grille, robustesse aux valeurs aberrantes. |
 | Euclidienne ($`\ell_2`$) | $`\sqrt{\sum_i (x_i-y_i)^2}`$ | $`k`$-means, $`k`$-NN, géométrie usuelle. |
-| Tchebychev ($`\ell_\infty`$) | $`\max_i |x_i - y_i|`$ | Jeux d'échecs (mouvement du roi), tolérances. |
-| Minkowski ($`\ell_p`$) | $`\big(\sum_i |x_i-y_i|^p\big)^{1/p}`$ | Famille paramétrée généralisant les précédentes. |
+| Tchebychev ($`\ell_\infty`$) | $`\max_i \vert x_i - y_i\vert `$ | Jeux d'échecs (mouvement du roi), tolérances. |
+| Minkowski ($`\ell_p`$) | $`\big(\sum_i \vert x_i-y_i\vert ^p\big)^{1/p}`$ | Famille paramétrée généralisant les précédentes. |
 
 #### Exemple chiffré
 

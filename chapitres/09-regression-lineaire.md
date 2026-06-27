@@ -396,7 +396,7 @@ S_\lambda(z)=\mathrm{sign}(z)\,\max(|z|-\lambda,\ 0)=
 
 | Critere | Ridge ($`\ell_2`$) | Lasso ($`\ell_1`$) |
 |---|---|---|
-| Penalite | $`\tfrac\lambda2\sum_j w_j^2`$ | $`\lambda\sum_j |w_j|`$ |
+| Penalite | $`\tfrac\lambda2\sum_j w_j^2`$ | $`\lambda\sum_j \vert w_j\vert `$ |
 | Solution | fermee, $`(\mathbf X^\top\mathbf X+\lambda\mathbf I)^{-1}\mathbf X^\top\mathbf y`$ | iterative (coordonnees, proximal) |
 | Effet sur les poids | retrecit tous (jamais 0) | annule certains (parcimonie) |
 | Selection de variables | non | oui |
@@ -424,7 +424,7 @@ La vraisemblance gaussienne $`p(\mathbf y\mid\mathbf w)=\mathcal N(\mathbf X\mat
 | Loi a priori sur $`\mathbf w`$ | Terme $`-\log p(\mathbf w)`$ | Estimation MAP obtenue |
 |---|---|---|
 | Gaussienne $`\mathcal N(\mathbf 0,\ \tau^2\mathbf I)`$ | $`\tfrac{1}{2\tau^2}\lVert\mathbf w\rVert_2^2 + \text{const}`$ | **ridge** avec $`\lambda=\sigma^2/\tau^2`$ |
-| Laplace $`\prod_j \tfrac{1}{2b}e^{-|w_j|/b}`$ | $`\tfrac1b\lVert\mathbf w\rVert_1 + \text{const}`$ | **lasso** avec $`\lambda=\sigma^2/b`$ |
+| Laplace $`\prod_j \tfrac{1}{2b}e^{-\vert w_j\vert /b}`$ | $`\tfrac1b\lVert\mathbf w\rVert_1 + \text{const}`$ | **lasso** avec $`\lambda=\sigma^2/b`$ |
 
 > **Le symbole $`\tau^2`$ (variance du prior) et $`b`$ (echelle de Laplace).** $`\tau^2`$ est la variance de la gaussienne *a priori* sur chaque poids : elle dit a quel point on autorise les poids a s'eloigner de zero *avant* de voir les donnees. Petit $`\tau^2`$ = on croit fort que les poids sont petits = forte regularisation. Le parametre $`b`$ joue le meme role pour la loi de Laplace (la « double exponentielle », plus piquee en zero que la gaussienne, ce qui favorise les poids exactement nuls).
 

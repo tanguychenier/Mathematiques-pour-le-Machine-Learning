@@ -529,7 +529,7 @@ La structure est **identique** au cas scalaire, traduite en algebre lineaire (ch
 | $`\mu`$ | $`\boldsymbol\mu`$ (vecteur) | centre de la cloche |
 | $`\sigma^2`$ | $`\boldsymbol\Sigma`$ (matrice) | etalement + orientation |
 | $`\frac{(x-\mu)^2}{\sigma^2}`$ | $`(\mathbf x-\boldsymbol\mu)^\top\boldsymbol\Sigma^{-1}(\mathbf x-\boldsymbol\mu)`$ | **distance de Mahalanobis** au carre |
-| $`\frac{1}{\sqrt{2\pi\sigma^2}}`$ | $`\frac{1}{(2\pi)^{d/2}|\boldsymbol\Sigma|^{1/2}}`$ | normalisation |
+| $`\frac{1}{\sqrt{2\pi\sigma^2}}`$ | $`\frac{1}{(2\pi)^{d/2}\vert \boldsymbol\Sigma\vert ^{1/2}}`$ | normalisation |
 
 > **Le symbole $`|\boldsymbol\Sigma|`$ (determinant).** Ce symbole represente **le « volume » associe a la matrice** (vu au chapitre algebre lineaire). Pour la covariance, $`|\boldsymbol\Sigma|`$ mesure le volume d'incertitude : plus la cloche est etalee, plus le determinant est grand, et plus la constante de normalisation est petite (on etale la meme masse $`1`$ sur un plus grand volume). Le terme $`\boldsymbol\Sigma^{-1}`$ (matrice **inverse**, dite **matrice de precision**) joue le role de $`1/\sigma^2`$.
 
